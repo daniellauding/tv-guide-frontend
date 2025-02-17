@@ -85,6 +85,22 @@
     .channel-switch[aria-checked="true"] .channel-switch-handle {
         @apply translate-x-5;
     }
+
+    .search-icon {
+        @apply fill-gray-600 dark:fill-gray-800 transition-colors duration-200;
+    }
+
+    .nav-button {
+        @apply transition-all duration-200 hover:scale-95 active:scale-95;
+    }
+
+    .mobile-menu-enter {
+        animation: mobileMenuFadeIn 0.2s ease-out;
+    }
+
+    .mobile-menu-leave {
+        animation: mobileMenuFadeOut 0.2s ease-in;
+    }
 }
 
 /* Existing utilities */
@@ -106,4 +122,15 @@
 
 .modal-enter {
     animation: modalFadeIn 0.2s ease-out;
+}
+
+/* Add mobile menu animations */
+@keyframes mobileMenuFadeIn {
+    from { opacity: 0; transform: translateY(-1rem); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobileMenuFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-1rem); }
 } 

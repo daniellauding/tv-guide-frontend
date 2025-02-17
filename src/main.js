@@ -120,28 +120,63 @@ const tvData = {
     ]
 };
 
-// Add this at the top of the file, after tvData declaration
-const programDates = {
-    '2024-02-17': { ...tvData },  // Current data
-    '2024-02-18': {
-        channels: tvData.channels.map(channel => ({
-            ...channel,
-            programs: channel.programs.map(program => ({
-                ...program,
-                title: program.title + ' (Yeni Bölüm)',  // Example modification
-            }))
-        }))
-    },
-    '2024-02-19': {
-        channels: tvData.channels.map(channel => ({
-            ...channel,
-            programs: channel.programs.map(program => ({
-                ...program,
-                time: (parseInt(program.time.split(':')[0]) + 1).toString().padStart(2, '0') + ':' + program.time.split(':')[1],  // Shift times by 1 hour
-            }))
-        }))
+// Add this helper function to generate realistic dates
+function generateDateRange(daysBack = 2, daysForward = 3) {
+    const dates = [];
+    const today = new Date();
+    
+    for (let i = -daysBack; i <= daysForward; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + i);
+        dates.push(date);
     }
-};
+    
+    return dates;
+}
+
+// Add this function to generate realistic program schedules
+function generateProgramSchedule(basePrograms, date) {
+    const isToday = new Date().toDateString() === date.toDateString();
+    const isPast = date < new Date();
+    const dayOfWeek = date.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    return basePrograms.map(program => {
+        const [hours, minutes] = program.time.split(':').map(Number);
+        let newProgram = { ...program };
+
+        // Adjust program titles based on day
+        if (isPast) {
+            newProgram.title += ' (Tekrar)';
+        } else if (!isToday) {
+            if (isWeekend && program.type === 'Program') {
+                newProgram.title = 'Hafta Sonu ' + program.title;
+            }
+            if (program.type === 'Dizi') {
+                newProgram.title += ' (Yeni Bölüm)';
+            }
+        }
+
+        // Adjust times for different days
+        const timeOffset = dayOfWeek % 3 - 1; // -1, 0, or 1 hour offset
+        const newHours = (hours + timeOffset + 24) % 24;
+        newProgram.time = `${newHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        return newProgram;
+    });
+}
+
+// Update the programDates initialization
+const programDates = {};
+generateDateRange().forEach(date => {
+    const dateString = date.toISOString().split('T')[0];
+    programDates[dateString] = {
+        channels: tvData.channels.map(channel => ({
+            ...channel,
+            programs: generateProgramSchedule(channel.programs, date)
+        }))
+    };
+});
 
 // Add enabled property to channel objects
 tvData.channels = tvData.channels.map(channel => ({
@@ -166,80 +201,174 @@ function renderChannelNav() {
     `).join('');
 }
 
-// Modify renderPrograms to use the same showChannelDetail function
-function renderPrograms(selectedChannelId = null) {
+// Add this helper function to get relevant programs
+function getRelevantPrograms(programs, selectedDate) {
+    const currentTime = new Date();
+    const [currentHour, currentMinute] = [currentTime.getHours(), currentTime.getMinutes()];
+    const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+
+    let currentIndex = programs.findIndex(program => {
+        const [programHour, programMinute] = program.time.split(':').map(Number);
+        const programEndHour = programHour + Math.floor(Number(program.duration) / 60);
+        const programEndMinute = programMinute + (Number(program.duration) % 60);
+        
+        return `${programHour.toString().padStart(2, '0')}:${programMinute.toString().padStart(2, '0')}` <= currentTimeString &&
+               `${programEndHour.toString().padStart(2, '0')}:${programEndMinute.toString().padStart(2, '0')}` >= currentTimeString;
+    });
+
+    if (currentIndex === -1) {
+        currentIndex = programs.length - 1;
+    }
+
+    return {
+        previous: programs[currentIndex - 1],
+        current: programs[currentIndex],
+        next: programs[currentIndex + 1],
+        allPrograms: programs,
+    };
+}
+
+// Update the renderPrograms function
+function renderPrograms(selectedChannelId = null, selectedDate = null) {
     const content = document.querySelector('.content');
     const channels = selectedChannelId 
         ? tvData.channels.filter(c => c.id === selectedChannelId)
-        : tvData.channels.filter(c => c.enabled); // Only show enabled channels
+        : tvData.channels.filter(c => c.enabled);
 
     content.innerHTML = `
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
-            ${channels.map(channel => `
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                    <div class="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center cursor-pointer"
-                                 onclick="showChannelDetail('${channel.id}')">
-                                <img src="${channel.logo}" alt="${channel.name}" 
-                                     class="h-6 md:h-8 w-auto object-contain"
-                                     onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
-                            </div>
-                            <div>
-                                <h2 class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${channel.name}</h2>
-                                ${channel.description ? `
-                                    <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${channel.description}</p>
-                                ` : ''}
+            ${channels.map(channel => {
+                const relevantPrograms = getRelevantPrograms(channel.programs, selectedDate);
+                
+                return `
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                        <div class="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center cursor-pointer"
+                                         onclick="showChannelDetail('${channel.id}')">
+                                        <img src="${channel.logo}" alt="${channel.name}" 
+                                             class="h-6 md:h-8 w-auto object-contain"
+                                             onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
+                                    </div>
+                                    <div>
+                                        <h2 class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${channel.name}</h2>
+                                    </div>
+                                </div>
+                                <button 
+                                    onclick="toggleSchedule('${channel.id}')"
+                                    class="text-gray-600 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                                    title="Tüm programları göster"
+                                >
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
-                        ${channel.programs.map(program => {
-                            const progress = calculateProgramProgress(program.time, program.duration);
-                            const isLiveProgram = isLive(program.time, program.duration);
-                            
-                            return `
-                                <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-                                     onclick="showProgramModal('${channel.id}', '${program.time}')">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
-                                            <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
-                                        </div>
-                                        ${isLiveProgram ? `
-                                            <div class="live-indicator">
-                                                <span class="live-dot"></span>
-                                                <span>CANLI</span>
+                        <div class="divide-y divide-gray-100 dark:divide-gray-700" id="programs-${channel.id}">
+                            ${[relevantPrograms.previous, relevantPrograms.current, relevantPrograms.next]
+                                .filter(Boolean)
+                                .map(program => {
+                                    const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
+                                    const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+                                    
+                                    return `
+                                        <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                                             onclick="showProgramModal('${channel.id}', '${program.time}')">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
+                                                    <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
+                                                </div>
+                                                ${isLiveProgram ? `
+                                                    <div class="live-indicator">
+                                                        <span class="live-dot"></span>
+                                                        <span>CANLI</span>
+                                                    </div>
+                                                ` : ''}
                                             </div>
-                                        ` : ''}
-                                    </div>
-                                    <div class="mt-1 flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
-                                        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">
-                                            ${program.type}
-                                        </span>
-                                        <span class="ml-2">${program.duration} dk</span>
-                                    </div>
-                                    ${isLiveProgram ? `
-                                        <div class="mt-2 progress-bar">
-                                            <div class="progress-fill" style="width: ${progress}%"></div>
+                                            ${isLiveProgram ? `
+                                                <div class="mt-2 progress-bar">
+                                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                                </div>
+                                            ` : ''}
                                         </div>
-                                    ` : ''}
-                                </div>
-                            `;
-                        }).join('')}
+                                    `;
+                                }).join('')}
+                        </div>
                     </div>
-                </div>
-            `).join('')}
+                `;
+            }).join('')}
         </div>
     `;
 }
 
+// Add this function to toggle full schedule
+function toggleSchedule(channelId) {
+    const channel = tvData.channels.find(c => c.id === channelId);
+    const programsContainer = document.getElementById(`programs-${channelId}`);
+    const button = programsContainer.parentElement.querySelector('button');
+    
+    if (programsContainer.dataset.expanded) {
+        // Collapse to show only relevant programs
+        const relevantPrograms = getRelevantPrograms(channel.programs);
+        renderChannelPrograms(programsContainer, [relevantPrograms.previous, relevantPrograms.current, relevantPrograms.next].filter(Boolean), channel.id);
+        // Change to chevron down icon
+        button.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>`;
+        delete programsContainer.dataset.expanded;
+    } else {
+        // Expand to show all programs
+        renderChannelPrograms(programsContainer, channel.programs, channel.id);
+        // Change to chevron up icon
+        button.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+        </svg>`;
+        programsContainer.dataset.expanded = 'true';
+    }
+}
+
+// Helper function to render channel programs
+function renderChannelPrograms(container, programs, channelId) {
+    container.innerHTML = programs.map(program => {
+        const progress = calculateProgramProgress(program.time, program.duration);
+        const isLiveProgram = isLive(program.time, program.duration);
+        
+        return `
+            <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                 onclick="showProgramModal('${channelId}', '${program.time}')">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
+                        <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
+                    </div>
+                    ${isLiveProgram ? `
+                        <div class="live-indicator">
+                            <span class="live-dot"></span>
+                            <span>CANLI</span>
+                        </div>
+                    ` : ''}
+                </div>
+                ${isLiveProgram ? `
+                    <div class="mt-2 progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }).join('');
+}
+
 // Add program modal
 function showProgramModal(channelId, programTime) {
+    const dateSelector = document.getElementById('dateSelector');
+    const selectedDate = dateSelector.value;
     const channel = tvData.channels.find(c => c.id === channelId);
     const program = channel.programs.find(p => p.time === programTime);
-    const progress = calculateProgramProgress(program.time, program.duration);
-    const isLiveProgram = isLive(program.time, program.duration);
+    const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
+    const isLiveProgram = isLive(program.time, program.duration, selectedDate);
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'programModal';
@@ -327,11 +456,11 @@ function closeModal() {
 // Theme toggle
 function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return; // Add safety check
+
     const html = document.documentElement;
-
-    // Set initial state
     themeToggle.setAttribute('aria-checked', html.classList.contains('dark'));
-
+    
     themeToggle.addEventListener('click', () => {
         const isDark = html.classList.toggle('dark');
         themeToggle.setAttribute('aria-checked', isDark);
@@ -341,6 +470,30 @@ function setupThemeToggle() {
 // Add these new functions
 function setupDateSelector() {
     const dateSelector = document.getElementById('dateSelector');
+    const dates = generateDateRange();
+    
+    // Clear existing options
+    dateSelector.innerHTML = dates.map(date => {
+        const dateString = date.toISOString().split('T')[0];
+        const isToday = new Date().toDateString() === date.toDateString();
+        
+        // Format date in Turkish
+        const formatter = new Intl.DateTimeFormat('tr-TR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
+        });
+        
+        return `
+            <option value="${dateString}">
+                ${formatter.format(date)}${isToday ? ' (Bugün)' : ''}
+            </option>
+        `;
+    }).join('');
+    
+    // Set default to today
+    dateSelector.value = new Date().toISOString().split('T')[0];
+    
     dateSelector.addEventListener('change', (e) => {
         const selectedDate = e.target.value;
         const programData = programDates[selectedDate] || tvData;
@@ -370,6 +523,8 @@ function setupChannelSelector() {
 
 // Unified channel detail view function
 function showChannelDetail(channelId) {
+    const dateSelector = document.getElementById('dateSelector');
+    const selectedDate = dateSelector.value;
     const channel = tvData.channels.find(c => c.id === channelId);
     const content = document.querySelector('.content');
     
@@ -401,8 +556,8 @@ function showChannelDetail(channelId) {
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Günün Programları</h2>
                 <div class="space-y-4">
                     ${channel.programs.map(program => {
-                        const progress = calculateProgramProgress(program.time, program.duration);
-                        const isLiveProgram = isLive(program.time, program.duration);
+                        const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
+                        const isLiveProgram = isLive(program.time, program.duration, selectedDate);
                         
                         return `
                             <div class="flex items-start space-x-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer"
@@ -568,40 +723,136 @@ function renderSearchResults(results, searchTerm) {
     `;
 }
 
-// Add this helper function
-function calculateProgramProgress(timeString, durationMinutes) {
-    const now = new Date();
+// Update the isLive function to handle past dates more gracefully
+function isLive(timeString, durationMinutes, selectedDate) {
+    // If no selected date, use current date
+    const currentDate = new Date();
+    const selectedDateTime = selectedDate ? new Date(selectedDate) : currentDate;
+    
+    // Set the time components for the selected date
     const [hours, minutes] = timeString.split(':').map(Number);
-    const startTime = new Date();
-    startTime.setHours(hours, minutes, 0);
+    const programStartTime = new Date(selectedDateTime);
+    programStartTime.setHours(hours, minutes, 0);
     
-    const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
+    const programEndTime = new Date(programStartTime.getTime() + durationMinutes * 60000);
     
-    // If program hasn't started yet
-    if (now < startTime) return 0;
-    // If program has finished
-    if (now > endTime) return 100;
+    // For past dates, show as "live" if the current time matches the program time
+    if (selectedDateTime.toDateString() !== currentDate.toDateString()) {
+        const currentTimeOnSelectedDate = new Date(currentDate);
+        currentTimeOnSelectedDate.setFullYear(selectedDateTime.getFullYear());
+        currentTimeOnSelectedDate.setMonth(selectedDateTime.getMonth());
+        currentTimeOnSelectedDate.setDate(selectedDateTime.getDate());
+        
+        return currentTimeOnSelectedDate >= programStartTime && 
+               currentTimeOnSelectedDate <= programEndTime;
+    }
     
-    // Calculate progress
-    const totalDuration = endTime - startTime;
-    const elapsed = now - startTime;
+    // For current date, use actual live status
+    const progress = calculateProgramProgress(timeString, durationMinutes, selectedDate);
+    return progress > 0 && progress < 100;
+}
+
+// Update the calculateProgramProgress function to handle past dates
+function calculateProgramProgress(timeString, durationMinutes, selectedDate) {
+    const currentDate = new Date();
+    const selectedDateTime = selectedDate ? new Date(selectedDate) : currentDate;
+    
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const programStartTime = new Date(selectedDateTime);
+    programStartTime.setHours(hours, minutes, 0);
+    
+    const programEndTime = new Date(programStartTime.getTime() + durationMinutes * 60000);
+    
+    // For past dates, calculate progress based on current time of day
+    if (selectedDateTime.toDateString() !== currentDate.toDateString()) {
+        const currentTimeOnSelectedDate = new Date(currentDate);
+        currentTimeOnSelectedDate.setFullYear(selectedDateTime.getFullYear());
+        currentTimeOnSelectedDate.setMonth(selectedDateTime.getMonth());
+        currentTimeOnSelectedDate.setDate(selectedDateTime.getDate());
+        
+        if (currentTimeOnSelectedDate < programStartTime) return 0;
+        if (currentTimeOnSelectedDate > programEndTime) return 100;
+        
+        const totalDuration = programEndTime - programStartTime;
+        const elapsed = currentTimeOnSelectedDate - programStartTime;
+        return Math.round((elapsed / totalDuration) * 100);
+    }
+    
+    // For current date, use actual progress
+    if (currentDate < programStartTime) return 0;
+    if (currentDate > programEndTime) return 100;
+    
+    const totalDuration = programEndTime - programStartTime;
+    const elapsed = currentDate - programStartTime;
     return Math.round((elapsed / totalDuration) * 100);
 }
 
-// Add this helper function
-function isLive(timeString, durationMinutes) {
-    const progress = calculateProgramProgress(timeString, durationMinutes);
-    return progress > 0 && progress < 100;
+// Add this function to handle date navigation
+function navigateDate(direction) {
+    const dateSelector = document.getElementById('dateSelector');
+    const currentDate = dateSelector.value;
+    const dates = Array.from(dateSelector.options).map(opt => opt.value);
+    const currentIndex = dates.indexOf(currentDate);
+    
+    let newIndex = currentIndex + direction;
+    
+    // Handle bounds
+    if (newIndex >= 0 && newIndex < dates.length) {
+        dateSelector.value = dates[newIndex];
+        // Trigger change event
+        dateSelector.dispatchEvent(new Event('change'));
+        
+        // Update button states
+        updateNavigationButtons();
+    }
+}
+
+// Update the setupDateNavigation function
+function setupDateNavigation() {
+    // Set initial button states
+    updateNavigationButtons();
+    
+    // Add date change listener
+    document.getElementById('dateSelector').addEventListener('change', (e) => {
+        updateNavigationButtons();
+        
+        // Update content based on selected date
+        const selectedDate = e.target.value;
+        const programData = programDates[selectedDate] || tvData;
+        renderPrograms(null, programData);
+    });
+}
+
+// Update the updateNavigationButtons function
+function updateNavigationButtons() {
+    const dateSelector = document.getElementById('dateSelector');
+    const dates = Array.from(dateSelector.options).map(opt => opt.value);
+    const currentIndex = dates.indexOf(dateSelector.value);
+    
+    const prevButton = document.getElementById('prevDate');
+    const nextButton = document.getElementById('nextDate');
+    
+    if (prevButton && nextButton) {
+        // Remove disabled state, just update visual feedback
+        prevButton.classList.toggle('text-gray-400', currentIndex === 0);
+        nextButton.classList.toggle('text-gray-400', currentIndex === dates.length - 1);
+    }
 }
 
 // Update the initialization
 document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0];
+    
     setupDateSelector();
     setupChannelSelector();
     setupSearch();
+    setupDateNavigation();
     renderChannelNav();
-    renderPrograms();
-    setupThemeToggle();
+    renderPrograms(null, today);
+    
+    if (document.getElementById('themeToggle')) {
+        setupThemeToggle();
+    }
 });
 
 function showChannelPreferences() {
@@ -753,4 +1004,37 @@ function showAboutPage(event) {
             </div>
         </div>
     `;
-} 
+}
+
+// Add these functions for mobile menu
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const body = document.body;
+    
+    if (mobileMenu.classList.contains('hidden')) {
+        // Open menu
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('mobile-menu-enter');
+        body.style.overflow = 'hidden';
+    } else {
+        // Close menu with animation
+        mobileMenu.classList.add('mobile-menu-leave');
+        body.style.overflow = '';
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            mobileMenu.classList.remove('mobile-menu-leave');
+            mobileMenu.classList.add('hidden');
+        }, 200);
+    }
+}
+
+// Add this to close mobile menu on resize if open
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) { // md breakpoint
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (!mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+    }
+}); 

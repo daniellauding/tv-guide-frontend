@@ -123,6 +123,12 @@ module.exports = {
     'w-3',
     'w-9',
     'aria-checked:bg-primary-500',
+    'fill-gray-400',
+    'fill-gray-600',
+    'scale-95',
+    'scale-100',
+    'hover:scale-95',
+    'active:scale-95',
   ],
   theme: {
     extend: {
