@@ -1,13 +1,12 @@
 {
-  "name": "my-tailwind-project",
+  "name": "tv-guide-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "TV Guide Frontend Application",
   "main": "index.js",
   "scripts": {
     "dev": "npm run watch",
-    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify && cp -r index.html src/* dist/",
     "serve": "live-server",
-    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
   },
   "keywords": [],
