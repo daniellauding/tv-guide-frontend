@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Rehberi</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <script src="./src/main.js" defer></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white cursor-pointer" onclick="resetView()">TV Rehberi</h1>
+                    <div class="flex space-x-4">
+                        <button onclick="showChannelPreferences()" 
+                                class="text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                            Kanal Tercihleri
+                        </button>
+                        <a href="#" onclick="showAboutPage(event)" 
+                           class="text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                            Hakkında
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Channel Navigation -->
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="channel-nav flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
+                <!-- Channel logos will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Navigation -->
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-12">
+                <div class="flex items-center space-x-4">
+                    <!-- Date Selector -->
+                    <select id="dateSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg">
+                        <option value="2024-02-17">17 Şubat 2024</option>
+                        <option value="2024-02-18">18 Şubat 2024</option>
+                        <option value="2024-02-19">19 Şubat 2024</option>
+                        <option value="2024-02-20">20 Şubat 2024</option>
+                    </select>
+
+                    <!-- Channel Selector -->
+                    <select id="channelSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg">
+                        <option value="">Tüm Kanallar</option>
+                    </select>
+
+                    <!-- Search input -->
+                    <div class="relative">
+                        <input 
+                            type="search" 
+                            id="programSearch" 
+                            placeholder="Program veya kanal ara..."
+                            class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg pl-10 w-64"
+                        >
+                        <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Navigation arrows -->
+                <div class="flex space-x-2">
+                    <button class="p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300">←</button>
+                    <button class="p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        <div class="content space-y-6">
+            <!-- Program content will be inserted here by JavaScript -->
+        </div>
+    </main>
+</body>
+</html> 
