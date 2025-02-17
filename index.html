@@ -41,10 +41,11 @@
     <!-- Time Navigation -->
     <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-12">
-                <div class="flex items-center space-x-4">
+            <!-- Adjust for mobile -->
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center py-3 md:h-12 space-y-3 md:space-y-0">
+                <div class="flex flex-wrap items-center gap-3">
                     <!-- Date Selector -->
-                    <select id="dateSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg">
+                    <select id="dateSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1.5 md:px-4 md:py-2 text-sm rounded-lg">
                         <option value="2024-02-17">17 Şubat 2024</option>
                         <option value="2024-02-18">18 Şubat 2024</option>
                         <option value="2024-02-19">19 Şubat 2024</option>
@@ -52,19 +53,19 @@
                     </select>
 
                     <!-- Channel Selector -->
-                    <select id="channelSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg">
+                    <select id="channelSelector" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1.5 md:px-4 md:py-2 text-sm rounded-lg">
                         <option value="">Tüm Kanallar</option>
                     </select>
 
                     <!-- Search input -->
-                    <div class="relative">
+                    <div class="relative flex-1 md:flex-none">
                         <input 
                             type="search" 
                             id="programSearch" 
                             placeholder="Program veya kanal ara..."
-                            class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg pl-10 w-64"
+                            class="w-full md:w-64 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1.5 md:px-4 md:py-2 rounded-lg pl-9 text-sm"
                         >
-                        <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                        <span class="absolute left-3 top-2 text-gray-400">🔍</span>
                     </div>
                 </div>
 

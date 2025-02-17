@@ -157,9 +157,9 @@ function renderChannelNav() {
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
             onclick="showChannelDetail('${channel.id}')"
         >
-            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
-                     class="h-10 w-auto object-contain"
+                     class="h-8 md:h-10 w-auto object-contain"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
             </div>
         </button>
@@ -174,21 +174,21 @@ function renderPrograms(selectedChannelId = null) {
         : tvData.channels.filter(c => c.enabled); // Only show enabled channels
 
     content.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
             ${channels.map(channel => `
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                    <div class="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center cursor-pointer"
+                    <div class="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center cursor-pointer"
                                  onclick="showChannelDetail('${channel.id}')">
                                 <img src="${channel.logo}" alt="${channel.name}" 
-                                     class="h-8 w-auto object-contain"
+                                     class="h-6 md:h-8 w-auto object-contain"
                                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
                             </div>
                             <div>
-                                <h2 class="font-medium text-gray-900 dark:text-white">${channel.name}</h2>
+                                <h2 class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${channel.name}</h2>
                                 ${channel.description ? `
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">${channel.description}</p>
+                                    <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${channel.description}</p>
                                 ` : ''}
                             </div>
                         </div>
@@ -199,12 +199,12 @@ function renderPrograms(selectedChannelId = null) {
                             const isLiveProgram = isLive(program.time, program.duration);
                             
                             return `
-                                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                                <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
                                      onclick="showProgramModal('${channel.id}', '${program.time}')">
                                     <div class="flex justify-between items-start">
                                         <div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
-                                            <div class="font-medium text-gray-900 dark:text-white">${program.title}</div>
+                                            <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
+                                            <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
                                         </div>
                                         ${isLiveProgram ? `
                                             <div class="live-indicator">
@@ -213,7 +213,7 @@ function renderPrograms(selectedChannelId = null) {
                                             </div>
                                         ` : ''}
                                     </div>
-                                    <div class="mt-1 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                    <div class="mt-1 flex items-center text-xs md:text-sm text-gray-500 dark:text-gray-400">
                                         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">
                                             ${program.type}
                                         </span>
