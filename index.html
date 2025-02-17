@@ -27,17 +27,31 @@
                     </div>
                 </div>
                 
-                <!-- Mobile menu button -->
-                <div class="flex md:hidden">
+                <!-- Right side with theme toggle and mobile menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle Button -->
                     <button 
-                        onclick="toggleMobileMenu()"
-                        class="p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300"
-                        aria-label="Menu"
+                        id="themeToggle" 
+                        type="button" 
+                        role="switch" 
+                        aria-checked="false"
+                        class="theme-switch"
                     >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <span class="theme-switch-handle"></span>
                     </button>
+
+                    <!-- Mobile menu button -->
+                    <div class="flex md:hidden">
+                        <button 
+                            onclick="toggleMobileMenu()"
+                            class="p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300"
+                            aria-label="Menu"
+                        >
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -65,6 +79,22 @@
                        class="py-3 text-left text-lg font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
                         Hakkında
                     </a>
+                    
+                    <!-- Add theme toggle option -->
+                    <div class="flex items-center justify-between py-3">
+                        <span class="text-lg font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                            Karanlık Mod
+                        </span>
+                        <button 
+                            id="mobileThemeToggle" 
+                            type="button" 
+                            role="switch" 
+                            aria-checked="false"
+                            class="theme-switch"
+                        >
+                            <span class="theme-switch-handle"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -455,15 +455,28 @@ function closeModal() {
 
 // Theme toggle
 function setupThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return; // Add safety check
-
+    const themeToggles = document.querySelectorAll('#themeToggle, #mobileThemeToggle');
     const html = document.documentElement;
-    themeToggle.setAttribute('aria-checked', html.classList.contains('dark'));
     
-    themeToggle.addEventListener('click', () => {
-        const isDark = html.classList.toggle('dark');
-        themeToggle.setAttribute('aria-checked', isDark);
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Set initial theme
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        html.classList.add('dark');
+        themeToggles.forEach(toggle => toggle.setAttribute('aria-checked', 'true'));
+    }
+    
+    // Setup toggle listeners
+    themeToggles.forEach(toggle => {
+        toggle.setAttribute('aria-checked', html.classList.contains('dark'));
+        
+        toggle.addEventListener('click', () => {
+            const isDark = html.classList.toggle('dark');
+            themeToggles.forEach(t => t.setAttribute('aria-checked', isDark));
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
     });
 }
 
