@@ -373,34 +373,13 @@ function showProgramModal(channelId, programTime) {
     const modalContainer = document.createElement('div');
     modalContainer.id = 'programModal';
     modalContainer.className = 'modal-enter';
-    modalContainer.innerHTML = `
-        <div class="modal-container" onclick="closeModal()">
-            <div class="modal-content" onclick="event.stopPropagation()">
+    const modalHTML = `
+        <div class="modal-base" onclick="closeModal()">
+            <div class="modal-window" onclick="event.stopPropagation()">
                 <div class="modal-header">
-                    <div class="flex items-center space-x-3">
-                        <img src="${channel.logo}" alt="${channel.name}" class="h-8 w-auto">
-                        <div>
-                            <h3 class="modal-title">${program.title}</h3>
-                            <div class="flex items-center space-x-2">
-                                <p class="text-gray-500">${channel.name} • ${program.time}</p>
-                                ${isLiveProgram ? `
-                                    <div class="live-indicator">
-                                        <span class="live-dot"></span>
-                                        <span>CANLI</span>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="modal-title">${program.title}</h3>
                     <button onclick="closeModal()" class="modal-close">✕</button>
                 </div>
-                ${isLiveProgram ? `
-                    <div class="px-6 py-2">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${progress}%"></div>
-                        </div>
-                    </div>
-                ` : ''}
                 <div class="modal-body">
                     <div>
                         <div class="modal-label">Program Türü</div>
@@ -426,6 +405,7 @@ function showProgramModal(channelId, programTime) {
             </div>
         </div>
     `;
+    modalContainer.innerHTML = modalHTML;
     document.body.appendChild(modalContainer);
     document.body.style.overflow = 'hidden';
     
@@ -873,8 +853,8 @@ function showChannelPreferences() {
     modalContainer.id = 'preferencesModal';
     modalContainer.className = 'modal-enter';
     modalContainer.innerHTML = `
-        <div class="modal-container" onclick="closePreferencesModal()">
-            <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-base" onclick="closePreferencesModal()">
+            <div class="modal-window" onclick="event.stopPropagation()">
                 <div class="modal-header">
                     <div>
                         <h3 class="modal-title">Kanal Tercihleri</h3>

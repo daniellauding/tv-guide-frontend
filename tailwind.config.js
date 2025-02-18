@@ -134,12 +134,22 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          50: '#fff3e6',
+          100: '#ffe0cc',
+          300: '#ff9933',
+          500: '#ff6b00',
+          600: '#e65c00',
+          700: '#cc5200',
           DEFAULT: '#ff6b00',
           dark: '#cc5500',
           light: '#ff8533',
-          500: '#ff6b00',
         },
         secondary: {
+          50: '#e6eef7',
+          100: '#ccddf0',
+          500: '#2b4c7e',
+          600: '#234066',
+          700: '#1a2f4d',
           DEFAULT: '#2b4c7e',
           dark: '#1a2f4d',
           light: '#406eb8',
@@ -147,6 +157,39 @@ module.exports = {
         background: {
           light: '#f8f9fa',
           dark: '#1a1a1a',
+          card: {
+            light: '#ffffff',
+            dark: '#343a40',
+          },
+          header: {
+            light: '#ffffff',
+            dark: '#343a40',
+          },
+          footer: {
+            light: '#f8f9fa',
+            dark: '#212529',
+          },
+        },
+        text: {
+          light: {
+            primary: '#212529',
+            secondary: '#495057',
+            muted: '#868e96',
+          },
+          dark: {
+            primary: '#f8f9fa',
+            secondary: '#e9ecef',
+            muted: '#adb5bd',
+          },
+        },
+        border: {
+          light: '#e9ecef',
+          dark: '#495057',
+        },
+        status: {
+          live: '#dc3545',
+          upcoming: '#198754',
+          ended: '#6c757d',
         }
       },
       fontFamily: {

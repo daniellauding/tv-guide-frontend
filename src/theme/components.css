@@ -1,0 +1,170 @@
+/* Component-specific theme styles */
+
+/* Header */
+.header {
+  @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700;
+}
+
+.header-nav {
+  @apply flex items-center justify-between h-16;
+}
+
+.header-title {
+  @apply text-xl font-bold text-gray-800 dark:text-white;
+}
+
+/* Navigation */
+.nav-link {
+  @apply text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors;
+}
+
+.nav-button {
+  @apply p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 transition-all hover:scale-95 active:scale-95;
+}
+
+/* Forms and Inputs */
+.form-input {
+  @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 
+         px-3 py-1.5 md:px-4 md:py-2 text-sm rounded-lg 
+         border border-gray-200 dark:border-gray-600
+         focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+.form-select {
+  @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 
+         px-3 py-1.5 md:px-4 md:py-2 text-sm rounded-lg
+         border border-gray-200 dark:border-gray-600
+         focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+.form-search {
+  @apply w-full md:w-64 bg-gray-100 dark:bg-gray-700 
+         text-gray-600 dark:text-gray-300 px-3 py-1.5 
+         md:px-9 md:py-2 rounded-lg pl-9 text-sm
+         border border-gray-200 dark:border-gray-600
+         focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+/* Modal */
+.modal-base {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50;
+}
+
+.modal-window {
+  @apply bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full p-6;
+}
+
+.modal-header {
+  @apply flex justify-between items-start mb-4;
+}
+
+.modal-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white;
+}
+
+/* Table */
+.table-container {
+  @apply w-full overflow-x-auto;
+}
+
+.table {
+  @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700;
+}
+
+.table-header {
+  @apply bg-gray-50 dark:bg-gray-700;
+}
+
+.table-header-cell {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider;
+}
+
+.table-row {
+  @apply bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+.table-cell {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white;
+}
+
+/* Accordion */
+.accordion {
+  @apply divide-y divide-gray-200 dark:divide-gray-700;
+}
+
+.accordion-header {
+  @apply flex justify-between items-center p-4 cursor-pointer
+         bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+.accordion-content {
+  @apply p-4 bg-gray-50 dark:bg-gray-700;
+}
+
+/* Card */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden;
+}
+
+.card-header {
+  @apply p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700;
+}
+
+.card-body {
+  @apply p-3 md:p-4;
+}
+
+/* Status Indicators */
+.status-live {
+  @apply text-status-live;
+}
+
+.status-upcoming {
+  @apply text-status-upcoming;
+}
+
+.status-ended {
+  @apply text-status-ended;
+}
+
+/* Progress Indicators */
+.progress-container {
+  @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+}
+
+.progress-bar {
+  @apply h-full bg-primary-500 transition-all duration-300;
+}
+
+/* Add these footer styles to components.css */
+.footer {
+  @apply bg-gray-800 text-gray-300 py-12 mt-12;
+}
+
+.footer-container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+.footer-grid {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-8;
+}
+
+.footer-title {
+  @apply text-lg font-semibold text-white mb-4;
+}
+
+.footer-text {
+  @apply text-sm text-gray-400;
+}
+
+.footer-link {
+  @apply text-gray-300 hover:text-white transition-colors;
+}
+
+.footer-divider {
+  @apply border-t border-gray-700 mt-8 pt-8;
+}
+
+.footer-copyright {
+  @apply text-sm text-gray-400;
+} 
