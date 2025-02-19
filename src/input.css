@@ -40,11 +40,11 @@
     }
 
     .progress-bar {
-        @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+        @apply h-1 bg-progress dark:bg-progress rounded-full overflow-hidden;
     }
 
     .progress-fill {
-        @apply h-full bg-primary-500 transition-all duration-300;
+        @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
     }
 
     /* Add live indicator */

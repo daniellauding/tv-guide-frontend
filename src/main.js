@@ -5,13 +5,24 @@ const tvData = {
             id: 'show',
             name: 'Show TV',
             logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
+            enabled: true,
             programs: [
-                { time: '06:00', title: 'Kalbimdeki Deniz', type: 'Dizi', duration: '120' },
-                { time: '08:00', title: 'Show Ana Haber', type: 'Haber', duration: '60' },
-                { time: '10:00', title: 'Sabahın Sultanı', type: 'Program', duration: '180' },
-                { time: '13:00', title: 'Bir Zamanlar Çukurova', type: 'Dizi', duration: '120' },
-                { time: '15:00', title: 'Didem Arslan', type: 'Program', duration: '120' },
-                { time: '17:00', title: 'Akşam Haberleri', type: 'Haber', duration: '60' }
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Gece Sineması', type: 'Film', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
+                { time: '04:00', title: 'Sabah Sporu', type: 'Spor', duration: '60', state: 'past' },
+                { time: '05:00', title: 'Günaydın Show', type: 'Program', duration: '60', state: 'past' },
+                { time: '06:00', title: 'Kalbimdeki Deniz', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '08:00', title: 'Show Ana Haber', type: 'Haber', duration: '60', state: 'past' },
+                { time: '09:00', title: 'Sabah Magazin', type: 'Magazin', duration: '60', state: 'past' },
+                { time: '10:00', title: 'Sabahın Sultanı', type: 'Program', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Bir Zamanlar Çukurova', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '15:00', title: 'Didem Arslan', type: 'Program', duration: '120', state: 'next' },
+                { time: '17:00', title: 'Akşam Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Prime Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '21:00', title: 'Show Prime', type: 'Program', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
             ]
         },
         {
@@ -19,50 +30,95 @@ const tvData = {
             name: 'ATV',
             logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Atv_logo.png',
             color: '#0066CC',
+            enabled: true,
             programs: [
-                { time: '07:00', title: 'Kahvaltı Haberleri', type: 'Haber', duration: '120', color: '#E4F1FF' },
-                { time: '09:00', title: 'Müge Anlı', type: 'Program', duration: '180', color: '#D6EBFF' },
-                { time: '12:00', title: 'Esra Erol', type: 'Program', duration: '180', color: '#C8E5FF' }
+                { time: '00:00', title: 'Gece Bülteni', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Film', type: 'Film', duration: '120', state: 'past' },
+                { time: '04:30', title: 'Sabah Haberleri', type: 'Haber', duration: '90', state: 'past' },
+                { time: '06:00', title: 'Kahvaltı Haberleri', type: 'Haber', duration: '120', state: 'past' },
+                { time: '08:00', title: 'Müge Anlı', type: 'Program', duration: '180', state: 'past' },
+                { time: '10:00', title: 'Esra Erol', type: 'Program', duration: '180', state: 'current' },
+                { time: '13:00', title: 'ATV Gün Ortası', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Kardeşlerim', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '16:00', title: 'Yaprak Dökümü', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '18:00', title: 'ATV Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Kim Milyoner Olmak İster?', type: 'Yarışma', duration: '120', state: 'next' },
+                { time: '21:00', title: 'Kuruluş Osman', type: 'Dizi', duration: '150', state: 'next' },
+                { time: '23:30', title: 'Son Durak', type: 'Haber', duration: '30', state: 'next' }
             ]
         },
         {
             id: 'fox',
             name: 'FOX TV',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/FOX_wordmark-red_2.svg/800px-FOX_wordmark-red_2.svg.png',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             color: '#FF6600',
             programs: [
-                { time: '08:30', title: 'İsmail Küçükkaya ile Çalar Saat', type: 'Haber', duration: '180', color: '#FFE4D6' },
-                { time: '11:30', title: 'Ekonomi Arşivi', type: 'Ekonomi', duration: '60', color: '#FFD6C8' },
-                { time: '12:30', title: 'Selçuk Tepeli ile FOX Ana Haber', type: 'Haber', duration: '60', color: '#FFC8BA' }
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Film', type: 'Film', duration: '120', state: 'past' },
+                { time: '04:30', title: 'Sabah Haberleri', type: 'Haber', duration: '90', state: 'past' },
+                { time: '06:00', title: 'İsmail Küçükkaya ile Çalar Saat', type: 'Haber', duration: '180', state: 'past' },
+                { time: '09:00', title: 'Çağla ile Yeni Bir Gün', type: 'Program', duration: '180', state: 'past' },
+                { time: '12:00', title: 'Fox Ana Haber', type: 'Haber', duration: '60', state: 'past' },
+                { time: '13:00', title: 'Evlilik Hakkında Her Şey', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '15:00', title: 'Fulya ile Umudun Olsun', type: 'Program', duration: '120', state: 'next' },
+                { time: '17:00', title: 'Fox Akşam Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Prime Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '21:00', title: 'Show Prime', type: 'Program', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
             ]
         },
         {
             id: 'star',
             name: 'Star TV',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Star_TV_logo.svg/800px-Star_TV_logo.svg.png',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             color: '#3366CC',
             programs: [
-                { time: '07:00', title: 'Mesut Yar ile Uyanış', type: 'Sabah', duration: '180', color: '#E4EBFF' },
-                { time: '10:00', title: 'Aramızda Kalmasın', type: 'Program', duration: '120', color: '#D6E1FF' },
-                { time: '12:00', title: 'Star Haber', type: 'Haber', duration: '60', color: '#C8D7FF' }
+                { time: '00:00', title: 'Gece Bülteni', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Sinema', type: 'Film', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
+                { time: '04:00', title: 'Sabah Yıldızı', type: 'Program', duration: '120', state: 'past' },
+                { time: '06:00', title: 'Star Sabah', type: 'Haber', duration: '120', state: 'past' },
+                { time: '08:00', title: 'Mesut Yar ile Uyanış', type: 'Program', duration: '180', state: 'past' },
+                { time: '10:00', title: 'Aramızda Kalmasın', type: 'Program', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Star Öğle Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Yerli Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '16:00', title: 'Zuhal Topal', type: 'Program', duration: '120', state: 'next' },
+                { time: '18:00', title: 'Star Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
+                { time: '21:00', title: 'Ana Dizi', type: 'Dizi', duration: '150', state: 'next' },
+                { time: '23:30', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'next' }
             ]
         },
         {
             id: 'tv8',
             name: 'TV8',
-            logo: 'https://upload.wikimedia.org/wikipedia/tr/6/6e/Tv8_Yeni_Logo.png',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             color: '#CC0066',
             programs: [
-                { time: '06:30', title: 'Oynat Bakalım', type: 'Eğlence', duration: '90', color: '#FFE4F1' },
-                { time: '09:30', title: 'Masterchef Türkiye', type: 'Yarışma', duration: '180', color: '#FFD6E8' },
-                { time: '12:30', title: 'Survivor Panorama', type: 'Reality', duration: '120', color: '#FFC8DF' }
+                { time: '00:00', title: 'Survivor All Star', type: 'Program', duration: '150', state: 'past' },
+                { time: '02:30', title: 'Magazin 8', type: 'Magazin', duration: '90', state: 'past' },
+                { time: '04:00', title: 'Günün Yemeği', type: 'Yemek', duration: '60', state: 'past' },
+                { time: '05:00', title: 'Oynat Bakalım', type: 'Eğlence', duration: '90', state: 'past' },
+                { time: '06:30', title: '8de Sağlık', type: 'Program', duration: '150', state: 'past' },
+                { time: '09:00', title: 'Müge ve Gülşen', type: 'Program', duration: '180', state: 'past' },
+                { time: '10:00', title: 'Masterchef Türkiye', type: 'Yarışma', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Survivor Panorama', type: 'Reality', duration: '120', state: 'next' },
+                { time: '15:00', title: 'Çarkıfelek', type: 'Yarışma', duration: '90', state: 'next' },
+                { time: '16:30', title: 'Para Bende', type: 'Yarışma', duration: '90', state: 'next' },
+                { time: '18:00', title: 'TV8 Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'O Ses Türkiye', type: 'Yarışma', duration: '180', state: 'next' },
+                { time: '22:00', title: 'Survivor All Star', type: 'Reality', duration: '120', state: 'next' }
             ]
         },
         {
             id: 'trt1',
             name: 'TRT 1',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/TRT_1_logo_%282021-%29.svg/512px-TRT_1_logo_%282021-%29.svg.png',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
                 { time: '05:30', title: 'Yeşil Deniz', type: 'Dizi', duration: '120' },
                 { time: '07:30', title: 'İyilik Kulübü', type: 'Program', duration: '90' },
                 { time: '09:00', title: 'Uzun Hikaye', type: 'Dizi', duration: '120' },
@@ -74,47 +130,91 @@ const tvData = {
         {
             id: 'kanal7',
             name: 'Kanal 7',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Kanal_7_logo.svg/512px-Kanal_7_logo.svg.png',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
-                { time: '06:00', title: 'Seda ile Sabah', type: 'Program', duration: '180' },
-                { time: '09:00', title: 'Dr. Feridun ile Sağlık', type: 'Program', duration: '60' },
-                { time: '10:00', title: 'Mutfak Bahane', type: 'Yemek', duration: '60' },
-                { time: '11:00', title: 'Magazin 7', type: 'Magazin', duration: '60' },
-                { time: '12:00', title: 'Haber Saati', type: 'Haber', duration: '60' },
-                { time: '18:00', title: 'Emanet', type: 'Dizi', duration: '120' }
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
+                { time: '02:00', title: 'Sağlık Zamanı', type: 'Program', duration: '60', state: 'past' },
+                { time: '03:00', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'past' },
+                { time: '04:00', title: 'Dr. Feridun Kunak', type: 'Program', duration: '120', state: 'past' },
+                { time: '06:00', title: 'Sabah Kahvesi', type: 'Program', duration: '180', state: 'past' },
+                { time: '09:00', title: 'Mutfak Bahane', type: 'Program', duration: '60', state: 'past' },
+                { time: '10:00', title: 'Elif', type: 'Dizi', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Kanal 7 Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Yemin', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '16:00', title: 'Emanet', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Baş Tacım', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '21:00', title: 'İkimizin Sırrı', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Dizi', type: 'Dizi', duration: '60', state: 'next' }
             ]
         },
         {
             id: 'teve2',
             name: 'Teve2',
-            logo: 'https://upload.wikimedia.org/wikipedia/tr/1/13/Teve2_logo.png',
-            description: 'Eğlenceli programların adresi',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
-                { time: '06:00', title: 'Sabah Keyfi', type: 'Program', duration: '180', description: 'Güne keyifli bir başlangıç', presenter: 'Melike Şahin' },
-                { time: '09:00', title: 'Önce Sağlık', type: 'Sağlık', duration: '120', description: 'Sağlık ve yaşam programı', presenter: 'Dr. Ayça Kaya' },
-                { time: '11:00', title: 'Kelime Oyunu', type: 'Yarışma', duration: '60', description: 'Eğlenceli kelime yarışması', presenter: 'Ali İhsan Varol' }
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Sinema', type: 'Film', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
+                { time: '04:00', title: 'Magazin', type: 'Magazin', duration: '60', state: 'past' },
+                { time: '05:00', title: 'Müzik', type: 'Müzik', duration: '60', state: 'past' },
+                { time: '06:00', title: 'Sabah Keyfi', type: 'Program', duration: '180', state: 'past' },
+                { time: '09:00', title: '2. Sayfa', type: 'Magazin', duration: '60', state: 'past' },
+                { time: '10:00', title: 'Müge ve Gülşen', type: 'Program', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Öğlen Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Yerli Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '16:00', title: 'Magazin', type: 'Magazin', duration: '120', state: 'next' },
+                { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '19:00', title: 'Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '21:00', title: 'Sinema', type: 'Film', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
             ]
         },
         {
-            id: 'beyaz-tv',
+            id: 'beyaztv',
             name: 'Beyaz TV',
-            logo: 'https://upload.wikimedia.org/wikipedia/tr/8/88/Beyaz_TV_logo.png',
-            description: 'Spor ve haber kanalı',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
-                { time: '07:00', title: 'Beyaz Futbol Sabah', type: 'Spor', duration: '120', description: 'Günün spor gündemi', presenter: 'Ertem Şener' },
-                { time: '12:00', title: 'Ana Haber', type: 'Haber', duration: '60', description: 'Günün önemli gelişmeleri', presenter: 'Tahir Sarıkaya' },
-                { time: '15:00', title: 'Uyan Türkiyem', type: 'Tartışma', duration: '180', description: 'Güncel konular', presenter: 'Latif Şimşek' }
+                { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Sinema', type: 'Film', duration: '120', state: 'past' },
+                { time: '02:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
+                { time: '04:00', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'past' },
+                { time: '05:00', title: 'Sabah Namazı', type: 'Din', duration: '30', state: 'past' },
+                { time: '05:30', title: 'Nur Viral', type: 'Program', duration: '150', state: 'past' },
+                { time: '08:00', title: 'Sabah Haberleri', type: 'Haber', duration: '120', state: 'past' },
+                { time: '10:00', title: 'Uyan Türkiyem', type: 'Program', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Öğle Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Söylemezsem Olmaz', type: 'Program', duration: '180', state: 'next' },
+                { time: '17:00', title: 'Beyaz Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '18:00', title: 'Dinamit', type: 'Program', duration: '120', state: 'next' },
+                { time: '20:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '21:00', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
             ]
         },
         {
             id: 'ntv',
             name: 'NTV',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/NTV_logo.png',
-            description: 'Türkiye\'nin haber kanalı',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
-                { time: '06:30', title: 'Güne Başlarken', type: 'Haber', duration: '150', description: 'Sabah haberleri', presenter: 'Gülay Özdem' },
-                { time: '10:00', title: 'Ekonomi Gündemi', type: 'Ekonomi', duration: '60', description: 'Ekonomi haberleri', presenter: 'Melda Yücel' },
-                { time: '13:00', title: 'Öğle Bülteni', type: 'Haber', duration: '60', description: 'Günün gelişmeleri', presenter: 'Buğra Aktan' }
+                { time: '00:00', title: 'Gece Bülteni', type: 'Haber', duration: '30', state: 'past' },
+                { time: '00:30', title: 'Spor Servisi', type: 'Spor', duration: '30', state: 'past' },
+                { time: '01:00', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'past' },
+                { time: '02:00', title: 'Para Piyasaları', type: 'Ekonomi', duration: '60', state: 'past' },
+                { time: '03:00', title: 'Dünya Gündemi', type: 'Haber', duration: '60', state: 'past' },
+                { time: '04:00', title: 'Sabah Raporu', type: 'Haber', duration: '180', state: 'past' },
+                { time: '07:00', title: 'Güne Başlarken', type: 'Haber', duration: '180', state: 'past' },
+                { time: '10:00', title: 'Gün Ortası', type: 'Haber', duration: '180', state: 'current' },
+                { time: '13:00', title: 'Öğle Bülteni', type: 'Haber', duration: '60', state: 'next' },
+                { time: '14:00', title: 'Ekonomi Servisi', type: 'Ekonomi', duration: '120', state: 'next' },
+                { time: '16:00', title: 'Finans Servisi', type: 'Ekonomi', duration: '60', state: 'next' },
+                { time: '17:00', title: 'Akşam Haberleri', type: 'Haber', duration: '60', state: 'next' },
+                { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '90', state: 'next' },
+                { time: '19:30', title: 'Spor Servisi', type: 'Spor', duration: '30', state: 'next' },
+                { time: '20:00', title: 'Para Dünyası', type: 'Ekonomi', duration: '60', state: 'next' },
+                { time: '21:00', title: 'Belgesel', type: 'Belgesel', duration: '120', state: 'next' },
+                { time: '23:00', title: 'Son Bülten', type: 'Haber', duration: '60', state: 'next' }
             ]
         }
     ]
@@ -192,7 +292,7 @@ function renderChannelNav() {
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
             onclick="showChannelDetail('${channel.id}')"
         >
-            <div class="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 md:w-8 md:h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
                      class="h-8 md:h-10 w-auto object-contain"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
@@ -228,17 +328,44 @@ function getRelevantPrograms(programs, selectedDate) {
     };
 }
 
-// Update the renderPrograms function
+// Change default state to true (show all programs)
+let showAllPrograms = true;
+
+// Invert the toggle logic in toggleAllSchedules
+function toggleAllSchedules(collapsed) {
+    showAllPrograms = !collapsed; // Invert the logic
+    const programContainers = document.querySelectorAll('[id^="programs-"]');
+    
+    programContainers.forEach(container => {
+        const programs = container.querySelectorAll('.program-item');
+        programs.forEach(program => {
+            if (!collapsed) {
+                // Show all programs
+                program.classList.remove('hidden');
+            } else {
+                // Show only current/live programs and next program
+                const state = program.classList.contains('current') ? 'current' : 
+                             program.classList.contains('next') ? 'next' : 'past';
+                             
+                if (state === 'past') {
+                    program.classList.add('hidden');
+                }
+            }
+        });
+    });
+}
+
+// Modify the program rendering to include state classes
 function renderPrograms(selectedChannelId = null, selectedDate = null) {
     const content = document.querySelector('.content');
     const channels = selectedChannelId 
         ? tvData.channels.filter(c => c.id === selectedChannelId)
-        : tvData.channels.filter(c => c.enabled);
+        : tvData.channels;
 
     content.innerHTML = `
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             ${channels.map(channel => {
-                const relevantPrograms = getRelevantPrograms(channel.programs, selectedDate);
+                const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
                 return `
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
@@ -255,47 +382,43 @@ function renderPrograms(selectedChannelId = null, selectedDate = null) {
                                         <h2 class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${channel.name}</h2>
                                     </div>
                                 </div>
-                                <button 
-                                    onclick="toggleSchedule('${channel.id}')"
-                                    class="text-gray-600 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                                    title="Tüm programları göster"
-                                >
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                    </svg>
-                                </button>
                             </div>
                         </div>
                         <div class="divide-y divide-gray-100 dark:divide-gray-700" id="programs-${channel.id}">
-                            ${[relevantPrograms.previous, relevantPrograms.current, relevantPrograms.next]
-                                .filter(Boolean)
-                                .map(program => {
-                                    const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
-                                    const isLiveProgram = isLive(program.time, program.duration, selectedDate);
-                                    
-                                    return `
-                                        <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-                                             onclick="showProgramModal('${channel.id}', '${program.time}')">
-                                            <div class="flex justify-between items-start">
-                                                <div>
-                                                    <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
-                                                    <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
+                            ${allPrograms.map(program => {
+                                const isHidden = !showAllPrograms && program.state === 'past';
+                                const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
+                                const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+                                
+                                return `
+                                    <div class="program-item ${program.state} ${isHidden ? 'hidden' : ''} 
+                                         p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                                         onclick="showProgramModal('${channel.id}', '${program.time}')">
+                                        <div class="flex justify-between items-start">
+                                            <div class="flex flex-row items-center gap-2">
+                                                <div class="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                                    ${createIcon('time', 'w-4 h-4')}
+                                                    ${program.time}
                                                 </div>
-                                                ${isLiveProgram ? `
-                                                    <div class="live-indicator">
-                                                        <span class="live-dot"></span>
-                                                        <span>CANLI</span>
-                                                    </div>
-                                                ` : ''}
+                                                <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">
+                                                    ${program.title}
+                                                </div>
                                             </div>
                                             ${isLiveProgram ? `
-                                                <div class="mt-2 progress-bar">
-                                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                                <div class="live-indicator">
+                                                    <span class="live-dot"></span>
+                                                    <span>CANLI</span>
                                                 </div>
                                             ` : ''}
                                         </div>
-                                    `;
-                                }).join('')}
+                                        ${isLiveProgram ? `
+                                            <div class="mt-2 progress-bar">
+                                                <div class="progress-fill" style="width: ${progress}%"></div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
@@ -337,11 +460,14 @@ function renderChannelPrograms(container, programs, channelId) {
         const isLiveProgram = isLive(program.time, program.duration);
         
         return `
-            <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+            <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer ${program.state}"
                  onclick="showProgramModal('${channelId}', '${program.time}')">
                 <div class="flex justify-between items-start">
-                    <div>
-                        <div class="text-xs md:text-sm text-gray-500 dark:text-gray-400">${program.time}</div>
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                            ${createIcon('time', 'w-4 h-4')}
+                            ${program.time}
+                        </div>
                         <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
                     </div>
                     ${isLiveProgram ? `
@@ -411,7 +537,7 @@ function showProgramModal(channelId, programTime) {
     
     // Close modal when clicking outside
     modalContainer.addEventListener('click', (e) => {
-        if (e.target === modalContainer) {
+        if (e.target === modal) {
             closeModal();
         }
     });
@@ -832,7 +958,7 @@ function updateNavigationButtons() {
     }
 }
 
-// Update the initialization
+// Update the DOMContentLoaded listener
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     
@@ -849,62 +975,68 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showChannelPreferences() {
-    const modalContainer = document.createElement('div');
-    modalContainer.id = 'preferencesModal';
-    modalContainer.className = 'modal-enter';
-    modalContainer.innerHTML = `
-        <div class="modal-base" onclick="closePreferencesModal()">
-            <div class="modal-window" onclick="event.stopPropagation()">
-                <div class="modal-header">
-                    <div>
-                        <h3 class="modal-title">Kanal Tercihleri</h3>
-                        <p class="text-sm text-gray-500">Görmek istediğiniz kanalları seçin ve sıralayın</p>
-                    </div>
-                    <button onclick="closePreferencesModal()" class="modal-close">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="space-y-2" id="channelPreferencesList">
-                        ${tvData.channels.map((channel, index) => `
-                            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <div class="flex items-center space-x-3">
-                                    <div class="cursor-move text-gray-400">⋮⋮</div>
-                                    <button 
-                                        type="button"
-                                        role="switch"
-                                        aria-checked="${channel.enabled}"
-                                        onclick="toggleChannel('${channel.id}', !${channel.enabled})"
-                                        class="channel-switch"
-                                    >
-                                        <span class="channel-switch-handle"></span>
-                                    </button>
-                                    <img src="${channel.logo}" alt="${channel.name}" class="h-6 w-auto">
-                                    <label class="text-sm font-medium">
-                                        ${channel.name}
-                                    </label>
-                                </div>
-                                <span class="text-sm text-gray-500">${index + 1}</span>
+    const modal = document.createElement('div');
+    modal.className = 'modal-base';
+    modal.innerHTML = `
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title">Kanal Tercihleri</h3>
+                <button class="nav-button close-modal">
+                    ${createIcon('close', 'w-5 h-5')}
+                </button>
+            </div>
+            <!-- Update toggle text to reflect collapsed state -->
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-gray-700 dark:text-gray-300">Sadece Güncel Programları Göster</span>
+                <label class="switch">
+                    <input type="checkbox" id="expandAllPrograms" onchange="toggleAllSchedules(this.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <!-- Existing channel selection content -->
+            <div class="p-4">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Görmek istediğiniz kanalları seçin ve sıralayın
+                </p>
+                <div class="space-y-2" id="channelPreferencesList">
+                    ${tvData.channels.map((channel, index) => `
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="cursor-move text-gray-400">⋮⋮</div>
+                                <button 
+                                    type="button"
+                                    role="switch"
+                                    aria-checked="${channel.enabled || false}"
+                                    onclick="toggleChannel('${channel.id}', ${!channel.enabled})"
+                                    class="channel-switch"
+                                >
+                                    <span class="channel-switch-handle"></span>
+                                </button>
+                                <img src="${channel.logo}" alt="${channel.name}" class="h-6 w-auto">
+                                <label class="text-sm font-medium">
+                                    ${channel.name}
+                                </label>
                             </div>
-                        `).join('')}
-                    </div>
-                </div>
-                <div class="mt-6 flex justify-end space-x-3 border-t pt-4">
-                    <button onclick="resetChannelPreferences()" 
-                            class="px-4 py-2 text-gray-600 hover:text-gray-800">
-                        Sıfırla
-                    </button>
-                    <button onclick="saveChannelPreferences()" 
-                            class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600">
-                        Kaydet
-                    </button>
+                            <span class="text-sm text-gray-500">${index + 1}</span>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         </div>
     `;
-    document.body.appendChild(modalContainer);
-    document.body.style.overflow = 'hidden';
 
-    // Render programs in background to show live updates
-    renderPrograms();
+    // Add click handler to close when clicking outside
+    modal.addEventListener('click', (e) => {
+        // Close if clicking outside the modal window or on close button
+        if (e.target === modal || e.target.closest('.close-modal')) {
+            modal.remove();
+        }
+    });
+
+    document.body.appendChild(modal);
+    // Initialize icons for the newly added content
+    initializeIcons();
 }
 
 // Update the toggle function to show live changes
@@ -916,41 +1048,91 @@ function toggleChannel(channelId, enabled) {
         // Update the toggle switch state
         const toggleButton = document.querySelector(`button[onclick*="toggleChannel('${channelId}"]`);
         if (toggleButton) {
-            toggleButton.setAttribute('aria-checked', enabled);
+            toggleButton.setAttribute('aria-checked', enabled.toString());
+            toggleButton.setAttribute('onclick', `toggleChannel('${channelId}', ${!enabled})`);
         }
 
-        // Re-render programs to show live updates
-        renderPrograms();
+        // Get current active provider
+        const activeProvider = document.querySelector('.provider-card.active');
+        const providerId = activeProvider ? activeProvider.dataset.provider : 'ulusal';
+        
+        // Update the UI with the new channel state
+        updateChannelList(providers[providerId].channels);
+        updateProgramGrid(providers[providerId].channels);
     }
 }
 
-// Update reset function to use new toggle switches
-function resetChannelPreferences() {
+// Initialize channels with enabled state based on provider
+function initializeChannels() {
+    const providerAvailability = {
+        ulusal: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'kanal-d': true,
+            'trt1': true,
+            'tv8': false,
+            'tv100': false,
+            'halk-tv': false
+        },
+        digiturk: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'kanal-d': false,
+            'trt1': true,
+            'tv8': true,
+            'bein-sports': true,
+            'movie-smart': true,
+            'lig-tv': true,
+            'discovery': true
+        },
+        dsmart: {
+            'show': true,
+            'atv': false,
+            'fox': true,
+            'star': true,
+            'kanal-d': true,
+            'trt1': true,
+            'smart-spor': true,
+            'd-max': true,
+            'national-geographic': true
+        },
+        other: {
+            // Only enable Show TV and Kanal 7 for Övriga
+            'show': true,
+            'kanal7': true,
+            'atv': false,
+            'fox': false,
+            'star': false,
+            'kanal-d': false,
+            'trt1': false,
+            'tv8': false,
+            'tv100': false,
+            'halk-tv': false
+        }
+    };
+
+    // Get current provider
+    const activeProvider = document.querySelector('.provider-card.active');
+    const providerId = activeProvider ? activeProvider.dataset.provider : 'ulusal';
+
+    // Set enabled state based on provider availability
     tvData.channels.forEach(channel => {
-        channel.enabled = true;
+        channel.enabled = providerAvailability[providerId]?.[channel.id] ?? false;
     });
-    
-    // Update all toggle switches
-    document.querySelectorAll('.channel-switch').forEach(toggle => {
-        toggle.setAttribute('aria-checked', 'true');
-    });
-
-    // Re-render programs
-    renderPrograms();
 }
 
-function saveChannelPreferences() {
-    closePreferencesModal();
-    renderPrograms(); // Re-render with updated preferences
-}
-
-function closePreferencesModal() {
-    const modal = document.getElementById('preferencesModal');
-    if (modal) {
-        document.body.style.overflow = '';
-        modal.remove();
-    }
-}
+// Call this when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeChannels();
+    setupProviders();
+    setupProviderScroll();
+    setupShrinkingHeader();
+    initializeIcons();
+});
 
 // Add About page
 function showAboutPage(event) {
@@ -1002,23 +1184,16 @@ function showAboutPage(event) {
 // Add these functions for mobile menu
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
-    const body = document.body;
+    const providers = document.querySelector('.providers');
     
-    if (mobileMenu.classList.contains('hidden')) {
-        // Open menu
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('mobile-menu-enter');
-        body.style.overflow = 'hidden';
-    } else {
-        // Close menu with animation
-        mobileMenu.classList.add('mobile-menu-leave');
-        body.style.overflow = '';
+    if (mobileMenu) {
+        const isMenuOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
         
-        // Wait for animation to finish before hiding
-        setTimeout(() => {
-            mobileMenu.classList.remove('mobile-menu-leave');
-            mobileMenu.classList.add('hidden');
-        }, 200);
+        // Update providers z-index based on menu state
+        if (providers) {
+            providers.style.zIndex = isMenuOpen ? '50' : '40';
+        }
     }
 }
 
@@ -1030,4 +1205,271 @@ window.addEventListener('resize', () => {
             toggleMobileMenu();
         }
     }
-}); 
+});
+
+// Provider scroll functionality
+function setupProviderScroll() {
+    const container = document.querySelector('.provider-scroll-container');
+    const wrapper = document.querySelector('.provider-scroll-wrapper');
+    const prevBtn = document.querySelector('.provider-scroll-prev');
+    const nextBtn = document.querySelector('.provider-scroll-next');
+
+    if (!container || !wrapper || !prevBtn || !nextBtn) return;
+
+    function updateScrollButtons() {
+        const isScrollable = wrapper.scrollWidth > wrapper.clientWidth;
+        const isScrollStart = wrapper.scrollLeft <= 0;
+        const isScrollEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 10;
+
+        // Only show buttons if content is scrollable
+        if (!isScrollable) {
+            prevBtn.classList.remove('visible');
+            nextBtn.classList.remove('visible');
+            return;
+        }
+
+        // Update button visibility based on scroll position
+        prevBtn.classList.toggle('visible', !isScrollStart);
+        nextBtn.classList.toggle('visible', !isScrollEnd);
+    }
+
+    const scroll = (direction) => {
+        const scrollAmount = wrapper.offsetWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    prevBtn.addEventListener('click', () => scroll('left'));
+    nextBtn.addEventListener('click', () => scroll('right'));
+    
+    wrapper.addEventListener('scroll', updateScrollButtons);
+    window.addEventListener('resize', updateScrollButtons);
+    
+    // Initial check
+    updateScrollButtons();
+}
+
+// Shrinking header
+function setupShrinkingHeader() {
+    const header = document.querySelector('.header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.classList.add('shrunk');
+        } else if (currentScroll < lastScroll) {
+            header.classList.remove('shrunk');
+        }
+        
+        lastScroll = currentScroll;
+    });
+}
+
+// Provider management
+function setupProviders() {
+    const providerCards = document.querySelectorAll('.provider-card');
+    let activeProvider = 'ulusal'; // Default provider
+
+    function updateProviderView(providerId) {
+        // Update active state of provider cards
+        providerCards.forEach(card => {
+            card.classList.toggle('active', card.dataset.provider === providerId);
+        });
+
+        // Initialize channels for this provider
+        initializeChannels();
+
+        // Update visible channels
+        const providerChannels = providers[providerId].channels;
+        updateChannelList(providerChannels);
+        updateProgramGrid(providerChannels);
+    }
+
+    // Provider click handlers
+    providerCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const providerId = card.dataset.provider;
+            activeProvider = providerId;
+            updateProviderView(providerId);
+        });
+    });
+
+    // Initialize with default provider
+    updateProviderView(activeProvider);
+}
+
+// Update channel list based on provider
+function updateChannelList(providerChannels) {
+    const channelNav = document.querySelector('.channel-nav');
+    if (!channelNav) return;
+
+    // Filter channels that are both in provider and enabled
+    const channels = tvData.channels.filter(channel => 
+        providerChannels.includes(channel.id) && channel.enabled
+    );
+
+    channelNav.innerHTML = channels.map(channel => `
+        <button 
+            class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
+            onclick="showChannelDetail('${channel.id}')"
+        >
+            <div class="w-8 h-8 md:w-8 md:h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                <img src="${channel.logo}" alt="${channel.name}" 
+                     class="h-8 md:h-10 w-auto object-contain"
+                     onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
+            </div>
+        </button>
+    `).join('');
+}
+
+// Update program grid based on provider
+function updateProgramGrid(providerChannels) {
+    const contentDiv = document.querySelector('.content');
+    const wrapperDiv = document.querySelector('.wrapper');
+    if (!contentDiv) return;
+
+    // Filter channels that are both in provider and enabled
+    const channels = tvData.channels.filter(channel => 
+        providerChannels.includes(channel.id) && channel.enabled
+    );
+
+    // Only show content if there are channels to display
+    if (channels.length > 0) {
+        if (wrapperDiv) wrapperDiv.style.display = 'block';
+        contentDiv.innerHTML = ProgramGrid.render(channels);
+    } else {
+        // Hide the wrapper and clear content if no channels
+        if (wrapperDiv) wrapperDiv.style.display = 'none';
+        contentDiv.innerHTML = '';
+    }
+}
+
+// Add this function to initialize icons
+function initializeIcons() {
+    // Initialize search icon with xs size
+    const searchIcon = document.querySelector('.icon-search');
+    if (searchIcon) {
+        searchIcon.innerHTML = createIcon('search', 'w-3.5 h-3.5');
+    }
+}
+
+// Update the DOMContentLoaded listener
+document.addEventListener('DOMContentLoaded', () => {
+    setupProviders();
+    setupProviderScroll();
+    setupShrinkingHeader();
+    initializeIcons();
+});
+
+// Add this before setupProviders function
+const providers = {
+    ulusal: {
+        name: 'Ulusal',
+        channels: ['show', 'atv', 'fox', 'star', 'kanal-d', 'trt1']
+    },
+    digiturk: {
+        name: 'Digiturk',
+        channels: ['bein-sports', 'movie-smart', 'lig-tv', 'discovery']
+    },
+    dsmart: {
+        name: 'D-Smart',
+        channels: ['smart-spor', 'd-max', 'national-geographic']
+    },
+    other: {
+        name: 'Övriga',
+        channels: ['show', 'kanal7']
+    },
+    // Add new providers
+    tivibu: {
+        name: 'Tivibu',
+        channels: ['show', 'atv', 'fox']
+    },
+    turksat: {
+        name: 'Türksat',
+        channels: ['show', 'atv']
+    },
+    vodafone: {
+        name: 'Vodafone TV',
+        channels: ['show', 'atv']
+    },
+    turkcell: {
+        name: 'Turkcell TV+',
+        channels: ['show', 'atv']
+    },
+    blutv: {
+        name: 'BluTV',
+        channels: ['show']
+    },
+    netflix: {
+        name: 'Netflix',
+        channels: ['show']
+    },
+    amazon: {
+        name: 'Prime Video',
+        channels: ['show']
+    },
+    disney: {
+        name: 'Disney+',
+        channels: ['show']
+    }
+};
+
+// Add this function to handle the more providers button
+function toggleMoreProviders(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Get screen width
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    
+    if (isMobile) {
+        // Show modal on mobile
+        const modal = document.getElementById('moreProvidersModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            modal.querySelectorAll('.provider-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const providerId = card.dataset.provider;
+                    updateProviderView(providerId);
+                    modal.classList.add('hidden');
+                });
+            });
+        }
+    } else {
+        // Toggle dropdown on desktop
+        const dropdown = document.getElementById('providerDropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+            
+            // Close dropdown when clicking outside
+            const closeDropdown = (e) => {
+                if (!dropdown.contains(e.target) && !event.target.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            };
+            
+            document.addEventListener('click', closeDropdown);
+
+            // Handle provider selection
+            dropdown.querySelectorAll('.provider-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const providerId = card.dataset.provider;
+                    updateProviderView(providerId);
+                    dropdown.classList.add('hidden');
+                });
+            });
+        }
+    }
+} 

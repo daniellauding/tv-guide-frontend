@@ -1,0 +1,26 @@
+/* Barlow Regular */
+@font-face {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./barlow-regular.woff2') format('woff2'),
+         url('./barlow-regular.woff') format('woff');
+}
+
+/* Barlow Medium */
+@font-face {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./barlow-medium.woff2') format('woff2'),
+         url('./barlow-medium.woff') format('woff');
+}
+
+/* Barlow SemiBold */
+@font-face {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 600;
+    src: url('./barlow-semibold.woff2') format('woff2'),
+         url('./barlow-semibold.woff') format('woff');
+} 

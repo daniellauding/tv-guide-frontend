@@ -1,26 +1,22 @@
 :root {
   /* Colors */
-  --color-primary-50: theme('colors.primary.50');
-  --color-primary-100: theme('colors.primary.100');
-  --color-primary-300: theme('colors.primary.300');
   --color-primary-500: theme('colors.primary.500');
   --color-primary-600: theme('colors.primary.600');
-  --color-primary-700: theme('colors.primary.700');
-
   --color-secondary-500: theme('colors.secondary.500');
-  --color-secondary-600: theme('colors.secondary.600');
-  --color-secondary-700: theme('colors.secondary.700');
 
   /* Backgrounds */
-  --bg-body: theme('colors.background.light');
-  --bg-card: theme('colors.background.card.light');
-  --bg-header: theme('colors.background.header.light');
-  --bg-footer: theme('colors.background.footer.light');
+  --bg-body: theme('colors.body.DEFAULT');
+  --bg-card: theme('colors.card.DEFAULT');
+  --bg-header: theme('colors.header.DEFAULT');
+  --bg-providers: theme('colors.provider.DEFAULT');
+  --bg-channels: theme('colors.background.light');
+  --bg-filter: theme('colors.background.light');
+  --bg-footer: theme('colors.background.light');
 
   /* Text */
-  --text-primary: theme('colors.text.light.primary');
-  --text-secondary: theme('colors.text.light.secondary');
-  --text-muted: theme('colors.text.light.muted');
+  --text-primary: theme('colors.text.DEFAULT');
+  --text-secondary: theme('colors.text.muted');
+  --text-muted: theme('colors.text.muted');
 
   /* Borders */
   --border-color: theme('colors.border.light');
@@ -33,14 +29,17 @@
 
 /* Dark mode overrides */
 .dark {
-  --bg-body: theme('colors.background.dark');
-  --bg-card: theme('colors.background.card.dark');
-  --bg-header: theme('colors.background.header.dark');
-  --bg-footer: theme('colors.background.footer.dark');
+  --bg-body: theme('colors.body.dark');
+  --bg-card: theme('colors.card.dark');
+  --bg-header: theme('colors.header.dark');
+  --bg-providers: theme('colors.provider.dark');
+  --bg-channels: theme('colors.background.dark');
+  --bg-filter: theme('colors.background.dark');
+  --bg-footer: theme('colors.background.dark');
 
-  --text-primary: theme('colors.text.dark.primary');
-  --text-secondary: theme('colors.text.dark.secondary');
-  --text-muted: theme('colors.text.dark.muted');
+  --text-primary: theme('colors.text.dark');
+  --text-secondary: theme('colors.text.muted');
+  --text-muted: theme('colors.text.muted');
 
   --border-color: theme('colors.border.dark');
 } 

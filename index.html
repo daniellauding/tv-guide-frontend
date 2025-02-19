@@ -5,26 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TV Rehberi</title>
     <link href="./dist/output.css" rel="stylesheet">
+    <link href="./src/fonts/barlow.css" rel="stylesheet">
+    <script src="./src/constants/icons.js"></script>
     <script src="./src/main.js" defer></script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900">
+<body class="bg-body dark:bg-body-dark">
     <!-- Header -->
     <header class="header">
         <div class="max-w-7xl mx-auto px-4">
             <nav class="header-nav">
                 <div class="flex items-center space-x-6">
-                    <h1 class="header-title" onclick="resetView()">TV Rehberi</h1>
-                    <!-- Desktop menu -->
-                    <div class="hidden md:flex space-x-4">
-                        <button onclick="showChannelPreferences()" 
-                                class="nav-link">
-                            Kanal Tercihleri
-                        </button>
-                        <a href="#" onclick="showAboutPage(event)" 
-                           class="nav-link">
-                            Hakkında
-                        </a>
-                    </div>
+                    <h1 class="header-title" onclick="resetView()">
+                        <img src="./src/logo.png" alt="TV Rehberi" class="h-8 md:h-10 w-auto cursor-pointer">
+                    </h1>
                 </div>
                 
                 <!-- Right side with theme toggle and mobile menu -->
@@ -41,44 +34,35 @@
                     </button>
 
                     <!-- Mobile menu button -->
-                    <button onclick="toggleMobileMenu()"
-                            class="nav-button md:hidden"
+                    <button onclick="toggleMobileMenu()" 
+                            class="nav-button"
                             aria-label="Menu">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <span class="icon-hamburger"></span>
                     </button>
                 </div>
             </nav>
         </div>
         
         <!-- Mobile menu overlay -->
-        <div id="mobileMenu" class="fixed inset-0 bg-white dark:bg-gray-800 z-50 hidden md:hidden">
-            <div class="max-w-7xl mx-auto px-4 py-6">
+        <div id="mobileMenu" class="fixed inset-0 bg-white dark:bg-gray-800 z-90 hidden">
+            <div class="h-full flex flex-col">
                 <div class="flex justify-end mb-6">
                     <button 
                         onclick="toggleMobileMenu()"
-                        class="p-2 text-gray-600 hover:text-gray-800 dark:text-gray-300"
-                    >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
+                        class="p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                        <span class="icon-close"></span>
                     </button>
                 </div>
-                <div class="flex flex-col space-y-4">
-                    <button onclick="showChannelPreferences(); toggleMobileMenu();" 
-                            class="py-3 text-left text-lg font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
-                        Kanal Tercihleri
-                    </button>
+                <div class="flex flex-col flex-grow px-6 py-8 space-y-6">
                     <a href="#" 
                        onclick="showAboutPage(event); toggleMobileMenu();" 
-                       class="py-3 text-left text-lg font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                       class="py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
                         Hakkında
                     </a>
                     
                     <!-- Add theme toggle option -->
-                    <div class="flex items-center justify-between py-3">
-                        <span class="text-lg font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
+                    <div class="flex items-center justify-between py-4">
+                        <span class="text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
                             Karanlık Mod
                         </span>
                         <button 
@@ -96,22 +80,94 @@
         </div>
     </header>
 
-    <!-- Channel Navigation -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 py-4">
-            <div class="channel-nav flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-                <!-- Channel logos will be inserted here by JavaScript -->
+    <!-- Add after header, before main content -->
+    <div class="providers">
+        <div class="max-w-7xl mx-auto">
+            <div class="provider-scroll-container">
+                <!-- Scroll buttons -->
+                <button class="provider-scroll-button provider-scroll-prev hidden md:flex">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                
+                <div class="provider-scroll-wrapper pr-8">
+                    <button class="provider-card" data-provider="ulusal">
+                        Ulusal
+                    </button>
+                    <button class="provider-card" data-provider="digiturk">
+                        Digiturk
+                    </button>
+                    <button class="provider-card" data-provider="dsmart">
+                        D-Smart
+                    </button>
+                    <button class="provider-card" data-provider="other">
+                        Övriga
+                    </button>
+                    <div class="relative flex items-center justify-center align-center">
+                        <button class="provider-card" onclick="toggleMoreProviders(event)">
+                            <span class="icon-more icon-sm"></span>
+                        </button>
+                        <!-- Desktop Dropdown -->
+                        <div id="providerDropdown" class="provider-dropdown hidden">
+                            <div class="flex flex-col p-2">
+                                <button class="provider-card !w-full !justify-start" data-provider="tivibu">Tivibu</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="turksat">Türksat</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="vodafone">Vodafone TV</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="turkcell">Turkcell TV+</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="blutv">BluTV</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="netflix">Netflix</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="amazon">Prime Video</button>
+                                <button class="provider-card !w-full !justify-start" data-provider="disney">Disney+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="provider-scroll-button provider-scroll-next hidden md:flex">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- More Providers Modal -->
+    <div id="moreProvidersModal" class="modal-base hidden">
+        <div class="modal-window max-w-4xl">
+            <div class="modal-header">
+                <h3 class="modal-title">Tüm TV Platformları</h3>
+                <button class="nav-button" onclick="closeModal(this)">
+                    ${createIcon('close', 'w-5 h-5')}
+                </button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+                <button class="provider-card !w-full !justify-center" data-provider="tivibu">Tivibu</button>
+                <button class="provider-card !w-full !justify-center" data-provider="turksat">Türksat</button>
+                <button class="provider-card !w-full !justify-center" data-provider="vodafone">Vodafone TV</button>
+                <button class="provider-card !w-full !justify-center" data-provider="turkcell">Turkcell TV+</button>
+                <button class="provider-card !w-full !justify-center" data-provider="blutv">BluTV</button>
+                <button class="provider-card !w-full !justify-center" data-provider="netflix">Netflix</button>
+                <button class="provider-card !w-full !justify-center" data-provider="amazon">Prime Video</button>
+                <button class="provider-card !w-full !justify-center" data-provider="disney">Disney+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+      <h1 class="header-title"">Page title</h1>
+    </div>
+
     <!-- Time Navigation -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40">
+    <div class="filter">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center py-3 md:h-12 space-y-3 md:space-y-0">
-                <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-col md:flex-row md:items-center py-3 md:h-12 space-y-3 md:space-y-0">
+                <div class="flex items-center gap-3 w-full">
+                    
+                  <div class="flex items-center gap-1">
                     <!-- Mobile navigation arrows + Date Selector (inline) -->
-                    <div class="flex items-center md:hidden">
+                    <div class="flex align-center justify-center items-center w-8 h-8 bg-white shadow-sm rounded-full">
                         <button id="prevDate" 
                                 onclick="navigateDate(-1)"
                                 class="nav-button">
@@ -130,7 +186,7 @@
                     </select>
 
                     <!-- Mobile next arrow (after date selector) -->
-                    <div class="flex items-center md:hidden">
+                    <div class="flex align-center justify-center items-center w-8 h-8 bg-white shadow-sm rounded-full">
                         <button id="nextDate" 
                                 onclick="navigateDate(1)"
                                 class="nav-button">
@@ -138,28 +194,38 @@
                         </button>
                     </div>
 
+                  </div>
+
                     <!-- Channel Selector -->
                     <select id="channelSelector" class="form-select">
                         <option value="">Tüm Kanallar</option>
                     </select>
 
                     <!-- Search input -->
-                    <div class="relative flex-1 md:flex-none">
+                    <div class="relative flex w-full">
                         <input 
                             type="search" 
                             id="programSearch" 
                             placeholder="Program veya kanal ara..."
                             class="form-search">
-                        <span class="absolute left-3 top-2 text-gray-400">
-                            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.6095 13.7241L12.2248 10.3394C12.9241 9.28543 13.3335 8.02342 13.3335 6.66674C13.3335 2.9907 10.3428 0 6.66674 0C2.9907 0 0 2.9907 0 6.66674C0 10.3428 2.9907 13.3335 6.66674 13.3335C8.02342 13.3335 9.28543 12.9241 10.3394 12.2248L13.7241 15.6095C14.2441 16.1302 15.0895 16.1302 15.6095 15.6095C16.1302 15.0888 16.1302 14.2448 15.6095 13.7241ZM2.00002 6.66674C2.00002 4.09338 4.09338 2.00002 6.66674 2.00002C9.2401 2.00002 11.3335 4.09338 11.3335 6.66674C11.3335 9.2401 9.2401 11.3335 6.66674 11.3335C4.09338 11.3335 2.00002 9.2401 2.00002 6.66674Z"/>
-                            </svg>
-                        </span>
+                        <span class="absolute left-3 top-3 text-gray-500 icon-search icon-sm"></span>
                     </div>
                 </div>
 
-                <!-- Desktop navigation arrows (hidden on mobile) -->
-                <div class="hidden md:flex space-x-2">
+                <!-- Channel Navigation (Moved here) -->
+                <div class="channel-nav flex space-x-1 overflow-x-auto scrollbar-hide">
+                    <!-- Channel logos will be inserted here by JavaScript -->
+                  </div>
+
+                  <!-- Channel Preferences -->
+                  <button onclick="showChannelPreferences()" 
+                                  class="nav-button"
+                      title="Kanal Tercihleri">
+                      <span class="icon-cog"></span>
+                  </button>
+
+                <!-- Desktop navigation arrows -->
+                <!-- <div class="hidden md:flex space-x-2">
                     <button id="prevDateDesktop" 
                             onclick="navigateDate(-1)"
                             class="nav-button">
@@ -170,13 +236,13 @@
                             class="nav-button">
                         →
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-6">
+    <main class="wrapper">
         <div class="content space-y-6">
             <!-- Program content will be inserted here by JavaScript -->
             <div class="card">
@@ -266,5 +332,14 @@
             </div>
         </div>
     </footer>
+
+    <!-- Search icon -->
+    <span class="absolute left-3 top-2 text-gray-400 icon-search"></span>
+
+    <!-- Calendar icon -->
+    <span class="icon-calendar text-gray-600 dark:text-gray-300"></span>
+
+    <!-- Time icon -->
+    <span class="icon-time text-gray-500"></span>
 </body>
 </html> 
