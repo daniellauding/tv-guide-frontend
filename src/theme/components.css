@@ -178,23 +178,46 @@
     @apply text-status-ended;
   }
 
-  .program-item {
+  .program-wraper {
+    @apply bg-programWrapper-light dark:bg-programWrapper-dark;
+  }
 
+  .program-header {
+    @apply p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-programHeader-light dark:bg-programHeader-dark;
+  }
+
+  .program-item {
+    @apply bg-programItem-light dark:bg-programItem-dark;
   }
 
   .program-item.past {
-    @apply opacity-50;
+    
   }
 
   .program-item.today {
-    @apply opacity-50;
+    
   }
 
   .program-item.next {
     @apply opacity-100;
   }
   
-  
+  .icon-btn {
+    @apply flex items-center justify-center w-8 h-8 shadow-sm rounded-full bg-iconBtn-light dark:bg-iconBtn-dark;
+  }
+
+  .logo-channel {
+    @apply bg-logoChannel-light dark:bg-logoChannel-dark;
+  }
+
+  /* Icon colors */
+  .icon {
+    @apply text-gray-600;
+  }
+
+  :is(.dark *) .icon {
+    @apply text-white;
+  }
 
   /* Progress Indicators */
   .progress-container {
@@ -249,7 +272,9 @@
   }
 
   .providers {
-    @apply md:fixed md:top-10 md:left-1/2 md:-translate-x-1/2 md:right-1/2 mx-auto md:-translate-y-4 z-50 bg-provider dark:bg-provider w-full md:w-fit md:rounded-full md:shadow-sm;
+    @apply md:fixed md:top-10 md:left-1/2 md:-translate-x-1/2 md:right-1/2 mx-auto md:-translate-y-4 z-50 
+           bg-provider-background-light dark:bg-provider-background-dark 
+           w-full md:w-fit md:rounded-full md:shadow-sm;
     /* overflow-hidden */
   }
 
@@ -264,7 +289,9 @@
 
   .provider-card {
     @apply rounded-full flex-shrink-0 cursor-pointer px-4 py-2 transition-all duration-200 text-center 
-           text-provider-text hover:text-provider-text-hover hover:bg-provider-background-hover focus:text-provider-text-active
+           text-provider-text-light dark:text-provider-text-dark 
+           hover:text-provider-text-light-hover dark:hover:text-provider-text-dark-hover 
+           hover:bg-provider-background-hover focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
            inline-flex items-center justify-center font-barlow font-medium;
   }
   
@@ -277,7 +304,8 @@
   }
 
   .provider-card.active {
-    @apply bg-provider-background-hover text-provider-text-active;
+    @apply bg-provider-background-hover 
+           text-provider-text-light-active dark:text-provider-text-dark-active;
   }
 
   .provider-scroll-button {

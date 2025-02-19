@@ -2,6 +2,7 @@
 module.exports = {
   content: ["./*.{html,js}", "./src/**/*.{html,js}"],
   darkMode: 'class',
+  important: true,
   safelist: [
     // Modal classes
     'fixed',
@@ -374,14 +375,31 @@ module.exports = {
           DEFAULT: '#fff',
           dark: '#fff',
           text: {
-            DEFAULT: 'rgba(0,0,0,0.6)',
-            active: '#F79235',
-            hover: '#F79235'
+            light: {
+              DEFAULT: 'rgba(0,0,0,0.6)',
+              hover: '#F79235',
+              active: '#F79235'
+            },
+            dark: {
+              DEFAULT: 'rgba(0,0,0,0.6)',
+              hover: '#F79235',
+              active: '#F79235'
+            }
           },
           background: {
             DEFAULT: 'transparent',
             active: 'rgba(0,0,0,0.05)',
-            hover: 'rgba(0,0,0,0.04)'
+            hover: 'rgba(0,0,0,0.04)',
+            light: {
+              DEFAULT: '#FFFFFF',
+              hover: '#F5F5F5',
+              active: '#EFEFEF',
+            },
+            dark: {
+              DEFAULT: '#fff',
+              hover: '#F5F5F5',
+              active: '#EFEFEF',
+            }
           }
         },
         progress: {
@@ -415,9 +433,9 @@ module.exports = {
             active: '#EFEFEF',
           },
           dark: {
-            DEFAULT: '#343a40',
-            hover: '#3f474e',
-            active: '#495057',
+            DEFAULT: '#3B332C',
+            hover: '#3B332C',
+            active: '#3B332C',
           }
         },
         select: {
@@ -427,9 +445,69 @@ module.exports = {
             active: '#EFEFEF',
           },
           dark: {
-            DEFAULT: '#343a40',
-            hover: '#3f474e',
-            active: '#495057',
+            DEFAULT: '#3B332C',
+            hover: '#3B332C',
+            active: '#4953B332C057',
+          }
+        },
+        iconBtn: {
+          light: {
+            DEFAULT: '#FFFFFF',
+            hover: '#F5F5F5',
+            active: '#EFEFEF',
+          },
+          dark: {
+            DEFAULT: '#3B332C',
+            hover: '#3B332C',
+            active: '#3B332C',
+          }
+        },
+        programHeader: {
+          light: {
+            DEFAULT: '#F9FAFB',
+            hover: '#F9FAFB',
+            active: '#F9FAFB',
+          },
+          dark: {
+            DEFAULT: '#60554C',
+            hover: '#60554C',
+            active: '#60554C',
+          }
+        },
+        programWrapper: {
+          light: {
+            DEFAULT: 'rgba(255, 255, 255, 1)',
+            hover: 'rgba(249, 259, 251, 1)',
+            active: 'rgba(249, 259, 251, 1)',
+          },
+          dark: {
+            DEFAULT: '#504943',
+            hover: '#504943',
+            active: '#504943',
+          }
+        },
+        programItem: {
+          light: {
+            DEFAULT: 'rgba(255, 255, 255, 1)',
+            hover: 'rgba(249, 259, 251, 1)',
+            active: 'rgba(249, 259, 251, 1)',
+          },
+          dark: {
+            DEFAULT: '#504943',
+            hover: '#504943',
+            active: '#504943',
+          }
+        },
+        logoChannel: {
+          light: {
+            DEFAULT: '#FFFFFF',
+            hover: '#F5F5F5',
+            active: '#EFEFEF',
+          },
+          dark: {
+            DEFAULT: '#3B332C',
+            hover: '#3B332C',
+            active: '#3B332C',
           }
         },
         title: {

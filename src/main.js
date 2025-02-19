@@ -292,7 +292,7 @@ function renderChannelNav() {
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
             onclick="showChannelDetail('${channel.id}')"
         >
-            <div class="w-8 h-8 md:w-8 md:h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
                      class="h-8 md:h-10 w-auto object-contain"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
@@ -368,11 +368,11 @@ function renderPrograms(selectedChannelId = null, selectedDate = null) {
                 const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
                 return `
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                        <div class="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+                    <div class="program-wraper rounded-lg shadow-sm overflow-hidden">
+                        <div class="program-header p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center cursor-pointer"
+                                    <div class="w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center cursor-pointer"
                                          onclick="showChannelDetail('${channel.id}')">
                                         <img src="${channel.logo}" alt="${channel.name}" 
                                              class="h-6 md:h-8 w-auto object-contain"
@@ -392,7 +392,7 @@ function renderPrograms(selectedChannelId = null, selectedDate = null) {
                                 
                                 return `
                                     <div class="program-item ${program.state} ${isHidden ? 'hidden' : ''} 
-                                         p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                                         p-3 md:p-4 cursor-pointer"
                                          onclick="showProgramModal('${channel.id}', '${program.time}')">
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
@@ -1317,7 +1317,7 @@ function updateChannelList(providerChannels) {
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
             onclick="showChannelDetail('${channel.id}')"
         >
-            <div class="w-8 h-8 md:w-8 md:h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
                      class="h-8 md:h-10 w-auto object-contain"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
