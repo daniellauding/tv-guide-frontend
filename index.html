@@ -6,6 +6,7 @@
     <title>TV Rehberi</title>
     <link href="./dist/output.css" rel="stylesheet">
     <link href="./src/fonts/barlow.css" rel="stylesheet">
+    <link href="./src/styles/custom.css" rel="stylesheet">
     <script src="./src/constants/icons.js"></script>
     <script src="./src/main.js" defer></script>
 </head>
@@ -15,6 +16,12 @@
         <div class="max-w-7xl mx-auto px-4">
             <nav class="header-nav">
                 <div class="flex items-center space-x-6">
+                   <!-- Mobile menu button -->
+                   <button onclick="toggleMobileMenu()" 
+                          class="nav-button"
+                          aria-label="Menu">
+                      <span class="icon-hamburger"></span>
+                    </button>
                     <h1 class="header-title" onclick="resetView()">
                         <img src="./src/logo.png" alt="TV Rehberi" class="h-8 md:h-10 w-auto cursor-pointer">
                     </h1>
@@ -22,25 +29,64 @@
                 
                 <!-- Right side with theme toggle and mobile menu -->
                 <div class="flex items-center space-x-4">
+                    <!-- Search Toggle -->
+                    <button 
+                        id="searchToggle" 
+                        type="button"
+                        class="nav-button"
+                        aria-label="Program Ara"
+                        title="Program Ara"
+                    >
+                        <span class="icon-search"></span>
+                    </button>
+
+                    <!-- Current Programs Toggle -->
+                    <button 
+                        id="currentProgramsToggle" 
+                        type="button"
+                        class="nav-button"
+                        aria-label="Sadece Güncel Programları Göster"
+                        title="Sadece Güncel Programları Göster"
+                    >
+                        <span class="icon-clock"></span>
+                    </button>
+
                     <!-- Theme Toggle Button -->
                     <button 
                         id="themeToggle" 
-                        type="button" 
-                        role="switch" 
-                        aria-checked="false"
-                        class="theme-switch"
-                    >
-                        <span class="theme-switch-handle"></span>
+                        class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        aria-label="Toggle dark mode"
+                        title="Toggle dark mode">
+                        <svg class="w-5 h-5 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
                     </button>
 
-                    <!-- Mobile menu button -->
-                    <button onclick="toggleMobileMenu()" 
-                            class="nav-button"
-                            aria-label="Menu">
-                        <span class="icon-hamburger"></span>
-                    </button>
+
                 </div>
             </nav>
+        </div>
+        
+        <!-- Search Section (Hidden by default) -->
+        <div id="searchSection" class="hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <div class="relative flex w-full">
+                    <input 
+                        type="search" 
+                        id="programSearch" 
+                        placeholder="Program veya kanal ara..."
+                        class="form-search"
+                    >
+                    <button 
+                        id="closeSearch"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 nav-button"
+                        aria-label="Aramayı Kapat"
+                    >
+                        <span class="icon-close"></span>
+                    </button>
+                </div>
+            </div>
         </div>
         
         <!-- Mobile menu overlay -->
@@ -133,6 +179,44 @@
         </div>
     </div>
 
+    <!-- Day Navigation Section -->
+    <div class="day-nav bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="overflow-x-auto scrollbar-thin">
+                <div class="flex space-x-4 py-3">
+                    <button class="day-nav-item active">
+                        <span class="day">Mo</span>
+                        <span class="date">3/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">Ti</span>
+                        <span class="date">4/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">On</span>
+                        <span class="date">5/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">To</span>
+                        <span class="date">6/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">Fr</span>
+                        <span class="date">7/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">Lö</span>
+                        <span class="date">8/3</span>
+                    </button>
+                    <button class="day-nav-item">
+                        <span class="day">Sö</span>
+                        <span class="date">9/3</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- More Providers Modal -->
     <div id="moreProvidersModal" class="modal-base hidden">
         <div class="modal-window max-w-4xl">
@@ -155,91 +239,8 @@
         </div>
     </div>
 
-    <div class="page-header">
-      <h1 class="header-title"">Page title</h1>
-    </div>
-
     <!-- Time Navigation -->
-    <div class="filter">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:items-center py-3 md:h-12 space-y-3 md:space-y-0">
-                <div class="flex items-center gap-3 w-full">
-                    
-                  <div class="flex items-center gap-1">
-                    <!-- Mobile navigation arrows + Date Selector (inline) -->
-                    <div class="flex align-center justify-center items-center w-8 h-8 icon-btn">
-                        <button id="prevDate" 
-                                onclick="navigateDate(-1)"
-                                class="nav-button">
-                            ←
-                        </button>
-                    </div>
-                    
-                    <!-- Date Selector -->
-                    <select id="dateSelector" class="form-select">
-                        <option value="2024-02-15">15 Şubat 2024</option>
-                        <option value="2024-02-16">16 Şubat 2024</option>
-                        <option value="2024-02-17">17 Şubat 2024</option>
-                        <option value="2024-02-18">18 Şubat 2024</option>
-                        <option value="2024-02-19">19 Şubat 2024</option>
-                        <option value="2024-02-20">20 Şubat 2024</option>
-                    </select>
-
-                    <!-- Mobile next arrow (after date selector) -->
-                    <div class="flex align-center justify-center items-center w-8 h-8 icon-btn">
-                        <button id="nextDate" 
-                                onclick="navigateDate(1)"
-                                class="nav-button">
-                            →
-                        </button>
-                    </div>
-
-                  </div>
-
-                    <!-- Channel Selector -->
-                    <select id="channelSelector" class="form-select">
-                        <option value="">Tüm Kanallar</option>
-                    </select>
-
-                    <!-- Search input -->
-                    <div class="relative flex w-full">
-                        <input 
-                            type="search" 
-                            id="programSearch" 
-                            placeholder="Program veya kanal ara..."
-                            class="form-search">
-                        <span class="absolute left-3 top-3 text-gray-500 icon-search icon-sm icon"></span>
-                    </div>
-                </div>
-
-                <!-- Channel Navigation (Moved here) -->
-                <div class="channel-nav flex space-x-1 overflow-x-auto scrollbar-hide">
-                    <!-- Channel logos will be inserted here by JavaScript -->
-                  </div>
-
-                  <!-- Channel Preferences -->
-                  <button onclick="showChannelPreferences()" 
-                                  class="nav-button"
-                      title="Kanal Tercihleri">
-                      <span class="icon-cog"></span>
-                  </button>
-
-                <!-- Desktop navigation arrows -->
-                <!-- <div class="hidden md:flex space-x-2">
-                    <button id="prevDateDesktop" 
-                            onclick="navigateDate(-1)"
-                            class="nav-button">
-                        ←
-                    </button>
-                    <button id="nextDateDesktop" 
-                            onclick="navigateDate(1)"
-                            class="nav-button">
-                        →
-                    </button>
-                </div> -->
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Main Content -->
     <main class="wrapper">

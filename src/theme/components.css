@@ -274,7 +274,7 @@
   .providers {
     @apply md:fixed md:top-10 md:left-1/2 md:-translate-x-1/2 md:right-1/2 mx-auto md:-translate-y-4 z-50 
            bg-provider-background-light dark:bg-provider-background-dark 
-           w-full md:w-fit md:rounded-full md:shadow-sm;
+           w-full md:w-fit md:rounded-full md:shadow-sm overflow-y-scroll;
     /* overflow-hidden */
   }
 
@@ -366,7 +366,7 @@
   } 
 
   .filter {
-    @apply max-w-7xl mx-auto relative bg-filter dark:bg-filter mt-8 mb-4;
+    @apply w-full mx-auto relative bg-filter dark:bg-filter mt-8 mb-4 overflow-y-scroll;
   }
 
   /* More providers modal specific styles */

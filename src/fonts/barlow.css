@@ -12,8 +12,7 @@
     font-family: 'Barlow';
     font-style: normal;
     font-weight: 500;
-    src: url('./barlow-medium.woff2') format('woff2'),
-         url('./barlow-medium.woff') format('woff');
+    src: url('https://fonts.gstatic.com/s/barlow/v12/7cHqv4kjgoGqM7E3_-gs51os.woff2') format('woff2');
 }
 
 /* Barlow SemiBold */
@@ -21,6 +20,5 @@
     font-family: 'Barlow';
     font-style: normal;
     font-weight: 600;
-    src: url('./barlow-semibold.woff2') format('woff2'),
-         url('./barlow-semibold.woff') format('woff');
+    src: url('https://fonts.gstatic.com/s/barlow/v12/7cHqv4kjgoGqM7E30-8s51os.woff2') format('woff2');
 } 
