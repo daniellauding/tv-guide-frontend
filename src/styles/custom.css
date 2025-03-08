@@ -24,11 +24,11 @@
     --border-color: #E5E7EB;
     --text-primary: #111827;
     --text-secondary: #6B7280;
-    --primary-50: #EEF2FF;
-    --primary-300: #93C5FD;
-    --primary-600: #2563EB;
-    --primary-700: #1D4ED8;
-    --primary-900: #1E3A8A;
+    --primary-50: #FFF7ED;
+    --primary-300: #FDBA74;
+    --primary-600: #EA580C;
+    --primary-700: #C2410C;
+    --primary-900: #7C2D12;
 }
 
 .dark {
@@ -37,7 +37,7 @@
     --border-color: #374151;
     --text-primary: #F9FAFB;
     --text-secondary: #9CA3AF;
-    --primary-200: #BFDBFE;
+    --primary-200: #FED7AA;
 }
 
 /* Smooth scrolling */
@@ -176,4 +176,323 @@
 
 .logo-channel:hover {
     transform: scale(1.05);
+}
+
+/* Modal Base Styles */
+.modal-base {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-base.mobile {
+    background-color: var(--bg-color);
+}
+
+.modal-content {
+    background-color: var(--bg-color);
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-content.mobile-modal {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* Mobile Header */
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 2;
+}
+
+.back-button,
+.share-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover,
+.share-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Program Hero Section */
+.program-hero {
+    position: relative;
+    padding: 2rem;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+}
+
+.program-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.program-hero-content {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.channel-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.channel-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.5rem;
+}
+
+.program-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.program-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.live-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Program Details Section */
+.program-details {
+    padding: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-item .label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.info-item .value {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.description {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.description h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.description p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Progress Section */
+.progress-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.dark .progress-bar {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--primary-600);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Ad Space */
+.ad-space {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.ad-placeholder {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+}
+
+.dark .ad-placeholder {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Modal Animations */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-exit {
+    animation: modalFadeOut 0.3s ease forwards;
+}
+
+@keyframes modalFadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* Copy Notification */
+.copy-notification {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 60;
+    animation: notificationFadeIn 0.3s ease forwards;
+}
+
+@keyframes notificationFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .program-hero {
+        min-height: 250px;
+        padding: 4rem 1rem 1.5rem;
+    }
+
+    .program-title {
+        font-size: 1.5rem;
+    }
+
+    .channel-logo {
+        width: 48px;
+        height: 48px;
+    }
+
+    .program-details {
+        padding: 1.5rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 } 

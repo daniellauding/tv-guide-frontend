@@ -339,24 +339,10 @@ function toggleAllSchedules() {
     // Update button appearance
     button.classList.toggle('text-primary-500', !showAllPrograms);
     
-    const programContainers = document.querySelectorAll('[id^="programs-"]');
-    programContainers.forEach(container => {
-        const programs = container.querySelectorAll('.program-item');
-        programs.forEach(program => {
-            if (showAllPrograms) {
-                // Show all programs
-                program.classList.remove('hidden');
-            } else {
-                // Show only current/live programs and next program
-                const state = program.classList.contains('current') ? 'current' : 
-                             program.classList.contains('next') ? 'next' : 'past';
-                             
-                if (state === 'past') {
-                    program.classList.add('hidden');
-                }
-            }
-        });
-    });
+    // Re-render programs with current date to show/hide past programs
+    const activeDay = document.querySelector('.day-nav-item.active');
+    const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
+    renderPrograms(selectedDate);
 }
 
 // Modify the program rendering to include state classes
@@ -375,8 +361,7 @@ function renderPrograms(selectedDate = null) {
                         <div class="program-header p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center cursor-pointer"
-                                         onclick="showChannelDetail('${channel.id}')">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center">
                                         <img src="${channel.logo}" alt="${channel.name}" 
                                              class="h-6 md:h-8 w-auto object-contain"
                                              onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
@@ -400,7 +385,6 @@ function renderPrograms(selectedDate = null) {
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
                                                 <div class="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">
-                                                    <span class="icon-time"></span>
                                                     ${program.time}
                                                 </div>
                                                 <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">
@@ -492,58 +476,135 @@ function renderChannelPrograms(container, programs, channelId) {
 
 // Add program modal
 function showProgramModal(channelId, programTime) {
+    // Get the date from either dateSelector, active day, or today
+    let selectedDate;
     const dateSelector = document.getElementById('dateSelector');
-    const selectedDate = dateSelector.value;
+    const activeDay = document.querySelector('.day-nav-item.active');
+    
+    if (dateSelector && dateSelector.value) {
+        selectedDate = dateSelector.value;
+    } else if (activeDay && activeDay.dataset.date) {
+        selectedDate = activeDay.dataset.date;
+    } else {
+        selectedDate = new Date().toISOString().split('T')[0];
+    }
+
     const channel = tvData.channels.find(c => c.id === channelId);
     const program = channel.programs.find(p => p.time === programTime);
     const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
     const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+    const isMobile = window.innerWidth < 768;
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'programModal';
-    modalContainer.className = 'modal-enter';
+    modalContainer.className = `modal-base ${isMobile ? 'mobile' : ''}`;
+    
+    // Format date in Turkish
+    const formatter = new Intl.DateTimeFormat('tr-TR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+    });
+    const formattedDate = formatter.format(new Date(selectedDate));
+
     const modalHTML = `
-        <div class="modal-base" onclick="closeModal()">
-            <div class="modal-window" onclick="event.stopPropagation()">
-                <div class="modal-header">
-                    <h3 class="modal-title">${program.title}</h3>
-                    <button onclick="closeModal()" class="modal-close">✕</button>
+        <div class="modal-content ${isMobile ? 'mobile-modal' : ''}" onclick="event.stopPropagation()">
+            ${isMobile ? `
+                <div class="mobile-header">
+                    <button onclick="closeModal()" class="back-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                    </button>
+                    <button onclick="shareProgram('${channel.id}', '${program.time}')" class="share-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                        </svg>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <div class="modal-label">Program Türü</div>
-                        <div class="modal-value">${program.type}</div>
+            ` : ''}
+            <div class="program-hero" style="background-color: ${channel.color || '#1a1a1a'}">
+                <div class="program-hero-content">
+                    ${!isMobile ? `
+                        <button onclick="closeModal()" class="modal-close">✕</button>
+                        <button onclick="shareProgram('${channel.id}', '${program.time}')" class="share-button">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                            </svg>
+                        </button>
+                    ` : ''}
+                    <div class="channel-info">
+                        <img src="${channel.logo}" alt="${channel.name}" class="channel-logo">
+                        <h1 class="program-title">${program.title}</h1>
                     </div>
-                    <div>
-                        <div class="modal-label">Süre</div>
-                        <div class="modal-value">${program.duration} dakika</div>
+                    <div class="program-meta">
+                        <span class="date">${formattedDate}</span>
+                        <span class="time">${program.time}</span>
+                        ${isLiveProgram ? `
+                            <span class="live-badge">CANLI</span>
+                        ` : ''}
                     </div>
+                </div>
+            </div>
+            
+            <div class="program-details">
+                <div class="program-info">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Tür</span>
+                            <span class="value">${program.type}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Süre</span>
+                            <span class="value">${program.duration} dakika</span>
+                        </div>
+                        ${program.presenter ? `
+                            <div class="info-item">
+                                <span class="label">Sunucu</span>
+                                <span class="value">${program.presenter}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
                     ${program.description ? `
-                        <div>
-                            <div class="modal-label">Açıklama</div>
-                            <div class="modal-value">${program.description}</div>
+                        <div class="description">
+                            <h3>Program Hakkında</h3>
+                            <p>${program.description}</p>
                         </div>
                     ` : ''}
-                    ${program.presenter ? `
-                        <div>
-                            <div class="modal-label">Sunucu</div>
-                            <div class="modal-value">${program.presenter}</div>
+                    
+                    ${isLiveProgram ? `
+                        <div class="progress-section">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="progress-text">${progress}% tamamlandı</div>
                         </div>
                     ` : ''}
+                </div>
+                
+                <div class="ad-space">
+                    <!-- Ad placeholder -->
+                    <div class="ad-placeholder">
+                        <span>Reklam Alanı</span>
+                    </div>
                 </div>
             </div>
         </div>
     `;
+    
     modalContainer.innerHTML = modalHTML;
     document.body.appendChild(modalContainer);
     document.body.style.overflow = 'hidden';
     
-    // Close modal when clicking outside
-    modalContainer.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    // Add click handler to close when clicking outside on desktop
+    if (!isMobile) {
+        modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) {
+                closeModal();
+            }
+        });
+    }
 
     // Close modal with ESC key
     document.addEventListener('keydown', (e) => {
@@ -553,12 +614,50 @@ function showProgramModal(channelId, programTime) {
     });
 }
 
+// Add share functionality
+function shareProgram(channelId, programTime) {
+    const channel = tvData.channels.find(c => c.id === channelId);
+    const program = channel.programs.find(p => p.time === programTime);
+    
+    const shareData = {
+        title: `${program.title} - ${channel.name}`,
+        text: `${program.title} programını ${channel.name}'de ${program.time}'da izle!`,
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = `${shareData.text}\n${shareData.url}`;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        
+        // Show copy notification
+        const notification = document.createElement('div');
+        notification.className = 'copy-notification';
+        notification.textContent = 'Bağlantı kopyalandı!';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 2000);
+    }
+}
+
+// Update close modal function
 function closeModal() {
     const modal = document.getElementById('programModal');
     if (modal) {
-        // Restore body scroll
-        document.body.style.overflow = '';
-        modal.remove();
+        modal.classList.add('modal-exit');
+        setTimeout(() => {
+            document.body.style.overflow = '';
+            modal.remove();
+        }, 300);
     }
 }
 
