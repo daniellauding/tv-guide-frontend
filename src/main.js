@@ -284,13 +284,13 @@ tvData.channels = tvData.channels.map(channel => ({
     enabled: true // All channels enabled by default
 }));
 
-// Modify renderChannelNav to use the same showChannelDetail function
+// Modify renderChannelNav to remove the onclick attribute
 function renderChannelNav() {
     const nav = document.querySelector('.channel-nav');
     nav.innerHTML = tvData.channels.map(channel => `
         <button 
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
-            onclick="showChannelDetail('${channel.id}')"
+            data-channel-id="${channel.id}"
         >
             <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
@@ -360,11 +360,9 @@ function toggleAllSchedules() {
 }
 
 // Modify the program rendering to include state classes
-function renderPrograms(selectedChannelId = null, selectedDate = null) {
+function renderPrograms(selectedDate = null) {
     const content = document.querySelector('.content');
-    const channels = selectedChannelId 
-        ? tvData.channels.filter(c => c.id === selectedChannelId && c.enabled)
-        : tvData.channels.filter(c => c.enabled);
+    const channels = tvData.channels.filter(c => c.enabled);
 
     content.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -372,7 +370,8 @@ function renderPrograms(selectedChannelId = null, selectedDate = null) {
                 const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
                 return `
-                    <div class="program-wrapper rounded-lg shadow-sm overflow-hidden bg-white dark:bg-gray-800">
+                    <div class="program-wrapper rounded-lg shadow-sm overflow-hidden bg-white dark:bg-gray-800"
+                         data-channel-id="${channel.id}">
                         <div class="program-header p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
@@ -388,7 +387,7 @@ function renderPrograms(selectedChannelId = null, selectedDate = null) {
                                 </div>
                             </div>
                         </div>
-                        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-[calc(100vh-16rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent" id="programs-${channel.id}">
+                        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-[calc(100vh-16rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                             ${allPrograms.map(program => {
                                 const isHidden = !showAllPrograms && program.state === 'past';
                                 const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
@@ -577,10 +576,10 @@ function setupThemeToggle() {
     
     // Update button state
     themeToggle.setAttribute('aria-pressed', initialTheme === 'dark');
-    
+        
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         themeToggle.setAttribute('aria-pressed', isDark);
     });
 }
@@ -595,56 +594,36 @@ function setupDateSelector() {
         const dateString = date.toISOString().split('T')[0];
         const isToday = new Date().toDateString() === date.toDateString();
         
+        // Format date in Turkish
+        const formatter = new Intl.DateTimeFormat('tr-TR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
+        });
+        
         return `
             <option value="${dateString}">
-                ${date.toLocaleDateString('sv-SE', { 
-                    weekday: 'short', 
-                    day: 'numeric',
-                    month: 'numeric'
-                })}${isToday ? ' (Idag)' : ''}
+                ${formatter.format(date)}${isToday ? ' (Bugün)' : ''}
             </option>
         `;
     }).join('');
     
     // Set default to today
-    const today = new Date().toISOString().split('T')[0];
-    dateSelector.value = today;
+    dateSelector.value = new Date().toISOString().split('T')[0];
     
     dateSelector.addEventListener('change', (e) => {
-        const selectedDate = new Date(e.target.value);
-        updateDayNavigation(selectedDate);
-        const programData = programDates[e.target.value] || tvData;
-        renderPrograms(null, programData);
-    });
-    
-    // Initial update of day navigation
-    updateDayNavigation(new Date());
-}
-
-function setupChannelSelector() {
-    const channelSelector = document.getElementById('channelSelector');
-    // Populate channel options
-    channelSelector.innerHTML = `
-        <option value="">Tüm Kanallar</option>
-        ${tvData.channels.map(channel => `
-            <option value="${channel.id}">${channel.name}</option>
-        `).join('')}
-    `;
-    
-    channelSelector.addEventListener('change', (e) => {
-        const selectedChannelId = e.target.value;
-        if (selectedChannelId) {
-            renderPrograms(selectedChannelId);
-        } else {
-            renderPrograms();
-        }
+        const selectedDate = e.target.value;
+        const programData = programDates[selectedDate] || tvData;
+        renderPrograms(selectedDate);
     });
 }
 
 // Unified channel detail view function
 function showChannelDetail(channelId) {
-    const dateSelector = document.getElementById('dateSelector');
-    const selectedDate = dateSelector.value;
+    // Get the selected date from the active day button
+    const activeDay = document.querySelector('.day-nav-item.active');
+    const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
+    
     const channel = tvData.channels.find(c => c.id === channelId);
     const content = document.querySelector('.content');
     
@@ -721,7 +700,6 @@ function showChannelDetail(channelId) {
 function resetView() {
     // Reset selectors
     document.getElementById('dateSelector').value = '2024-02-17';
-    document.getElementById('channelSelector').value = '';
     document.getElementById('programSearch').value = '';
     
     // Reset view
@@ -770,8 +748,8 @@ function setupSearch() {
             const searchTerm = e.target.value.toLowerCase();
             if (searchTerm.length >= 2) {
                 const results = tvData.channels.reduce((acc, channel) => {
-                    const matchingPrograms = channel.programs.filter(program =>
-                        program.title.toLowerCase().includes(searchTerm) ||
+                const matchingPrograms = channel.programs.filter(program => 
+                    program.title.toLowerCase().includes(searchTerm) ||
                         program.type?.toLowerCase().includes(searchTerm)
                     ).map(program => ({ ...program, channelId: channel.id, channelName: channel.name }));
                     return [...acc, ...matchingPrograms];
@@ -795,13 +773,17 @@ function setupSearch() {
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     
-    setupDateSelector();
-    setupChannelSelector();
-    setupSearch();
+    // Initialize all required functionality
+    initializeChannels();
+    setupProviders();
+    setupProviderScroll();
+    setupShrinkingHeader();
+    setupChannelSectionVisibility();
     setupDateNavigation();
-    updateDayNavigation();
+    setupSearch();
     renderChannelNav();
-    renderPrograms(null, today);
+    renderPrograms(today);
+    initializeIcons();
     
     // Initialize theme toggle
     if (document.getElementById('themeToggle')) {
@@ -904,48 +886,106 @@ function initializeChannels() {
             'atv': true,
             'fox': true,
             'star': true,
-            'kanal-d': true,
-            'trt1': true,
             'tv8': false,
-            'tv100': false,
-            'halk-tv': false
+            'trt1': true,
+            'kanal7': true,
+            'teve2': true,
+            'beyaztv': true,
+            'ntv': false
         },
         digiturk: {
             'show': true,
             'atv': true,
             'fox': true,
             'star': true,
-            'kanal-d': false,
-            'trt1': true,
             'tv8': true,
-            'bein-sports': true,
-            'movie-smart': true,
-            'lig-tv': true,
-            'discovery': true
+            'trt1': true,
+            'ntv': true
         },
         dsmart: {
             'show': true,
-            'atv': false,
             'fox': true,
             'star': true,
-            'kanal-d': true,
+            'tv8': true,
             'trt1': true,
-            'smart-spor': true,
-            'd-max': true,
-            'national-geographic': true
+            'ntv': true
         },
         other: {
-            // Only enable Show TV and Kanal 7 for Övriga
             'show': true,
             'kanal7': true,
-            'atv': false,
-            'fox': false,
-            'star': false,
-            'kanal-d': false,
-            'trt1': false,
-            'tv8': false,
-            'tv100': false,
-            'halk-tv': false
+            'teve2': true
+        },
+        tivibu: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
+        },
+        turksat: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'kanal7': true,
+            'teve2': true,
+            'beyaztv': true,
+            'ntv': true
+        },
+        vodafone: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
+        },
+        turkcell: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
+        },
+        blutv: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true
+        },
+        netflix: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
+        },
+        amazon: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
+        },
+        disney: {
+            'show': true,
+            'atv': true,
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true,
+            'ntv': true
         }
     };
 
@@ -965,6 +1005,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupProviders();
     setupProviderScroll();
     setupShrinkingHeader();
+    setupChannelSectionVisibility();
+    setupDateNavigation();
     initializeIcons();
 });
 
@@ -1149,7 +1191,7 @@ function updateChannelList(providerChannels) {
     channelNav.innerHTML = channels.map(channel => `
         <button 
             class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
-            onclick="showChannelDetail('${channel.id}')"
+            data-channel-id="${channel.id}"
         >
             <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
                 <img src="${channel.logo}" alt="${channel.name}" 
@@ -1174,7 +1216,7 @@ function updateProgramGrid(providerChannels) {
     // Only show content if there are channels to display
     if (channels.length > 0) {
         if (wrapperDiv) wrapperDiv.style.display = 'block';
-        renderPrograms(null, new Date().toISOString().split('T')[0]);
+        renderPrograms();
     } else {
         // Hide the wrapper and clear content if no channels
         if (wrapperDiv) wrapperDiv.style.display = 'none';
@@ -1190,67 +1232,6 @@ function initializeIcons() {
         searchIcon.innerHTML = createIcon('search', 'w-3.5 h-3.5');
     }
 }
-
-// Update the DOMContentLoaded listener
-document.addEventListener('DOMContentLoaded', () => {
-    setupProviders();
-    setupProviderScroll();
-    setupShrinkingHeader();
-    initializeIcons();
-});
-
-// Add this before setupProviders function
-const providers = {
-    ulusal: {
-        name: 'Ulusal',
-        channels: ['show', 'atv', 'fox', 'star', 'kanal-d', 'trt1']
-    },
-    digiturk: {
-        name: 'Digiturk',
-        channels: ['bein-sports', 'movie-smart', 'lig-tv', 'discovery']
-    },
-    dsmart: {
-        name: 'D-Smart',
-        channels: ['smart-spor', 'd-max', 'national-geographic']
-    },
-    other: {
-        name: 'Övriga',
-        channels: ['show', 'kanal7']
-    },
-    // Add new providers
-    tivibu: {
-        name: 'Tivibu',
-        channels: ['show', 'atv', 'fox']
-    },
-    turksat: {
-        name: 'Türksat',
-        channels: ['show', 'atv']
-    },
-    vodafone: {
-        name: 'Vodafone TV',
-        channels: ['show', 'atv']
-    },
-    turkcell: {
-        name: 'Turkcell TV+',
-        channels: ['show', 'atv']
-    },
-    blutv: {
-        name: 'BluTV',
-        channels: ['show']
-    },
-    netflix: {
-        name: 'Netflix',
-        channels: ['show']
-    },
-    amazon: {
-        name: 'Prime Video',
-        channels: ['show']
-    },
-    disney: {
-        name: 'Disney+',
-        channels: ['show']
-    }
-};
 
 // Add this function to handle the more providers button
 function toggleMoreProviders(event) {
@@ -1337,75 +1318,179 @@ function isLive(programTime, duration, selectedDate = null) {
     return now >= programDate && now <= programEndTime;
 }
 
-// Add setupDateNavigation function
-function setupDateNavigation() {
-    const prevDate = document.getElementById('prevDate');
-    const nextDate = document.getElementById('nextDate');
-    const dateSelector = document.getElementById('dateSelector');
-
-    if (prevDate) {
-        prevDate.addEventListener('click', () => {
-            const currentIndex = dateSelector.selectedIndex;
-            if (currentIndex > 0) {
-                dateSelector.selectedIndex = currentIndex - 1;
-                dateSelector.dispatchEvent(new Event('change'));
-            }
-        });
-    }
-
-    if (nextDate) {
-        nextDate.addEventListener('click', () => {
-            const currentIndex = dateSelector.selectedIndex;
-            if (currentIndex < dateSelector.options.length - 1) {
-                dateSelector.selectedIndex = currentIndex + 1;
-                dateSelector.dispatchEvent(new Event('change'));
-            }
-        });
-    }
-}
-
-// Add this function to handle day navigation clicks
-function handleDayClick(event) {
-    const dayButtons = document.querySelectorAll('.day-nav-item');
-    dayButtons.forEach(btn => btn.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    
-    // Get the date from the clicked button
-    const dateText = event.currentTarget.querySelector('.date').textContent;
-    const [day, month] = dateText.split('/');
-    const year = new Date().getFullYear();
-    const selectedDate = new Date(year, month - 1, day);
-    
-    // Update the date selector and trigger change
-    const dateSelector = document.getElementById('dateSelector');
-    dateSelector.value = selectedDate.toISOString().split('T')[0];
-    dateSelector.dispatchEvent(new Event('change'));
-}
-
-// Add this function to update day navigation
-function updateDayNavigation(selectedDate = new Date()) {
+// Update channel section visibility and scrolling behavior
+function setupChannelSectionVisibility() {
+    const channelSection = document.querySelector('.channel-section');
     const dayNav = document.querySelector('.day-nav');
-    if (!dayNav) return;
-
-    const days = ['Sö', 'Mo', 'Ti', 'On', 'To', 'Fr', 'Lö'];
-    const dates = generateDateRange(3, 3); // Show 7 days centered on today
     
-    const dayButtons = dayNav.querySelectorAll('.day-nav-item');
-    dates.forEach((date, index) => {
-        const button = dayButtons[index];
-        if (button) {
-            const daySpan = button.querySelector('.day');
-            const dateSpan = button.querySelector('.date');
-            
-            daySpan.textContent = days[date.getDay()];
-            dateSpan.textContent = `${date.getDate()}/${date.getMonth() + 1}`;
-            
-            // Check if this date matches the selected date
-            const isSameDate = date.toDateString() === selectedDate.toDateString();
-            button.classList.toggle('active', isSameDate);
-            
-            // Add click handler
-            button.onclick = handleDayClick;
-        }
+    if (!channelSection || !dayNav) return;
+    
+    // Remove any existing visible class
+    channelSection.classList.remove('visible');
+    
+    // Handle scroll behavior
+    window.addEventListener('scroll', () => {
+        const dayNavBottom = dayNav.getBoundingClientRect().bottom;
+        const shouldBeVisible = dayNavBottom < 0;
+        channelSection.classList.toggle('visible', shouldBeVisible);
     });
+    
+    // Add click handler for smooth scrolling
+    const channelNav = document.querySelector('.channel-nav');
+    if (channelNav) {
+        channelNav.addEventListener('click', (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const channelId = button.getAttribute('data-channel-id');
+            if (!channelId) return;
+
+            // Find the program wrapper for this channel
+            const targetProgram = document.querySelector(`.program-wrapper[data-channel-id="${channelId}"]`);
+            if (targetProgram) {
+                // Calculate offset to account for sticky header and channel section
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const channelSectionHeight = channelSection.offsetHeight;
+                const offset = headerHeight + channelSectionHeight + 16; // 16px extra padding
+                
+                const targetPosition = targetProgram.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+}
+
+// Update setupDateNavigation function
+function setupDateNavigation() {
+    const dayNav = document.querySelector('.day-nav .flex.space-x-2');
+    
+    // Generate dates for the next 7 days
+    const dates = generateDateRange(2, 4); // 2 days back, 4 days forward
+    
+    // Populate day navigation
+    if (dayNav) {
+        dayNav.innerHTML = dates.map(date => {
+            const isToday = new Date().toDateString() === date.toDateString();
+            const dateStr = date.toISOString().split('T')[0];
+            const dayName = new Intl.DateTimeFormat('tr-TR', { weekday: 'short' }).format(date);
+            const dayNum = date.getDate();
+            
+            return `
+                <button 
+                    data-date="${dateStr}"
+                    class="day-nav-item flex flex-col items-center px-4 py-2 rounded-lg transition-colors
+                           ${isToday ? 'bg-primary-50 text-primary-600 dark:bg-primary-900 dark:text-primary-300' : 
+                                     'hover:bg-gray-50 dark:hover:bg-gray-700'}"
+                >
+                    <span class="text-sm font-medium">${dayName}</span>
+                    <span class="text-2xl font-semibold">${dayNum}</span>
+                </button>
+            `;
+        }).join('');
+        
+        // Add click handlers for day buttons
+        dayNav.querySelectorAll('.day-nav-item').forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedDate = button.dataset.date;
+                
+                // Update active state
+                dayNav.querySelectorAll('.day-nav-item').forEach(btn => {
+                    btn.classList.remove('bg-primary-50', 'text-primary-600', 'dark:bg-primary-900', 'dark:text-primary-300');
+                });
+                button.classList.add('bg-primary-50', 'text-primary-600', 'dark:bg-primary-900', 'dark:text-primary-300');
+                
+                // Update content
+                renderPrograms(selectedDate);
+            });
+        });
+    }
+}
+
+// Define providers and their available channels
+const providers = {
+    ulusal: {
+        name: 'Ulusal',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'kanal7', 'teve2', 'beyaztv', 'ntv']
+    },
+    digiturk: {
+        name: 'Digiturk',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
+    },
+    dsmart: {
+        name: 'D-Smart',
+        channels: ['show', 'fox', 'star', 'tv8', 'trt1', 'ntv']
+    },
+    other: {
+        name: 'Övriga',
+        channels: ['show', 'kanal7', 'teve2']
+    },
+    tivibu: {
+        name: 'Tivibu',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
+    },
+    turksat: {
+        name: 'Türksat',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'kanal7', 'teve2', 'beyaztv', 'ntv']
+    },
+    vodafone: {
+        name: 'Vodafone TV',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
+    },
+    turkcell: {
+        name: 'Turkcell TV+',
+        channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
+    },
+    blutv: {
+        name: 'BluTV',
+        channels: ['show', 'atv', 'fox', 'star']
+    },
+    netflix: {
+        name: 'Netflix',
+        channels: []
+    },
+    amazon: {
+        name: 'Prime Video',
+        channels: []
+    },
+    disney: {
+        name: 'Disney+',
+        channels: []
+    }
+};
+
+// Provider management
+function setupProviders() {
+    const providerCards = document.querySelectorAll('.provider-card');
+    let activeProvider = 'ulusal'; // Default provider
+
+    function updateProviderView(providerId) {
+        // Update active state of provider cards
+        providerCards.forEach(card => {
+            card.classList.toggle('active', card.dataset.provider === providerId);
+        });
+
+        // Initialize channels for this provider
+        initializeChannels();
+
+        // Update visible channels
+        const providerChannels = providers[providerId].channels;
+        updateChannelList(providerChannels);
+        updateProgramGrid(providerChannels);
+    }
+
+    // Provider click handlers
+    providerCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const providerId = card.dataset.provider;
+            activeProvider = providerId;
+            updateProviderView(providerId);
+        });
+    });
+
+    // Initialize with default provider
+    updateProviderView(activeProvider);
 } 

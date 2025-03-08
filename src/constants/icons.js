@@ -35,26 +35,24 @@ function createIcon(name, customSize = '') {
     const icon = ICONS[name];
     if (!icon) return '';
     
-    // Get the parent element's size class
-    const sizeClass = customSize || 'w-5 h-5'; // default to medium if no size specified
-    
-    return `<svg class="${sizeClass}" viewBox="${icon.viewBox}" fill="none" stroke="currentColor">${icon.path}</svg>`;
+    // If it's already an SVG string, just return it
+    if (typeof icon === 'string') {
+        if (customSize) {
+            return icon.replace(/class="[^"]*"/, `class="${customSize}"`);
+        }
+        return icon;
+    }
 }
 
 // Update initializeIcons function
 function initializeIcons() {
     document.querySelectorAll('[class*="icon-"]').forEach(element => {
         const iconName = Array.from(element.classList)
-            .find(cls => cls.startsWith('icon-') && !cls.startsWith('icon-sm') && !cls.startsWith('icon-md') && !cls.startsWith('icon-lg'))
-            ?.split('icon-')[1];
+            .find(cls => cls.startsWith('icon-'))
+            ?.replace('icon-', '');
             
         if (iconName && ICONS[iconName]) {
-            // Get size class from element
-            const sizeClass = Array.from(element.classList)
-                .find(cls => cls.startsWith('icon-') && (cls.endsWith('-sm') || cls.endsWith('-md') || cls.endsWith('-lg')));
-            
-            const size = ICON_SIZES[sizeClass] || ICON_SIZES['icon-md']; // default to medium
-            element.innerHTML = createIcon(iconName, size);
+            element.innerHTML = ICONS[iconName];
         }
     });
 }

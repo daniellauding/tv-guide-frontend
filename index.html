@@ -16,12 +16,6 @@
         <div class="max-w-7xl mx-auto px-4">
             <nav class="header-nav">
                 <div class="flex items-center space-x-6">
-                   <!-- Mobile menu button -->
-                   <button onclick="toggleMobileMenu()" 
-                          class="nav-button"
-                          aria-label="Menu">
-                      <span class="icon-hamburger"></span>
-                    </button>
                     <h1 class="header-title" onclick="resetView()">
                         <img src="./src/logo.png" alt="TV Rehberi" class="h-8 md:h-10 w-auto cursor-pointer">
                     </h1>
@@ -63,7 +57,12 @@
                         </svg>
                     </button>
 
-
+                    <!-- Mobile menu button -->
+                    <button onclick="toggleMobileMenu()" 
+                            class="nav-button"
+                            aria-label="Menu">
+                        <span class="icon-hamburger"></span>
+                    </button>
                 </div>
             </nav>
         </div>
@@ -179,44 +178,6 @@
         </div>
     </div>
 
-    <!-- Day Navigation Section -->
-    <div class="day-nav bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="overflow-x-auto scrollbar-thin">
-                <div class="flex space-x-4 py-3">
-                    <button class="day-nav-item active">
-                        <span class="day">Mo</span>
-                        <span class="date">3/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">Ti</span>
-                        <span class="date">4/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">On</span>
-                        <span class="date">5/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">To</span>
-                        <span class="date">6/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">Fr</span>
-                        <span class="date">7/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">Lö</span>
-                        <span class="date">8/3</span>
-                    </button>
-                    <button class="day-nav-item">
-                        <span class="day">Sö</span>
-                        <span class="date">9/3</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- More Providers Modal -->
     <div id="moreProvidersModal" class="modal-base hidden">
         <div class="modal-window max-w-4xl">
@@ -239,21 +200,40 @@
         </div>
     </div>
 
-    <!-- Time Navigation -->
-    
+    <!-- Day Navigation Section -->
+    <div class="day-nav bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center space-x-4 py-3">
+                <button id="prevDate" class="flex-shrink-0 nav-button">
+                    <span class="icon-chevron-left"></span>
+                </button>
+                
+                <div class="flex space-x-2 overflow-x-auto scrollbar-thin">
+                    <!-- Days will be populated by JavaScript -->
+                </div>
+                
+                <button id="nextDate" class="flex-shrink-0 nav-button">
+                    <span class="icon-chevron-right"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Channel Navigation Section -->
+    <div class="channel-section bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center py-3">
+                <div class="channel-nav flex space-x-1 overflow-x-auto scrollbar-hide">
+                    <!-- Channel logos will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="wrapper">
         <div class="content space-y-6">
             <!-- Program content will be inserted here by JavaScript -->
-            <div class="card">
-                <div class="card-header">
-                    <!-- Channel header content -->
-                </div>
-                <div class="card-body">
-                    <!-- Program content -->
-                </div>
-            </div>
         </div>
     </main>
 

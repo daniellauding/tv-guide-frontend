@@ -365,10 +365,6 @@
     @apply text-lg;
   } 
 
-  .filter {
-    @apply w-full mx-auto relative bg-filter dark:bg-filter mt-8 mb-4 overflow-y-scroll;
-  }
-
   /* More providers modal specific styles */
   #moreProvidersModal .provider-card {
     @apply h-16 text-lg font-medium;
@@ -383,5 +379,23 @@
 
   .provider-dropdown .provider-card {
     @apply h-10 text-base hover:bg-gray-50 dark:hover:bg-gray-700 mb-1 last:mb-0;
+  }
+
+  /* Channel Navigation Section */
+  .channel-section {
+    @apply sticky top-16 z-40 transition-all duration-300 ease-in-out;
+  }
+
+  .channel-section.visible {
+    @apply block;
+  }
+
+  .channel-nav {
+    @apply flex space-x-4 overflow-x-auto scrollbar-hide;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .channel-nav img {
+    @apply w-8 h-8 object-contain;
   }
 }
