@@ -16,6 +16,12 @@
         <div class="max-w-7xl mx-auto px-4">
             <nav class="header-nav">
                 <div class="flex items-center space-x-6">
+                                      <!-- Mobile menu button -->
+                                      <button onclick="toggleMobileMenu()" 
+                                      class="nav-button"
+                                      aria-label="Menu">
+                                  <span class="icon-hamburger"></span>
+                              </button>
                     <h1 class="header-title" onclick="resetView()">
                         <img src="./src/logo.png" alt="TV Rehberi" class="h-8 md:h-10 w-auto cursor-pointer">
                     </h1>
@@ -55,13 +61,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
-                    </button>
-
-                    <!-- Mobile menu button -->
-                    <button onclick="toggleMobileMenu()" 
-                            class="nav-button"
-                            aria-label="Menu">
-                        <span class="icon-hamburger"></span>
                     </button>
                 </div>
             </nav>

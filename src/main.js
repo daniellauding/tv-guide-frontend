@@ -797,12 +797,26 @@ function showChannelDetail(channelId) {
 
 // Add this new function
 function resetView() {
-    // Reset selectors
-    document.getElementById('dateSelector').value = '2024-02-17';
-    document.getElementById('programSearch').value = '';
+    // Reset selectors if they exist
+    const dateSelector = document.getElementById('dateSelector');
+    const programSearch = document.getElementById('programSearch');
+    
+    if (dateSelector) {
+        dateSelector.value = new Date().toISOString().split('T')[0];
+    }
+    
+    if (programSearch) {
+        programSearch.value = '';
+    }
     
     // Reset view
     renderPrograms();
+
+    // Scroll to top of page smoothly
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 // Add this function to handle search toggle
