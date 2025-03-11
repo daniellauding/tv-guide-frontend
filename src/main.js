@@ -384,10 +384,10 @@ function renderPrograms(selectedDate = null) {
                                          onclick="showProgramModal('${channel.id}', '${program.time}')">
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
-                                                <div class="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                                <div class="flex items-center gap-1 text-xs md:text-sm">
                                                     ${program.time}
                                                 </div>
-                                                <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">
+                                                <div class="font-medium text-sm md:text-base">
                                                     ${program.title}
                                                 </div>
                                             </div>
@@ -446,16 +446,30 @@ function renderChannelPrograms(container, programs, channelId) {
         const progress = calculateProgramProgress(program.time, program.duration);
         const isLiveProgram = isLive(program.time, program.duration);
         
+        // Determine text color classes based on program state
+        let titleClass, timeClass;
+        
+        if (program.state === 'past') {
+            titleClass = 'text-gray-400 dark:text-gray-500 font-normal';
+            timeClass = 'text-gray-400 dark:text-gray-500';
+        } else if (program.state === 'today') {
+            titleClass = 'text-gray-700 dark:text-gray-200 font-medium';
+            timeClass = 'text-gray-500 dark:text-gray-400';
+        } else { // next
+            titleClass = 'text-black dark:text-white font-semibold';
+            timeClass = 'text-gray-600 dark:text-gray-300';
+        }
+        
         return `
-            <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer ${program.state}"
+            <div class="p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer program-item ${program.state}"
                  onclick="showProgramModal('${channelId}', '${program.time}')">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-row items-center gap-2">
-                        <div class="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-1 text-xs md:text-sm ${timeClass}">
                             ${createIcon('time', 'w-4 h-4')}
                             ${program.time}
                         </div>
-                        <div class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${program.title}</div>
+                        <div class="text-sm md:text-base ${titleClass}">${program.title}</div>
                     </div>
                     ${isLiveProgram ? `
                         <div class="live-indicator">
@@ -1198,46 +1212,54 @@ window.addEventListener('resize', () => {
 
 // Provider scroll functionality
 function setupProviderScroll() {
-    const container = document.querySelector('.provider-scroll-container');
-    const wrapper = document.querySelector('.provider-scroll-wrapper');
-    const prevBtn = document.querySelector('.provider-scroll-prev');
-    const nextBtn = document.querySelector('.provider-scroll-next');
+    // Setup for mobile providers
+    setupScrollForContainer('.providers');
+    
+    // Setup for desktop providers
+    setupScrollForContainer('.providers-desktop');
+    
+    function setupScrollForContainer(containerSelector) {
+        const container = document.querySelector(`${containerSelector} .provider-scroll-container`);
+        const wrapper = container?.querySelector('.provider-scroll-wrapper');
+        const prevBtn = container?.querySelector('.provider-scroll-prev');
+        const nextBtn = container?.querySelector('.provider-scroll-next');
 
-    if (!container || !wrapper || !prevBtn || !nextBtn) return;
+        if (!container || !wrapper || !prevBtn || !nextBtn) return;
 
-    function updateScrollButtons() {
-        const isScrollable = wrapper.scrollWidth > wrapper.clientWidth;
-        const isScrollStart = wrapper.scrollLeft <= 0;
-        const isScrollEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 10;
+        function updateScrollButtons() {
+            const isScrollable = wrapper.scrollWidth > wrapper.clientWidth;
+            const isScrollStart = wrapper.scrollLeft <= 0;
+            const isScrollEnd = wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 10;
 
-        // Only show buttons if content is scrollable
-        if (!isScrollable) {
-            prevBtn.classList.remove('visible');
-            nextBtn.classList.remove('visible');
-            return;
+            // Only show buttons if content is scrollable
+            if (!isScrollable) {
+                prevBtn.classList.remove('visible');
+                nextBtn.classList.remove('visible');
+                return;
+            }
+
+            // Update button visibility based on scroll position
+            prevBtn.classList.toggle('visible', !isScrollStart);
+            nextBtn.classList.toggle('visible', !isScrollEnd);
         }
 
-        // Update button visibility based on scroll position
-        prevBtn.classList.toggle('visible', !isScrollStart);
-        nextBtn.classList.toggle('visible', !isScrollEnd);
+        const scroll = (direction) => {
+            const scrollAmount = wrapper.offsetWidth * 0.8;
+            wrapper.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        };
+
+        prevBtn.addEventListener('click', () => scroll('left'));
+        nextBtn.addEventListener('click', () => scroll('right'));
+        
+        wrapper.addEventListener('scroll', updateScrollButtons);
+        window.addEventListener('resize', updateScrollButtons);
+        
+        // Initial check
+        updateScrollButtons();
     }
-
-    const scroll = (direction) => {
-        const scrollAmount = wrapper.offsetWidth * 0.8;
-        wrapper.scrollBy({
-            left: direction === 'left' ? -scrollAmount : scrollAmount,
-            behavior: 'smooth'
-        });
-    };
-
-    prevBtn.addEventListener('click', () => scroll('left'));
-    nextBtn.addEventListener('click', () => scroll('right'));
-    
-    wrapper.addEventListener('scroll', updateScrollButtons);
-    window.addEventListener('resize', updateScrollButtons);
-    
-    // Initial check
-    updateScrollButtons();
 }
 
 // Shrinking header
@@ -1266,7 +1288,11 @@ function setupProviders() {
     function updateProviderView(providerId) {
         // Update active state of provider cards
         providerCards.forEach(card => {
-            card.classList.toggle('active', card.dataset.provider === providerId);
+            if (card.dataset.provider === providerId) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
         });
 
         // Initialize channels for this provider
@@ -1280,6 +1306,9 @@ function setupProviders() {
 
     // Provider click handlers
     providerCards.forEach(card => {
+        // Skip the "more" button which doesn't have a provider ID
+        if (!card.dataset.provider) return;
+        
         card.addEventListener('click', () => {
             const providerId = card.dataset.provider;
             activeProvider = providerId;
@@ -1289,6 +1318,9 @@ function setupProviders() {
 
     // Initialize with default provider
     updateProviderView(activeProvider);
+    
+    // Make updateProviderView available globally
+    window.updateProviderView = updateProviderView;
 }
 
 // Update channel list based on provider
@@ -1376,7 +1408,11 @@ function toggleMoreProviders(event) {
         }
     } else {
         // Toggle dropdown on desktop
-        const dropdown = document.getElementById('providerDropdown');
+        // Determine which dropdown to use based on the button's location
+        const isInHeader = event.target.closest('.providers-desktop') !== null;
+        const dropdownId = isInHeader ? 'providerDropdownDesktop' : 'providerDropdown';
+        
+        const dropdown = document.getElementById(dropdownId);
         if (dropdown) {
             dropdown.classList.toggle('hidden');
             
@@ -1388,9 +1424,12 @@ function toggleMoreProviders(event) {
                 }
             };
             
-            document.addEventListener('click', closeDropdown);
-
-            // Handle provider selection
+            // Add event listener with a slight delay to avoid immediate triggering
+            setTimeout(() => {
+                document.addEventListener('click', closeDropdown);
+            }, 100);
+            
+            // Add click handlers to provider cards
             dropdown.querySelectorAll('.provider-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const providerId = card.dataset.provider;
@@ -1583,7 +1622,11 @@ function setupProviders() {
     function updateProviderView(providerId) {
         // Update active state of provider cards
         providerCards.forEach(card => {
-            card.classList.toggle('active', card.dataset.provider === providerId);
+            if (card.dataset.provider === providerId) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
         });
 
         // Initialize channels for this provider
@@ -1597,6 +1640,9 @@ function setupProviders() {
 
     // Provider click handlers
     providerCards.forEach(card => {
+        // Skip the "more" button which doesn't have a provider ID
+        if (!card.dataset.provider) return;
+        
         card.addEventListener('click', () => {
             const providerId = card.dataset.provider;
             activeProvider = providerId;
@@ -1606,4 +1652,7 @@ function setupProviders() {
 
     // Initialize with default provider
     updateProviderView(activeProvider);
+    
+    // Make updateProviderView available globally
+    window.updateProviderView = updateProviderView;
 } 

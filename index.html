@@ -27,6 +27,58 @@
                     </h1>
                 </div>
                 
+                <!-- Desktop Providers - Hidden on mobile -->
+                <div class="hidden md:block flex-grow mx-4">
+                    <div class="providers-desktop">
+                        <div class="provider-scroll-container">
+                            <button class="provider-scroll-button provider-scroll-prev hidden md:flex">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            
+                            <div class="provider-scroll-wrapper">
+                                <button class="provider-card" data-provider="ulusal">
+                                    Ulusal
+                                </button>
+                                <button class="provider-card" data-provider="digiturk">
+                                    Digiturk
+                                </button>
+                                <button class="provider-card" data-provider="dsmart">
+                                    D-Smart
+                                </button>
+                                <button class="provider-card" data-provider="other">
+                                    Övriga
+                                </button>
+                                <div class="relative flex items-center justify-center align-center">
+                                    <button class="provider-card" onclick="toggleMoreProviders(event)">
+                                        <span class="icon-more icon-sm"></span>
+                                    </button>
+                                    <!-- Desktop Dropdown -->
+                                    <div id="providerDropdownDesktop" class="provider-dropdown hidden">
+                                        <div class="flex flex-col p-2">
+                                            <button class="provider-card !w-full !justify-start" data-provider="tivibu">Tivibu</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="turksat">Türksat</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="vodafone">Vodafone TV</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="turkcell">Turkcell TV+</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="blutv">BluTV</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="netflix">Netflix</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="amazon">Prime Video</button>
+                                            <button class="provider-card !w-full !justify-start" data-provider="disney">Disney+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="provider-scroll-button provider-scroll-next hidden md:flex">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Right side with theme toggle and mobile menu -->
                 <div class="flex items-center space-x-4">
                     <!-- Search Toggle -->
@@ -124,8 +176,8 @@
         </div>
     </header>
 
-    <!-- Add after header, before main content -->
-    <div class="providers">
+    <!-- Mobile Providers - Hidden on desktop -->
+    <div class="providers md:hidden">
         <div class="max-w-7xl mx-auto">
             <div class="provider-scroll-container">
                 <!-- Scroll buttons -->
