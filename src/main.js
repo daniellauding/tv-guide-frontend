@@ -320,11 +320,33 @@ function getRelevantPrograms(programs, selectedDate) {
         currentIndex = programs.length - 1;
     }
 
+    // Set program states based on their time
+    const programsWithState = programs.map((program, index) => {
+        const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+        let state;
+        
+        if (isLiveProgram) {
+            state = 'today';
+        } else {
+            const [programHour, programMinute] = program.time.split(':').map(Number);
+            const programTime = new Date();
+            programTime.setHours(programHour, programMinute, 0, 0);
+            
+            if (programTime < currentTime) {
+                state = 'past';
+            } else {
+                state = 'next';
+            }
+        }
+        
+        return { ...program, state };
+    });
+
     return {
-        previous: programs[currentIndex - 1],
-        current: programs[currentIndex],
-        next: programs[currentIndex + 1],
-        allPrograms: programs,
+        previous: programsWithState[currentIndex - 1],
+        current: programsWithState[currentIndex],
+        next: programsWithState[currentIndex + 1],
+        allPrograms: programsWithState,
     };
 }
 
@@ -378,16 +400,30 @@ function renderPrograms(selectedDate = null) {
                                 const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
                                 const isLiveProgram = isLive(program.time, program.duration, selectedDate);
                                 
+                                // Determine text color classes based on program state
+                                let titleClass, timeClass;
+                                
+                                if (program.state === 'past') {
+                                    titleClass = 'text-gray-500 dark:text-gray-500';
+                                    timeClass = 'text-gray-400 dark:text-gray-500';
+                                } else if (program.state === 'today') {
+                                    titleClass = 'text-red-500 dark:text-red-500';
+                                    timeClass = 'text-gray-600 dark:text-gray-400';
+                                } else { // next
+                                    titleClass = 'text-black dark:text-white font-medium';
+                                    timeClass = 'text-gray-700 dark:text-gray-300';
+                                }
+                                
                                 return `
                                     <div class="program-item ${program.state} ${isHidden ? 'hidden' : ''} 
                                          p-3 md:p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
                                          onclick="showProgramModal('${channel.id}', '${program.time}')">
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
-                                                <div class="flex items-center gap-1 text-xs md:text-sm">
+                                                <div class="flex items-center gap-1 text-xs md:text-sm ${timeClass}">
                                                     ${program.time}
                                                 </div>
-                                                <div class="font-medium text-sm md:text-base">
+                                                <div class="font-medium text-sm md:text-base ${titleClass}">
                                                     ${program.title}
                                                 </div>
                                             </div>
@@ -399,7 +435,7 @@ function renderPrograms(selectedDate = null) {
                                             ` : ''}
                                         </div>
                                         ${isLiveProgram ? `
-                                            <div class="mt-2 progress-bar">
+                                            <div class="mt-2 progress-container">
                                                 <div class="progress-fill" style="width: ${progress}%"></div>
                                             </div>
                                         ` : ''}
@@ -442,7 +478,33 @@ function toggleSchedule(channelId) {
 
 // Helper function to render channel programs
 function renderChannelPrograms(container, programs, channelId) {
-    container.innerHTML = programs.map(program => {
+    // First, set the program states
+    const programsWithState = programs.map(program => {
+        if (!program.state) {
+            const isLiveProgram = isLive(program.time, program.duration);
+            let state;
+            
+            if (isLiveProgram) {
+                state = 'today';
+            } else {
+                const [programHour, programMinute] = program.time.split(':').map(Number);
+                const programTime = new Date();
+                programTime.setHours(programHour, programMinute, 0, 0);
+                const currentTime = new Date();
+                
+                if (programTime < currentTime) {
+                    state = 'past';
+                } else {
+                    state = 'next';
+                }
+            }
+            
+            return { ...program, state };
+        }
+        return program;
+    });
+    
+    container.innerHTML = programsWithState.map(program => {
         const progress = calculateProgramProgress(program.time, program.duration);
         const isLiveProgram = isLive(program.time, program.duration);
         
@@ -450,14 +512,14 @@ function renderChannelPrograms(container, programs, channelId) {
         let titleClass, timeClass;
         
         if (program.state === 'past') {
-            titleClass = 'text-gray-400 dark:text-gray-500 font-normal';
+            titleClass = 'text-gray-500 dark:text-gray-500 font-normal';
             timeClass = 'text-gray-400 dark:text-gray-500';
         } else if (program.state === 'today') {
-            titleClass = 'text-gray-700 dark:text-gray-200 font-medium';
-            timeClass = 'text-gray-500 dark:text-gray-400';
+            titleClass = 'text-gray-800 dark:text-gray-200 font-medium';
+            timeClass = 'text-gray-600 dark:text-gray-400';
         } else { // next
             titleClass = 'text-black dark:text-white font-semibold';
-            timeClass = 'text-gray-600 dark:text-gray-300';
+            timeClass = 'text-gray-700 dark:text-gray-300';
         }
         
         return `
@@ -479,7 +541,7 @@ function renderChannelPrograms(container, programs, channelId) {
                     ` : ''}
                 </div>
                 ${isLiveProgram ? `
-                    <div class="mt-2 progress-bar">
+                    <div class="mt-2 progress-container">
                         <div class="progress-fill" style="width: ${progress}%"></div>
                     </div>
                 ` : ''}
@@ -589,7 +651,7 @@ function showProgramModal(channelId, programTime) {
                     
                     ${isLiveProgram ? `
                         <div class="progress-section">
-                            <div class="progress-bar">
+                            <div class="progress-container">
                                 <div class="progress-fill" style="width: ${progress}%"></div>
                             </div>
                             <div class="progress-text">${progress}% tamamlandı</div>
@@ -795,7 +857,7 @@ function showChannelDetail(channelId) {
                                         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">${program.description}</p>
                                     ` : ''}
                                     ${isLiveProgram ? `
-                                        <div class="mt-2 progress-bar">
+                                        <div class="mt-2 progress-container">
                                             <div class="progress-fill" style="width: ${progress}%"></div>
                                         </div>
                                     ` : ''}

@@ -195,25 +195,37 @@
   }
 
   .program-item.past h3 {
-    @apply text-gray-400 dark:text-gray-500 font-normal;
+    @apply text-gray-500 dark:text-gray-500 font-normal;
+  }
+  
+  .program-item.past p {
+    @apply text-gray-400 dark:text-gray-500;
   }
 
   .program-item.today {
-    @apply text-gray-600 dark:text-gray-300;
+    @apply text-red-500;
   }
 
   .program-item.today h3 {
-    @apply text-gray-700 dark:text-gray-200 font-medium;
+    @apply text-gray-800 dark:text-gray-200 font-medium;
+  }
+  
+  .program-item.today p {
+    @apply text-gray-600 dark:text-gray-400;
   }
 
   .program-item.next {
-    @apply text-gray-800 dark:text-white;
+    @apply text-gray-900 dark:text-white;
   }
   
   .program-item.next h3 {
     @apply font-semibold text-black dark:text-white;
   }
   
+  .program-item.next p {
+    @apply text-gray-800 dark:text-gray-200;
+  }
+
   .icon-btn {
     @apply flex items-center justify-center w-8 h-8 shadow-sm rounded-full bg-iconBtn-light dark:bg-iconBtn-dark;
   }
@@ -233,11 +245,24 @@
 
   /* Progress Indicators */
   .progress-container {
-    @apply h-1 bg-progress dark:bg-progress rounded-full overflow-hidden;
+    @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
   }
 
   .progress-bar {
     @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
+  }
+  
+  /* For the detailed program view */
+  .progress-section {
+    @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
+  }
+  
+  .progress-section .progress-container {
+    @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+  }
+  
+  .progress-text {
+    @apply mt-2 text-sm text-gray-600 dark:text-gray-400;
   }
 
   /* Add these footer styles to components.css */
