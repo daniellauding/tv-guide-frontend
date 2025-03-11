@@ -358,8 +358,16 @@ function toggleAllSchedules() {
     const button = document.getElementById('currentProgramsToggle');
     showAllPrograms = !showAllPrograms;
     
-    // Update button appearance
-    button.classList.toggle('text-primary-500', !showAllPrograms);
+    // Update button appearance based on state
+    // When showAllPrograms is true, use opacity-50 to indicate filter is active
+    // When showAllPrograms is false, use opacity-100 to indicate no filter
+    if (showAllPrograms) {
+        button.classList.remove('opacity-100');
+        button.classList.add('opacity-50');
+    } else {
+        button.classList.remove('opacity-50');
+        button.classList.add('opacity-100');
+    }
     
     // Re-render programs with current date to show/hide past programs
     const activeDay = document.querySelector('.day-nav-item.active');
@@ -749,13 +757,31 @@ function setupThemeToggle() {
     // Set initial theme
     document.documentElement.classList.toggle('dark', initialTheme === 'dark');
     
-    // Update button state
-    themeToggle.setAttribute('aria-pressed', initialTheme === 'dark');
-        
+    // Set initial button state with opacity
+    if (initialTheme === 'dark') {
+        themeToggle.classList.add('opacity-50');
+        themeToggle.classList.remove('opacity-100');
+    } else {
+        themeToggle.classList.add('opacity-100');
+        themeToggle.classList.remove('opacity-50');
+    }
+    
+    // Add click handler
     themeToggle.addEventListener('click', () => {
+        // Toggle theme
         const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        themeToggle.setAttribute('aria-pressed', isDark);
+        
+        // Toggle opacity
+        if (isDark) {
+            themeToggle.classList.remove('opacity-100');
+            themeToggle.classList.add('opacity-50');
+        } else {
+            themeToggle.classList.remove('opacity-50');
+            themeToggle.classList.add('opacity-100');
+        }
+        
+        // Save preference
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 }
 
@@ -905,15 +931,18 @@ function toggleSearch() {
     if (isVisible) {
         // Hide search
         searchSection.classList.add('hidden');
-        searchToggle.innerHTML = '<span class="icon-search"></span>';
+        searchToggle.classList.remove('opacity-50');
+        searchToggle.classList.add('opacity-100');
         searchInput.value = ''; // Clear search input
         // Clear search results if any
         renderPrograms();
     } else {
         // Show search
         searchSection.classList.remove('hidden');
-        searchToggle.innerHTML = '<span class="icon-close"></span>';
-        searchInput.focus(); // Focus the input
+        searchToggle.classList.remove('opacity-100');
+        searchToggle.classList.add('opacity-50');
+        // Focus search input
+        setTimeout(() => searchInput.focus(), 100);
     }
 }
 
@@ -924,10 +953,15 @@ function setupSearch() {
     const closeSearch = document.getElementById('closeSearch');
     
     if (searchToggle) {
+        // Set initial opacity to 100%
+        searchToggle.classList.add('opacity-100');
+        searchToggle.classList.remove('opacity-50');
         searchToggle.addEventListener('click', toggleSearch);
     }
     
     if (closeSearch) {
+        // Ensure the close button has the correct opacity
+        closeSearch.classList.add('opacity-100');
         closeSearch.addEventListener('click', toggleSearch);
     }
 
@@ -982,7 +1016,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize current programs toggle with active state
     const currentProgramsToggle = document.getElementById('currentProgramsToggle');
     if (currentProgramsToggle) {
-        currentProgramsToggle.classList.add('text-primary-500');
+        // Set initial opacity based on showAllPrograms state
+        // Default is opacity-100 (no filter active)
+        if (showAllPrograms) {
+            currentProgramsToggle.classList.add('opacity-50');
+        } else {
+            currentProgramsToggle.classList.add('opacity-100');
+        }
         currentProgramsToggle.addEventListener('click', toggleAllSchedules);
     }
 });
@@ -1433,10 +1473,10 @@ function updateProgramGrid(providerChannels) {
 
 // Add this function to initialize icons
 function initializeIcons() {
-    // Initialize search icon with xs size
+    // Initialize search icon with the correct size
     const searchIcon = document.querySelector('.icon-search');
     if (searchIcon) {
-        searchIcon.innerHTML = createIcon('search', 'w-3.5 h-3.5');
+        searchIcon.innerHTML = createIcon('search', 'w-6 h-6');
     }
 }
 
@@ -1592,16 +1632,16 @@ function setupDateNavigation() {
             const dateStr = date.toISOString().split('T')[0];
             const dayName = new Intl.DateTimeFormat('tr-TR', { weekday: 'short' }).format(date);
             const dayNum = date.getDate();
+            const month = date.getMonth() + 1; // Month is 0-indexed, so add 1
+            const formattedDate = `${dayNum}/${month}`;
             
             return `
                 <button 
                     data-date="${dateStr}"
-                    class="day-nav-item flex flex-row gap-2 items-center px-4 py-2 rounded-lg transition-colors
-                           ${isToday ? 'bg-primary-50 text-primary-600 dark:bg-primary-900 dark:text-primary-300' : 
-                                     'hover:bg-gray-50 dark:hover:bg-gray-700'}"
+                    class="day-nav-item ${isToday ? 'active' : ''}"
                 >
-                    <span class=text-1xl font-medium">${dayName}</span>
-                    <span class="text-sm font-regular">${dayNum}</span>
+                    <span class="day-name">${dayName}</span>
+                    <span class="day-date">${formattedDate}</span>
                 </button>
             `;
         }).join('');
@@ -1613,9 +1653,9 @@ function setupDateNavigation() {
                 
                 // Update active state
                 dayNav.querySelectorAll('.day-nav-item').forEach(btn => {
-                    btn.classList.remove('bg-primary-50', 'text-primary-600', 'dark:bg-primary-900', 'dark:text-primary-300');
+                    btn.classList.remove('active');
                 });
-                button.classList.add('bg-primary-50', 'text-primary-600', 'dark:bg-primary-900', 'dark:text-primary-300');
+                button.classList.add('active');
                 
                 // Update content
                 renderPrograms(selectedDate);

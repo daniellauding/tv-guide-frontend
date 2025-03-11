@@ -105,6 +105,17 @@ module.exports = {
     'dark:text-gray-300',
     'border-gray-200',
     'dark:border-gray-700',
+    'opacity-100',
+    'opacity-90',
+    'opacity-80',
+    'opacity-70',
+    'opacity-60',
+    'opacity-50',
+    'opacity-40',
+    'opacity-30',
+    'opacity-20',
+    'opacity-10',
+    'opacity-0',
     {
       pattern: /^(w|h)-\d+/,
       variants: ['lg', 'md', 'sm']
@@ -387,11 +398,11 @@ module.exports = {
             }
           },
           background: {
-            DEFAULT: 'transparent',
-            active: 'rgba(0,0,0,0.05)',
-            hover: 'rgba(0,0,0,0.04)',
+            DEFAULT: 'rgba(255, 255, 255, 0.7)',
+            active: '#fff',
+            hover: '#fff',
             light: {
-              DEFAULT: '#FFFFFF',
+              DEFAULT: '#fff',
               hover: '#F5F5F5',
               active: '#EFEFEF',
             },
