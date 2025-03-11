@@ -1495,12 +1495,12 @@ function setupDateNavigation() {
             return `
                 <button 
                     data-date="${dateStr}"
-                    class="day-nav-item flex flex-col items-center px-4 py-2 rounded-lg transition-colors
+                    class="day-nav-item flex flex-row gap-2 items-center px-4 py-2 rounded-lg transition-colors
                            ${isToday ? 'bg-primary-50 text-primary-600 dark:bg-primary-900 dark:text-primary-300' : 
                                      'hover:bg-gray-50 dark:hover:bg-gray-700'}"
                 >
-                    <span class="text-sm font-medium">${dayName}</span>
-                    <span class="text-2xl font-semibold">${dayNum}</span>
+                    <span class=text-1xl font-medium">${dayName}</span>
+                    <span class="text-sm font-regular">${dayNum}</span>
                 </button>
             `;
         }).join('');
