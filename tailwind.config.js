@@ -364,8 +364,8 @@ module.exports = {
           },
         },
         header: {
-          DEFAULT: '#F37335',
-          dark: '#F37335',
+          DEFAULT: '#fff',
+          dark: '#fff',
         },
         wrapper: {
           DEFAULT: '#fff',

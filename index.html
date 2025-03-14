@@ -11,20 +11,20 @@
     <script src="./src/constants/icons.js"></script>
     <script src="./src/main.js" defer></script>
 </head>
-<body class="bg-body dark:bg-body-dark">
+<body class="body">
     <!-- Header -->
     <header class="header">
-        <div class="mx-auto px-4">
+        <div class="header-container">
             <nav class="header-nav">
-                <div class="flex items-center space-x-6">
-                                      <!-- Mobile menu button -->
-                                      <button onclick="toggleMobileMenu()" 
-                                      class="nav-button"
-                                      aria-label="Menu">
-                                  <span class="icon-hamburger"></span>
-                              </button>
+                <div class="header-nav-inner">
+                    <!-- Mobile menu button -->
+                    <button onclick="toggleMobileMenu()" 
+                      class="nav-button"
+                      aria-label="Menu">
+                      <span class="icon-hamburger"></span>
+                    </button>
                     <h1 class="header-title" onclick="resetView()">
-                        <img src="./src/logo.png" alt="TV Rehberi" class="h-8 md:h-10 w-auto cursor-pointer">
+                        <img src="./src/logo.png" alt="TV Rehberi" class="header-logo">
                     </h1>
                 </div>
                 

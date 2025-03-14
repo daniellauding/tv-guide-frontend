@@ -1,6 +1,8 @@
 @layer components {
   /* Component-specific theme styles */
-
+  .body {
+    @apply bg-body dark:bg-body-dark
+  }
   /* Mobile Menu */
   .mobile-menu-backdrop {
     @apply fixed inset-0 bg-black z-80 transition-opacity duration-300;
@@ -53,13 +55,25 @@
            bg-header dark:bg-header shadow-lg;
   }
 
+  .header-container {
+    @apply mx-auto px-4;
+  }
+
   .header-nav {
     @apply flex items-center justify-between h-16;
+  }
+
+  .header-nav-inner {
+    @apply flex items-center space-x-6
   }
 
   .header-title {
     @apply flex items-center font-barlow font-semibold text-3xl 
            text-title dark:text-title-dark hover:text-title-hover;
+  }
+
+  .header-logo {
+    @apply h-8 md:h-10 w-auto cursor-pointer;
   }
 
   .header-title img {
