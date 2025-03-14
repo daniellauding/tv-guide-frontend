@@ -221,7 +221,7 @@ const tvData = {
 };
 
 // Add this helper function to generate realistic dates
-function generateDateRange(daysBack = 2, daysForward = 3) {
+function generateDateRange(daysBack = 0, daysForward = 4) {
     const dates = [];
     const today = new Date();
     
@@ -1110,7 +1110,7 @@ function toggleChannel(channelId, enabled) {
 // Initialize channels with enabled state based on provider
 function initializeChannels() {
     const providerAvailability = {
-        ulusal: {
+        providerOne: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1122,7 +1122,7 @@ function initializeChannels() {
             'beyaztv': true,
             'ntv': false
         },
-        digiturk: {
+        providerTwo: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1131,7 +1131,7 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        dsmart: {
+        providerThree: {
             'show': true,
             'fox': true,
             'star': true,
@@ -1139,12 +1139,12 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        other: {
+        providerFour: {
             'show': true,
             'kanal7': true,
             'teve2': true
         },
-        tivibu: {
+        providerFive: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1153,7 +1153,7 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        turksat: {
+        providerSix: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1165,7 +1165,7 @@ function initializeChannels() {
             'beyaztv': true,
             'ntv': true
         },
-        vodafone: {
+        providerSeven: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1174,7 +1174,7 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        turkcell: {
+        providerEight: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1183,13 +1183,13 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        blutv: {
+        providerNine: {
             'show': true,
             'atv': true,
             'fox': true,
             'star': true
         },
-        netflix: {
+        providerTen: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1198,7 +1198,7 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        amazon: {
+        providerEleven: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1207,7 +1207,7 @@ function initializeChannels() {
             'trt1': true,
             'ntv': true
         },
-        disney: {
+        providerTwelve: {
             'show': true,
             'atv': true,
             'fox': true,
@@ -1215,12 +1215,27 @@ function initializeChannels() {
             'tv8': true,
             'trt1': true,
             'ntv': true
+        },
+        providerThirteen: {
+            'show': true,
+            'atv': true
+        },
+        providerFourteen: {
+            'fox': true,
+            'star': true,
+            'tv8': true,
+            'trt1': true
+        },
+        providerFifteen: {
+            'kanal7': true,
+            'teve2': true,
+            'beyaztv': true
         }
     };
 
     // Get current provider
     const activeProvider = document.querySelector('.provider-card.active');
-    const providerId = activeProvider ? activeProvider.dataset.provider : 'ulusal';
+    const providerId = activeProvider ? activeProvider.dataset.provider : 'providerOne';
 
     // Set enabled state based on provider availability
     tvData.channels.forEach(channel => {
@@ -1409,7 +1424,7 @@ function setupShrinkingHeader() {
 // Provider management
 function setupProviders() {
     const providerCards = document.querySelectorAll('.provider-card');
-    let activeProvider = 'ulusal'; // Default provider
+    let activeProvider = 'providerOne'; // Default provider
 
     function updateProviderView(providerId) {
         // Update active state of provider cards
@@ -1646,8 +1661,8 @@ function setupChannelSectionVisibility() {
 function setupDateNavigation() {
     const dayNav = document.querySelector('.day-nav .flex.space-x-2');
     
-    // Generate dates for the next 7 days
-    const dates = generateDateRange(2, 4); // 2 days back, 4 days forward
+    // Generate dates for the next 5 days (today + 4 days forward)
+    const dates = generateDateRange(0, 4); // 0 days back (today only), 4 days forward
     
     // Populate day navigation
     if (dayNav) {
@@ -1686,64 +1701,91 @@ function setupDateNavigation() {
             });
         });
     }
+    
+    // Add click handler for next date button to scroll the date navigation
+    const nextDateBtn = document.getElementById('nextDate');
+    if (nextDateBtn) {
+        nextDateBtn.addEventListener('click', () => {
+            // Scroll the date navigation to show more dates
+            if (dayNav) {
+                // Scroll by 100px to the right to reveal more dates
+                dayNav.scrollBy({
+                    left: 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 }
 
 // Define providers and their available channels
 const providers = {
-    ulusal: {
-        name: 'Ulusal',
+    providerOne: {
+        name: 'Provider #1',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'kanal7', 'teve2', 'beyaztv', 'ntv']
     },
-    digiturk: {
-        name: 'Digiturk',
+    providerTwo: {
+        name: 'Provider #2',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
     },
-    dsmart: {
-        name: 'D-Smart',
+    providerThree: {
+        name: 'Provider #3',
         channels: ['show', 'fox', 'star', 'tv8', 'trt1', 'ntv']
     },
-    other: {
-        name: 'Övriga',
+    providerFour: {
+        name: 'Provider #4',
         channels: ['show', 'kanal7', 'teve2']
     },
-    tivibu: {
-        name: 'Tivibu',
+    providerFive: {
+        name: 'Provider #5',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
     },
-    turksat: {
-        name: 'Türksat',
+    providerSix: {
+        name: 'Provider #6',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'kanal7', 'teve2', 'beyaztv', 'ntv']
     },
-    vodafone: {
-        name: 'Vodafone TV',
+    providerSeven: {
+        name: 'Provider #7',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
     },
-    turkcell: {
-        name: 'Turkcell TV+',
+    providerEight: {
+        name: 'Provider #8',
         channels: ['show', 'atv', 'fox', 'star', 'tv8', 'trt1', 'ntv']
     },
-    blutv: {
-        name: 'BluTV',
+    providerNine: {
+        name: 'Provider #9',
         channels: ['show', 'atv', 'fox', 'star']
     },
-    netflix: {
-        name: 'Netflix',
+    providerTen: {
+        name: 'Provider #10',
         channels: []
     },
-    amazon: {
-        name: 'Prime Video',
+    providerEleven: {
+        name: 'Provider #11',
         channels: []
     },
-    disney: {
-        name: 'Disney+',
+    providerTwelve: {
+        name: 'Provider #12',
         channels: []
+    },
+    providerThirteen: {
+        name: 'Provider #13',
+        channels: ['show', 'atv']
+    },
+    providerFourteen: {
+        name: 'Provider #14',
+        channels: ['fox', 'star', 'tv8', 'trt1']
+    },
+    providerFifteen: {
+        name: 'Provider #15',
+        channels: ['kanal7', 'teve2', 'beyaztv']
     }
 };
 
 // Provider management
 function setupProviders() {
     const providerCards = document.querySelectorAll('.provider-card');
-    let activeProvider = 'ulusal'; // Default provider
+    let activeProvider = 'providerOne'; // Default provider
 
     function updateProviderView(providerId) {
         // Update active state of provider cards

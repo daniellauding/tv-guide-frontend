@@ -392,27 +392,27 @@ module.exports = {
           dark: '#fff',
           text: {
             light: {
-              DEFAULT: 'rgba(0,0,0,0.6)',
-              hover: '#F79235',
-              active: '#F79235'
+              DEFAULT: '#000',
+              hover: '#000',
+              active: '#000'
             },
             dark: {
-              DEFAULT: 'rgba(0,0,0,0.6)',
-              hover: '#F79235',
-              active: '#F79235'
+              DEFAULT: '#000',
+              hover: '#000',
+              active: '#000'
             }
           },
           background: {
-            DEFAULT: 'rgba(255, 255, 255, 0.7)',
+            DEFAULT: '#F0F0F0',
             active: '#fff',
             hover: '#fff',
             light: {
-              DEFAULT: '#fff',
+              DEFAULT: '#F0F0F0',
               hover: '#F5F5F5',
               active: '#EFEFEF',
             },
             dark: {
-              DEFAULT: '#fff',
+              DEFAULT: '#F0F0F0',
               hover: '#F5F5F5',
               active: '#EFEFEF',
             }
@@ -531,6 +531,11 @@ module.exports = {
           dark: '#FFFFFF',
           muted: '#666666',
           hover: '#F37335'
+        },
+        'icon': {
+          DEFAULT: '#000000',
+          'dark': '#000000',
+          'light': '#000000',
         },
       },
       fontFamily: {

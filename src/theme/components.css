@@ -52,7 +52,7 @@
   /* Header */
   .header {
     @apply sticky top-0 z-50 transition-all duration-300 ease-in-out
-           bg-header dark:bg-header shadow-lg;
+           bg-header dark:bg-header border-b border-gray-200 dark:border-gray-700;
   }
 
   .header-container {
@@ -91,7 +91,11 @@
   }
 
   .nav-button {
-    @apply p-2 text-white hover:text-white dark:text-white transition-all hover:scale-95 active:scale-95;
+    @apply p-2 transition-all hover:scale-95 active:scale-95;
+  }
+
+  .nav-button span {
+    @apply text-black dark:text-black;
   }
 
   /* Forms and Inputs */
@@ -362,18 +366,24 @@
 
   .providers {
     @apply 
-           bg-transparent
+    md:hidden bg-provider-background-light dark:bg-provider-background-dark
            w-full md:w-fit md:rounded-full md:shadow-sm overflow-y-scroll;
+    /* Add subtle shadow to indicate scrollability */
+    box-shadow: inset -8px 0 6px -6px rgba(0, 0, 0, 0.1);
     /* overflow-hidden */
+  }
+
+  .providers .provider-scroll-wrapper {
+    @apply pr-8;
   }
 
   .providers-desktop {
     @apply 
-           rounded-full shadow-none overflow-hidden;
+    hidden md:block flex-grow mx-4 rounded-full shadow-none overflow-hidden;
   }
 
   .providers-desktop .provider-scroll-wrapper {
-    @apply px-2 py-1 justify-center;
+    @apply px-2 py-1 justify-start;
   }
 
   .providers-desktop .provider-card {
@@ -390,11 +400,11 @@
   }
 
   .provider-card {
-    @apply rounded-full flex-shrink-0 cursor-pointer transition-all duration-200 text-center 
+    @apply flex-shrink-0 cursor-pointer text-left 
            text-provider-text-light dark:text-provider-text-dark 
            hover:text-provider-text-light-hover dark:hover:text-provider-text-dark-hover 
-           bg-[#F7D7C7] md:border-none md:bg-provider-background hover:bg-provider-background-hover focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
-           inline-flex items-center justify-center font-barlow text-sm px-4 py-1;
+           bg-transparent md:border-none md:bg-transparent hover:bg-transparent focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
+           inline-flex font-barlow text-sm px-4 py-1;
   }
   
   .provider-card:first-of-type {
@@ -406,8 +416,8 @@
   }
 
   .provider-card.active {
-    @apply bg-transparent border-2 border-[#F7C1A6] md:bg-provider-background-hover 
-    text-provider-text-light-active dark:text-gray-50 md:text-provider-text-light-active md:dark:text-provider-text-dark-active;
+    @apply bg-transparent border-0 md:bg-transparent 
+    text-provider-text-light-active dark:text-provider-text-dark-active font-bold;
   }
 
   .provider-scroll-button {

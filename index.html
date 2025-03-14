@@ -29,34 +29,29 @@
                 </div>
                 
                 <!-- Desktop Providers - Hidden on mobile -->
-                <div class="hidden md:block flex-grow mx-4">
-                    <div class="providers-desktop">
-                        <div class="provider-scroll-container">
-                            <button class="provider-scroll-button provider-scroll-prev hidden md:flex">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                </svg>
+                <div class="providers-desktop">
+                    <div class="provider-scroll-container">
+                        <div class="provider-scroll-wrapper">
+                            <button class="provider-card active" data-provider="providerOne">
+                                Provider #1
                             </button>
-                            
-                            <div class="provider-scroll-wrapper">
-                                <button class="provider-card" data-provider="ulusal">
-                                    Ulusal
-                                </button>
-                                <button class="provider-card" data-provider="digiturk">
-                                    Digiturk
-                                </button>
-                                <button class="provider-card" data-provider="dsmart">
-                                    D-Smart
-                                </button>
-                                <button class="provider-card" data-provider="other">
-                                    Övriga
-                                </button>
-                            </div>
-
-                            <button class="provider-scroll-button provider-scroll-next hidden md:flex">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
+                            <button class="provider-card" data-provider="providerTwo">
+                                Provider #2
+                            </button>
+                            <button class="provider-card" data-provider="providerThree">
+                                Provider #3
+                            </button>
+                            <button class="provider-card" data-provider="providerFour">
+                                Provider #4
+                            </button>
+                            <button class="provider-card" data-provider="providerFive">
+                                Provider #5
+                            </button>
+                            <button class="provider-card" data-provider="providerSix">
+                                Provider #6
+                            </button>
+                            <button class="provider-card" data-provider="providerSeven">
+                                Provider #7
                             </button>
                         </div>
                     </div>
@@ -153,36 +148,32 @@
     </header>
 
     <!-- Mobile Providers - Hidden on desktop -->
-    <div class="providers md:hidden bg-provider-background-light dark:bg-provider-background-dark">
-        <div class="max-w-7xl mx-auto">
+    <div class="providers">
+        <div class="providers-inner">
             <div class="provider-scroll-container">
-                <!-- Scroll buttons -->
-                <button class="provider-scroll-button provider-scroll-prev hidden md:flex">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                
-                <div class="provider-scroll-wrapper pr-8">
-                    <button class="provider-card" data-provider="ulusal">
-                        Ulusal
+                <div class="provider-scroll-wrapper">
+                    <button class="provider-card active" data-provider="providerOne">
+                        Provider #1
                     </button>
-                    <button class="provider-card" data-provider="digiturk">
-                        Digiturk
+                    <button class="provider-card" data-provider="providerTwo">
+                        Provider #2
                     </button>
-                    <button class="provider-card" data-provider="dsmart">
-                        D-Smart
+                    <button class="provider-card" data-provider="providerThree">
+                        Provider #3
                     </button>
-                    <button class="provider-card" data-provider="other">
-                        Övriga
+                    <button class="provider-card" data-provider="providerFour">
+                        Provider #4
+                    </button>
+                    <button class="provider-card" data-provider="providerFive">
+                        Provider #5
+                    </button>
+                    <button class="provider-card" data-provider="providerSix">
+                        Provider #6
+                    </button>
+                    <button class="provider-card" data-provider="providerSeven">
+                        Provider #7
                     </button>
                 </div>
-
-                <button class="provider-scroll-button provider-scroll-next hidden md:flex">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
             </div>
         </div>
     </div>
@@ -191,20 +182,19 @@
     <div id="moreProvidersModal" class="modal-base hidden">
         <div class="modal-window max-w-4xl">
             <div class="modal-header">
-                <h3 class="modal-title">Tüm TV Platformları</h3>
+                <h3 class="modal-title">All TV Providers (Alternative View)</h3>
                 <button class="nav-button" onclick="closeModal(this)">
                     ${createIcon('close', 'w-5 h-5')}
                 </button>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-                <button class="provider-card !w-full !justify-center" data-provider="tivibu">Tivibu</button>
-                <button class="provider-card !w-full !justify-center" data-provider="turksat">Türksat</button>
-                <button class="provider-card !w-full !justify-center" data-provider="vodafone">Vodafone TV</button>
-                <button class="provider-card !w-full !justify-center" data-provider="turkcell">Turkcell TV+</button>
-                <button class="provider-card !w-full !justify-center" data-provider="blutv">BluTV</button>
-                <button class="provider-card !w-full !justify-center" data-provider="netflix">Netflix</button>
-                <button class="provider-card !w-full !justify-center" data-provider="amazon">Prime Video</button>
-                <button class="provider-card !w-full !justify-center" data-provider="disney">Disney+</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerOne">Provider #1</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerTwo">Provider #2</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerThree">Provider #3</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerFour">Provider #4</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerFive">Provider #5</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerSix">Provider #6</button>
+                <button class="provider-card !w-full !justify-center" data-provider="providerSeven">Provider #7</button>
             </div>
         </div>
     </div>
@@ -213,10 +203,6 @@
     <div class="day-nav bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-center space-x-4 py-3">
-                <button id="prevDate" class="flex-shrink-0 nav-button">
-                    <span class="icon-chevron-left"></span>
-                </button>
-                
                 <div class="week-days flex space-x-2 overflow-x-auto scrollbar-thin">
                     <!-- Days will be populated by JavaScript -->
                 </div>
