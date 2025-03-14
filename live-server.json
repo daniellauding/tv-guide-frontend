@@ -1,0 +1,10 @@
+{
+  "port": 8080,
+  "host": "localhost",
+  "root": ".",
+  "open": true,
+  "file": "index.html",
+  "wait": 1000,
+  "logLevel": 2,
+  "watch": ["index.html", "src/**/*.{js,css,html}"]
+} 

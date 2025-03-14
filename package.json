@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "npm run watch",
     "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify && cp -r index.html src/* dist/",
-    "serve": "live-server",
-    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "serve": "live-server --config=live-server.json",
+    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "live": "concurrently \"npm run watch\" \"npm run serve\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "tailwindcss": "^3.4.17",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "concurrently": "^8.2.2"
   }
 }

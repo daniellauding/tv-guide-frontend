@@ -1,6 +1,52 @@
 @layer components {
   /* Component-specific theme styles */
 
+  /* Mobile Menu */
+  .mobile-menu-backdrop {
+    @apply fixed inset-0 bg-black z-80 transition-opacity duration-300;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .mobile-menu-backdrop.active {
+    opacity: 0.5;
+    pointer-events: auto;
+  }
+  
+  .mobile-menu {
+    @apply fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-800 z-90 shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
+    width: 75vw;
+    transform: translateX(-100%);
+  }
+  
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+  
+  .mobile-menu-header {
+    @apply flex justify-end mb-6;
+  }
+  
+  .mobile-menu-close {
+    @apply p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300;
+  }
+  
+  .mobile-menu-content {
+    @apply flex flex-col flex-grow px-6 py-8 space-y-6;
+  }
+  
+  .mobile-menu-link {
+    @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
+  }
+  
+  .mobile-menu-option {
+    @apply flex items-center justify-between py-4;
+  }
+  
+  .mobile-menu-option-text {
+    @apply text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
+  }
+
   /* Header */
   .header {
     @apply sticky top-0 z-50 transition-all duration-300 ease-in-out

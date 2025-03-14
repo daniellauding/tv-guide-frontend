@@ -129,11 +129,21 @@
 
 /* Add mobile menu animations */
 @keyframes mobileMenuFadeIn {
-    from { opacity: 0; transform: translateY(-1rem); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateX(-100%); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes mobileMenuFadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-1rem); }
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-100%); }
+}
+
+@keyframes backdropFadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.5; }
+}
+
+@keyframes backdropFadeOut {
+    from { opacity: 0.5; }
+    to { opacity: 0; }
 } 

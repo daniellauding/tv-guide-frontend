@@ -10,6 +10,11 @@ module.exports = {
     'bg-black',
     'bg-opacity-50',
     'z-50',
+    'z-60',
+    'z-70',
+    'z-80',
+    'z-90',
+    'z-100',
     'max-w-lg',
     'w-full',
     // Cursor classes
@@ -535,6 +540,11 @@ module.exports = {
       },
       zIndex: {
         '50': '50',
+        '60': '60',
+        '70': '70',
+        '80': '80',
+        '90': '90',
+        '100': '100',
       },
       backgroundImage: {
         'gradient-dark': 'linear-gradient(116.82deg, #F37435 0%, #FDC730 99.59%)',

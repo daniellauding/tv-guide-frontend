@@ -1289,11 +1289,27 @@ function showAboutPage(event) {
 // Add these functions for mobile menu
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
     const providers = document.querySelector('.providers');
     
-    if (mobileMenu) {
-        const isMenuOpen = !mobileMenu.classList.contains('hidden');
-        mobileMenu.classList.toggle('hidden');
+    if (mobileMenu && backdrop) {
+        const isMenuOpen = mobileMenu.classList.contains('active');
+        
+        if (isMenuOpen) {
+            // Close the menu
+            mobileMenu.classList.remove('active');
+            backdrop.classList.remove('active');
+            
+            // Enable scrolling on body
+            document.body.style.overflow = '';
+        } else {
+            // Open the menu
+            mobileMenu.classList.add('active');
+            backdrop.classList.add('active');
+            
+            // Disable scrolling on body when menu is open
+            document.body.style.overflow = 'hidden';
+        }
         
         // Update providers z-index based on menu state
         if (providers) {
@@ -1302,11 +1318,19 @@ function toggleMobileMenu() {
     }
 }
 
+// Add click event to backdrop to close menu when clicked
+document.addEventListener('DOMContentLoaded', () => {
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    if (backdrop) {
+        backdrop.addEventListener('click', toggleMobileMenu);
+    }
+});
+
 // Add this to close mobile menu on resize if open
 window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) { // md breakpoint
         const mobileMenu = document.getElementById('mobileMenu');
-        if (!mobileMenu.classList.contains('hidden')) {
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
             toggleMobileMenu();
         }
     }

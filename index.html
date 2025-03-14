@@ -119,38 +119,35 @@
         </div>
         
         <!-- Mobile menu overlay -->
-        <div id="mobileMenu" class="fixed inset-0 bg-white dark:bg-gray-800 z-90 hidden">
-            <div class="h-full flex flex-col">
-                <div class="flex justify-end mb-6">
-                    <button 
-                        onclick="toggleMobileMenu()"
-                        class="p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300">
-                        <span class="icon-close"></span>
-                    </button>
-                </div>
-                <div class="flex flex-col flex-grow px-6 py-8 space-y-6">
-                    <a href="#" 
-                       onclick="showAboutPage(event); toggleMobileMenu();" 
-                       class="py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
-                        Hakkında
-                    </a>
-                    
-                    <!-- Add theme toggle option -->
-                    <div class="flex items-center justify-between py-4">
-                        <span class="text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300">
-                            Karanlık Mod
-                        </span>
-                        <button 
-                            id="mobileThemeToggle" 
-                            type="button" 
-                            role="switch" 
-                            aria-checked="false"
-                            class="theme-switch"
-                        >
-                            <span class="theme-switch-handle"></span>
-                        </button>
-                    </div>
-                </div>
+        <div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
+        <div id="mobileMenu" class="mobile-menu">
+            <div class="mobile-menu-header">
+                <button 
+                    onclick="toggleMobileMenu()"
+                    class="mobile-menu-close">
+                    <span class="icon-close"></span>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <a href="index.html" 
+                   class="mobile-menu-link">
+                    TV-tablå
+                </a>
+                
+                <a href="contact.html" 
+                   class="mobile-menu-link">
+                    Kontakta oss
+                </a>
+                
+                <a href="streaming.html" 
+                   class="mobile-menu-link">
+                    Streaming
+                </a>
+                
+                <a href="stats.html" 
+                   class="mobile-menu-link">
+                    Tittarsiffror
+                </a>
             </div>
         </div>
     </header>
