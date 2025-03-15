@@ -427,7 +427,7 @@ module.exports = {
           dark: '#FCC430',
         },
         body: {
-          DEFAULT: '#FCF6F2',
+          DEFAULT: '#fff',
           dark: '#261E17',
         },
         filter: {

@@ -221,13 +221,25 @@ const tvData = {
 };
 
 // Add this helper function to generate realistic dates
-function generateDateRange(daysBack = 0, daysForward = 4) {
+function generateDateRange(daysBack = 0, daysForward = 6) {
     const dates = [];
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to beginning of day
     
-    for (let i = -daysBack; i <= daysForward; i++) {
+    // Add past dates if needed
+    for (let i = daysBack; i > 0; i--) {
         const date = new Date(today);
-        date.setDate(date.getDate() + i);
+        date.setDate(today.getDate() - i);
+        dates.push(date);
+    }
+    
+    // Add today
+    dates.push(new Date(today));
+    
+    // Add future dates
+    for (let i = 1; i <= daysForward; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
         dates.push(date);
     }
     
@@ -402,7 +414,7 @@ function renderPrograms(selectedDate = null) {
                                 </div>
                             </div>
                         </div>
-                        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-[calc(100vh-16rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                        <div class="channel-item">
                             ${allPrograms.map(program => {
                                 const isHidden = !showAllPrograms && program.state === 'past';
                                 const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
@@ -424,7 +436,7 @@ function renderPrograms(selectedDate = null) {
                                 
                                 return `
                                     <div class="program-item ${program.state} ${isHidden ? 'hidden' : ''} 
-                                         p-3 md:p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
+                                         "
                                          onclick="showProgramModal('${channel.id}', '${program.time}')">
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
@@ -1051,6 +1063,9 @@ function setupScrollShadows() {
     
     // Also add shadows to the day navigation
     const dayNav = document.querySelector('.day-nav .week-days');
+    const prevDateBtn = document.getElementById('prevDate');
+    const nextDateBtn = document.getElementById('nextDate');
+    
     if (dayNav) {
         // Create a container for the week-days if it doesn't exist
         if (!dayNav.parentElement.classList.contains('week-days-container')) {
@@ -1065,13 +1080,21 @@ function setupScrollShadows() {
         function updateDayNavShadows() {
             const scrollLeft = dayNav.scrollLeft;
             const maxScrollLeft = dayNav.scrollWidth - dayNav.clientWidth;
+            const hasHorizontalScroll = dayNav.scrollWidth > dayNav.clientWidth;
             
             // Only show shadows if there's scrollable content
-            if (dayNav.scrollWidth <= dayNav.clientWidth) {
+            if (!hasHorizontalScroll) {
                 weekDaysContainer.classList.remove('shadow-left', 'shadow-right');
+                if (prevDateBtn) prevDateBtn.classList.add('hidden');
+                if (nextDateBtn) nextDateBtn.classList.add('hidden');
             } else {
+                // Update shadows
                 weekDaysContainer.classList.toggle('shadow-left', scrollLeft > 0);
                 weekDaysContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+                
+                // Update navigation buttons
+                if (prevDateBtn) prevDateBtn.classList.toggle('hidden', scrollLeft <= 0);
+                if (nextDateBtn) nextDateBtn.classList.toggle('hidden', scrollLeft >= maxScrollLeft - 5);
             }
         }
         
@@ -1083,6 +1106,25 @@ function setupScrollShadows() {
         
         // Update on window resize
         window.addEventListener('resize', updateDayNavShadows);
+        
+        // Add click handlers for the navigation buttons
+        if (prevDateBtn) {
+            prevDateBtn.addEventListener('click', () => {
+                dayNav.scrollBy({
+                    left: -100,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        if (nextDateBtn) {
+            nextDateBtn.addEventListener('click', () => {
+                dayNav.scrollBy({
+                    left: 100,
+                    behavior: 'smooth'
+                });
+            });
+        }
     }
 }
 
@@ -1754,62 +1796,70 @@ function setupChannelSectionVisibility() {
 
 // Update setupDateNavigation function
 function setupDateNavigation() {
-    const dayNav = document.querySelector('.day-nav .flex.space-x-2');
+    const dayNav = document.querySelector('.day-nav .week-days');
+    const nextDateBtn = document.getElementById('nextDate');
     
-    // Generate dates for the next 5 days (today + 4 days forward)
-    const dates = generateDateRange(0, 4); // 0 days back (today only), 4 days forward
+    // Generate dates for a full week (7 days)
+    const dates = generateDateRange(0, 6); // 0 days back (today only), 6 days forward
     
     // Populate day navigation
     if (dayNav) {
-        dayNav.innerHTML = dates.map(date => {
+        dayNav.innerHTML = dates.map((date, index) => {
             const isToday = new Date().toDateString() === date.toDateString();
             const dateStr = date.toISOString().split('T')[0];
-            const dayName = new Intl.DateTimeFormat('tr-TR', { weekday: 'short' }).format(date);
             const dayNum = date.getDate();
             const month = date.getMonth() + 1; // Month is 0-indexed, so add 1
             const formattedDate = `${dayNum}/${month}`;
+            
+            // Determine the label based on the index
+            let dayLabel;
+            if (index === 0) {
+                dayLabel = 'Today';
+            } else if (index === 1) {
+                dayLabel = 'Tomorrow';
+            } else {
+                // Use the weekday name for other days
+                dayLabel = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+            }
             
             return `
                 <button 
                     data-date="${dateStr}"
                     class="day-nav-item ${isToday ? 'active' : ''}"
                 >
-                    <span class="day-name">${dayName}</span>
-                    <span class="day-date">${formattedDate}</span>
+                    <div class="day-name">${dayLabel}</div>
+                    <div class="day-date">${formattedDate}</div>
                 </button>
             `;
         }).join('');
         
-        // Add click handlers for day buttons
-        dayNav.querySelectorAll('.day-nav-item').forEach(button => {
+        // Add click event listeners to date buttons
+        const dateButtons = dayNav.querySelectorAll('.day-nav-item');
+        dateButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const selectedDate = button.dataset.date;
+                // Remove active class from all buttons
+                dateButtons.forEach(btn => btn.classList.remove('active'));
                 
-                // Update active state
-                dayNav.querySelectorAll('.day-nav-item').forEach(btn => {
-                    btn.classList.remove('active');
-                });
+                // Add active class to clicked button
                 button.classList.add('active');
                 
-                // Update content
+                // Get selected date
+                const selectedDate = button.dataset.date;
+                
+                // Update programs based on selected date
                 renderPrograms(selectedDate);
             });
         });
-    }
-    
-    // Add click handler for next date button to scroll the date navigation
-    const nextDateBtn = document.getElementById('nextDate');
-    if (nextDateBtn) {
-        nextDateBtn.addEventListener('click', () => {
-            // Scroll the date navigation to show more dates
-            if (dayNav) {
-                // Scroll by 100px to the right to reveal more dates
+        
+        // Add click handler for next date button
+        if (nextDateBtn) {
+            nextDateBtn.addEventListener('click', () => {
                 dayNav.scrollBy({
                     left: 100,
                     behavior: 'smooth'
                 });
-            }
-        });
+            });
+        }
     }
 }
 

@@ -234,6 +234,34 @@
     @apply text-status-ended;
   }
 
+  .channel-item {
+    @apply divide-y dark:divide-gray-700 max-h-[calc(100vh-16rem)] overflow-y-auto;
+    /* Custom scrollbar styles */
+    scrollbar-width: thin;
+    scrollbar-color: #D1D5DB transparent;
+  }
+  
+  .dark .channel-item {
+    scrollbar-color: #4B5563 transparent;
+  }
+  
+  .channel-item::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .channel-item::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .channel-item::-webkit-scrollbar-thumb {
+    background-color: #D1D5DB;
+    border-radius: 3px;
+  }
+  
+  .dark .channel-item::-webkit-scrollbar-thumb {
+    background-color: #4B5563;
+  }
+
   .program-wraper {
     @apply bg-programWrapper-light dark:bg-programWrapper-dark;
   }
@@ -243,7 +271,7 @@
   }
 
   .program-item {
-    @apply bg-programItem-light dark:bg-programItem-dark;
+    @apply bg-programItem-light dark:bg-programItem-dark p-3 md:p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700;
   }
 
   .program-item.past {
@@ -498,7 +526,7 @@
 
   /* Channel Navigation Section */
   .channel-section {
-    @apply sticky top-16 z-40 transition-all duration-300 ease-in-out;
+    @apply sticky top-16 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 left-0 right-0 opacity-0 hidden;
   }
 
   .channel-section.visible {
@@ -513,4 +541,128 @@
   .channel-nav img {
     @apply w-8 h-8 object-contain;
   }
+
+  /* Day Navigation styles */
+.day-nav {
+  @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700
+}
+
+.day-nav-inner {
+  @apply mx-auto max-w-7xl px-4;
+}
+
+.day-nav .scrollbar-thin {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.day-nav .scrollbar-thin::-webkit-scrollbar {
+  display: none;
+}
+
+/* Day navigation container */
+.day-nav .week-days-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.day-nav .week-days {
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.day-nav .week-days::-webkit-scrollbar {
+  display: none;
+}
+
+/* Day navigation shadows */
+.day-nav .week-days-container::before,
+.day-nav .week-days-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.day-nav .week-days-container::before {
+  left: 0;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+}
+
+.day-nav .week-days-container::after {
+  right: 0;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+}
+
+.day-nav .week-days-container.shadow-left::before {
+  opacity: 1;
+}
+
+.day-nav .week-days-container.shadow-right::after {
+  opacity: 1;
+}
+
+.dark .day-nav .week-days-container::before {
+  background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+}
+
+.dark .day-nav .week-days-container::after {
+  background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+}
+
+.day-nav-item {
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  @apply rounded-md bg-gray-300 text-black;
+}
+
+.day-nav-item .day-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.day-nav-item .day-date {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.day-nav-item.active {
+  @apply rounded-md bg-gray-800 text-white;
+}
+
+.day-nav-item.active .day-name {
+  /* color: var(--primary-300); */
+}
+
+.day-nav-item.active .day-date {
+  /* color: var(--primary-300); */
+}
+
+.dark .day-nav-item.active {
+  /* background-color: var(--primary-300); */
+}
+
+.dark .day-nav-item.active .day-name {
+  /* color: var(--primary-300); */
+}
+
+.dark .day-nav-item.active .day-date {
+  /* color: var(--primary-200); */
+}
 }

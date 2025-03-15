@@ -201,39 +201,21 @@
 
     <!-- Day Navigation Section -->
     <div class="day-nav bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4">
-            <!-- Navigation buttons above on mobile -->
-            <div class="flex items-center justify-between py-2 md:hidden">
-                <button id="prevDate" class="flex-shrink-0 nav-button">
-                    <span class="icon-chevron-left"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg></span>
-                </button>
-                <button id="nextDate" class="flex-shrink-0 nav-button">
-                    <span class="icon-chevron-right"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg></span>
-                </button>
-            </div>
-            
-            <!-- Main day navigation with buttons on the side for desktop -->
+        <div class="day-nav-inner">
             <div class="flex items-center justify-center space-x-4 py-3">
-                <!-- Previous button (desktop only) -->
-                <button id="prevDateDesktop" class="flex-shrink-0 nav-button hidden md:block">
+                <button id="prevDate" class="flex-shrink-0 nav-button hidden">
                     <span class="icon-chevron-left"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg></span>
                 </button>
                 
-                <!-- Days container (full width on mobile) -->
-                <div class="week-days-container w-full md:w-auto">
+                <div class="week-days-container flex-1">
                     <div class="week-days flex space-x-2 overflow-x-auto scrollbar-thin">
                         <!-- Days will be populated by JavaScript -->
                     </div>
                 </div>
                 
-                <!-- Next button (desktop only) -->
-                <button id="nextDateDesktop" class="flex-shrink-0 nav-button hidden md:block">
+                <button id="nextDate" class="flex-shrink-0 nav-button hidden">
                     <span class="icon-chevron-right"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg></span>
@@ -243,7 +225,7 @@
     </div>
 
     <!-- Channel Navigation Section -->
-    <div class="channel-section bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div class="channel-section">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center py-3 justify-center">
                 <div class="channel-nav flex space-x-1 overflow-x-auto scrollbar-hide">
