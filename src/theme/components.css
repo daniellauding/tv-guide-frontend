@@ -73,7 +73,7 @@
   }
 
   .header-logo {
-    @apply h-8 md:h-10 w-auto cursor-pointer;
+    @apply h-8 md:h-auto w-fit cursor-pointer;
   }
 
   .header-title img {
@@ -379,11 +379,11 @@
 
   .providers-desktop {
     @apply 
-    hidden md:block flex-grow mx-4 rounded-full shadow-none overflow-hidden;
+    hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
   }
 
   .providers-desktop .provider-scroll-wrapper {
-    @apply px-2 py-1 justify-start;
+    @apply px-2 py-1;
   }
 
   .providers-desktop .provider-card {
@@ -391,7 +391,7 @@
   }
 
   .provider-scroll-container {
-    @apply relative flex w-full scrollbar-hide;
+    @apply relative flex w-full scrollbar-hide overflow-x-auto;
     /* overflow-x-auto */
   }
 

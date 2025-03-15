@@ -992,7 +992,101 @@ function setupSearch() {
     }
 }
 
-// Update the DOMContentLoaded listener
+// Add this function to initialize scroll shadows
+function setupScrollShadows() {
+    const desktopProviderContainer = document.querySelector('.providers-desktop .provider-scroll-container');
+    const mobileProviderContainer = document.querySelector('.providers .provider-scroll-container');
+    
+    if (desktopProviderContainer) {
+        const desktopWrapper = desktopProviderContainer.querySelector('.provider-scroll-wrapper');
+        
+        function updateDesktopShadows() {
+            const scrollLeft = desktopWrapper.scrollLeft;
+            const maxScrollLeft = desktopWrapper.scrollWidth - desktopWrapper.clientWidth;
+            
+            // Only show shadows if there's scrollable content
+            if (desktopWrapper.scrollWidth <= desktopWrapper.clientWidth) {
+                desktopProviderContainer.classList.remove('shadow-left', 'shadow-right');
+            } else {
+                desktopProviderContainer.classList.toggle('shadow-left', scrollLeft > 0);
+                desktopProviderContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+            }
+        }
+        
+        // Initial update
+        updateDesktopShadows();
+        
+        // Update on scroll
+        desktopWrapper.addEventListener('scroll', updateDesktopShadows);
+        
+        // Update on window resize
+        window.addEventListener('resize', updateDesktopShadows);
+    }
+    
+    if (mobileProviderContainer) {
+        const mobileWrapper = mobileProviderContainer.querySelector('.provider-scroll-wrapper');
+        
+        function updateMobileShadows() {
+            const scrollLeft = mobileWrapper.scrollLeft;
+            const maxScrollLeft = mobileWrapper.scrollWidth - mobileWrapper.clientWidth;
+            
+            // Only show shadows if there's scrollable content
+            if (mobileWrapper.scrollWidth <= mobileWrapper.clientWidth) {
+                mobileProviderContainer.classList.remove('shadow-left', 'shadow-right');
+            } else {
+                mobileProviderContainer.classList.toggle('shadow-left', scrollLeft > 0);
+                mobileProviderContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+            }
+        }
+        
+        // Initial update
+        updateMobileShadows();
+        
+        // Update on scroll
+        mobileWrapper.addEventListener('scroll', updateMobileShadows);
+        
+        // Update on window resize
+        window.addEventListener('resize', updateMobileShadows);
+    }
+    
+    // Also add shadows to the day navigation
+    const dayNav = document.querySelector('.day-nav .week-days');
+    if (dayNav) {
+        // Create a container for the week-days if it doesn't exist
+        if (!dayNav.parentElement.classList.contains('week-days-container')) {
+            const container = document.createElement('div');
+            container.className = 'week-days-container';
+            dayNav.parentNode.insertBefore(container, dayNav);
+            container.appendChild(dayNav);
+        }
+        
+        const weekDaysContainer = dayNav.parentElement;
+        
+        function updateDayNavShadows() {
+            const scrollLeft = dayNav.scrollLeft;
+            const maxScrollLeft = dayNav.scrollWidth - dayNav.clientWidth;
+            
+            // Only show shadows if there's scrollable content
+            if (dayNav.scrollWidth <= dayNav.clientWidth) {
+                weekDaysContainer.classList.remove('shadow-left', 'shadow-right');
+            } else {
+                weekDaysContainer.classList.toggle('shadow-left', scrollLeft > 0);
+                weekDaysContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+            }
+        }
+        
+        // Initial update
+        updateDayNavShadows();
+        
+        // Update on scroll
+        dayNav.addEventListener('scroll', updateDayNavShadows);
+        
+        // Update on window resize
+        window.addEventListener('resize', updateDayNavShadows);
+    }
+}
+
+// Update the DOMContentLoaded listener to include setupScrollShadows
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     
@@ -1004,6 +1098,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupChannelSectionVisibility();
     setupDateNavigation();
     setupSearch();
+    setupScrollShadows(); // Add this line
     renderChannelNav();
     renderPrograms(today);
     initializeIcons();
