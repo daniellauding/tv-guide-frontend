@@ -655,7 +655,7 @@
   .day-nav {
     @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
     /* Default position (mobile without channel section visible) */
-    top: 120px; /* Header + providers height on mobile */
+    top: 116px; /* Header + providers height on mobile */
   }
 
   /* Desktop mode - remove sticky positioning */
@@ -811,6 +811,41 @@
 
   .nav-button--next {
     @apply absolute right-0;
+  }
+
+  /* Highlight effect for channel anchor scrolling */
+  .highlight-channel {
+    animation: pulse-highlight 2s ease-in-out;
+    position: relative;
+    z-index: 5;
+  }
+
+  @keyframes pulse-highlight {
+    0% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+  }
+
+  .dark .highlight-channel {
+    animation: pulse-highlight-dark 2s ease-in-out;
+  }
+
+  @keyframes pulse-highlight-dark {
+    0% {
+      box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(96, 165, 250, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
+    }
   }
 
 }

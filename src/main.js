@@ -397,8 +397,26 @@ function renderPrograms(selectedDate = null) {
             ${channels.map(channel => {
                 const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
+                // Find the current or next program index
+                const currentIndex = allPrograms.findIndex(program => 
+                    program.state === 'today' || program.state === 'next'
+                );
+                
+                // Limit programs to 4 when not showing all
+                let displayPrograms = allPrograms;
+                if (!showAllPrograms) {
+                    // If we have a current program, show it and the next 3
+                    if (currentIndex !== -1) {
+                        displayPrograms = allPrograms.slice(currentIndex, currentIndex + 4);
+                    } else {
+                        // If no current program, just show the first 4
+                        displayPrograms = allPrograms.slice(0, 4);
+                    }
+                }
+                
                 return `
                     <div class="program-wrapper"
+                         id="channel-${channel.id}"
                          data-channel-id="${channel.id}">
                         <div class="program-header">
                             <div class="flex items-center justify-between">
@@ -415,8 +433,7 @@ function renderPrograms(selectedDate = null) {
                             </div>
                         </div>
                         <div class="channel-item">
-                            ${allPrograms.map(program => {
-                                const isHidden = !showAllPrograms && program.state === 'past';
+                            ${displayPrograms.map(program => {
                                 const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
                                 const isLiveProgram = isLive(program.time, program.duration, selectedDate);
                                 
@@ -435,8 +452,7 @@ function renderPrograms(selectedDate = null) {
                                 }
                                 
                                 return `
-                                    <div class="program-item ${program.state} ${isHidden ? 'hidden' : ''} 
-                                         "
+                                    <div class="program-item ${program.state}"
                                          onclick="showProgramModal('${channel.id}', '${program.time}')">
                                         <div class="flex justify-between items-start">
                                             <div class="flex flex-row items-center gap-2">
@@ -1187,6 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSearch();
     setupScrollShadows(); // Add this line
     setupScrollBasedSections(); // Add scroll behavior for channel section
+    setupChannelAnchorScrolling(); // Add channel anchor scrolling
     renderChannelNav();
     renderPrograms(today);
     initializeIcons();
@@ -1982,8 +1999,8 @@ function setupScrollBasedSections() {
   const channelSection = document.querySelector('.channel-section');
   const dayNav = document.querySelector('.day-nav');
   let lastScrollY = 0;
-  const scrollThreshold = 200; // Increased threshold - show channel section after 200px of scrolling
-  const bufferZone = 30; // Buffer zone to prevent flickering
+  const scrollThreshold = 350; // Increased threshold - show channel section after 350px of scrolling
+  const bufferZone = 50; // Increased buffer zone to prevent flickering
   let isVisible = false; // Track visibility state
   let scrollTimer = null; // For debouncing
   
@@ -2076,44 +2093,37 @@ function setupScrollBasedSections() {
   observer.observe(dayNav, { attributes: true });
 }
 
-// Add this function to handle the channel section visibility on scroll
-function setupChannelSectionScroll() {
-    const channelSection = document.querySelector('.channel-section');
-    const dayNav = document.querySelector('.day-nav');
-    let lastScrollY = 0;
-    const scrollThreshold = 50; // Show after 50px of scrolling
-
-    // Only apply this behavior on mobile
-    function updateChannelSectionVisibility() {
-        if (window.innerWidth < 768) { // Mobile breakpoint
-            const currentScrollY = window.scrollY;
-            
-            // Show channel section after scrolling down a bit
-            if (currentScrollY > scrollThreshold) {
-                channelSection.classList.add('visible');
-            } else {
-                channelSection.classList.remove('visible');
-            }
-            
-            lastScrollY = currentScrollY;
-        } else {
-            // On desktop, always show the channel section
-            channelSection.classList.remove('visible');
+// Add this function to handle channel anchor scrolling
+function setupChannelAnchorScrolling() {
+  // Add click event listeners to channel elements
+  document.addEventListener('click', function(event) {
+    // Check if the clicked element or its parent is a channel
+    let channelElement = event.target.closest('.channel');
+    
+    if (channelElement) {
+      const channelId = channelElement.dataset.channelId;
+      
+      if (channelId) {
+        // Prevent default anchor behavior
+        event.preventDefault();
+        
+        // Find the target program container for this channel
+        const targetElement = document.getElementById(`channel-${channelId}`);
+        
+        if (targetElement) {
+          // Scroll to the target element with smooth behavior
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // Highlight the target element temporarily
+          targetElement.classList.add('highlight-channel');
+          setTimeout(() => {
+            targetElement.classList.remove('highlight-channel');
+          }, 2000);
         }
+      }
     }
-
-    // Initial check
-    updateChannelSectionVisibility();
-    
-    // Update on scroll
-    window.addEventListener('scroll', updateChannelSectionVisibility);
-    
-    // Update on resize
-    window.addEventListener('resize', updateChannelSectionVisibility);
+  });
 }
-
-// Call this function when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // ... other initialization code
-    setupChannelSectionScroll();
-});
