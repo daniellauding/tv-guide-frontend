@@ -398,7 +398,7 @@ function renderPrograms(selectedDate = null) {
                 const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
                 return `
-                    <div class="program-wrapper rounded-lg shadow-sm overflow-hidden bg-white dark:bg-gray-800"
+                    <div class="program-wrapper"
                          data-channel-id="${channel.id}">
                         <div class="program-header p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center justify-between">
