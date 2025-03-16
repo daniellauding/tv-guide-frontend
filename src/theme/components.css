@@ -553,6 +553,12 @@
     z-index: 39;
   }
 
+  /* Desktop mode - remove sticky positioning */
+  .channel-section.desktop-mode {
+    @apply static;
+    top: auto;
+  }
+
   /* Mobile behavior for channel section */
   @media (max-width: 767px) {
     .channel-section {
@@ -650,6 +656,12 @@
     @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
     /* Default position (mobile without channel section visible) */
     top: 120px; /* Header + providers height on mobile */
+  }
+
+  /* Desktop mode - remove sticky positioning */
+  .day-nav.desktop-mode {
+    @apply static;
+    top: auto;
   }
 
   /* Position when channel section is visible on mobile */

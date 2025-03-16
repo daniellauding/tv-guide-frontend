@@ -1982,48 +1982,99 @@ function setupScrollBasedSections() {
   const channelSection = document.querySelector('.channel-section');
   const dayNav = document.querySelector('.day-nav');
   let lastScrollY = 0;
-  const scrollThreshold = 50; // Show channel section after 50px of scrolling
+  const scrollThreshold = 200; // Increased threshold - show channel section after 200px of scrolling
+  const bufferZone = 30; // Buffer zone to prevent flickering
+  let isVisible = false; // Track visibility state
+  let scrollTimer = null; // For debouncing
   
   // Only apply this behavior on mobile
   const isMobile = () => window.innerWidth < 768;
   
+  // Function to ensure classes are in sync
+  function syncChannelSectionAndDayNav(shouldBeVisible) {
+    if (shouldBeVisible) {
+      channelSection.classList.add('visible');
+      dayNav.classList.add('with-channel-section');
+    } else {
+      channelSection.classList.remove('visible');
+      dayNav.classList.remove('with-channel-section');
+    }
+    isVisible = shouldBeVisible;
+  }
+  
   function updateSectionsOnScroll() {
     const currentScrollY = window.scrollY;
     
-    // Only apply this behavior on mobile
-    if (isMobile()) {
-      // Show channel section after scrolling down a bit
-      if (currentScrollY > scrollThreshold) {
-        channelSection.classList.add('visible');
-        
-        // Add class to adjust day-nav position to be below the channel section
-        dayNav.classList.add('with-channel-section');
-      } else {
-        channelSection.classList.remove('visible');
-        
-        // Remove class to reset day-nav position when channel section is hidden
-        dayNav.classList.remove('with-channel-section');
-      }
-    } else {
-      // On desktop, ensure channel section is always visible
-      channelSection.classList.add('visible');
-      
-      // Remove class on desktop as position is controlled by media query
-      dayNav.classList.remove('with-channel-section');
+    // Clear any existing timer
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
     }
     
-    lastScrollY = currentScrollY;
+    // Set a timer to debounce the scroll event
+    scrollTimer = setTimeout(() => {
+      // Only apply this behavior on mobile
+      if (isMobile()) {
+        // Add hysteresis with buffer zone to prevent flickering
+        if (!isVisible && currentScrollY > scrollThreshold) {
+          // Show channel section when scrolling past threshold
+          syncChannelSectionAndDayNav(true);
+        } else if (isVisible && currentScrollY < (scrollThreshold - bufferZone)) {
+          // Hide channel section only when scrolling significantly above threshold
+          syncChannelSectionAndDayNav(false);
+        }
+      } else {
+        // On desktop, ensure channel section is always visible but not sticky
+        channelSection.classList.add('visible');
+        channelSection.classList.add('desktop-mode');
+        
+        // Remove class on desktop as position is controlled by media query
+        dayNav.classList.remove('with-channel-section');
+        dayNav.classList.add('desktop-mode');
+      }
+      
+      lastScrollY = currentScrollY;
+    }, 10); // Short delay to debounce scroll events
   }
   
   // Update on scroll
   window.addEventListener('scroll', updateSectionsOnScroll);
   
   // Update on resize (in case of switching between mobile and desktop)
-  window.addEventListener('resize', updateSectionsOnScroll);
+  window.addEventListener('resize', function() {
+    // Force sync when resizing
+    if (isMobile()) {
+      const shouldBeVisible = window.scrollY > scrollThreshold;
+      syncChannelSectionAndDayNav(shouldBeVisible);
+    } else {
+      channelSection.classList.add('visible');
+      channelSection.classList.add('desktop-mode');
+      dayNav.classList.remove('with-channel-section');
+      dayNav.classList.add('desktop-mode');
+    }
+  });
   
   // Initial update
   updateSectionsOnScroll();
-} 
+  
+  // Add a mutation observer to ensure classes stay in sync
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'class' && isMobile()) {
+        const isChannelSectionVisible = channelSection.classList.contains('visible');
+        const isDayNavWithChannelSection = dayNav.classList.contains('with-channel-section');
+        
+        // If they're out of sync, force them to be in sync
+        if (isChannelSectionVisible !== isDayNavWithChannelSection) {
+          syncChannelSectionAndDayNav(isChannelSectionVisible);
+        }
+      }
+    });
+  });
+  
+  // Observe both elements for class changes
+  observer.observe(channelSection, { attributes: true });
+  observer.observe(dayNav, { attributes: true });
+}
 
 // Add this function to handle the channel section visibility on scroll
 function setupChannelSectionScroll() {
