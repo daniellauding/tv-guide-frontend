@@ -301,7 +301,7 @@ function renderChannelNav() {
     const nav = document.querySelector('.channel-nav');
     nav.innerHTML = tvData.channels.map(channel => `
         <button 
-            class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
+            class="channel"
             data-channel-id="${channel.id}"
         >
             <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
@@ -400,7 +400,7 @@ function renderPrograms(selectedDate = null) {
                 return `
                     <div class="program-wrapper"
                          data-channel-id="${channel.id}">
-                        <div class="program-header p-3 md:p-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="program-header">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center">
@@ -1008,6 +1008,7 @@ function setupSearch() {
 function setupScrollShadows() {
     const desktopProviderContainer = document.querySelector('.providers-desktop .provider-scroll-container');
     const mobileProviderContainer = document.querySelector('.providers .provider-scroll-container');
+    const channelSectionInner = document.querySelector('.channel-section-inner');
     
     if (desktopProviderContainer) {
         const desktopWrapper = desktopProviderContainer.querySelector('.provider-scroll-wrapper');
@@ -1059,6 +1060,50 @@ function setupScrollShadows() {
         
         // Update on window resize
         window.addEventListener('resize', updateMobileShadows);
+    }
+    
+    // Add shadows to the channel section
+    if (channelSectionInner) {
+        const channelNav = channelSectionInner.querySelector('.channel-nav');
+        
+        function updateChannelSectionShadows() {
+            const scrollLeft = channelNav.scrollLeft;
+            const maxScrollLeft = channelNav.scrollWidth - channelNav.clientWidth;
+            const hasHorizontalScroll = channelNav.scrollWidth > channelNav.clientWidth;
+            
+            // Only show shadows if there's scrollable content
+            if (!hasHorizontalScroll) {
+                channelSectionInner.classList.remove('shadow-left', 'shadow-right');
+            } else {
+                channelSectionInner.classList.toggle('shadow-left', scrollLeft > 0);
+                channelSectionInner.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+            }
+        }
+        
+        // Initial update
+        updateChannelSectionShadows();
+        
+        // Update on scroll
+        channelNav.addEventListener('scroll', updateChannelSectionShadows);
+        
+        // Update on window resize
+        window.addEventListener('resize', updateChannelSectionShadows);
+        
+        // Update when channel section becomes visible
+        const channelSection = document.querySelector('.channel-section');
+        if (channelSection) {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.attributeName === 'class') {
+                        if (channelSection.classList.contains('visible')) {
+                            updateChannelSectionShadows();
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(channelSection, { attributes: true });
+        }
     }
     
     // Also add shadows to the day navigation
@@ -1141,6 +1186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDateNavigation();
     setupSearch();
     setupScrollShadows(); // Add this line
+    setupScrollBasedSections(); // Add scroll behavior for channel section
     renderChannelNav();
     renderPrograms(today);
     initializeIcons();
@@ -1613,12 +1659,12 @@ function updateChannelList(providerChannels) {
 
     channelNav.innerHTML = channels.map(channel => `
         <button 
-            class="flex-shrink-0 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg"
+            class="channel"
             data-channel-id="${channel.id}"
         >
-            <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
+            <div class="channel-img-wrapper">
                 <img src="${channel.logo}" alt="${channel.name}" 
-                     class="h-8 md:h-10 w-auto object-contain"
+                     class="channel-img-wrapper-img"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
             </div>
         </button>
@@ -1750,48 +1796,9 @@ function isLive(programTime, duration, selectedDate = null) {
 
 // Update channel section visibility and scrolling behavior
 function setupChannelSectionVisibility() {
-    const channelSection = document.querySelector('.channel-section');
-    const dayNav = document.querySelector('.day-nav');
-    
-    if (!channelSection || !dayNav) return;
-    
-    // Remove any existing visible class
-    channelSection.classList.remove('visible');
-    
-    // Handle scroll behavior
-    window.addEventListener('scroll', () => {
-        const dayNavBottom = dayNav.getBoundingClientRect().bottom;
-        const shouldBeVisible = dayNavBottom < 0;
-        channelSection.classList.toggle('visible', shouldBeVisible);
-    });
-    
-    // Add click handler for smooth scrolling
-    const channelNav = document.querySelector('.channel-nav');
-    if (channelNav) {
-        channelNav.addEventListener('click', (e) => {
-            const button = e.target.closest('button');
-            if (!button) return;
-
-            const channelId = button.getAttribute('data-channel-id');
-            if (!channelId) return;
-
-            // Find the program wrapper for this channel
-            const targetProgram = document.querySelector(`.program-wrapper[data-channel-id="${channelId}"]`);
-            if (targetProgram) {
-                // Calculate offset to account for sticky header and channel section
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const channelSectionHeight = channelSection.offsetHeight;
-                const offset = headerHeight + channelSectionHeight + 16; // 16px extra padding
-                
-                const targetPosition = targetProgram.getBoundingClientRect().top + window.pageYOffset - offset;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    }
+    // This functionality is now handled by setupScrollBasedSections
+    // Keeping this function as a stub to avoid breaking existing code
+    console.log("Channel section visibility is now handled by setupScrollBasedSections");
 }
 
 // Update setupDateNavigation function
@@ -1968,4 +1975,94 @@ function setupProviders() {
     
     // Make updateProviderView available globally
     window.updateProviderView = updateProviderView;
+}
+
+// Add this function to handle the scroll behavior for the channel section
+function setupScrollBasedSections() {
+  const channelSection = document.querySelector('.channel-section');
+  const dayNav = document.querySelector('.day-nav');
+  let lastScrollY = 0;
+  const scrollThreshold = 50; // Show channel section after 50px of scrolling
+  
+  // Only apply this behavior on mobile
+  const isMobile = () => window.innerWidth < 768;
+  
+  function updateSectionsOnScroll() {
+    const currentScrollY = window.scrollY;
+    
+    // Only apply this behavior on mobile
+    if (isMobile()) {
+      // Show channel section after scrolling down a bit
+      if (currentScrollY > scrollThreshold) {
+        channelSection.classList.add('visible');
+        
+        // Add class to adjust day-nav position to be below the channel section
+        dayNav.classList.add('with-channel-section');
+      } else {
+        channelSection.classList.remove('visible');
+        
+        // Remove class to reset day-nav position when channel section is hidden
+        dayNav.classList.remove('with-channel-section');
+      }
+    } else {
+      // On desktop, ensure channel section is always visible
+      channelSection.classList.add('visible');
+      
+      // Remove class on desktop as position is controlled by media query
+      dayNav.classList.remove('with-channel-section');
+    }
+    
+    lastScrollY = currentScrollY;
+  }
+  
+  // Update on scroll
+  window.addEventListener('scroll', updateSectionsOnScroll);
+  
+  // Update on resize (in case of switching between mobile and desktop)
+  window.addEventListener('resize', updateSectionsOnScroll);
+  
+  // Initial update
+  updateSectionsOnScroll();
 } 
+
+// Add this function to handle the channel section visibility on scroll
+function setupChannelSectionScroll() {
+    const channelSection = document.querySelector('.channel-section');
+    const dayNav = document.querySelector('.day-nav');
+    let lastScrollY = 0;
+    const scrollThreshold = 50; // Show after 50px of scrolling
+
+    // Only apply this behavior on mobile
+    function updateChannelSectionVisibility() {
+        if (window.innerWidth < 768) { // Mobile breakpoint
+            const currentScrollY = window.scrollY;
+            
+            // Show channel section after scrolling down a bit
+            if (currentScrollY > scrollThreshold) {
+                channelSection.classList.add('visible');
+            } else {
+                channelSection.classList.remove('visible');
+            }
+            
+            lastScrollY = currentScrollY;
+        } else {
+            // On desktop, always show the channel section
+            channelSection.classList.remove('visible');
+        }
+    }
+
+    // Initial check
+    updateChannelSectionVisibility();
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateChannelSectionVisibility);
+    
+    // Update on resize
+    window.addEventListener('resize', updateChannelSectionVisibility);
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // ... other initialization code
+    setupChannelSectionScroll();
+});

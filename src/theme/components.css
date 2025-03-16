@@ -235,10 +235,16 @@
   }
 
   .channel-item {
-    @apply divide-y;
     /* Custom scrollbar styles */
     scrollbar-width: thin;
     scrollbar-color: #D1D5DB transparent;
+  }
+  
+  /* Override to remove the border between items */
+  .channel-item > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-y-reverse: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
   }
   
   .dark .channel-item {
@@ -267,7 +273,7 @@
   }
 
   .program-header {
-    @apply p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-programHeader-light dark:bg-programHeader-dark;
+    @apply p-0;
   }
 
   .program-item {
@@ -312,6 +318,18 @@
 
   .icon-btn {
     @apply flex items-center justify-center w-8 h-8 shadow-sm rounded-full bg-iconBtn-light dark:bg-iconBtn-dark;
+  }
+
+  .channel {
+    @apply flex-shrink-0 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg;
+  }
+
+  .channel-img-wrapper {
+    @apply w-8 h-8 md:w-8 md:h-8 logo-channel flex items-center justify-center rounded-md border-gray-200 border;
+  }
+
+  .channel-img-wrapper-img {
+    @apply h-8 md:h-10 w-auto object-contain;
   }
 
   .logo-channel {
@@ -392,13 +410,15 @@
     @apply relative;
   }
 
+  /* Provider section - sticky below header */
   .providers {
     @apply 
     md:hidden bg-provider-background-light dark:bg-provider-background-dark
-           w-full md:w-fit md:rounded-full md:shadow-sm overflow-y-scroll;
+    w-full md:w-fit md:rounded-full md:shadow-sm overflow-y-scroll
+    sticky z-40;
+    top: 64px; /* Height of the header */
     /* Add subtle shadow to indicate scrollability */
     box-shadow: inset -8px 0 6px -6px rgba(0, 0, 0, 0.1);
-    /* overflow-hidden */
   }
 
   .providers .provider-scroll-wrapper {
@@ -481,15 +501,15 @@
 
   .channel-nav {
     @apply flex space-x-4 overflow-x-auto scrollbar-hide;
-    max-width: calc(100vw - 200px); /* Give space for arrows */
+    max-width: calc(100vw - 2rem);
   }
 
   .channel-nav img {
-    @apply w-8 h-8 object-contain; /* 32x32 pixels */
+    @apply w-8 h-8 object-contain;
   }
 
   /* Shrinking Header */
-  .header.shrunk {
+  /* .header.shrunk {
     @apply py-2;
   }
 
@@ -503,7 +523,7 @@
 
   .header.shrunk .header-title {
     @apply text-lg;
-  } 
+  }  */
 
   /* More providers modal specific styles */
   #moreProvidersModal .provider-card {
@@ -524,27 +544,124 @@
     @apply px-4 py-2 rounded-lg flex items-center;
   }
 
-  /* Channel Navigation Section */
+  /* Channel Section - always visible on desktop, appears on scroll on mobile */
   .channel-section {
-    @apply sticky top-16 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 left-0 right-0 opacity-0 hidden;
+    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-all duration-300;
+    /* Desktop behavior - always visible */
+    @apply md:relative;
+    top: 64px; /* Height of the header on desktop */
+    z-index: 39;
+  }
+
+  /* Mobile behavior for channel section */
+  @media (max-width: 767px) {
+    .channel-section {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 116px; /* Header + providers height on mobile */
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 39;
+    }
+
+    .channel-section.visible {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .channel-section-inner {
+    @apply max-w-7xl mx-auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Channel section shadows */
+  .channel-section-inner::before,
+  .channel-section-inner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .channel-section-inner::before {
+    left: 0;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+  }
+
+  .channel-section-inner::after {
+    right: 0;
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+  }
+
+  .channel-section-inner.shadow-left::before {
+    opacity: 1;
+  }
+
+  .channel-section-inner.shadow-right::after {
+    opacity: 1;
+  }
+
+  .dark .channel-section-inner::before {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .dark .channel-section-inner::after {
+    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .channel-section-scroll {
+    @apply flex items-center justify-center;
   }
 
   .channel-section.visible {
-    @apply block;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .channel-nav {
+    @apply flex space-x-4 overflow-x-auto flex space-x-1 overflow-x-auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-width: calc(100vw - 2rem);
+    position: relative;
   }
 
-  .channel-nav {
-    @apply flex space-x-4 overflow-x-auto scrollbar-hide;
-    max-width: calc(100vw - 2rem);
+  .channel-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .channel-nav img {
     @apply w-8 h-8 object-contain;
   }
 
-    /* Day Navigation styles */
+  /* Day Navigation - sticky below channel section */
   .day-nav {
-    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700
+    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
+    /* Default position (mobile without channel section visible) */
+    top: 120px; /* Header + providers height on mobile */
+  }
+
+  /* Position when channel section is visible on mobile */
+  .day-nav.with-channel-section {
+    top: 168px; /* Header (64px) + providers (56px) + channel section (48px) */
+  }
+
+  /* Desktop position */
+  @media (min-width: 768px) {
+    .day-nav {
+      top: 64px; /* Just below header on desktop */
+    }
   }
 
   .day-nav-inner {
