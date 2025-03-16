@@ -384,6 +384,14 @@ function toggleAllSchedules() {
     // Re-render programs with current date to show/hide past programs
     const activeDay = document.querySelector('.day-nav-item.active');
     const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
+    
+    // Force a complete re-render by clearing the content first
+    const content = document.querySelector('.content');
+    if (content) {
+        content.innerHTML = '';
+    }
+    
+    // Re-render the programs
     renderPrograms(selectedDate);
 }
 
@@ -395,12 +403,24 @@ function renderPrograms(selectedDate = null) {
     content.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             ${channels.map(channel => {
-                const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
+                const { allPrograms, current } = getRelevantPrograms(channel.programs, selectedDate);
                 
                 // Find the current or next program index
-                const currentIndex = allPrograms.findIndex(program => 
-                    program.state === 'today' || program.state === 'next'
+                let currentIndex = allPrograms.findIndex(program => 
+                    program.state === 'today'
                 );
+                
+                // If no live program, find the next upcoming one
+                if (currentIndex === -1) {
+                    currentIndex = allPrograms.findIndex(program => 
+                        program.state === 'next'
+                    );
+                }
+                
+                // If still no match, use the first program
+                if (currentIndex === -1 && allPrograms.length > 0) {
+                    currentIndex = 0;
+                }
                 
                 // Limit programs to 4 when not showing all
                 let displayPrograms = allPrograms;
@@ -410,7 +430,7 @@ function renderPrograms(selectedDate = null) {
                         displayPrograms = allPrograms.slice(currentIndex, currentIndex + 4);
                     } else {
                         // If no current program, just show the first 4
-                        displayPrograms = allPrograms.slice(0, 4);
+                        displayPrograms = allPrograms.slice(0, Math.min(4, allPrograms.length));
                     }
                 }
                 
