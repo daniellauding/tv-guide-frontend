@@ -67,9 +67,14 @@
     @apply flex items-center space-x-6
   }
 
+  /* Override for the header title to remove left margin */
+  .header-nav-inner > .header-title {
+    margin-left: 0 !important;
+  }
+
   .header-title {
     @apply flex items-center font-barlow font-semibold text-3xl 
-           text-title dark:text-title-dark hover:text-title-hover;
+           text-title dark:text-title-dark hover:text-title-hover ml-2;
   }
 
   .header-logo {
@@ -325,7 +330,7 @@
   }
 
   .channel-img-wrapper {
-    @apply w-8 h-8 md:w-8 md:h-8 logo-channel flex items-center justify-center rounded-md border-gray-200 border;
+    @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center rounded-lg border-gray-200 border;
   }
 
   .channel-img-wrapper-img {
@@ -702,7 +707,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 
-    @apply flex space-x-2 overflow-x-auto justify-center;
+    @apply flex space-x-2 overflow-x-auto md:justify-center;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -753,28 +758,16 @@
   }
 
   .day-nav-item {
-    text-align: center;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    @apply rounded-md bg-gray-300 text-black;
+    @apply rounded-lg bg-gray-200 text-black h-8 px-3 text-center transition-none flex items-center justify-center gap-1;
   }
 
-  .day-nav-item .day-name {
+  /* .day-nav-item .day-name {
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-secondary);
-  }
+  } */
 
   .day-nav-item .day-date {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-primary);
   }
 
   .day-nav-item.active {
