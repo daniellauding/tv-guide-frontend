@@ -368,6 +368,7 @@ let showAllPrograms = false;
 // Update the toggle function to work with the new button
 function toggleAllSchedules() {
     const button = document.getElementById('currentProgramsToggle');
+    const wasShowingAll = showAllPrograms;
     showAllPrograms = !showAllPrograms;
     
     // Update button appearance based on state
@@ -388,24 +389,43 @@ function toggleAllSchedules() {
     // Force a complete re-render by clearing the content first
     const content = document.querySelector('.content');
     if (content) {
+        // Clear the content
         content.innerHTML = '';
+        
+        // If we're toggling back to filtered view from showing all
+        if (wasShowingAll && !showAllPrograms) {
+            // Force a complete refresh to ensure we show current programs
+            setTimeout(() => {
+                renderPrograms(selectedDate);
+                
+                // Find and scroll to the first "today" program if available
+                setTimeout(() => {
+                    const todayProgram = document.querySelector('.program-item.today');
+                    if (todayProgram) {
+                        todayProgram.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }, 50);
+        } else {
+            // Normal render
+            renderPrograms(selectedDate);
+        }
     }
-    
-    // Re-render the programs
-    renderPrograms(selectedDate);
 }
 
 // Modify the program rendering to include state classes
 function renderPrograms(selectedDate = null) {
     const content = document.querySelector('.content');
     const channels = tvData.channels.filter(c => c.enabled);
+    const now = new Date();
 
     content.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             ${channels.map(channel => {
-                const { allPrograms, current } = getRelevantPrograms(channel.programs, selectedDate);
+                // Get all programs with their states
+                const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
                 
-                // Find the current or next program index
+                // Find the current live program
                 let currentIndex = allPrograms.findIndex(program => 
                     program.state === 'today'
                 );
@@ -417,17 +437,57 @@ function renderPrograms(selectedDate = null) {
                     );
                 }
                 
-                // If still no match, use the first program
+                // If still no match, find the most recent past program
                 if (currentIndex === -1 && allPrograms.length > 0) {
-                    currentIndex = 0;
+                    // Find the most recent past program (closest to current time)
+                    let closestPastIndex = 0;
+                    let smallestTimeDiff = Infinity;
+                    
+                    allPrograms.forEach((program, index) => {
+                        if (program.state === 'past') {
+                            const [hours, minutes] = program.time.split(':').map(Number);
+                            const programTime = new Date();
+                            programTime.setHours(hours, minutes, 0, 0);
+                            const timeDiff = now - programTime;
+                            
+                            if (timeDiff < smallestTimeDiff) {
+                                smallestTimeDiff = timeDiff;
+                                closestPastIndex = index;
+                            }
+                        }
+                    });
+                    
+                    currentIndex = closestPastIndex;
                 }
                 
                 // Limit programs to 4 when not showing all
                 let displayPrograms = allPrograms;
                 if (!showAllPrograms) {
-                    // If we have a current program, show it and the next 3
+                    // If we have a current index, show it and the next 3
                     if (currentIndex !== -1) {
-                        displayPrograms = allPrograms.slice(currentIndex, currentIndex + 4);
+                        // Make sure we include at least one "today" program if it exists
+                        const todayIndex = allPrograms.findIndex(p => p.state === 'today');
+                        
+                        if (todayIndex !== -1 && (todayIndex < currentIndex || todayIndex >= currentIndex + 4)) {
+                            // If today program exists but wouldn't be included in our slice,
+                            // adjust the slice to include it
+                            if (todayIndex < currentIndex) {
+                                // Today is before our current index, include it
+                                displayPrograms = [
+                                    allPrograms[todayIndex],
+                                    ...allPrograms.slice(currentIndex, currentIndex + 3)
+                                ];
+                            } else {
+                                // Today is after our current slice, include it
+                                displayPrograms = [
+                                    ...allPrograms.slice(currentIndex, currentIndex + 3),
+                                    allPrograms[todayIndex]
+                                ];
+                            }
+                        } else {
+                            // Normal case - just take 4 programs from current index
+                            displayPrograms = allPrograms.slice(currentIndex, currentIndex + 4);
+                        }
                     } else {
                         // If no current program, just show the first 4
                         displayPrograms = allPrograms.slice(0, Math.min(4, allPrograms.length));
