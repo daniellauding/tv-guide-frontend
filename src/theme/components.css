@@ -606,12 +606,12 @@
 
   .channel-section-inner::before {
     left: 0;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
   }
 
   .channel-section-inner::after {
     right: 0;
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1)), transparent);
   }
 
   .channel-section-inner.shadow-left::before {
@@ -671,7 +671,7 @@
 
   /* Position when channel section is visible on mobile */
   .day-nav.with-channel-section {
-    top: 168px; /* Header (64px) + providers (56px) + channel section (48px) */
+    top: 196px; /* Header (64px) + providers (56px) + channel section (48px) */
   }
 
   /* Desktop position */
@@ -682,7 +682,7 @@
   }
 
   .day-nav-inner {
-    @apply mx-auto max-w-7xl px-4;
+    @apply mx-auto max-w-7xl pl-4;
   }
 
   .day-nav .scrollbar-thin {
@@ -733,12 +733,12 @@
 
   .day-nav .week-days-container::before {
     left: 0;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) transparent);
   }
 
   .day-nav .week-days-container::after {
     right: 0;
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
   }
 
   .day-nav .week-days-container.shadow-left::before {
