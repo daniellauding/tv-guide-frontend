@@ -2079,66 +2079,54 @@ function setupScrollBasedSections() {
   const channelSection = document.querySelector('.channel-section');
   const dayNav = document.querySelector('.day-nav');
   let lastScrollY = 0;
-  const scrollThreshold = 350; // Increased threshold - show channel section after 350px of scrolling
-  const bufferZone = 50; // Increased buffer zone to prevent flickering
-  let isVisible = false; // Track visibility state
-  let scrollTimer = null; // For debouncing
+  const scrollThreshold = 100; // Show channel section after 100px of scrolling
+  const bufferZone = 30; // Buffer zone to prevent flickering
+  let isVisible = false;
+  let scrollTimer = null;
   
-  // Only apply this behavior on mobile
   const isMobile = () => window.innerWidth < 768;
   
-  // Function to ensure classes are in sync
   function syncChannelSectionAndDayNav(shouldBeVisible) {
-    if (shouldBeVisible) {
-      channelSection.classList.add('visible');
-      dayNav.classList.add('with-channel-section');
-    } else {
-      channelSection.classList.remove('visible');
-      dayNav.classList.remove('with-channel-section');
+    if (shouldBeVisible !== isVisible) {
+      if (shouldBeVisible) {
+        channelSection.classList.add('visible');
+        dayNav.classList.add('with-channel-section');
+      } else {
+        channelSection.classList.remove('visible');
+        dayNav.classList.remove('with-channel-section');
+      }
+      isVisible = shouldBeVisible;
     }
-    isVisible = shouldBeVisible;
   }
   
   function updateSectionsOnScroll() {
-    const currentScrollY = window.scrollY;
-    
-    // Clear any existing timer
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
     
-    // Set a timer to debounce the scroll event
     scrollTimer = setTimeout(() => {
-      // Only apply this behavior on mobile
+      const currentScrollY = window.scrollY;
+      
       if (isMobile()) {
-        // Add hysteresis with buffer zone to prevent flickering
         if (!isVisible && currentScrollY > scrollThreshold) {
-          // Show channel section when scrolling past threshold
           syncChannelSectionAndDayNav(true);
         } else if (isVisible && currentScrollY < (scrollThreshold - bufferZone)) {
-          // Hide channel section only when scrolling significantly above threshold
           syncChannelSectionAndDayNav(false);
         }
       } else {
-        // On desktop, ensure channel section is always visible but not sticky
         channelSection.classList.add('visible');
         channelSection.classList.add('desktop-mode');
-        
-        // Remove class on desktop as position is controlled by media query
         dayNav.classList.remove('with-channel-section');
         dayNav.classList.add('desktop-mode');
       }
       
       lastScrollY = currentScrollY;
-    }, 10); // Short delay to debounce scroll events
+    }, 10);
   }
   
-  // Update on scroll
-  window.addEventListener('scroll', updateSectionsOnScroll);
+  window.addEventListener('scroll', updateSectionsOnScroll, { passive: true });
   
-  // Update on resize (in case of switching between mobile and desktop)
-  window.addEventListener('resize', function() {
-    // Force sync when resizing
+  window.addEventListener('resize', () => {
     if (isMobile()) {
       const shouldBeVisible = window.scrollY > scrollThreshold;
       syncChannelSectionAndDayNav(shouldBeVisible);
@@ -2152,25 +2140,6 @@ function setupScrollBasedSections() {
   
   // Initial update
   updateSectionsOnScroll();
-  
-  // Add a mutation observer to ensure classes stay in sync
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.attributeName === 'class' && isMobile()) {
-        const isChannelSectionVisible = channelSection.classList.contains('visible');
-        const isDayNavWithChannelSection = dayNav.classList.contains('with-channel-section');
-        
-        // If they're out of sync, force them to be in sync
-        if (isChannelSectionVisible !== isDayNavWithChannelSection) {
-          syncChannelSectionAndDayNav(isChannelSectionVisible);
-        }
-      }
-    });
-  });
-  
-  // Observe both elements for class changes
-  observer.observe(channelSection, { attributes: true });
-  observer.observe(dayNav, { attributes: true });
 }
 
 // Add this function to handle channel anchor scrolling

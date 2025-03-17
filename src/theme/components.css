@@ -1,57 +1,18 @@
 @layer components {
-  /* Component-specific theme styles */
+  /* ==========================================================================
+     Base Layout Components
+     ========================================================================== */
+  
   .body {
-    @apply bg-body dark:bg-body-dark
-  }
-  /* Mobile Menu */
-  .mobile-menu-backdrop {
-    @apply fixed inset-0 bg-black z-80 transition-opacity duration-300;
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  .mobile-menu-backdrop.active {
-    opacity: 0.5;
-    pointer-events: auto;
-  }
-  
-  .mobile-menu {
-    @apply fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-800 z-90 shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
-    width: 75vw;
-    transform: translateX(-100%);
-  }
-  
-  .mobile-menu.active {
-    transform: translateX(0);
-  }
-  
-  .mobile-menu-header {
-    @apply flex justify-end mb-6;
-  }
-  
-  .mobile-menu-close {
-    @apply p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300;
-  }
-  
-  .mobile-menu-content {
-    @apply flex flex-col flex-grow px-6 py-8 space-y-6;
-  }
-  
-  .mobile-menu-link {
-    @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
-  }
-  
-  .mobile-menu-option {
-    @apply flex items-center justify-between py-4;
-  }
-  
-  .mobile-menu-option-text {
-    @apply text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
+    @apply bg-body dark:bg-body-dark;
   }
 
-  /* Header */
+  /* ==========================================================================
+     Header Components
+     ========================================================================== */
+  
   .header {
-    @apply sticky top-0 z-50 transition-all duration-300 ease-in-out
+    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out
            bg-header dark:bg-header border-b border-gray-200 dark:border-gray-700;
   }
 
@@ -64,12 +25,7 @@
   }
 
   .header-nav-inner {
-    @apply flex items-center space-x-6
-  }
-
-  /* Override for the header title to remove left margin */
-  .header-nav-inner > .header-title {
-    margin-left: 0 !important;
+    @apply flex items-center space-x-6;
   }
 
   .header-title {
@@ -81,29 +37,168 @@
     @apply h-8 md:h-auto w-fit cursor-pointer;
   }
 
-  .header-title img {
-    @apply transition-transform duration-200 hover:scale-95;
+  /* ==========================================================================
+     Mobile Menu Components
+     ========================================================================== */
+
+  .mobile-menu-backdrop {
+    @apply fixed inset-0 bg-black z-80 transition-opacity duration-300;
+    opacity: 0;
+    pointer-events: none;
   }
 
-  .page-header {
-    @apply max-w-7xl mx-auto pt-12 pb-0 px-4;
+  .mobile-menu-backdrop.active {
+    @apply opacity-50 pointer-events-auto;
   }
 
-  /* Navigation */
-  .nav-link {
-    @apply text-text hover:text-text-hover dark:text-text-dark transition-colors
-           font-barlow font-medium;
+  .mobile-menu {
+    @apply fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-800 z-90 
+           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
+    width: 75vw;
+    transform: translateX(-100%);
   }
 
-  .nav-button {
-    @apply p-2 transition-all hover:scale-95 active:scale-95;
+  .mobile-menu.active {
+    @apply translate-x-0;
   }
 
-  .nav-button span {
-    @apply text-black dark:text-black;
+  .mobile-menu-header {
+    @apply flex justify-end mb-6;
   }
 
-  /* Forms and Inputs */
+  .mobile-menu-close {
+    @apply p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300;
+  }
+
+  .mobile-menu-content {
+    @apply flex flex-col flex-grow px-6 py-8 space-y-6;
+  }
+
+  .mobile-menu-link {
+    @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
+  }
+
+  /* ==========================================================================
+     Provider Components
+     ========================================================================== */
+
+  .provider {
+    @apply relative;
+  }
+
+  .providers {
+    @apply md:hidden bg-provider-background-light dark:bg-provider-background-dark
+           w-full md:w-fit md:rounded-full md:shadow-sm overflow-x-auto
+           sticky md:relative z-40;
+    top: 64px;
+  }
+
+  .providers-desktop {
+    @apply hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
+  }
+
+  .provider-card {
+    @apply flex-shrink-0 cursor-pointer text-left 
+           text-provider-text-light dark:text-provider-text-dark 
+           hover:text-provider-text-light-hover dark:hover:text-provider-text-dark-hover 
+           bg-transparent md:border-none md:bg-transparent hover:bg-transparent
+           focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
+           inline-flex font-barlow text-sm px-4 py-1;
+  }
+
+  .provider-card.active {
+    @apply font-bold;
+  }
+
+  .provider-scroll-wrapper {
+    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-visible;
+  }
+
+  /* ==========================================================================
+     Channel Components
+     ========================================================================== */
+
+  .channel {
+    @apply flex-shrink-0 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg;
+  }
+
+  .channel-section {
+    top: 124px;
+    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 
+           transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none
+           w-full;
+    @apply md:transform-none md:opacity-100 md:pointer-events-auto md:static fixed md:relative md:top-0 z-40;
+  }
+
+  .channel-section-scroll {
+    @apply flex items-center justify-center px-4 py-2;
+  }
+
+  .channel-section.visible {
+    @apply transform translate-y-0 opacity-100 pointer-events-auto;
+  }
+
+  .channel-nav {
+    @apply flex space-x-4 overflow-x-auto md:overflow-visible scrollbar-hide relative w-full flex md:items-center md:justify-center;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .channel-nav::-webkit-scrollbar {
+    @apply hidden;
+  }
+
+  .channel-nav img {
+    @apply w-8 h-8 object-contain;
+  }
+
+  .channel-img-wrapper {
+    @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center 
+           rounded-lg border-gray-200 border;
+  }
+
+  .channel-img-wrapper-img {
+    @apply h-8 md:h-10 w-auto object-contain;
+  }
+
+  /* ==========================================================================
+     Program Components
+     ========================================================================== */
+
+  .program-wraper {
+    @apply bg-programWrapper-light dark:bg-programWrapper-dark 
+           bg-white dark:bg-gray-800;
+  }
+
+  .program-header {
+    @apply p-0;
+  }
+
+  .program-item {
+    @apply bg-programItem-light dark:bg-programItem-dark p-3 md:p-4 
+           cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700;
+  }
+
+  .program-item.past {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+
+  .program-item.past h3 {
+    @apply text-gray-500 dark:text-gray-500 font-normal;
+  }
+
+  .program-item.today {
+    @apply text-red-500;
+  }
+
+  .program-item.today h3 {
+    @apply text-gray-800 dark:text-gray-200 font-medium;
+  }
+
+  /* ==========================================================================
+     Form Components
+     ========================================================================== */
+
   .form-input {
     @apply bg-input-light dark:bg-input-dark text-gray-600 dark:text-gray-300 
            px-3 py-1.5 md:px-4 md:py-2 text-sm rounded-lg 
@@ -112,8 +207,8 @@
   }
 
   .form-select {
-    @apply px-1.5 py-1.5 md:px-1.5 bg-select-light dark:bg-select-dark md:py-2 text-sm rounded-full
-    shadow-sm
+    @apply px-1.5 py-1.5 md:px-1.5 bg-select-light dark:bg-select-dark md:py-2 
+           text-sm rounded-full shadow-sm
            text-gray-600 dark:text-gray-300
            focus:outline-none focus:ring-2 focus:ring-primary-500
            appearance-none relative
@@ -122,38 +217,19 @@
     transform-origin: right 50%;
   }
 
-  .form-select:hover {
-    @apply border-primary-100;
-  }
-
-  .form-select:focus {
-    @apply border-primary-500;
-    transform: translateY(-1px);
-  }
-
-  /* For dark mode */
-  .dark .form-select {
-  }
-
-  .dark .form-select:hover {
-    @apply border-primary-300;
-  }
-
-  .dark .form-select:focus {
-    @apply border-primary-500;
-  }
-
   .form-search {
     @apply w-full px-1.5 py-1.5 
            md:px-9 md:py-1.5 rounded-full pl-1.5 text-sm
-           bg-select-light dark:bg-select-dark md:py-2 text-sm
+           bg-select-light dark:bg-select-dark md:py-2
            shadow-sm
            text-gray-600 dark:text-gray-300
            focus:outline-none focus:ring-2 focus:ring-primary-500;
-           
   }
 
-  /* Modal */
+  /* ==========================================================================
+     Modal Components
+     ========================================================================== */
+
   .modal-base {
     @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50;
   }
@@ -171,186 +247,10 @@
            text-title dark:text-title-dark;
   }
 
-  /* Table */
-  .table-container {
-    @apply w-full overflow-x-auto;
-  }
+  /* ==========================================================================
+     Progress Components
+     ========================================================================== */
 
-  .table {
-    @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700;
-  }
-
-  .table-header {
-    @apply bg-gray-50 dark:bg-gray-700;
-  }
-
-  .table-header-cell {
-    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider;
-  }
-
-  .table-row {
-    @apply bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700;
-  }
-
-  .table-cell {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white;
-  }
-
-  /* Accordion */
-  .accordion {
-    @apply divide-y divide-gray-200 dark:divide-gray-700;
-  }
-
-  .accordion-header {
-    @apply flex justify-between items-center p-4 cursor-pointer
-           bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700;
-  }
-
-  .accordion-content {
-    @apply p-4 bg-gray-50 dark:bg-gray-700;
-  }
-
-  /* Card */
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden;
-  }
-
-  .card-header {
-    @apply p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 
-           bg-gray-50 dark:bg-gray-700
-           font-barlow font-semibold
-           text-title dark:text-title-dark;
-  }
-
-  .card-body {
-    @apply p-3 md:p-4;
-  }
-
-  /* Status Indicators */
-  .status-live {
-    @apply text-status-live;
-  }
-
-  .status-upcoming {
-    @apply text-status-upcoming;
-  }
-
-  .status-ended {
-    @apply text-status-ended;
-  }
-
-  .channel-item {
-    /* Custom scrollbar styles */
-    scrollbar-width: thin;
-    scrollbar-color: #D1D5DB transparent;
-  }
-  
-  /* Override to remove the border between items */
-  .channel-item > :not([hidden]) ~ :not([hidden]) {
-    --tw-divide-y-reverse: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-  }
-  
-  .dark .channel-item {
-    scrollbar-color: #4B5563 transparent;
-  }
-  
-  .channel-item::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .channel-item::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .channel-item::-webkit-scrollbar-thumb {
-    background-color: #D1D5DB;
-    border-radius: 3px;
-  }
-  
-  .dark .channel-item::-webkit-scrollbar-thumb {
-    background-color: #4B5563;
-  }
-
-  .program-wraper {
-    @apply bg-programWrapper-light dark:bg-programWrapper-dark bg-white dark:bg-gray-800;
-  }
-
-  .program-header {
-    @apply p-0;
-  }
-
-  .program-item {
-    @apply bg-programItem-light dark:bg-programItem-dark p-3 md:p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700;
-  }
-
-  .program-item.past {
-    @apply text-gray-400 dark:text-gray-500;
-  }
-
-  .program-item.past h3 {
-    @apply text-gray-500 dark:text-gray-500 font-normal;
-  }
-  
-  .program-item.past p {
-    @apply text-gray-400 dark:text-gray-500;
-  }
-
-  .program-item.today {
-    @apply text-red-500;
-  }
-
-  .program-item.today h3 {
-    @apply text-gray-800 dark:text-gray-200 font-medium;
-  }
-  
-  .program-item.today p {
-    @apply text-gray-600 dark:text-gray-400;
-  }
-
-  .program-item.next {
-    @apply text-gray-900 dark:text-white;
-  }
-  
-  .program-item.next h3 {
-    @apply font-semibold text-black dark:text-white;
-  }
-  
-  .program-item.next p {
-    @apply text-gray-800 dark:text-gray-200;
-  }
-
-  .icon-btn {
-    @apply flex items-center justify-center w-8 h-8 shadow-sm rounded-full bg-iconBtn-light dark:bg-iconBtn-dark;
-  }
-
-  .channel {
-    @apply flex-shrink-0 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg;
-  }
-
-  .channel-img-wrapper {
-    @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center rounded-lg border-gray-200 border;
-  }
-
-  .channel-img-wrapper-img {
-    @apply h-8 md:h-10 w-auto object-contain;
-  }
-
-  .logo-channel {
-    @apply bg-logoChannel-light dark:bg-logoChannel-dark;
-  }
-
-  /* Icon colors */
-  .icon {
-    @apply text-gray-600;
-  }
-
-  :is(.dark *) .icon {
-    @apply text-white;
-  }
-
-  /* Progress Indicators */
   .progress-container {
     @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
   }
@@ -358,460 +258,35 @@
   .progress-bar {
     @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
   }
-  
-  /* For the detailed program view */
+
   .progress-section {
     @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
   }
-  
-  .progress-section .progress-container {
-    @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
-  }
-  
-  .progress-text {
-    @apply mt-2 text-sm text-gray-600 dark:text-gray-400;
-  }
 
-  /* Add these footer styles to components.css */
-  .footer {
-    @apply bg-gray-800 text-gray-300 py-12 mt-12;
-  }
+  /* ==========================================================================
+     Utility Components
+     ========================================================================== */
 
-  .footer-container {
-    @apply max-w-7xl mx-auto px-4;
-  }
-
-  .footer-grid {
-    @apply grid grid-cols-1 md:grid-cols-4 gap-8;
-  }
-
-  .footer-title {
-    @apply text-lg font-semibold text-white mb-4;
-  }
-
-  .footer-text {
-    @apply text-sm text-gray-400;
-  }
-
-  .footer-link {
-    @apply text-gray-300 hover:text-white transition-colors;
-  }
-
-  .footer-divider {
-    @apply border-t border-gray-700 mt-8 pt-8;
-  }
-
-  .footer-copyright {
-    @apply text-sm text-gray-400;
-  }
-    /* Wrapper */
-
-  .wrapper {
-    @apply max-w-7xl mx-auto px-4 pt-2 pb-6;
-  }
-
-  /* TV Provider Cards */
-  .provider {
-    @apply relative;
-  }
-
-  /* Provider section - sticky below header */
-  .providers {
-    @apply 
-    md:hidden bg-provider-background-light dark:bg-provider-background-dark
-    w-full md:w-fit md:rounded-full md:shadow-sm overflow-y-scroll
-    sticky z-40;
-    top: 64px; /* Height of the header */
-    /* Add subtle shadow to indicate scrollability */
-    box-shadow: inset -8px 0 6px -6px rgba(0, 0, 0, 0.1);
-  }
-
-  .providers .provider-scroll-wrapper {
-    @apply pr-8;
-  }
-
-  .providers-desktop {
-    @apply 
-    hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
-  }
-
-  .providers-desktop .provider-scroll-wrapper {
-    @apply px-2 py-1;
-  }
-
-  .providers-desktop .provider-card {
-    @apply text-sm py-1;
-  }
-
-  .provider-scroll-container {
-    @apply relative flex w-full scrollbar-hide overflow-x-auto;
-    /* overflow-x-auto */
-  }
-
-  .provider-scroll-wrapper {
-    @apply flex space-x-4 px-4 py-3 snap-x snap-mandatory w-full;
-  }
-
-  .provider-card {
-    @apply flex-shrink-0 cursor-pointer text-left 
-           text-provider-text-light dark:text-provider-text-dark 
-           hover:text-provider-text-light-hover dark:hover:text-provider-text-dark-hover 
-           bg-transparent md:border-none md:bg-transparent hover:bg-transparent focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
-           inline-flex font-barlow text-sm px-4 py-1;
-  }
-  
-  .provider-card:first-of-type {
-    @apply pl-4
-  }
-
-  .provider-card:last-of-type {
-    @apply pr-4
-  }
-
-  .provider-card.active {
-    @apply bg-transparent border-0 md:bg-transparent 
-    text-provider-text-light-active dark:text-provider-text-dark-active font-bold;
-  }
-
-  .provider-scroll-button {
-    @apply absolute top-1/2 -translate-y-1/2 z-10
-           w-10 h-10 flex items-center justify-center
-           rounded-full shadow-lg transition-all duration-200
-           opacity-0 pointer-events-none;
-    background-color: var(--bg-card);
-    color: var(--text-secondary);
-  }
-
-  .provider-scroll-button.visible {
-    @apply opacity-100 pointer-events-auto;
-  }
-
-  .provider-scroll-prev {
-    @apply left-2;
-  }
-
-  .provider-scroll-next {
-    @apply right-2;
-  }
-
-  /* Provider Channel List */
-
-  .channels {
-    @apply bg-channel dark:bg-channel;
-  }
-
-  .provider-channels {
-    @apply mt-4 transition-all duration-300;
-  }
-
-  .channel-nav {
-    @apply flex space-x-4 overflow-x-auto scrollbar-hide;
-    max-width: calc(100vw - 2rem);
-  }
-
-  .channel-nav img {
-    @apply w-8 h-8 object-contain;
-  }
-
-  /* Shrinking Header */
-  /* .header.shrunk {
-    @apply py-2;
-  }
-
-  .header.shrunk .header-nav {
-    @apply h-12;
-  }
-
-  .header.shrunk .header-title img {
-    @apply h-6 md:h-8;
-  }
-
-  .header.shrunk .header-title {
-    @apply text-lg;
-  }  */
-
-  /* More providers modal specific styles */
-  #moreProvidersModal .provider-card {
-    @apply h-16 text-lg font-medium;
-  }
-
-  /* Provider dropdown styles */
-  .provider-dropdown {
-    @apply absolute top-full right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50
-           border border-gray-200 dark:border-gray-700 min-w-[200px];
-  }
-
-  .providers-desktop .provider-dropdown {
-    @apply right-auto;
-  }
-
-  .provider-dropdown .provider-card {
-    @apply px-4 py-2 rounded-lg flex items-center;
-  }
-
-  /* Channel Section - always visible on desktop, appears on scroll on mobile */
-  .channel-section {
-    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-all duration-300;
-    /* Desktop behavior - always visible */
-    @apply md:relative;
-    top: 64px; /* Height of the header on desktop */
-    z-index: 39;
-  }
-
-  /* Desktop mode - remove sticky positioning */
-  .channel-section.desktop-mode {
-    @apply static;
-    top: auto;
-  }
-
-  /* Mobile behavior for channel section */
-  @media (max-width: 767px) {
-    .channel-section {
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 116px; /* Header + providers height on mobile */
-      transform: translateY(-100%);
-      opacity: 0;
-      visibility: hidden;
-      z-index: 39;
-    }
-
-    .channel-section.visible {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  .channel-section-inner {
-    @apply max-w-7xl mx-auto;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Channel section shadows */
-  .channel-section-inner::before,
-  .channel-section-inner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .channel-section-inner::before {
-    left: 0;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
-  }
-
-  .channel-section-inner::after {
-    right: 0;
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 1)), transparent);
-  }
-
-  .channel-section-inner.shadow-left::before {
-    opacity: 1;
-  }
-
-  .channel-section-inner.shadow-right::after {
-    opacity: 1;
-  }
-
-  .dark .channel-section-inner::before {
-    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
-  }
-
-  .dark .channel-section-inner::after {
-    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
-  }
-
-  .channel-section-scroll {
-    @apply flex items-center justify-center;
-  }
-
-  .channel-section.visible {
-    transform: none;
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .channel-nav {
-    @apply flex space-x-4 overflow-x-auto flex space-x-1 overflow-x-auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    max-width: calc(100vw - 2rem);
-    position: relative;
-  }
-
-  .channel-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .channel-nav img {
-    @apply w-8 h-8 object-contain;
-  }
-
-  /* Day Navigation - sticky below channel section */
-  .day-nav {
-    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
-    /* Default position (mobile without channel section visible) */
-    top: 116px; /* Header + providers height on mobile */
-  }
-
-  /* Desktop mode - remove sticky positioning */
-  .day-nav.desktop-mode {
-    @apply static;
-    top: auto;
-  }
-
-  /* Position when channel section is visible on mobile */
-  .day-nav.with-channel-section {
-    top: 196px; /* Header (64px) + providers (56px) + channel section (48px) */
-  }
-
-  /* Desktop position */
-  @media (min-width: 768px) {
-    .day-nav {
-      top: 64px; /* Just below header on desktop */
-    }
-  }
-
-  .day-nav-inner {
-    @apply mx-auto max-w-7xl pl-4;
-  }
-
-  .day-nav .scrollbar-thin {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .day-nav .scrollbar-thin::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Day navigation container */
-  .day-nav .week-days-container {
-    position: relative;
-    overflow: hidden;
-    @apply flex-1;
-  }
-
-  .day-nav .week-days {
-    position: relative;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    @apply flex space-x-2 overflow-x-auto md:justify-center;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .day-nav .week-days::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Day navigation shadows */
-  .day-nav .week-days-container::before,
-  .day-nav .week-days-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .day-nav .week-days-container::before {
-    left: 0;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) transparent);
-  }
-
-  .day-nav .week-days-container::after {
-    right: 0;
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
-  }
-
-  .day-nav .week-days-container.shadow-left::before {
-    opacity: 1;
-  }
-
-  .day-nav .week-days-container.shadow-right::after {
-    opacity: 1;
-  }
-
-  .dark .day-nav .week-days-container::before {
-    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
-  }
-
-  .dark .day-nav .week-days-container::after {
-    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
-  }
-
-  .day-nav-item {
-    @apply rounded-lg bg-gray-200 text-black h-8 px-3 text-center transition-none flex items-center justify-center gap-1;
-  }
-
-  /* .day-nav-item .day-name {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-  } */
-
-  .day-nav-item .day-date {
-  }
-
-  .day-nav-item.active {
-    @apply rounded-md bg-gray-800 text-white;
-  }
-
-  .day-nav-item.active .day-name {
-    /* color: var(--primary-300); */
-  }
-
-  .day-nav-item.active .day-date {
-    /* color: var(--primary-300); */
-  }
-
-  .dark .day-nav-item.active {
-    /* background-color: var(--primary-300); */
-  }
-
-  .dark .day-nav-item.active .day-name {
-    /* color: var(--primary-300); */
-  }
-
-  .dark .day-nav-item.active .day-date {
-    /* color: var(--primary-200); */
+  .icon {
+    @apply text-gray-600 dark:text-white;
   }
 
   .nav-button {
-    @apply flex-shrink-0;
+    @apply p-2 transition-all hover:scale-95 active:scale-95;
   }
 
-  .nav-button--prev {
-    @apply absolute left-0;
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
   }
 
-  .nav-button--next {
-    @apply absolute right-0;
+  .dark .scrollbar-thin {
+    scrollbar-color: theme('colors.gray.600') transparent;
   }
 
-  /* Highlight effect for channel anchor scrolling */
-  .highlight-channel {
-    animation: pulse-highlight 2s ease-in-out;
-    position: relative;
-    z-index: 5;
-  }
+  /* ==========================================================================
+     Animation Components
+     ========================================================================== */
 
   @keyframes pulse-highlight {
     0% {
@@ -823,6 +298,12 @@
     100% {
       box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
     }
+  }
+
+  .highlight-channel {
+    animation: pulse-highlight 2s ease-in-out;
+    position: relative;
+    z-index: 5;
   }
 
   .dark .highlight-channel {
@@ -841,4 +322,134 @@
     }
   }
 
+  /* ==========================================================================
+     Logo Components
+     ========================================================================== */
+
+  .logo-channel {
+    @apply bg-logoChannel-light dark:bg-logoChannel-dark transition-transform duration-200;
+  }
+
+  .logo-channel:hover {
+    @apply transform scale-105;
+  }
+
+  /* ==========================================================================
+     Shadow Components
+     ========================================================================== */
+
+  /* Provider scroll shadows */
+  .provider-scroll-container {
+    @apply relative overflow-hidden;
+  }
+
+  .provider-scroll-container::before,
+  .provider-scroll-container::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+  }
+
+  .provider-scroll-container::before {
+    @apply left-0;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+  }
+
+  .provider-scroll-container::after {
+    @apply right-0;
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+  }
+
+  .provider-scroll-container.shadow-left::before {
+    @apply opacity-100;
+  }
+
+  .provider-scroll-container.shadow-right::after {
+    @apply opacity-100;
+  }
+
+  .dark .provider-scroll-container::before {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .dark .provider-scroll-container::after {
+    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  /* Channel section shadows */
+  .channel-section-inner::before,
+  .channel-section-inner::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+  }
+
+  .channel-section-inner::before {
+    @apply left-0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .channel-section-inner::after {
+    @apply right-0;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .channel-section-inner.shadow-left::before {
+    @apply opacity-100;
+  }
+
+  .channel-section-inner.shadow-right::after {
+    @apply opacity-100;
+  }
+
+  .dark .channel-section-inner::before {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .dark .channel-section-inner::after {
+    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  /* Day navigation shadows */
+  .week-days {
+    @apply flex space-x-2 overflow-x-auto md:overflow-visible scrollbar-hide;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    max-width: 100%;
+  }
+
+  .week-days-container {
+    @apply relative overflow-x-auto md:overflow-visible;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .week-days-container::before,
+  .week-days-container::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+  }
+
+  .week-days-container::before {
+    @apply left-0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .week-days-container::after {
+    @apply right-0;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .week-days-container.shadow-left::before {
+    @apply opacity-100;
+  }
+
+  .week-days-container.shadow-right::after {
+    @apply opacity-100;
+  }
+
+  .dark .week-days-container::before {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .dark .week-days-container::after {
+    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+  }
 }
