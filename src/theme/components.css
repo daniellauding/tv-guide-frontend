@@ -1,6 +1,6 @@
 @layer components {
   /* ==========================================================================
-     Base Layout Components
+     Base Components
      ========================================================================== */
   
   .body {
@@ -11,23 +11,6 @@
      Header Components
      ========================================================================== */
   
-  .header {
-    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out
-           bg-header dark:bg-header border-b border-gray-200 dark:border-gray-700;
-  }
-
-  .header-container {
-    @apply mx-auto px-4;
-  }
-
-  .header-nav {
-    @apply flex items-center justify-between h-16;
-  }
-
-  .header-nav-inner {
-    @apply flex items-center space-x-6;
-  }
-
   .header-title {
     @apply flex items-center font-barlow font-semibold text-3xl 
            text-title dark:text-title-dark hover:text-title-hover ml-2;
@@ -86,17 +69,6 @@
     @apply relative;
   }
 
-  .providers {
-    @apply md:hidden bg-provider-background-light dark:bg-provider-background-dark
-           w-full md:w-fit md:rounded-full md:shadow-sm overflow-x-auto
-           sticky md:relative z-40;
-    top: 64px;
-  }
-
-  .providers-desktop {
-    @apply hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
-  }
-
   .provider-card {
     @apply flex-shrink-0 cursor-pointer text-left 
            text-provider-text-light dark:text-provider-text-dark 
@@ -110,42 +82,12 @@
     @apply font-bold;
   }
 
-  .provider-scroll-wrapper {
-    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-visible;
-  }
-
   /* ==========================================================================
      Channel Components
      ========================================================================== */
 
   .channel {
     @apply flex-shrink-0 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg;
-  }
-
-  .channel-section {
-    top: 124px;
-    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 
-           transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none
-           w-full;
-    @apply md:transform-none md:opacity-100 md:pointer-events-auto md:static fixed md:relative md:top-0 z-40;
-  }
-
-  .channel-section-scroll {
-    @apply flex items-center justify-center px-4 py-2;
-  }
-
-  .channel-section.visible {
-    @apply transform translate-y-0 opacity-100 pointer-events-auto;
-  }
-
-  .channel-nav {
-    @apply flex space-x-4 overflow-x-auto md:overflow-visible scrollbar-hide relative w-full flex md:items-center md:justify-center;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  .channel-nav::-webkit-scrollbar {
-    @apply hidden;
   }
 
   .channel-nav img {
@@ -275,13 +217,14 @@
     @apply p-2 transition-all hover:scale-95 active:scale-95;
   }
 
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.gray.300') transparent;
+  /* Scrollbar Utilities */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  .dark .scrollbar-thin {
-    scrollbar-color: theme('colors.gray.600') transparent;
+  .scrollbar-hide::-webkit-scrollbar {
+    @apply hidden;
   }
 
   /* ==========================================================================
@@ -409,18 +352,6 @@
   }
 
   /* Day navigation shadows */
-  .week-days {
-    @apply flex space-x-2 overflow-x-auto md:overflow-visible scrollbar-hide;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    max-width: 100%;
-  }
-
-  .week-days-container {
-    @apply relative overflow-x-auto md:overflow-visible;
-    -webkit-overflow-scrolling: touch;
-  }
-
   .week-days-container::before,
   .week-days-container::after {
     content: '';

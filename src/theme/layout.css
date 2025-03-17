@@ -8,7 +8,147 @@
   }
 
   /* ==========================================================================
-     Footer Components
+     Header Layout
+     ========================================================================== */
+
+  .header {
+    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out
+           bg-header dark:bg-header border-b border-gray-200 dark:border-gray-700;
+  }
+
+  .header-container {
+    @apply mx-auto px-4;
+  }
+
+  .header-nav {
+    @apply flex items-center justify-between h-16;
+  }
+
+  .header-nav-inner {
+    @apply flex items-center space-x-6;
+  }
+
+  /* ==========================================================================
+     Navigation Layout
+     ========================================================================== */
+
+  .nav-link {
+    @apply text-text hover:text-text-hover dark:text-text-dark transition-colors
+           font-barlow font-medium;
+  }
+
+  .nav-button {
+    @apply flex-shrink-0;
+  }
+
+  .nav-button--prev {
+    @apply absolute left-0;
+  }
+
+  .nav-button--next {
+    @apply absolute right-0;
+  }
+
+  /* ==========================================================================
+     Provider Layout
+     ========================================================================== */
+
+  .providers {
+    @apply md:hidden bg-provider-background-light dark:bg-provider-background-dark
+           w-full md:w-fit md:rounded-full md:shadow-sm overflow-x-auto scrollbar-hide
+           sticky md:relative z-40;
+    top: 64px;
+  }
+
+  .providers-desktop {
+    @apply hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
+  }
+
+  .provider-scroll-wrapper {
+    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-visible scrollbar-hide;
+  }
+
+  /* ==========================================================================
+     Channel Layout
+     ========================================================================== */
+
+  .channel-section {
+    top: 124px;
+    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 
+           transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none
+           w-full;
+    @apply md:transform-none md:opacity-100 md:pointer-events-auto md:static fixed md:relative md:top-0 z-40;
+  }
+
+  .channel-section-scroll {
+    @apply flex items-center justify-center px-4 py-2;
+  }
+
+  .channel-section.visible {
+    @apply transform translate-y-0 opacity-100 pointer-events-auto;
+  }
+
+  .channel-nav {
+    @apply flex space-x-4 overflow-x-auto md:overflow-visible scrollbar-hide relative w-full flex md:items-center md:justify-center;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* ==========================================================================
+     Day Navigation Layout
+     ========================================================================== */
+
+  .day-nav {
+    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
+    top: 124px;
+  }
+
+  .day-nav.desktop-mode {
+    @apply static;
+    top: auto;
+  }
+
+  .day-nav.with-channel-section {
+    top: 196px;
+  }
+
+  @media (min-width: 768px) {
+    .day-nav {
+      top: 64px;
+    }
+  }
+
+  .day-nav-inner {
+    @apply mx-auto max-w-7xl pl-4;
+  }
+
+  .day-nav .week-days-container {
+    @apply relative overflow-hidden flex-1;
+  }
+
+  .day-nav .week-days {
+    @apply flex space-x-2 overflow-x-auto md:overflow-x-hidden relative scrollbar-hide;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .day-nav .week-days::-webkit-scrollbar {
+    display: none;
+  }
+
+  .day-nav-item {
+    @apply rounded-lg bg-gray-200 text-black h-8 px-3 text-center transition-none 
+           flex items-center justify-center gap-1;
+  }
+
+  .day-nav-item.active {
+    @apply rounded-md bg-gray-800 text-white;
+  }
+
+  /* ==========================================================================
+     Footer Layout
      ========================================================================== */
 
   .footer {
@@ -44,75 +184,7 @@
   }
 
   /* ==========================================================================
-     Navigation Components
-     ========================================================================== */
-
-  .nav-link {
-    @apply text-text hover:text-text-hover dark:text-text-dark transition-colors
-           font-barlow font-medium;
-  }
-
-  .nav-button {
-    @apply flex-shrink-0;
-  }
-
-  .nav-button--prev {
-    @apply absolute left-0;
-  }
-
-  .nav-button--next {
-    @apply absolute right-0;
-  }
-
-  /* ==========================================================================
-     Day Navigation Components
-     ========================================================================== */
-
-  .day-nav {
-    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
-    top: 124px; /* Header + providers height on mobile */
-  }
-
-  .day-nav.desktop-mode {
-    @apply static;
-    top: auto;
-  }
-
-  .day-nav.with-channel-section {
-    top: 196px; /* Header (64px) + providers (56px) + channel section (48px) */
-  }
-
-  @media (min-width: 768px) {
-    .day-nav {
-      top: 64px; /* Just below header on desktop */
-    }
-  }
-
-  .day-nav-inner {
-    @apply mx-auto max-w-7xl pl-4;
-  }
-
-  .day-nav .week-days-container {
-    @apply relative overflow-hidden flex-1;
-  }
-
-  .day-nav .week-days {
-    @apply flex space-x-2 overflow-x-auto md:justify-center relative;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .day-nav-item {
-    @apply rounded-lg bg-gray-200 text-black h-8 px-3 text-center transition-none 
-           flex items-center justify-center gap-1;
-  }
-
-  .day-nav-item.active {
-    @apply rounded-md bg-gray-800 text-white;
-  }
-
-  /* ==========================================================================
-     Card Components
+     Card Layout
      ========================================================================== */
 
   .card {
@@ -131,11 +203,11 @@
   }
 
   /* ==========================================================================
-     Table Components
+     Table Layout
      ========================================================================== */
 
   .table-container {
-    @apply w-full overflow-x-auto;
+    @apply w-full overflow-x-auto scrollbar-hide md:scrollbar-thin;
   }
 
   .table {
