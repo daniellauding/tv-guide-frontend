@@ -298,10 +298,10 @@ tvData.channels = tvData.channels.map(channel => ({
 
 // Modify renderChannelNav to remove the onclick attribute
 function renderChannelNav() {
-    const nav = document.querySelector('.channel-nav');
+    const nav = document.querySelector('.channel-list__wrapper');
     nav.innerHTML = tvData.channels.map(channel => `
         <button 
-            class="channel"
+            class="channel-card"
             data-channel-id="${channel.id}"
         >
             <div class="w-8 h-8 md:w-8 md:h-8 logo-channel rounded-lg flex items-center justify-center">
@@ -372,22 +372,20 @@ function toggleAllSchedules() {
     showAllPrograms = !showAllPrograms;
     
     // Update button appearance based on state
-    // When showAllPrograms is true, use opacity-50 to indicate filter is active
-    // When showAllPrograms is false, use opacity-100 to indicate no filter
+    // When showAllPrograms is true, use button--active to indicate filter is active
+    // When showAllPrograms is false, remove button--active to indicate no filter
     if (showAllPrograms) {
-        button.classList.remove('opacity-100');
-        button.classList.add('opacity-50');
+        button.classList.add('button--active');
     } else {
-        button.classList.remove('opacity-50');
-        button.classList.add('opacity-100');
+        button.classList.remove('button--active');
     }
     
     // Re-render programs with current date to show/hide past programs
-    const activeDay = document.querySelector('.day-nav-item.active');
+    const activeDay = document.querySelector('.date-nav-item.active');
     const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
     
     // Force a complete re-render by clearing the content first
-    const content = document.querySelector('.content');
+    const content = document.querySelector('.programs__content');
     if (content) {
         // Clear the content
         content.innerHTML = '';
@@ -415,12 +413,12 @@ function toggleAllSchedules() {
 
 // Modify the program rendering to include state classes
 function renderPrograms(selectedDate = null) {
-    const content = document.querySelector('.content');
+    const content = document.querySelector('.programs__content');
     const channels = tvData.channels.filter(c => c.enabled);
     const now = new Date();
 
     content.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="program-list">
             ${channels.map(channel => {
                 // Get all programs with their states
                 const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
@@ -495,72 +493,61 @@ function renderPrograms(selectedDate = null) {
                 }
                 
                 return `
-                    <div class="program-wrapper"
-                         id="channel-${channel.id}"
-                         data-channel-id="${channel.id}">
-                        <div class="program-header">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center">
-                                        <img src="${channel.logo}" alt="${channel.name}" 
-                                             class="h-6 md:h-8 w-auto object-contain"
-                                             onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
-                                    </div>
-                                    <div>
-                                        <h2 class="font-medium text-gray-900 dark:text-white text-sm md:text-base">${channel.name}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="channel-item">
-                            ${displayPrograms.map(program => {
-                                const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
-                                const isLiveProgram = isLive(program.time, program.duration, selectedDate);
-                                
-                                // Determine text color classes based on program state
-                                let titleClass, timeClass;
-                                
-                                if (program.state === 'past') {
-                                    titleClass = 'text-gray-500 dark:text-gray-500';
-                                    timeClass = 'text-gray-400 dark:text-gray-500';
-                                } else if (program.state === 'today') {
-                                    titleClass = 'text-red-500 dark:text-red-500';
-                                    timeClass = 'text-gray-600 dark:text-gray-400';
-                                } else { // next
-                                    titleClass = 'text-black dark:text-white font-medium';
-                                    timeClass = 'text-gray-700 dark:text-gray-300';
-                                }
-                                
-                                return `
-                                    <div class="program-item ${program.state}"
-                                         onclick="showProgramModal('${channel.id}', '${program.time}')">
-                                        <div class="flex justify-between items-start">
-                                            <div class="flex flex-row items-center gap-2">
-                                                <div class="flex items-center gap-1 text-xs md:text-sm ${timeClass}">
-                                                    ${program.time}
-                                                </div>
-                                                <div class="font-medium text-sm md:text-base ${titleClass}">
-                                                    ${program.title}
-                                                </div>
-                                            </div>
-                                            ${isLiveProgram ? `
-                                                <div class="live-indicator">
-                                                    <span class="live-dot"></span>
-                                                    <span>CANLI</span>
-                                                </div>
-                                            ` : ''}
-                                        </div>
-                                        ${isLiveProgram ? `
-                                            <div class="mt-2 progress-container">
-                                                <div class="progress-fill" style="width: ${progress}%"></div>
-                                            </div>
-                                        ` : ''}
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
+                  <div class="program-card" id="channel-${channel.id}" data-channel-id="${channel.id}">
+                      <div class="program-card__header">
+                          <div class="program-card__topbar">
+                              <div class="program-card__info">
+                                  <div class="program-card__logo">
+                                      <img src="${channel.logo}" alt="${channel.name}" 
+                                          class="program-card__logo-img"
+                                          onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
+                                  </div>
+                                  <div class="program-card__details">
+                                      <h2 class="program-card__title">${channel.name}</h2>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="program-slot">
+                          ${displayPrograms.map(program => {
+                              const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
+                              const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+                              
+                              // Determine program state class
+                              let stateClass = '';
+                              if (program.state === 'program-slot--past') {
+                                  stateClass = 'program-slot--past';
+                              } else if (program.state === 'program-slot--today') {
+                                  stateClass = 'program-slot--live';
+                              } else { // next
+                                  stateClass = 'program-slot--upcoming';
+                              }
+                              
+                              return `
+                                  <div class="program-slot__item ${stateClass}" onclick="showProgramModal('${channel.id}', '${program.time}')">
+                                      <div class="program-slot__content">
+                                          <div class="program-slot__details">
+                                              <div class="program-slot__time">${program.time}</div>
+                                              <div class="program-slot__title">${program.title}</div>
+                                          </div>
+                                          ${isLiveProgram ? `
+                                              <div class="program-slot__live-indicator">
+                                                  <span class="live-dot"></span>
+                                                  <span>CANLI</span>
+                                              </div>
+                                          ` : ''}
+                                      </div>
+                                      ${isLiveProgram ? `
+                                          <div class="program-slot__progress">
+                                              <div class="program-slot__progress-bar" style="width: ${progress}%"></div>
+                                          </div>
+                                      ` : ''}
+                                  </div>
+                              `;
+                          }).join('')}
+                      </div>
+                  </div>
+              `;
             }).join('')}
         </div>
     `;
@@ -671,7 +658,7 @@ function showProgramModal(channelId, programTime) {
     // Get the date from either dateSelector, active day, or today
     let selectedDate;
     const dateSelector = document.getElementById('dateSelector');
-    const activeDay = document.querySelector('.day-nav-item.active');
+    const activeDay = document.querySelector('.date-nav-item.active');
     
     if (dateSelector && dateSelector.value) {
         selectedDate = dateSelector.value;
@@ -865,13 +852,11 @@ function setupThemeToggle() {
     // Set initial theme
     document.documentElement.classList.toggle('dark', initialTheme === 'dark');
     
-    // Set initial button state with opacity
+    // Set initial button state with button--active
     if (initialTheme === 'dark') {
-        themeToggle.classList.add('opacity-50');
-        themeToggle.classList.remove('opacity-100');
+        themeToggle.classList.add('button--active');
     } else {
-        themeToggle.classList.add('opacity-100');
-        themeToggle.classList.remove('opacity-50');
+        themeToggle.classList.remove('button--active');
     }
     
     // Add click handler
@@ -879,13 +864,11 @@ function setupThemeToggle() {
         // Toggle theme
         const isDark = document.documentElement.classList.toggle('dark');
         
-        // Toggle opacity
+        // Toggle button--active
         if (isDark) {
-            themeToggle.classList.remove('opacity-100');
-            themeToggle.classList.add('opacity-50');
+            themeToggle.classList.add('button--active');
         } else {
-            themeToggle.classList.remove('opacity-50');
-            themeToggle.classList.add('opacity-100');
+            themeToggle.classList.remove('button--active');
         }
         
         // Save preference
@@ -930,11 +913,11 @@ function setupDateSelector() {
 // Unified channel detail view function
 function showChannelDetail(channelId) {
     // Get the selected date from the active day button
-    const activeDay = document.querySelector('.day-nav-item.active');
+    const activeDay = document.querySelector('.date-nav-item.active');
     const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
     
     const channel = tvData.channels.find(c => c.id === channelId);
-    const content = document.querySelector('.content');
+    const content = document.querySelector('programs__content');
     
     content.innerHTML = `
         <button 
@@ -1039,16 +1022,14 @@ function toggleSearch() {
     if (isVisible) {
         // Hide search
         searchSection.classList.add('hidden');
-        searchToggle.classList.remove('opacity-50');
-        searchToggle.classList.add('opacity-100');
+        searchToggle.classList.remove('button--active');
         searchInput.value = ''; // Clear search input
         // Clear search results if any
         renderPrograms();
     } else {
         // Show search
         searchSection.classList.remove('hidden');
-        searchToggle.classList.remove('opacity-100');
-        searchToggle.classList.add('opacity-50');
+        searchToggle.classList.add('button--active');
         // Focus search input
         setTimeout(() => searchInput.focus(), 100);
     }
@@ -1061,15 +1042,12 @@ function setupSearch() {
     const closeSearch = document.getElementById('closeSearch');
     
     if (searchToggle) {
-        // Set initial opacity to 100%
-        searchToggle.classList.add('opacity-100');
-        searchToggle.classList.remove('opacity-50');
+        // Set initial state
+        searchToggle.classList.remove('button--active');
         searchToggle.addEventListener('click', toggleSearch);
     }
     
     if (closeSearch) {
-        // Ensure the close button has the correct opacity
-        closeSearch.classList.add('opacity-100');
         closeSearch.addEventListener('click', toggleSearch);
     }
 
@@ -1079,8 +1057,8 @@ function setupSearch() {
             const searchTerm = e.target.value.toLowerCase();
             if (searchTerm.length >= 2) {
                 const results = tvData.channels.reduce((acc, channel) => {
-                const matchingPrograms = channel.programs.filter(program => 
-                    program.title.toLowerCase().includes(searchTerm) ||
+                    const matchingPrograms = channel.programs.filter(program => 
+                        program.title.toLowerCase().includes(searchTerm) ||
                         program.type?.toLowerCase().includes(searchTerm)
                     ).map(program => ({ ...program, channelId: channel.id, channelName: channel.name }));
                     return [...acc, ...matchingPrograms];
@@ -1102,12 +1080,12 @@ function setupSearch() {
 
 // Add this function to initialize scroll shadows
 function setupScrollShadows() {
-    const desktopProviderContainer = document.querySelector('.providers-desktop .provider-scroll-container');
-    const mobileProviderContainer = document.querySelector('.providers .provider-scroll-container');
-    const channelSectionInner = document.querySelector('.channel-section-inner');
+    const desktopProviderContainer = document.querySelector('.provider-list .provider-list__scroll');
+    const mobileProviderContainer = document.querySelector('.providers .provider-list__scroll');
+    const channelSectionInner = document.querySelector('.channels__inner');
     
     if (desktopProviderContainer) {
-        const desktopWrapper = desktopProviderContainer.querySelector('.provider-scroll-wrapper');
+        const desktopWrapper = desktopProviderContainer.querySelector('.provider-list__wrapper');
         
         function updateDesktopShadows() {
             const scrollLeft = desktopWrapper.scrollLeft;
@@ -1133,7 +1111,7 @@ function setupScrollShadows() {
     }
     
     if (mobileProviderContainer) {
-        const mobileWrapper = mobileProviderContainer.querySelector('.provider-scroll-wrapper');
+        const mobileWrapper = mobileProviderContainer.querySelector('.provider-list__wrapper');
         
         function updateMobileShadows() {
             const scrollLeft = mobileWrapper.scrollLeft;
@@ -1160,7 +1138,7 @@ function setupScrollShadows() {
     
     // Add shadows to the channel section
     if (channelSectionInner) {
-        const channelNav = channelSectionInner.querySelector('.channel-nav');
+        const channelNav = channelSectionInner.querySelector('.channel-list__wrapper');
         
         function updateChannelSectionShadows() {
             const scrollLeft = channelNav.scrollLeft;
@@ -1186,7 +1164,7 @@ function setupScrollShadows() {
         window.addEventListener('resize', updateChannelSectionShadows);
         
         // Update when channel section becomes visible
-        const channelSection = document.querySelector('.channel-section');
+        const channelSection = document.querySelector('.channels');
         if (channelSection) {
             const observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
@@ -1203,15 +1181,15 @@ function setupScrollShadows() {
     }
     
     // Also add shadows to the day navigation
-    const dayNav = document.querySelector('.day-nav .week-days');
+    const dayNav = document.querySelector('.date-nav .date-list__wrapper');
     const prevDateBtn = document.getElementById('prevDate');
     const nextDateBtn = document.getElementById('nextDate');
     
     if (dayNav) {
         // Create a container for the week-days if it doesn't exist
-        if (!dayNav.parentElement.classList.contains('week-days-container')) {
+        if (!dayNav.parentElement.classList.contains('date-list__scroll')) {
             const container = document.createElement('div');
-            container.className = 'week-days-container';
+            container.className = 'date-list__scroll';
             dayNav.parentNode.insertBefore(container, dayNav);
             container.appendChild(dayNav);
         }
@@ -1296,14 +1274,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize current programs toggle with active state
     const currentProgramsToggle = document.getElementById('currentProgramsToggle');
     if (currentProgramsToggle) {
-        // Set initial opacity based on showAllPrograms state
-        // Default is opacity-100 (no filter active)
+        // Set initial state based on showAllPrograms state
         if (showAllPrograms) {
-            currentProgramsToggle.classList.add('opacity-50');
+            currentProgramsToggle.classList.add('button--active');
         } else {
-            currentProgramsToggle.classList.add('opacity-100');
+            currentProgramsToggle.classList.remove('button--active');
         }
         currentProgramsToggle.addEventListener('click', toggleAllSchedules);
+    }
+
+    // Add click event to backdrop to close menu when clicked
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    if (backdrop) {
+        backdrop.addEventListener('click', toggleMobileMenu);
     }
 });
 
@@ -1378,7 +1361,7 @@ function toggleChannel(channelId, enabled) {
         }
 
         // Get current active provider
-        const activeProvider = document.querySelector('.provider-card.active');
+        const activeProvider = document.querySelector('.provider-card--active');
         const providerId = activeProvider ? activeProvider.dataset.provider : 'ulusal';
         
         // Update the UI with the new channel state
@@ -1514,7 +1497,7 @@ function initializeChannels() {
     };
 
     // Get current provider
-    const activeProvider = document.querySelector('.provider-card.active');
+    const activeProvider = document.querySelector('.provider-card--active');
     const providerId = activeProvider ? activeProvider.dataset.provider : 'providerOne';
 
     // Set enabled state based on provider availability
@@ -1537,7 +1520,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add About page
 function showAboutPage(event) {
     event.preventDefault();
-    const content = document.querySelector('.content');
+    const content = document.querySelector('programs__content');
     
     content.innerHTML = `
         <div class="max-w-3xl mx-auto">
@@ -1637,11 +1620,11 @@ function setupProviderScroll() {
     setupScrollForContainer('.providers');
     
     // Setup for desktop providers
-    setupScrollForContainer('.providers-desktop');
+    setupScrollForContainer('.provider-list');
     
     function setupScrollForContainer(containerSelector) {
-        const container = document.querySelector(`${containerSelector} .provider-scroll-container`);
-        const wrapper = container?.querySelector('.provider-scroll-wrapper');
+        const container = document.querySelector(`${containerSelector} .provider-list__scroll`);
+        const wrapper = container?.querySelector('.provider-list__wrapper');
         const prevBtn = container?.querySelector('.provider-scroll-prev');
         const nextBtn = container?.querySelector('.provider-scroll-next');
 
@@ -1710,9 +1693,9 @@ function setupProviders() {
         // Update active state of provider cards
         providerCards.forEach(card => {
             if (card.dataset.provider === providerId) {
-                card.classList.add('active');
+                card.classList.add('provider-card--active');
             } else {
-                card.classList.remove('active');
+                card.classList.remove('provider-card--active');
             }
         });
 
@@ -1746,7 +1729,7 @@ function setupProviders() {
 
 // Update channel list based on provider
 function updateChannelList(providerChannels) {
-    const channelNav = document.querySelector('.channel-nav');
+    const channelNav = document.querySelector('.channel-list__wrapper');
     if (!channelNav) return;
 
     // Filter channels that are both in provider and enabled
@@ -1756,12 +1739,12 @@ function updateChannelList(providerChannels) {
 
     channelNav.innerHTML = channels.map(channel => `
         <button 
-            class="channel"
+            class="channel-card"
             data-channel-id="${channel.id}"
         >
-            <div class="channel-img-wrapper">
+            <div class="channel-card__img">
                 <img src="${channel.logo}" alt="${channel.name}" 
-                     class="channel-img-wrapper-img"
+                     class="channel-card__img-img"
                      onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
             </div>
         </button>
@@ -1770,7 +1753,7 @@ function updateChannelList(providerChannels) {
 
 // Update program grid based on provider
 function updateProgramGrid(providerChannels) {
-    const contentDiv = document.querySelector('.content');
+    const contentDiv = document.querySelector('programs__content');
     const wrapperDiv = document.querySelector('.wrapper');
     if (!contentDiv) return;
 
@@ -1804,61 +1787,35 @@ function toggleMoreProviders(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    // Get screen width
-    const isMobile = window.innerWidth < 768; // md breakpoint
+    // Determine which dropdown to use based on the button's location
+    const isInHeader = event.target.closest('.provider-list') !== null;
+    const dropdownId = isInHeader ? 'providerDropdownDesktop' : 'providerDropdown';
     
-    if (isMobile) {
-        // Show modal on mobile
-        const modal = document.getElementById('moreProvidersModal');
-        if (modal) {
-            modal.classList.remove('hidden');
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-
-            modal.querySelectorAll('.provider-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const providerId = card.dataset.provider;
-                    updateProviderView(providerId);
-                    modal.classList.add('hidden');
-                });
-            });
-        }
-    } else {
-        // Toggle dropdown on desktop
-        // Determine which dropdown to use based on the button's location
-        const isInHeader = event.target.closest('.providers-desktop') !== null;
-        const dropdownId = isInHeader ? 'providerDropdownDesktop' : 'providerDropdown';
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+        dropdown.classList.toggle('hidden');
         
-        const dropdown = document.getElementById(dropdownId);
-        if (dropdown) {
-            dropdown.classList.toggle('hidden');
-            
-            // Close dropdown when clicking outside
-            const closeDropdown = (e) => {
-                if (!dropdown.contains(e.target) && !event.target.contains(e.target)) {
-                    dropdown.classList.add('hidden');
-                    document.removeEventListener('click', closeDropdown);
-                }
-            };
-            
-            // Add event listener with a slight delay to avoid immediate triggering
-            setTimeout(() => {
-                document.addEventListener('click', closeDropdown);
-            }, 100);
-            
-            // Add click handlers to provider cards
-            dropdown.querySelectorAll('.provider-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const providerId = card.dataset.provider;
-                    updateProviderView(providerId);
-                    dropdown.classList.add('hidden');
-                });
+        // Close dropdown when clicking outside
+        const closeDropdown = (e) => {
+            if (!dropdown.contains(e.target) && !event.target.contains(e.target)) {
+                dropdown.classList.add('hidden');
+                document.removeEventListener('click', closeDropdown);
+            }
+        };
+        
+        // Add event listener with a slight delay to avoid immediate triggering
+        setTimeout(() => {
+            document.addEventListener('click', closeDropdown);
+        }, 100);
+        
+        // Add click handlers to provider cards
+        dropdown.querySelectorAll('.provider-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const providerId = card.dataset.provider;
+                updateProviderView(providerId);
+                dropdown.classList.add('hidden');
             });
-        }
+        });
     }
 }
 
@@ -1900,7 +1857,7 @@ function setupChannelSectionVisibility() {
 
 // Update setupDateNavigation function
 function setupDateNavigation() {
-    const dayNav = document.querySelector('.day-nav .week-days');
+    const dayNav = document.querySelector('.date-nav .date-list__wrapper');
     const nextDateBtn = document.getElementById('nextDate');
     
     // Generate dates for a full week (7 days)
@@ -1929,7 +1886,7 @@ function setupDateNavigation() {
             return `
                 <button 
                     data-date="${dateStr}"
-                    class="day-nav-item ${isToday ? 'active' : ''}"
+                    class="date-nav-item ${isToday ? 'active' : ''}"
                 >
                     <div class="day-name">${dayLabel}</div>
                     <div class="day-date">${formattedDate}</div>
@@ -1938,7 +1895,7 @@ function setupDateNavigation() {
         }).join('');
         
         // Add click event listeners to date buttons
-        const dateButtons = dayNav.querySelectorAll('.day-nav-item');
+        const dateButtons = dayNav.querySelectorAll('.date-nav-item');
         dateButtons.forEach(button => {
             button.addEventListener('click', () => {
                 // Remove active class from all buttons
@@ -2040,9 +1997,9 @@ function setupProviders() {
         // Update active state of provider cards
         providerCards.forEach(card => {
             if (card.dataset.provider === providerId) {
-                card.classList.add('active');
+                card.classList.add('provider-card--active');
             } else {
-                card.classList.remove('active');
+                card.classList.remove('provider-card--active');
             }
         });
 
@@ -2076,8 +2033,8 @@ function setupProviders() {
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
-  const channelSection = document.querySelector('.channel-section');
-  const dayNav = document.querySelector('.day-nav');
+  const channelSection = document.querySelector('.channels');
+  const dayNav = document.querySelector('.date-nav');
   let lastScrollY = 0;
   const scrollThreshold = 100; // Show channel section after 100px of scrolling
   const bufferZone = 30; // Buffer zone to prevent flickering
@@ -2090,10 +2047,10 @@ function setupScrollBasedSections() {
     if (shouldBeVisible !== isVisible) {
       if (shouldBeVisible) {
         channelSection.classList.add('visible');
-        dayNav.classList.add('with-channel-section');
+        dayNav.classList.add('with-channels');
       } else {
         channelSection.classList.remove('visible');
-        dayNav.classList.remove('with-channel-section');
+        dayNav.classList.remove('with-channels');
       }
       isVisible = shouldBeVisible;
     }
@@ -2116,7 +2073,7 @@ function setupScrollBasedSections() {
       } else {
         channelSection.classList.add('visible');
         channelSection.classList.add('desktop-mode');
-        dayNav.classList.remove('with-channel-section');
+        dayNav.classList.remove('with-channels');
         dayNav.classList.add('desktop-mode');
       }
       
@@ -2133,7 +2090,7 @@ function setupScrollBasedSections() {
     } else {
       channelSection.classList.add('visible');
       channelSection.classList.add('desktop-mode');
-      dayNav.classList.remove('with-channel-section');
+      dayNav.classList.remove('with-channels');
       dayNav.classList.add('desktop-mode');
     }
   });

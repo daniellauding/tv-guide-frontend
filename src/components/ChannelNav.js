@@ -1,6 +1,6 @@
 export const ChannelNav = {
     render: (channels, activeChannelId = null) => {
-        const nav = document.querySelector('.channel-nav');
+        const nav = document.querySelector('.channel-list__wrapper');
         nav.innerHTML = channels.map(channel => `
             <button 
                 data-channel-id="${channel.id}"

@@ -40,24 +40,24 @@ input[type="search"] {
 }
 
 /* Smooth scrolling */
-.program-wrapper {
+.program-card {
   scroll-behavior: smooth;
 }
 
 /* Hide scrollbar in Firefox when not hovering */
-.program-wrapper {
+.program-card {
   scrollbar-width: none;
 }
 
-.program-wrapper:hover {
+.program-card:hover {
   scrollbar-width: thin;
 }
 
 /* Hide scrollbar in Webkit/Chromium when not hovering */
-.program-wrapper::-webkit-scrollbar {
+.program-card::-webkit-scrollbar {
   width: 0;
 }
 
-.program-wrapper:hover::-webkit-scrollbar {
+.program-card:hover::-webkit-scrollbar {
   width: 6px;
 } 

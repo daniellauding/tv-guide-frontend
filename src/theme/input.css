@@ -108,7 +108,7 @@
         @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
     }
 
-    .nav-button {
+    .btn {
         @apply transition-all duration-200 hover:scale-95 active:scale-95;
     }
 

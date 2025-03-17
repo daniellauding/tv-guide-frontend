@@ -11,14 +11,22 @@
      Header Components
      ========================================================================== */
   
-  .header-title {
+  .nav-bar__logo {
     @apply flex items-center font-barlow font-semibold text-3xl 
            text-title dark:text-title-dark hover:text-title-hover ml-2;
   }
 
-  .header-logo {
+  .logo {
     @apply h-8 md:h-auto w-fit cursor-pointer;
   }
+
+  /* ==========================================================================
+    Nav-bar Controls
+    ========================================================================== */
+
+    .nav-bar__controls .button--active {
+      @apply opacity-50;
+    }
 
   /* ==========================================================================
      Mobile Menu Components
@@ -29,38 +37,38 @@
     opacity: 0;
     pointer-events: none;
   }
-
+  
   .mobile-menu-backdrop.active {
     @apply opacity-50 pointer-events-auto;
   }
-
+  
   .mobile-menu {
     @apply fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-800 z-90 
            shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
     width: 75vw;
     transform: translateX(-100%);
   }
-
+  
   .mobile-menu.active {
     @apply translate-x-0;
   }
-
+  
   .mobile-menu-header {
     @apply flex justify-end mb-6;
   }
-
+  
   .mobile-menu-close {
     @apply p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300;
   }
-
+  
   .mobile-menu-content {
     @apply flex flex-col flex-grow px-6 py-8 space-y-6;
   }
-
+  
   .mobile-menu-link {
     @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
   }
-
+  
   /* ==========================================================================
      Provider Components
      ========================================================================== */
@@ -78,8 +86,16 @@
            inline-flex font-barlow text-sm px-4 py-1;
   }
 
-  .provider-card.active {
+  .provider-card--active {
     @apply font-bold;
+  }
+
+  .button--icon {
+    @apply p-2 rounded-lg transition-all duration-200 hover:scale-95 active:scale-95;
+  }
+
+  .button--active {
+    @apply bg-gray-100 dark:bg-gray-700;
   }
 
   /* ==========================================================================
@@ -94,12 +110,12 @@
     @apply w-8 h-8 object-contain;
   }
 
-  .channel-img-wrapper {
+  .channel-card__img {
     @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center 
            rounded-lg border-gray-200 border;
   }
 
-  .channel-img-wrapper-img {
+  .channel-card__img-img {
     @apply h-8 md:h-10 w-auto object-contain;
   }
 
@@ -107,34 +123,129 @@
      Program Components
      ========================================================================== */
 
-  .program-wraper {
+  .program-list {
+    
+  }
+
+  .program-card {
     @apply bg-programWrapper-light dark:bg-programWrapper-dark 
            bg-white dark:bg-gray-800;
   }
 
-  .program-header {
+  .program-card__header {
     @apply p-0;
   }
 
-  .program-item {
-    @apply bg-programItem-light dark:bg-programItem-dark p-3 md:p-4 
-           cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700;
+  .program-card__header .program-card__topbar {
+    @apply flex items-center justify-between;
   }
 
-  .program-item.past {
-    @apply text-gray-400 dark:text-gray-500;
+  .program-card__header .program-card__info {
+    @apply flex items-center space-x-3
   }
 
-  .program-item.past h3 {
-    @apply text-gray-500 dark:text-gray-500 font-normal;
+  .program-card__header .program-card__logo {
+    @apply w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center;
   }
 
-  .program-item.today {
-    @apply text-red-500;
+  .program-card__header .program-card__details {  }
+
+  .program-card__header .program-card__title {
+    @apply font-medium text-gray-900 dark:text-white text-sm md:text-base;
   }
 
-  .program-item.today h3 {
-    @apply text-gray-800 dark:text-gray-200 font-medium;
+  .program-card {
+    @apply bg-white transition;
+  }
+
+  .program-card__header {
+    @apply mb-3;
+  }
+
+  .program-card__topbar {
+    @apply flex items-center justify-between;
+  }
+
+  .program-card__info {
+    @apply flex items-center space-x-3;
+  }
+
+  .program-card__logo {
+    @apply flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 w-10 h-10 md:w-12 md:h-12;
+  }
+
+  .program-card__logo-img {
+    @apply h-6 md:h-8 w-auto object-contain;
+  }
+
+  .program-card__title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+  }
+
+  /* 🎬 Program Slot Styling */
+  .program-slot {
+    @apply space-y-3;
+  }
+
+  .program-slot__item {
+    @apply p-3 rounded-lg transition duration-300 cursor-pointer;
+  }
+
+  .program-slot--past {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .program-slot--live {
+    @apply bg-red-100 dark:bg-red-900;
+  }
+
+  .program-slot--upcoming {
+    @apply bg-white dark:bg-gray-700;
+  }
+
+  .program-slot__content {
+    @apply flex justify-between items-center;
+  }
+
+  .program-slot__details {
+    @apply flex items-center space-x-2;
+  }
+
+  .program-slot__time {
+    @apply text-xs md:text-sm text-gray-600 dark:text-gray-400;
+  }
+
+  .program-slot__title {
+    @apply text-sm md:text-base font-medium;
+  }
+
+  .program-slot--past .program-slot__title {
+    @apply text-gray-500 dark:text-gray-500;
+  }
+
+  .program-slot--live .program-slot__title {
+    @apply text-red-500 dark:text-red-500;
+  }
+
+  .program-slot--upcoming .program-slot__title {
+    @apply text-black dark:text-white;
+  }
+
+  .program-slot__live-indicator {
+    @apply flex items-center space-x-2 text-red-500;
+  }
+
+  .live-dot {
+    @apply w-2 h-2 bg-red-500 rounded-full animate-ping;
+  }
+
+  /* ⏳ Progress Bar */
+  .program-slot__progress {
+    @apply mt-2 h-1 bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  .program-slot__progress-bar {
+    @apply h-full bg-red-500 rounded-full;
   }
 
   /* ==========================================================================
@@ -200,11 +311,11 @@
   .progress-bar {
     @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
   }
-
+  
   .progress-section {
     @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
   }
-
+  
   /* ==========================================================================
      Utility Components
      ========================================================================== */
@@ -213,7 +324,7 @@
     @apply text-gray-600 dark:text-white;
   }
 
-  .nav-button {
+  .btn {
     @apply p-2 transition-all hover:scale-95 active:scale-95;
   }
 
@@ -282,105 +393,162 @@
      ========================================================================== */
 
   /* Provider scroll shadows */
-  .provider-scroll-container {
+  .provider-list__scroll {
     @apply relative overflow-hidden;
   }
 
-  .provider-scroll-container::before,
-  .provider-scroll-container::after {
+  .provider-list__scroll::before,
+  .provider-list__scroll::after {
     content: '';
     @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
-  .provider-scroll-container::before {
+  .provider-list__scroll::before {
     @apply left-0;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
   }
 
-  .provider-scroll-container::after {
+  .provider-list__scroll::after {
     @apply right-0;
     background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
   }
 
-  .provider-scroll-container.shadow-left::before {
+  .provider-list__scroll.shadow-left::before {
     @apply opacity-100;
   }
 
-  .provider-scroll-container.shadow-right::after {
+  .provider-list__scroll.shadow-right::after {
     @apply opacity-100;
   }
 
-  .dark .provider-scroll-container::before {
+  .dark .provider-list__scroll::before {
     background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
   }
 
-  .dark .provider-scroll-container::after {
+  .dark .provider-list__scroll::after {
     background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
   }
 
   /* Channel section shadows */
-  .channel-section-inner::before,
-  .channel-section-inner::after {
+  .channels__inner::before,
+  .channels__inner::after {
     content: '';
     @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
-  .channel-section-inner::before {
+  .channels__inner::before {
     @apply left-0;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
   }
 
-  .channel-section-inner::after {
+  .channels__inner::after {
     @apply right-0;
     background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
   }
 
-  .channel-section-inner.shadow-left::before {
+  .channels__inner.shadow-left::before {
     @apply opacity-100;
   }
 
-  .channel-section-inner.shadow-right::after {
+  .channels__inner.shadow-right::after {
     @apply opacity-100;
   }
 
-  .dark .channel-section-inner::before {
+  .dark .channels__inner::before {
     background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
   }
 
-  .dark .channel-section-inner::after {
+  .dark .channels__inner::after {
     background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
   }
 
   /* Day navigation shadows */
-  .week-days-container::before,
-  .week-days-container::after {
+  .date-list__scroll::before,
+  .date-list__scroll::after {
     content: '';
     @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
-  .week-days-container::before {
+  .date-list__scroll::before {
     @apply left-0;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
   }
 
-  .week-days-container::after {
+  .date-list__scroll::after {
     @apply right-0;
     background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
   }
 
-  .week-days-container.shadow-left::before {
+  .date-list__scroll.shadow-left::before {
     @apply opacity-100;
   }
 
-  .week-days-container.shadow-right::after {
+  .date-list__scroll.shadow-right::after {
     @apply opacity-100;
   }
 
-  .dark .week-days-container::before {
+  .dark .date-list__scroll::before {
     background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
   }
 
-  .dark .week-days-container::after {
+  .dark .date-list__scroll::after {
     background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
   }
+
+  /* ==========================================================================
+     Footer Components
+  ========================================================================== */
+
+  .footer {
+    @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700;
+  }
+
+  .footer__container {
+      @apply max-w-7xl mx-auto px-4 py-8;
+  }
+
+  .footer__grid {
+      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
+  }
+
+  .footer__section {
+      @apply space-y-4;
+  }
+
+  .footer__title {
+      @apply text-xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .footer__subtitle {
+      @apply text-lg font-semibold text-gray-900 dark:text-white;
+  }
+
+  .footer__text {
+      @apply text-sm text-gray-600 dark:text-gray-300;
+  }
+
+  .footer__list {
+      @apply space-y-2;
+  }
+
+  .footer__link {
+      @apply text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors;
+  }
+
+  .footer__social {
+      @apply flex space-x-4;
+  }
+
+  .footer__icon {
+      @apply text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors;
+  }
+
+  .footer__divider {
+      @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
+  }
+
+  .footer__copyright {
+      @apply text-sm text-gray-600 dark:text-gray-300 text-center;
+  } 
+
 }
