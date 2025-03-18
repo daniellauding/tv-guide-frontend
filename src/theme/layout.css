@@ -16,8 +16,7 @@
      ========================================================================== */
 
   .header {
-    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out
-           bg-header dark:bg-header border-b border-gray-200 dark:border-gray-700;
+    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out;
   }
 
   .header__container {
@@ -86,7 +85,7 @@
 
   .channels {
     top: 124px;
-    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 
+    @apply bg-white dark:bg-gray-800 border-b md:border-0 border-gray-200 dark:border-gray-700 
            transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none
            w-full;
     @apply md:transform-none md:opacity-100 md:pointer-events-auto md:static fixed md:relative md:top-0 z-40;
@@ -111,7 +110,7 @@
      ========================================================================== */
 
   .date-nav {
-    @apply bg-white dark:bg-gray-800 border-t border-b border-gray-200 dark:border-gray-700 sticky z-30;
+    @apply bg-white dark:bg-gray-800 border-b md:border-0 border-gray-200 dark:border-gray-700 sticky z-30;
     top: 124px;
   }
 
@@ -168,7 +167,7 @@
     ========================================================================== */
 
   .program-list {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px;
   }
 
   /* ==========================================================================

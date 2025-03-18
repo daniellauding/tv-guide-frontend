@@ -335,96 +335,115 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#fff3e6',
-          100: '#ffe0cc',
-          300: '#ff9933',
-          500: '#ff6b00',
-          600: '#e65c00',
-          700: '#cc5200',
-          DEFAULT: '#ff6b00',
-          dark: '#cc5500',
-          light: '#ff8533',
+          50: 'var(--primary-50, #fff3e6)',
+          100: 'var(--primary-100, #ffe0cc)',
+          300: 'var(--primary-300, #ff9933)',
+          500: 'var(--primary-500, #ff6b00)',
+          600: 'var(--primary-600, #e65c00)',
+          700: 'var(--primary-700, #cc5200)',
+          DEFAULT: 'var(--primary-default, #ff6b00)',
+          dark: 'var(--primary-dark, #cc5500)',
+          light: 'var(--primary-light, #ff8533)',
         },
         secondary: {
-          50: '#e6eef7',
-          100: '#ccddf0',
-          500: '#2b4c7e',
-          600: '#234066',
-          700: '#1a2f4d',
-          DEFAULT: '#2b4c7e',
-          dark: '#1a2f4d',
-          light: '#406eb8',
+          50: 'var(--secondary-50, #e6eef7)',
+          100: 'var(--secondary-100, #ccddf0)',
+          500: 'var(--secondary-500, #2b4c7e)',
+          600: 'var(--secondary-600, #234066)',
+          700: 'var(--secondary-700, #1a2f4d)',
+          DEFAULT: 'var(--secondary-default, #2b4c7e)',
+          dark: 'var(--secondary-dark, #1a2f4d)',
+          light: 'var(--secondary-light, #406eb8)',
         },
         background: {
-          light: '#FCF6F2',
-          dark: '#261E17',
+          light: 'var(--bg-light, #FCF6F2)',
+          dark: 'var(--bg-dark, #261E17)',
           card: {
-            light: '#ffffff',
-            dark: '#343a40',
+            light: 'var(--bg-card-light, #ffffff)',
+            dark: 'var(--bg-card-dark, #343a40)',
           },
         },
+        input: {
+          light: {
+            DEFAULT: 'var(--input-light, #FFFFFF)',
+            hover: 'var(--input-light-hover, #F5F5F5)',
+            active: 'var(--input-light-active, #EFEFEF)',
+          },
+          dark: {
+            DEFAULT: 'var(--input-dark, #3B332C)',
+            hover: 'var(--input-dark-hover, #3B332C)',
+            active: 'var(--input-dark-active, #3B332C)',
+          }
+        },
         header: {
-          DEFAULT: '#fff',
-          dark: '#fff',
+          DEFAULT: 'var(--header-bg, #fff)',
+          light: {
+            DEFAULT: 'var(--header-bg, #fff)',
+            desktop: 'var(--header-bg-desktop, #f8f9fa)',
+          },
+          dark: {
+            DEFAULT: 'var(--header-bg-dark, #1f2937)',
+            desktop: 'var(--header-bg-desktop, #f8f9fa)',
+          }
         },
         wrapper: {
-          DEFAULT: '#fff',
-          dark: '#fff',
+          DEFAULT: 'var(--color-wrapper, #fff)',
+          dark: 'var(--color-wrapper-dark, #fff)',
         },
         text: {
-          DEFAULT: '#333333',
-          dark: '#FFFFFF',
-          muted: '#666666',
-          inverse: '#FFFFFF',
-          hover: '#F37335'
+          DEFAULT: 'var(--color-text, #333333)',
+          dark: 'var(--color-text-dark, #FFFFFF)',
+          muted: 'var(--color-text-muted, #666666)',
+          inverse: 'var(--color-text-inverse, #FFFFFF)',
+          hover: 'var(--color-text-hover, #F37335)',
         },
         border: {
-          light: '#e9ecef',
-          dark: '#495057',
+          light: 'var(--color-border-light, #e9ecef)',
+          dark: 'var(--color-border-dark, #495057)',
         },
         status: {
-          live: '#FCC430',
-          upcoming: '#198754',
-          ended: '#6c757d',
+          live: 'var(--color-status-live, #FCC430)',
+          upcoming: 'var(--color-status-upcoming, #198754)',
+          ended: 'var(--color-status-ended, #6c757d)',
         },
         provider: {
-          DEFAULT: '#fff',
-          dark: '#fff',
+          DEFAULT: 'var(--color-provider, #fff)',
+          dark: 'var(--color-provider-dark, #fff)',
           text: {
             light: {
-              DEFAULT: '#000',
-              hover: '#000',
-              active: '#000'
+              DEFAULT: 'var(--color-provider-text-light, #000)',
+              hover: 'var(--color-provider-text-light-hover, #000)',
+              active: 'var(--color-provider-text-light-active, #000)',
             },
             dark: {
-              DEFAULT: '#000',
-              hover: '#000',
-              active: '#000'
+              DEFAULT: 'var(--color-provider-text-dark, #000)',
+              hover: 'var(--color-provider-text-dark-hover, #000)',
+              active: 'var(--color-provider-text-dark-active, #000)',
             }
           },
           background: {
-            DEFAULT: '#F0F0F0',
-            active: '#fff',
-            hover: '#fff',
+            DEFAULT: 'var(--color-provider-bg, #F0F0F0)',
+            active: 'var(--color-provider-bg-active, #fff)',
+            hover: 'var(--color-provider-bg-hover, #fff)',
             light: {
-              DEFAULT: '#F0F0F0',
-              hover: '#F5F5F5',
-              active: '#EFEFEF',
+              DEFAULT: 'var(--color-provider-bg-light, #000)',
+              hover: 'var(--color-provider-bg-light-hover, #F5F5F5)',
+              active: 'var(--color-provider-bg-light-active, #EFEFEF)',
             },
             dark: {
-              DEFAULT: '#F0F0F0',
-              hover: '#F5F5F5',
-              active: '#EFEFEF',
+              DEFAULT: 'var(--color-provider-bg-dark, #F0F0F0)',
+              hover: 'var(--color-provider-bg-dark-hover, #F5F5F5)',
+              active: 'var(--color-provider-bg-dark-active, #EFEFEF)',
             }
           }
         },
         progress: {
-          DEFAULT: '#e5e7eb',
-          dark: '#e5e7eb',
+          DEFAULT: 'var(--color-progress, #e5e7eb)',
+          dark: 'var(--color-progress-dark, #e5e7eb)',
         },
         progressFill: {
-          DEFAULT: '#FCC430',
-          dark: '#FCC430',
+          DEFAULT: 'var(--color-progress-fill, #FCC430)',
+          dark: 'var(--color-progress-fill-dark, #FCC430)',
         },
         body: {
           DEFAULT: '#fff',
@@ -442,106 +461,94 @@ module.exports = {
           DEFAULT: '#ffffff',
           dark: '#343a40',
         },
-        input: {
-          light: {
-            DEFAULT: '#FFFFFF',
-            hover: '#F5F5F5',
-            active: '#EFEFEF',
-          },
-          dark: {
-            DEFAULT: '#3B332C',
-            hover: '#3B332C',
-            active: '#3B332C',
-          }
-        },
         select: {
           light: {
-            DEFAULT: '#FFFFFF',
-            hover: '#F5F5F5',
-            active: '#EFEFEF',
+            DEFAULT: 'var(--color-select-light, #FFFFFF)',
+            hover: 'var(--color-select-light-hover, #F5F5F5)',
+            active: 'var(--color-select-light-active, #EFEFEF)',
           },
           dark: {
-            DEFAULT: '#3B332C',
-            hover: '#3B332C',
-            active: '#4953B332C057',
+            DEFAULT: 'var(--color-select-dark, #3B332C)',
+            hover: 'var(--color-select-dark-hover, #3B332C)',
+            active: 'var(--color-select-dark-active, #495057)', // ✅ Fixed
           }
         },
         iconBtn: {
           light: {
-            DEFAULT: '#FFFFFF',
-            hover: '#F5F5F5',
-            active: '#EFEFEF',
+            DEFAULT: 'var(--color-iconBtn-light, #FFFFFF)',
+            hover: 'var(--color-iconBtn-light-hover, #F5F5F5)',
+            active: 'var(--color-iconBtn-light-active, #EFEFEF)',
           },
           dark: {
-            DEFAULT: '#3B332C',
-            hover: '#3B332C',
-            active: '#3B332C',
+            DEFAULT: 'var(--color-iconBtn-dark, #3B332C)',
+            hover: 'var(--color-iconBtn-dark-hover, #3B332C)',
+            active: 'var(--color-iconBtn-dark-active, #3B332C)',
           }
         },
         programHeader: {
           light: {
-            DEFAULT: '#F9FAFB',
-            hover: '#F9FAFB',
-            active: '#F9FAFB',
+            DEFAULT: 'var(--program-header-light, #F9FAFB)',
+            hover: 'var(--program-header-light-hover, #F9FAFB)',
+            active: 'var(--program-header-light-active, #F9FAFB)',
           },
           dark: {
-            DEFAULT: '#60554C',
-            hover: '#60554C',
-            active: '#60554C',
+            DEFAULT: 'var(--program-header-dark, #60554C)',
+            hover: 'var(--program-header-dark-hover, #60554C)',
+            active: 'var(--program-header-dark-active, #60554C)',
           }
         },
         programWrapper: {
           light: {
-            DEFAULT: 'rgba(255, 255, 255, 1)',
-            hover: 'rgba(249, 259, 251, 1)',
-            active: 'rgba(249, 259, 251, 1)',
+            DEFAULT: 'var(--program-wrapper-light, rgba(255, 255, 255, 1))',
+            hover: 'var(--program-wrapper-light-hover, rgba(249, 255, 251, 1))',
+            active: 'var(--program-wrapper-light-active, rgba(249, 255, 251, 1))',
           },
           dark: {
-            DEFAULT: '#504943',
-            hover: '#504943',
-            active: '#504943',
+            DEFAULT: 'var(--program-wrapper-dark, #504943)',
+            hover: 'var(--program-wrapper-dark-hover, #504943)',
+            active: 'var(--program-wrapper-dark-active, #504943)',
           }
         },
         programItem: {
           light: {
-            DEFAULT: 'rgba(255, 255, 255, 1)',
-            hover: 'rgba(249, 259, 251, 1)',
-            active: 'rgba(249, 259, 251, 1)',
+            DEFAULT: 'var(--program-item-light, rgba(255, 255, 255, 1))',
+            hover: 'var(--program-item-light-hover, rgba(249, 255, 251, 1))',
+            active: 'var(--program-item-light-active, rgba(249, 255, 251, 1))',
           },
           dark: {
-            DEFAULT: '#504943',
-            hover: '#504943',
-            active: '#504943',
+            DEFAULT: 'var(--program-item-dark, #504943)',
+            hover: 'var(--program-item-dark-hover, #504943)',
+            active: 'var(--program-item-dark-active, #504943)',
           }
         },
         logoChannel: {
           light: {
-            DEFAULT: '#FFFFFF',
-            hover: '#F5F5F5',
-            active: '#EFEFEF',
+            DEFAULT: 'var(--logo-channel-light, #FFFFFF)',
+            hover: 'var(--logo-channel-light-hover, #F5F5F5)',
+            active: 'var(--logo-channel-light-active, #EFEFEF)',
           },
           dark: {
-            DEFAULT: '#3B332C',
-            hover: '#3B332C',
-            active: '#3B332C',
+            DEFAULT: 'var(--logo-channel-dark, #3B332C)',
+            hover: 'var(--logo-channel-dark-hover, #3B332C)',
+            active: 'var(--logo-channel-dark-active, #3B332C)',
           }
         },
         title: {
-          DEFAULT: '#F37335',
-          dark: '#FFFFFF',
-          muted: '#666666',
-          hover: '#F37335'
+          DEFAULT: 'var(--color-title, #F37335)',
+          dark: 'var(--color-title-dark, #FFFFFF)',
+          muted: 'var(--color-title-muted, #666666)',
+          hover: 'var(--color-title-hover, #F37335)',
         },
         'icon': {
-          DEFAULT: '#000000',
-          'dark': '#000000',
-          'light': '#000000',
+          DEFAULT: 'var(--color-icon, #000000)',
+          dark: 'var(--color-icon-dark, #000000)',
+          light: 'var(--color-icon-light, #000000)',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'system-ui', 'sans-serif'],
-        'barlow': ['Barlow', 'sans-serif'],
+        sans: 'var(--font-sans, Inter, system-ui, sans-serif)',
+        display: 'var(--font-display, Poppins, system-ui, sans-serif)',
+        barlow: 'var(--font-barlow, Barlow, sans-serif)',
       },
       zIndex: {
         '50': '50',

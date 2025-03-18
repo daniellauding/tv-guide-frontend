@@ -10,15 +10,10 @@
   /* ==========================================================================
      Header Components
      ========================================================================== */
-  
-  .nav-bar__logo {
-    @apply flex items-center font-barlow font-semibold text-3xl 
-           text-title dark:text-title-dark hover:text-title-hover ml-2;
-  }
 
-  .logo {
-    @apply h-8 md:h-auto w-fit cursor-pointer;
-  }
+    .header {
+      @apply bg-header-light-desktop dark:bg-header-dark border-b border-gray-200 dark:border-gray-700
+    }
 
   /* ==========================================================================
     Nav-bar Controls
@@ -124,15 +119,28 @@
      ========================================================================== */
 
   .program-list {
+    @apply bg-gray-200 dark:bg-gray-700;
+  }
+
+  .program-card,
+  .program-wrapper {
+    @apply bg-white dark:bg-gray-800;
+  }
+
+  .program-card:not(:last-child),
+  .program-wrapper:not(:last-child) {
     
   }
 
-  .program-card {
-    @apply bg-programWrapper-light dark:bg-programWrapper-dark 
-           bg-white dark:bg-gray-800;
+  @media (max-width: 768px) {
+    .program-card:not(:last-child),
+    .program-wrapper:not(:last-child) {
+      @apply border-r-0 border-b border-gray-200 dark:border-gray-700;
+    }
   }
 
-  .program-card__header {
+  .program-card__header,
+  .program-header {
     @apply p-0;
   }
 

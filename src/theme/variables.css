@@ -7,7 +7,7 @@
   /* Backgrounds */
   --bg-body: theme('colors.body.DEFAULT');
   --bg-card: theme('colors.card.DEFAULT');
-  --bg-header: theme('colors.header.DEFAULT');
+  --bg-header: theme('colors.header.light.DEFAULT');
   --bg-providers: theme('colors.provider.DEFAULT');
   --bg-channels: theme('colors.background.light');
   --bg-filter: theme('colors.background.light');
@@ -31,7 +31,7 @@
 .dark {
   --bg-body: theme('colors.body.dark');
   --bg-card: theme('colors.card.dark');
-  --bg-header: theme('colors.header.dark');
+  --bg-header: theme('colors.header.dark.DEFAULT');
   --bg-providers: theme('colors.provider.dark');
   --bg-channels: theme('colors.background.dark');
   --bg-filter: theme('colors.background.dark');
