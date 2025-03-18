@@ -379,11 +379,22 @@ module.exports = {
           DEFAULT: 'var(--header-bg, #fff)',
           light: {
             DEFAULT: 'var(--header-bg, #fff)',
-            desktop: 'var(--header-bg-desktop, #f8f9fa)',
+            desktop: 'var(--header-bg-light-desktop, #f8f9fa)',
           },
           dark: {
-            DEFAULT: 'var(--header-bg-dark, #1f2937)',
-            desktop: 'var(--header-bg-desktop, #f8f9fa)',
+            DEFAULT: 'var(--header-bg-dark, #000)',
+            desktop: 'var(--header-bg-dark-desktop, #000)',
+          }
+        },
+        footer: {
+          DEFAULT: 'var(--footer-bg, #fff)',
+          light: {
+            DEFAULT: 'var(--footer-bg, #fff)',
+            desktop: 'var(--footer-bg-light-desktop, #f8f9fa)',
+          },
+          dark: {
+            DEFAULT: 'var(--footer-bg-dark, #000)',
+            desktop: 'var(--footer-bg-dark-desktop, #000)',
           }
         },
         wrapper: {
@@ -416,9 +427,9 @@ module.exports = {
               active: 'var(--color-provider-text-light-active, #000)',
             },
             dark: {
-              DEFAULT: 'var(--color-provider-text-dark, #000)',
-              hover: 'var(--color-provider-text-dark-hover, #000)',
-              active: 'var(--color-provider-text-dark-active, #000)',
+              DEFAULT: 'var(--color-provider-text-dark, #fff)',
+              hover: 'var(--color-provider-text-dark-hover, #fff)',
+              active: 'var(--color-provider-text-dark-active, #fff)',
             }
           },
           background: {
@@ -426,14 +437,43 @@ module.exports = {
             active: 'var(--color-provider-bg-active, #fff)',
             hover: 'var(--color-provider-bg-hover, #fff)',
             light: {
-              DEFAULT: 'var(--color-provider-bg-light, #000)',
-              hover: 'var(--color-provider-bg-light-hover, #F5F5F5)',
-              active: 'var(--color-provider-bg-light-active, #EFEFEF)',
+              DEFAULT: 'var(--color-provider-bg-light, #f8f9fa)',
+              hover: 'var(--color-provider-bg-light-hover, #f8f9fa)',
+              active: 'var(--color-provider-bg-light-active, #f8f9fa)',
             },
             dark: {
-              DEFAULT: 'var(--color-provider-bg-dark, #F0F0F0)',
-              hover: 'var(--color-provider-bg-dark-hover, #F5F5F5)',
-              active: 'var(--color-provider-bg-dark-active, #EFEFEF)',
+              DEFAULT: 'var(--color-provider-bg-dark, #000)',
+              hover: 'var(--color-provider-bg-dark-hover, #000)',
+              active: 'var(--color-provider-bg-dark-active, #000)',
+            }
+          }
+        },
+        chip: {
+          text: {
+            light: {
+              DEFAULT: 'var(--color-date-text-light, #000)',
+              hover: 'var(--color-date-text-light-hover, #000)',
+              active: 'var(--color-date-text-light-active, #fff)',
+            },
+            dark: {
+              DEFAULT: 'var(--color-date-text-dark, #fff)',
+              hover: 'var(--color-date-text-dark-hover, #fff)',
+              active: 'var(--color-date-text-dark-active, #000)',
+            }
+          },
+          background: {
+            DEFAULT: 'var(--color-date-bg, #F2F2F2)',
+            active: 'var(--color-date-bg-active, #000)',
+            hover: 'var(--color-date-bg-hover, #E5E5E5)',
+            light: {
+              DEFAULT: 'var(--color-date-bg-light, #F2F2F2)',
+              hover: 'var(--color-date-bg-light-hover, #E5E5E5)',
+              active: 'var(--color-date-bg-light-active, #000)',
+            },
+            dark: {
+              DEFAULT: 'var(--color-date-bg-dark, #272727)',
+              hover: 'var(--color-date-bg-dark-hover, #fff)',
+              active: 'var(--color-date-bg-dark-active, #fff)',
             }
           }
         },
@@ -447,7 +487,8 @@ module.exports = {
         },
         body: {
           DEFAULT: '#fff',
-          dark: '#261E17',
+          dark: '#000',
+          light: '#fff'
         },
         filter: {
           DEFAULT: 'transparent',

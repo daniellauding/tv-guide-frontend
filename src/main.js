@@ -22,7 +22,9 @@ const tvData = {
                 { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Prime Dizi', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '21:00', title: 'Show Prime', type: 'Program', duration: '120', state: 'next' },
-                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
+                { time: '22:00', title: 'Gece Kuşağı', type: 'Program', duration: '0', state: 'next' },
+                { time: '22:30', title: 'Gece Sineması', type: 'Program', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Kalbimdeki Deniz', type: 'Program', duration: '0', state: 'next' }
             ]
         },
         {
@@ -33,19 +35,22 @@ const tvData = {
             enabled: true,
             programs: [
                 { time: '00:00', title: 'Gece Bülteni', type: 'Haber', duration: '30', state: 'past' },
-                { time: '00:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '120', state: 'past' },
-                { time: '02:30', title: 'Film', type: 'Film', duration: '120', state: 'past' },
-                { time: '04:30', title: 'Sabah Haberleri', type: 'Haber', duration: '90', state: 'past' },
-                { time: '06:00', title: 'Kahvaltı Haberleri', type: 'Haber', duration: '120', state: 'past' },
-                { time: '08:00', title: 'Müge Anlı', type: 'Program', duration: '180', state: 'past' },
+                { time: '00:30', title: 'Spor Servisi', type: 'Spor', duration: '30', state: 'past' },
+                { time: '01:00', title: 'Film', type: 'Film', duration: '120', state: 'past' },
+                { time: '03:00', title: 'Dizi Tekrarı', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '05:00', title: 'Kahvaltı Haberleri', type: 'Haber', duration: '120', state: 'past' },
+                { time: '07:00', title: 'Sabah Kahvesi', type: 'Program', duration: '120', state: 'past' },
+                { time: '09:00', title: 'Müge Anlı', type: 'Program', duration: '180', state: 'past' },
                 { time: '10:00', title: 'Esra Erol', type: 'Program', duration: '180', state: 'current' },
                 { time: '13:00', title: 'ATV Gün Ortası', type: 'Haber', duration: '60', state: 'next' },
                 { time: '14:00', title: 'Kardeşlerim', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '16:00', title: 'Yaprak Dökümü', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '18:00', title: 'ATV Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Kim Milyoner Olmak İster?', type: 'Yarışma', duration: '120', state: 'next' },
-                { time: '21:00', title: 'Kuruluş Osman', type: 'Dizi', duration: '150', state: 'next' },
-                { time: '23:30', title: 'Son Durak', type: 'Haber', duration: '30', state: 'next' }
+                { time: '21:00', title: 'Kuruluş Osman', type: 'Dizi', duration: '150', state: 'current' },
+                { time: '21:15', title: 'Film', type: 'Dizi', duration: '0', state: 'next' },
+                { time: '21:30', title: 'Sabah Kahvesi', type: 'Dizi', duration: '0', state: 'next' },
+                { time: '23:30', title: 'Son Durak', type: 'Haber', duration: '0', state: 'next' }
             ]
         },
         {
@@ -60,14 +65,17 @@ const tvData = {
                 { time: '04:30', title: 'Sabah Haberleri', type: 'Haber', duration: '90', state: 'past' },
                 { time: '06:00', title: 'İsmail Küçükkaya ile Çalar Saat', type: 'Haber', duration: '180', state: 'past' },
                 { time: '09:00', title: 'Çağla ile Yeni Bir Gün', type: 'Program', duration: '180', state: 'past' },
-                { time: '12:00', title: 'Fox Ana Haber', type: 'Haber', duration: '60', state: 'past' },
+                { time: '10:00', title: 'Yasak Elma', type: 'Dizi', duration: '120', state: 'current' },
+                { time: '12:00', title: 'Fox Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '13:00', title: 'Evlilik Hakkında Her Şey', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '15:00', title: 'Fulya ile Umudun Olsun', type: 'Program', duration: '120', state: 'next' },
                 { time: '17:00', title: 'Fox Akşam Haberleri', type: 'Haber', duration: '60', state: 'next' },
                 { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Prime Dizi', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '21:00', title: 'Show Prime', type: 'Program', duration: '120', state: 'next' },
-                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
+                { time: '22:00', title: 'Gece Kuşağı', type: 'Program', duration: '00', state: 'next' },
+                { time: '22:30', title: 'Çağla ile Yeni Bir Gün', type: 'Program', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Fox Ana Haber', type: 'Program', duration: '0', state: 'next' },
             ]
         },
         {
@@ -89,7 +97,9 @@ const tvData = {
                 { time: '18:00', title: 'Star Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
                 { time: '21:00', title: 'Ana Dizi', type: 'Dizi', duration: '150', state: 'next' },
-                { time: '23:30', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'next' }
+                { time: '22:00', title: 'Aramızda Kalmasın', type: 'Haber', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Sinema', type: 'Haber', duration: '0', state: 'next' },
+                { time: '23:30', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'next' },
             ]
         },
         {
@@ -119,12 +129,24 @@ const tvData = {
             logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
             programs: [
                 { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
-                { time: '05:30', title: 'Yeşil Deniz', type: 'Dizi', duration: '120' },
-                { time: '07:30', title: 'İyilik Kulübü', type: 'Program', duration: '90' },
-                { time: '09:00', title: 'Uzun Hikaye', type: 'Dizi', duration: '120' },
-                { time: '12:00', title: 'Ana Haber', type: 'Haber', duration: '60' },
-                { time: '13:00', title: 'Masallarla Biz', type: 'Çocuk', duration: '30' },
-                { time: '19:00', title: 'Teşkilat', type: 'Dizi', duration: '150' }
+                { time: '00:30', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'past' },
+                { time: '01:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '03:30', title: 'Film', type: 'Film', duration: '120', state: 'past' },
+                { time: '05:30', title: 'Yeşil Deniz', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '07:30', title: 'İyilik Kulübü', type: 'Program', duration: '90', state: 'past' },
+                { time: '09:00', title: 'Uzun Hikaye', type: 'Dizi', duration: '120', state: 'past' },
+                { time: '10:00', title: 'Gönül Dağı', type: 'Dizi', duration: '120', state: 'current' },
+                { time: '12:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
+                { time: '13:00', title: 'Masallarla Biz', type: 'Çocuk', duration: '30', state: 'next' },
+                { time: '13:30', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'next' },
+                { time: '14:30', title: 'Dizi', type: 'Dizi', duration: '120', state: 'next' },
+                { time: '16:30', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
+                { time: '18:30', title: 'Akşam Haberleri', type: 'Haber', duration: '30', state: 'next' },
+                { time: '19:00', title: 'Teşkilat', type: 'Dizi', duration: '150', state: 'next' },
+                { time: '21:30', title: 'Belgesel', type: 'Belgesel', duration: '90', state: 'next' },
+                { time: '22:00', title: 'İyilik Kulübü', type: 'Program', duration: '0', state: 'next' },
+                { time: '22:30', title: 'Dizi Tekrarı', type: 'Program', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '0', state: 'next' }
             ]
         },
         {
@@ -146,7 +168,9 @@ const tvData = {
                 { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Baş Tacım', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '21:00', title: 'İkimizin Sırrı', type: 'Dizi', duration: '120', state: 'next' },
-                { time: '23:00', title: 'Dizi', type: 'Dizi', duration: '60', state: 'next' }
+                { time: '22:00', title: 'Dizi', type: 'Dizi', duration: '0', state: 'next' },
+                { time: '22:30', title: 'Mutfak Bahane', type: 'Dizi', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Belgesel', type: 'Dizi', duration: '0', state: 'next' }
             ]
         },
         {
@@ -168,7 +192,9 @@ const tvData = {
                 { time: '18:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '19:00', title: 'Dizi', type: 'Dizi', duration: '120', state: 'next' },
                 { time: '21:00', title: 'Sinema', type: 'Film', duration: '120', state: 'next' },
-                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
+                { time: '22:00', title: 'Gece Kuşağı', type: 'Program', duration: '0', state: 'next' },
+                { time: '22:30', title: 'Sabah Keyfi', type: 'Program', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Dizi Tekrarı', type: 'Program', duration: '0', state: 'next' }
             ]
         },
         {
@@ -190,7 +216,9 @@ const tvData = {
                 { time: '18:00', title: 'Dinamit', type: 'Program', duration: '120', state: 'next' },
                 { time: '20:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
                 { time: '21:00', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
-                { time: '23:00', title: 'Gece Kuşağı', type: 'Program', duration: '60', state: 'next' }
+                { time: '22:00', title: 'Gece Kuşağı', type: 'Program', duration: '0', state: 'next' },
+                { time: '22:30', title: 'Belgesel', type: 'Program', duration: '0', state: 'next' },
+                { time: '23:00', title: 'Gece Haberleri', type: 'Program', duration: '0', state: 'next' }
             ]
         },
         {
@@ -676,7 +704,7 @@ function showProgramModal(channelId, programTime) {
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'programModal';
-    modalContainer.className = `modal-base ${isMobile ? 'mobile' : ''}`;
+    modalContainer.className = `modal modal-base ${isMobile ? 'mobile' : ''}`;
     
     // Format date in Turkish
     const formatter = new Intl.DateTimeFormat('tr-TR', {
@@ -687,38 +715,38 @@ function showProgramModal(channelId, programTime) {
     const formattedDate = formatter.format(new Date(selectedDate));
 
     const modalHTML = `
-        <div class="modal-content ${isMobile ? 'mobile-modal' : ''}" onclick="event.stopPropagation()">
+        <div class="modal__content ${isMobile ? 'modal__content--mobile' : ''}" onclick="event.stopPropagation()">
             ${isMobile ? `
-                <div class="mobile-header">
-                    <button onclick="closeModal()" class="back-button">
+                <div class="modal__header modal__header--mobile">
+                    <button onclick="closeModal()" class="modal__back-btn">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
                     </button>
-                    <button onclick="shareProgram('${channel.id}', '${program.time}')" class="share-button">
+                    <button onclick="shareProgram('${channel.id}', '${program.time}')" class="modal__share-btn">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
                         </svg>
                     </button>
                 </div>
             ` : ''}
-            <div class="program-hero" style="background-color: ${channel.color || '#1a1a1a'}">
-                <div class="program-hero-content">
+            <div class="modal__hero" style="background-color: ${channel.color || '#1a1a1a'}">
+                <div class="modal__hero-content">
                     ${!isMobile ? `
-                        <button onclick="closeModal()" class="modal-close">✕</button>
-                        <button onclick="shareProgram('${channel.id}', '${program.time}')" class="share-button">
+                        <button onclick="closeModal()" class="modal__close-btn">✕</button>
+                        <button onclick="shareProgram('${channel.id}', '${program.time}')" class="modal__share-btn">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
                             </svg>
                         </button>
                     ` : ''}
-                    <div class="channel-info">
-                        <img src="${channel.logo}" alt="${channel.name}" class="channel-logo">
-                        <h1 class="program-title">${program.title}</h1>
+                    <div class="modal__channel-info">
+                        <img src="${channel.logo}" alt="${channel.name}" class="modal__channel-logo">
+                        <h1 class="modal__program-title">${program.title}</h1>
                     </div>
-                    <div class="program-meta">
-                        <span class="date">${formattedDate}</span>
-                        <span class="time">${program.time}</span>
+                    <div class="modal__meta">
+                        <span class="modal__date">${formattedDate}</span>
+                        <span class="modal__time">${program.time}</span>
                         ${isLiveProgram ? `
                             <span class="live-badge">CANLI</span>
                         ` : ''}
@@ -726,45 +754,45 @@ function showProgramModal(channelId, programTime) {
                 </div>
             </div>
             
-            <div class="program-details">
-                <div class="program-info">
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="label">Tür</span>
-                            <span class="value">${program.type}</span>
+            <div class="modal__details">
+                <div class="modal__info">
+                    <div class="modal__info-grid">
+                        <div class="modal__info-item">
+                            <span class="modal__label">Tür</span>
+                            <span class="modal__value">${program.type}</span>
                         </div>
-                        <div class="info-item">
-                            <span class="label">Süre</span>
-                            <span class="value">${program.duration} dakika</span>
+                        <div class="modal__info-item">
+                            <span class="modal__label">Süre</span>
+                            <span class="modal__value">${program.duration} dakika</span>
                         </div>
                         ${program.presenter ? `
-                            <div class="info-item">
-                                <span class="label">Sunucu</span>
-                                <span class="value">${program.presenter}</span>
+                            <div class="modal__info-item">
+                                <span class="modal__label">Sunucu</span>
+                                <span class="modal__value">${program.presenter}</span>
                             </div>
                         ` : ''}
                     </div>
                     
                     ${program.description ? `
-                        <div class="description">
-                            <h3>Program Hakkında</h3>
-                            <p>${program.description}</p>
+                        <div class="modal__description">
+                            <h3 class="modal__description-title">Program Hakkında</h3>
+                            <p class="modal__description-text">${program.description}</p>
                         </div>
                     ` : ''}
                     
                     ${isLiveProgram ? `
-                        <div class="progress-section">
-                            <div class="progress-container">
-                                <div class="progress-fill" style="width: ${progress}%"></div>
+                        <div class="modal__progress">
+                            <div class="modal__progress-container">
+                                <div class="modal__progress-fill" style="width: ${progress}%"></div>
                             </div>
-                            <div class="progress-text">${progress}% tamamlandı</div>
+                            <div class="modal__progress-text">${progress}% tamamlandı</div>
                         </div>
                     ` : ''}
                 </div>
                 
-                <div class="ad-space">
+                <div class="modal__ad-space">
                     <!-- Ad placeholder -->
-                    <div class="ad-placeholder">
+                    <div class="modal__ad-placeholder">
                         <span>Reklam Alanı</span>
                     </div>
                 </div>
@@ -849,30 +877,35 @@ function setupThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     const initialTheme = savedTheme || (prefersDarkScheme.matches ? 'dark' : 'light');
     
-    // Set initial theme
-    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+    // Remove any existing theme classes and add the initial theme
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(initialTheme);
     
-    // Set initial button state with button--active
-    if (initialTheme === 'dark') {
-        themeToggle.classList.add('button--active');
-    } else {
-        themeToggle.classList.remove('button--active');
-    }
+    // Set initial button state
+    themeToggle.classList.toggle('button--active', initialTheme === 'dark');
     
     // Add click handler
     themeToggle.addEventListener('click', () => {
         // Toggle theme
-        const isDark = document.documentElement.classList.toggle('dark');
+        const currentTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(currentTheme);
         
-        // Toggle button--active
-        if (isDark) {
-            themeToggle.classList.add('button--active');
-        } else {
-            themeToggle.classList.remove('button--active');
-        }
+        // Toggle button state
+        themeToggle.classList.toggle('button--active', currentTheme === 'dark');
         
         // Save preference
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('theme', currentTheme);
+    });
+    
+    // Listen for system theme changes
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(newTheme);
+            themeToggle.classList.toggle('button--active', newTheme === 'dark');
+        }
     });
 }
 

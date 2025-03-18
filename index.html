@@ -30,7 +30,7 @@
                 <div class="provider-list">
                     <div class="provider-list__scroll">
                         <div class="provider-list__wrapper">
-                            <button class="provider-card--active" data-provider="providerOne">
+                            <button class="provider-card provider-card--active" data-provider="providerOne">
                                 Provider #1
                             </button>
                             <button class="provider-card" data-provider="providerTwo">
@@ -91,18 +91,18 @@
         </div>
         
         <!-- Search Section (Hidden by default) -->
-        <div id="searchSection" class="hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-sm">
-            <div class="max-w-7xl mx-auto px-3 py-3">
-                <div class="relative flex w-full">
+        <div id="searchSection" class="search search--hidden hidden">
+            <div class="search__container">
+                <div class="search__wrapper">
                     <input 
                         type="search" 
                         id="programs__contentearch" 
                         placeholder="Program veya kanal ara..."
-                        class="form-search"
+                        class="search__input"
                     >
                     <button 
                         id="closeSearch"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600 dark:text-gray-300"
+                        class="search__close-btn"
                         aria-label="Aramayı Kapat"
                     >
                         <span class="icon-close"></span>
@@ -218,48 +218,16 @@
     <!-- Update the footer section -->
     <footer class="footer">
         <div class="footer__container">
-            <div class="footer__grid">
-                <!-- About -->
-                <div class="footer__section">
-                    <h2 class="footer__title">TV Rehberi</h2>
-                    <p class="footer__text">Türkiye'nin en kapsamlı TV rehberi. 2025'den beri yayında.</p>
-                </div>
-
-                <!-- Links -->
-                <div class="footer__section">
-                    <h3 class="footer__subtitle">Popüler</h3>
-                    <ul class="footer__list">
-                        <li><a href="#" class="footer__link">TV Kanalları</a></li>
-                        <li><a href="#" class="footer__link">Program Akışı</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div class="footer__section">
-                    <h3 class="footer__subtitle">Destek</h3>
-                    <ul class="footer__list">
-                        <li><a href="#" class="footer__link">İletişim</a></li>
-                        <li><a href="#" class="footer__link">Gizlilik Politikası</a></li>
-                    </ul>
-                </div>
-
-                <!-- Social Links -->
-                <div class="footer__section">
-                    <h3 class="footer__subtitle">Takip Et</h3>
-                    <div class="footer__social">
-                        <a href="#" class="footer__icon">
-                            <span class="icon icon-facebook"></span>
-                        </a>
-                        <a href="#" class="footer__icon">
-                            <span class="icon icon-instagram"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
             <!-- Copyright -->
-            <div class="footer__divider">
-                <p class="footer__copyright">© 2025 TV Rehberi. Tüm hakları saklıdır.</p>
+            <p class="footer__copyright">© 2025 TV Rehberi. Tüm hakları saklıdır.</p>
+
+            <div class="footer__social">
+              <a href="#" class="footer__icon">
+                  <span class="icon icon-facebook"></span>
+              </a>
+              <a href="#" class="footer__icon">
+                  <span class="icon icon-instagram"></span>
+              </a>
             </div>
         </div>
     </footer>

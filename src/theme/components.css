@@ -1,27 +1,179 @@
 @layer components {
   /* ==========================================================================
+     Dark Mode Support
+     ========================================================================== */
+  :root {
+    color-scheme: light dark;
+  }
+
+  .dark, html.dark {
+    /* Base */
+    .body {
+      @apply bg-body-dark;
+    }
+
+    /* Header */
+    .header {
+      @apply bg-header-dark md:bg-header-dark-desktop border-b-0;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      @apply bg-gray-800;
+    }
+
+    .mobile-menu-close {
+      @apply text-gray-300;
+    }
+
+    .mobile-menu-link {
+      @apply text-gray-300;
+    }
+
+    /* Provider */
+
+
+  /* ==========================================================================
+     Provider Layout
+  ========================================================================== */
+
+     .providers {
+      @apply bg-provider-background-dark;
+      top: 64px;
+    }
+
+    .provider-card {
+      @apply text-provider-text-dark hover:text-provider-text-dark-hover focus:text-provider-text-dark-active;
+    }
+
+    .provider-card--active {
+      @apply text-provider-text-dark;
+    }
+
+    .button--active {
+      @apply bg-gray-700;
+    }
+
+    /* Channel */
+
+    .channels {
+      @apply bg-body-dark border-0;
+    }
+
+    .channel {
+      @apply hover:bg-gray-700;
+    }
+
+    .channel-card__img {
+      @apply text-white;
+    }
+
+    /* Date Navigation */
+    .date-nav {
+      @apply bg-body-dark border-b-0;
+    }
+
+    .date-nav-item {
+      @apply bg-chip-background-dark text-chip-text-dark hover:bg-chip-background-dark-hover;
+    }
+
+    .date-nav-item.active {
+      @apply bg-chip-background-dark-active text-chip-text-dark-active hover:bg-chip-background-dark-hover;
+    }
+
+    /* Program */
+    .program-list {
+      @apply md:bg-gray-700;
+    }
+
+    .program-card,
+    .program-wrapper {
+      @apply bg-gray-800;
+    }
+
+    .program-card:not(:last-child),
+    .program-wrapper:not(:last-child) {
+      @apply border-gray-700;
+    }
+
+    .program-card__logo {
+      @apply w-14 h-14 md:w-14 md:h-14 flex items-center justify-center 
+      rounded-lg border-gray-200 border text-black;
+    }
+
+    .program-card__title {
+      @apply text-white;
+    }
+
+    .program-slot--past {
+      @apply bg-gray-800;
+    }
+
+    .program-slot--live {
+      @apply bg-red-900;
+    }
+
+    .program-slot--upcoming {
+      @apply bg-gray-700;
+    }
+
+    .footer {
+      @apply bg-footer-dark;
+    }
+  
+    .footer__title {
+        @apply text-white;
+    }
+  
+    .footer__subtitle {
+        @apply text-white;
+    }
+  
+    .footer__text {
+        @apply text-gray-300;
+    }
+  
+    .footer__link {
+        @apply text-gray-300 hover:text-white;
+    }
+  
+    .footer__icon {
+        @apply text-gray-300 hover:text-white;
+    }
+  
+    .footer__divider {
+        @apply border-gray-700;
+    }
+  
+    .footer__copyright {
+        @apply text-gray-300;
+    } 
+
+  }
+
+  /* ==========================================================================
      Base Components
      ========================================================================== */
   
   .body {
-    @apply bg-body dark:bg-body-dark;
+    @apply bg-body;
   }
 
   /* ==========================================================================
      Header Components
      ========================================================================== */
 
-    .header {
-      @apply bg-header-light-desktop dark:bg-header-dark border-b border-gray-200 dark:border-gray-700
-    }
+  .header {
+    @apply bg-header-light md:bg-header-light-desktop border-b border-gray-200;
+  }
 
   /* ==========================================================================
     Nav-bar Controls
     ========================================================================== */
 
-    .nav-bar__controls .button--active {
-      @apply opacity-50;
-    }
+  .nav-bar__controls .button--active {
+    @apply opacity-50;
+  }
 
   /* ==========================================================================
      Mobile Menu Components
@@ -38,7 +190,7 @@
   }
   
   .mobile-menu {
-    @apply fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-800 z-90 
+    @apply fixed inset-y-0 left-0 h-screen bg-white z-90 
            shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
     width: 75vw;
     transform: translateX(-100%);
@@ -53,7 +205,7 @@
   }
   
   .mobile-menu-close {
-    @apply p-4 text-gray-600 hover:text-gray-800 dark:text-gray-300;
+    @apply p-4 text-gray-600 hover:text-gray-800;
   }
   
   .mobile-menu-content {
@@ -61,28 +213,33 @@
   }
   
   .mobile-menu-link {
-    @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800 dark:text-gray-300;
+    @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800;
   }
   
   /* ==========================================================================
      Provider Components
      ========================================================================== */
 
+  .providers {
+    @apply bg-provider-background-light;
+    top: 64px;
+  }
+
+     
   .provider {
     @apply relative;
   }
 
   .provider-card {
     @apply flex-shrink-0 cursor-pointer text-left 
-           text-provider-text-light dark:text-provider-text-dark 
-           hover:text-provider-text-light-hover dark:hover:text-provider-text-dark-hover 
+           text-provider-text-light hover:text-provider-text-light-hover
            bg-transparent md:border-none md:bg-transparent hover:bg-transparent
-           focus:text-provider-text-light-active dark:focus:text-provider-text-dark-active
+           focus:text-provider-text-light-active
            inline-flex font-barlow text-sm px-4 py-1;
   }
 
   .provider-card--active {
-    @apply font-bold;
+    @apply font-bold text-provider-text-light;
   }
 
   .button--icon {
@@ -90,15 +247,19 @@
   }
 
   .button--active {
-    @apply bg-gray-100 dark:bg-gray-700;
+    @apply bg-gray-100;
   }
 
   /* ==========================================================================
      Channel Components
      ========================================================================== */
 
+  .channels {
+    @apply bg-body-light border-0 md:border-0 border-gray-200;
+  }
+
   .channel {
-    @apply flex-shrink-0 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg;
+    @apply flex-shrink-0 hover:bg-gray-50 rounded-lg;
   }
 
   .channel-nav img {
@@ -107,7 +268,7 @@
 
   .channel-card__img {
     @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center 
-           rounded-lg border-gray-200 border;
+           rounded-lg border-gray-200 border text-black;
   }
 
   .channel-card__img-img {
@@ -115,28 +276,51 @@
   }
 
   /* ==========================================================================
+     Date Navigation Layout
+     ========================================================================== */
+
+  .date-nav {
+    @apply bg-body-light border-b-0 md:border-0 border-gray-200 sticky z-30;
+    top: 124px;
+  }
+
+  .date-nav__controls {
+    @apply flex items-center justify-center space-x-4 py-3;
+  }
+
+  .date-nav.desktop-mode {
+    @apply static;
+    top: auto;
+  }
+
+  .date-nav.with-channels {
+    top: 196px;
+  }
+
+  .date-nav-item {
+    @apply bg-chip-background-light text-chip-text-light hover:bg-chip-background-light-hover;
+  }
+
+  .date-nav-item.active {
+    @apply bg-chip-background-light-active text-chip-text-light-active hover:bg-chip-background-light-hover;
+  }
+
+  /* ==========================================================================
      Program Components
      ========================================================================== */
 
   .program-list {
-    @apply bg-gray-200 dark:bg-gray-700;
+    @apply md:bg-gray-200;
   }
 
   .program-card,
   .program-wrapper {
-    @apply bg-white dark:bg-gray-800;
+    @apply bg-white;
   }
 
   .program-card:not(:last-child),
   .program-wrapper:not(:last-child) {
-    
-  }
-
-  @media (max-width: 768px) {
-    .program-card:not(:last-child),
-    .program-wrapper:not(:last-child) {
-      @apply border-r-0 border-b border-gray-200 dark:border-gray-700;
-    }
+    @apply border-r-0 border-b-0 border-gray-200;
   }
 
   .program-card__header,
@@ -153,17 +337,15 @@
   }
 
   .program-card__header .program-card__logo {
-    @apply w-10 h-10 md:w-12 md:h-12 logo-channel rounded-lg flex items-center justify-center;
+    @apply flex items-center justify-center rounded-lg bg-gray-200 w-10 h-10 md:w-12 md:h-12;
   }
 
-  .program-card__header .program-card__details {  }
-
   .program-card__header .program-card__title {
-    @apply font-medium text-gray-900 dark:text-white text-sm md:text-base;
+    @apply font-medium text-gray-900 text-sm md:text-lg;
   }
 
   .program-card {
-    @apply bg-white transition;
+    @apply bg-white transition md:p-4;
   }
 
   .program-card__header {
@@ -179,7 +361,7 @@
   }
 
   .program-card__logo {
-    @apply flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 w-10 h-10 md:w-12 md:h-12;
+    @apply flex items-center justify-center rounded-lg bg-gray-200 w-10 h-10 md:w-12 md:h-12;
   }
 
   .program-card__logo-img {
@@ -187,7 +369,7 @@
   }
 
   .program-card__title {
-    @apply text-lg font-semibold text-gray-900 dark:text-white;
+    @apply text-2xl font-semibold text-gray-900;
   }
 
   /* 🎬 Program Slot Styling */
@@ -196,19 +378,19 @@
   }
 
   .program-slot__item {
-    @apply p-3 rounded-lg transition duration-300 cursor-pointer;
+    @apply p-1 rounded-lg transition duration-300 cursor-pointer;
   }
 
   .program-slot--past {
-    @apply bg-gray-100 dark:bg-gray-800;
+    @apply bg-gray-100;
   }
 
   .program-slot--live {
-    @apply bg-red-100 dark:bg-red-900;
+    @apply bg-red-100;
   }
 
   .program-slot--upcoming {
-    @apply bg-white dark:bg-gray-700;
+    @apply bg-white;
   }
 
   .program-slot__content {
@@ -240,7 +422,7 @@
   }
 
   .program-slot__live-indicator {
-    @apply flex items-center space-x-2 text-red-500;
+    @apply flex items-center space-x-2 text-red-500 hidden;
   }
 
   .live-dot {
@@ -253,12 +435,45 @@
   }
 
   .program-slot__progress-bar {
-    @apply h-full bg-red-500 rounded-full;
+    @apply h-full bg-yellow-500 rounded-full;
   }
 
   /* ==========================================================================
      Form Components
      ========================================================================== */
+
+  /* ==========================================================================
+     Search
+     ========================================================================== */
+
+  .search {
+    @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-sm;
+  }
+
+  .search__container {
+    @apply max-w-7xl mx-auto px-3 py-3;
+  }
+
+  .search__wrapper {
+    @apply relative flex w-full;
+  }
+
+  .search__input {
+    @apply w-full px-1.5 py-1.5 
+    md:px-9 md:py-1.5 rounded-full pl-1.5 text-sm
+    bg-select-light dark:bg-select-dark md:py-2
+    shadow-sm
+    text-gray-600 dark:text-gray-300
+    focus:outline-none focus:ring-2 focus:ring-primary-500 border border-gray-200;
+  }
+
+  .search__close-btn {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600 dark:text-gray-300;
+  }
+
+  .icon-close {
+
+  }
 
   .form-input {
     @apply bg-input-light dark:bg-input-dark text-gray-600 dark:text-gray-300 
@@ -306,6 +521,127 @@
   .modal-title {
     @apply text-xl font-bold font-barlow
            text-title dark:text-title-dark;
+  }
+
+  .modal {
+    @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50;
+  }
+
+  .modal--visible {
+      @apply block;
+  }
+
+  .modal__content {
+      @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden max-w-lg w-full;
+  }
+
+  .modal__content--mobile {
+      @apply w-full h-full rounded-none;
+  }
+
+  .modal__hero {
+      @apply relative p-6 text-white;
+  }
+
+  .modal__hero-content {
+      @apply flex flex-col items-center text-center;
+  }
+
+  .modal__close-btn,
+  .modal__share-btn {
+      @apply absolute top-4 right-4 bg-white text-black rounded-full p-2 hover:bg-gray-300;
+  }
+
+  .modal__channel-info {
+      @apply flex flex-col items-center text-center;
+  }
+
+  .modal__channel-logo {
+      @apply w-16 h-16 rounded-full;
+  }
+
+  .modal__program-title {
+      @apply text-lg font-bold;
+  }
+
+  .modal__meta {
+      @apply flex justify-center space-x-4 text-sm;
+  }
+
+  .modal__date, .modal__time {
+      @apply bg-gray-200 text-gray-700 px-3 py-1 rounded-lg;
+  }
+
+  .modal__live-badge {
+      @apply bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-semibold;
+  }
+
+  .modal__details {
+      @apply p-4;
+  }
+
+  .modal__info-grid {
+      @apply grid grid-cols-2 gap-4;
+  }
+
+  .modal__info-item {
+      @apply flex flex-col;
+  }
+
+  .modal__label {
+      @apply text-xs text-gray-500 uppercase;
+  }
+
+  .modal__value {
+      @apply text-sm font-medium;
+  }
+
+  .modal__description {
+      @apply mt-4;
+  }
+
+  .modal__description-title {
+      @apply text-lg font-semibold;
+  }
+
+  .modal__description-text {
+      @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+
+  .modal__progress {
+      @apply mt-4;
+  }
+
+  .modal__progress-container {
+      @apply w-full bg-gray-300 rounded-lg h-2;
+  }
+
+  .modal__progress-fill {
+      @apply bg-primary-500 h-2 rounded-lg;
+  }
+
+  .modal__progress-text {
+      @apply text-xs text-gray-500 mt-1;
+  }
+
+  .modal__ad-space {
+      @apply mt-4;
+  }
+
+  .modal__ad-placeholder {
+      @apply bg-gray-300 text-center p-4 rounded-lg;
+  }
+
+  .modal__header--mobile {
+      @apply flex items-center justify-between p-4 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
+  }
+
+  .modal__back-btn {
+      @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
+  }
+
+  .modal__icon {
+      @apply w-6 h-6;
   }
 
   /* ==========================================================================
@@ -408,17 +744,17 @@
   .provider-list__scroll::before,
   .provider-list__scroll::after {
     content: '';
-    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+    @apply absolute top-0 bottom-0 w-8 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
   .provider-list__scroll::before {
     @apply left-0;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
   }
 
   .provider-list__scroll::after {
     @apply right-0;
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
   }
 
   .provider-list__scroll.shadow-left::before {
@@ -441,7 +777,7 @@
   .channels__inner::before,
   .channels__inner::after {
     content: '';
-    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+    @apply absolute top-0 bottom-0 w-8 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
   .channels__inner::before {
@@ -474,7 +810,7 @@
   .date-list__scroll::before,
   .date-list__scroll::after {
     content: '';
-    @apply absolute top-0 bottom-0 w-5 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+    @apply absolute top-0 bottom-0 w-8 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
   }
 
   .date-list__scroll::before {
@@ -508,55 +844,34 @@
   ========================================================================== */
 
   .footer {
-    @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700;
-  }
-
-  .footer__container {
-      @apply max-w-7xl mx-auto px-4 py-8;
-  }
-
-  .footer__grid {
-      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
-  }
-
-  .footer__section {
-      @apply space-y-4;
+    @apply bg-footer-light;
   }
 
   .footer__title {
-      @apply text-xl font-bold text-gray-900 dark:text-white;
+      @apply text-xl font-bold text-gray-900;
   }
 
   .footer__subtitle {
-      @apply text-lg font-semibold text-gray-900 dark:text-white;
+      @apply text-lg font-semibold text-gray-900;
   }
 
   .footer__text {
-      @apply text-sm text-gray-600 dark:text-gray-300;
-  }
-
-  .footer__list {
-      @apply space-y-2;
+      @apply text-sm text-gray-600;
   }
 
   .footer__link {
-      @apply text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors;
-  }
-
-  .footer__social {
-      @apply flex space-x-4;
+      @apply text-sm text-gray-600 hover:text-gray-900 transition-colors;
   }
 
   .footer__icon {
-      @apply text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors;
+      @apply text-gray-600 hover:text-gray-900 transition-colors;
   }
 
   .footer__divider {
-      @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
+      @apply mt-8 pt-8 border-t border-gray-200;
   }
 
   .footer__copyright {
-      @apply text-sm text-gray-600 dark:text-gray-300 text-center;
+      @apply text-sm text-gray-600 text-center;
   } 
-
 }
