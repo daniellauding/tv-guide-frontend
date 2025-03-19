@@ -61,4 +61,13 @@
     from { opacity: 0.5; }
     to { opacity: 0; }
   }
+
+  /* Custom border colors */
+  .border-dark {
+    border-color: var(--color-border-dark, #303030);
+  }
+
+  .border-light {
+    border-color: var(--color-border-light, #E5E7EB);
+  }
 } 

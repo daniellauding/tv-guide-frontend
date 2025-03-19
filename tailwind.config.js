@@ -3,6 +3,16 @@ module.exports = {
   content: ["./*.{html,js}", "./src/**/*.{html,js}"],
   darkMode: 'class',
   important: true,
+  future: {
+    // Disable modern CSS features that might not be supported in all browsers
+    disableColorOpacityUtilitiesByDefault: true,
+    respectDefaultRingColorOpacity: true,
+  },
+  // Add the 'features' key to disable the use of :is() selector
+  features: {
+    // This will prevent the use of :is() in the compiled CSS
+    matchVariant: false,
+  },
   safelist: [
     // Modal classes
     'fixed',
@@ -17,6 +27,9 @@ module.exports = {
     'z-100',
     'max-w-lg',
     'w-full',
+    // Border color classes
+    'border-dark',
+    'border-light',
     // Cursor classes
     'cursor-pointer',
     // Spacing and sizing
@@ -409,8 +422,8 @@ module.exports = {
           hover: 'var(--color-text-hover, #F37335)',
         },
         border: {
-          light: 'var(--color-border-light, #e9ecef)',
-          dark: 'var(--color-border-dark, #495057)',
+          light: 'var(--color-border-light, #E5E7EB)',
+          dark: 'var(--color-border-dark, #303030)',
         },
         status: {
           live: 'var(--color-status-live, #FCC430)',
@@ -538,7 +551,68 @@ module.exports = {
             active: 'var(--program-header-dark-active, #60554C)',
           }
         },
-        
+        button: {
+          icon: {
+            light: {
+              DEFAULT: 'var(--button-icon-light, #F5F5F5)',
+              hover: 'var(--button-icon-light-hover, #E5E5E5)',
+              active: 'var(--button-icon-light-active, #D4D4D4)',
+            },
+            dark: {
+              DEFAULT: 'var(--button-icon-dark, #3B332C)',
+              hover: 'var(--button-icon-dark-hover, #2E2620)',
+              active: 'var(--button-icon-dark-active, #25211B)',
+            }
+          },
+          flat: {
+            light: {
+              DEFAULT: 'var(--button-flat-light, #E0E0E0)',
+              hover: 'var(--button-flat-light-hover, #CFCFCF)',
+              active: 'var(--button-flat-light-active, #BEBEBE)',
+            },
+            dark: {
+              DEFAULT: 'var(--button-flat-dark, #4A4037)',
+              hover: 'var(--button-flat-dark-hover, #3E362F)',
+              active: 'var(--button-flat-dark-active, #2F2B26)',
+            }
+          },
+          primary: {
+            light: {
+              DEFAULT: 'var(--button-primary-light, #F37335)',
+              hover: 'var(--button-primary-light-hover, #E65E20)',
+              active: 'var(--button-primary-light-active, #D04A10)',
+            },
+            dark: {
+              DEFAULT: 'var(--button-primary-dark, #FF8C42)',
+              hover: 'var(--button-primary-dark-hover, #E67B35)',
+              active: 'var(--button-primary-dark-active, #CC6C29)',
+            }
+          },
+          secondary: {
+            light: {
+              DEFAULT: 'var(--button-secondary-light, #6C757D)',
+              hover: 'var(--button-secondary-light-hover, #5B6369)',
+              active: 'var(--button-secondary-light-active, #494F54)',
+            },
+            dark: {
+              DEFAULT: 'var(--button-secondary-dark, #A0A7AD)',
+              hover: 'var(--button-secondary-dark-hover, #8E959A)',
+              active: 'var(--button-secondary-dark-active, #7C8388)',
+            }
+          },
+          tertiary: {
+            light: {
+              DEFAULT: 'var(--button-tertiary-light, #F0F0F0)',
+              hover: 'var(--button-tertiary-light-hover, #E2E2E2)',
+              active: 'var(--button-tertiary-light-active, #D3D3D3)',
+            },
+            dark: {
+              DEFAULT: 'var(--button-tertiary-dark, #3B3F42)',
+              hover: 'var(--button-tertiary-dark-hover, #313538)',
+              active: 'var(--button-tertiary-dark-active, #282B2E)',
+            }
+          }
+        },
         programWrapper: {
           light: {
             DEFAULT: 'var(--program-wrapper-light, rgba(255, 255, 255, 1))',

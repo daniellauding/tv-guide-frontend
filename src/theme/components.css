@@ -19,7 +19,7 @@
 
     /* Mobile Menu */
     .mobile-menu {
-      @apply bg-gray-800;
+      @apply bg-body-dark;
     }
 
     .mobile-menu-close {
@@ -65,7 +65,7 @@
     }
 
     .channel-card__img {
-      @apply text-white ;
+      @apply border-dark text-gray-500;
     }
 
     /* Date Navigation */
@@ -83,12 +83,16 @@
 
     /* Program */
     .program-list {
-      @apply md:bg-gray-700;
+      @apply md:bg-border-dark;
     }
 
     .program-card,
     .program-wrapper {
-      @apply bg-gray-800;
+
+    }
+
+    .program-card {
+      @apply bg-body-dark;
     }
 
     .program-card:not(:last-child),
@@ -98,7 +102,7 @@
 
     .program-card__logo {
       @apply w-14 h-14 md:w-14 md:h-14 flex items-center justify-center 
-      rounded-lg border-gray-200 border text-black;
+      rounded-lg border-dark border text-gray-500;
     }
 
     .program-card__title {
@@ -114,7 +118,7 @@
     }
 
     .program-slot--upcoming {
-      @apply bg-gray-700;
+      
     }
 
     .footer {
@@ -191,8 +195,7 @@
   
   .mobile-menu {
     @apply fixed inset-y-0 left-0 h-screen bg-white z-90 
-           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto;
-    width: 75vw;
+           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[75vw] md:w-40;
     transform: translateX(-100%);
   }
   
@@ -268,7 +271,7 @@
 
   .channel-card__img {
     @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center 
-           rounded-lg border-gray-200 border text-black;
+           rounded-lg border-light border text-black;
   }
 
   .channel-card__img-img {
@@ -310,7 +313,7 @@
      ========================================================================== */
 
   .program-list {
-    @apply md:bg-gray-200;
+    @apply md:bg-border-light;
   }
 
   .program-card,
@@ -390,7 +393,6 @@
   }
 
   .program-slot--upcoming {
-    @apply bg-white;
   }
 
   .program-slot__content {
@@ -507,7 +509,7 @@
      ========================================================================== */
 
   .modal-base {
-    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50;
+    @apply fixed inset-0 bg-black flex items-center justify-center p-4 z-50;
   }
 
   .modal-window {
@@ -524,7 +526,7 @@
   }
 
   .modal {
-    @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50;
+    @apply fixed inset-0 flex items-center justify-center bg-black z-50;
   }
 
   .modal--visible {
