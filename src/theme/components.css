@@ -65,7 +65,7 @@
     }
 
     .channel-card__img {
-      @apply text-white;
+      @apply text-white ;
     }
 
     /* Date Navigation */

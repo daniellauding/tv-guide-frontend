@@ -70,7 +70,7 @@
 
     .search__input {
       @apply w-full px-1.5 py-1.5 
-      md:px-1.5 md:pr-9 md:py-1.5
+      md:px-2 md:pr-9 md:py-1.5
     }
 
     .search__close-btn {

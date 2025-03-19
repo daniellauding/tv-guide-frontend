@@ -538,6 +538,7 @@ module.exports = {
             active: 'var(--program-header-dark-active, #60554C)',
           }
         },
+        
         programWrapper: {
           light: {
             DEFAULT: 'var(--program-wrapper-light, rgba(255, 255, 255, 1))',
@@ -569,9 +570,9 @@ module.exports = {
             active: 'var(--logo-channel-light-active, #EFEFEF)',
           },
           dark: {
-            DEFAULT: 'var(--logo-channel-dark, #3B332C)',
-            hover: 'var(--logo-channel-dark-hover, #3B332C)',
-            active: 'var(--logo-channel-dark-active, #3B332C)',
+            DEFAULT: 'var(--logo-channel-dark, #303030)',
+            hover: 'var(--logo-channel-dark-hover, #303030)',
+            active: 'var(--logo-channel-dark-active, #303030)',
           }
         },
         title: {
