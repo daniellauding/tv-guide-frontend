@@ -2193,40 +2193,39 @@ function setupChannelSectionVisibility() {
 function setupDateNavigation() {
   const dayNav = document.querySelector('.date-nav .date-list__wrapper');
   const nextDateBtn = document.getElementById('nextDate');
+  const dateDropdownTrigger = document.getElementById('dateDropdownTrigger');
 
   // Generate dates for a full week (7 days)
-  const dates = generateDateRange(0, 6); // 0 days back (today only), 6 days forward
+  const dates = generateDateRange(0, 6);
 
-  // Populate day navigation
+  // Populate day navigation for desktop
   if (dayNav) {
     dayNav.innerHTML = dates
       .map((date, index) => {
         const isToday = new Date().toDateString() === date.toDateString();
         const dateStr = date.toISOString().split('T')[0];
         const dayNum = date.getDate();
-        const month = date.getMonth() + 1; // Month is 0-indexed, so add 1
+        const month = date.getMonth() + 1;
         const formattedDate = `${dayNum}/${month}`;
 
-        // Determine the label based on the index
         let dayLabel;
         if (index === 0) {
           dayLabel = 'Today';
         } else if (index === 1) {
           dayLabel = 'Tomorrow';
         } else {
-          // Use the weekday name for other days
           dayLabel = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
         }
 
         return `
-                <button 
-                    data-date="${dateStr}"
-                    class="date-nav-item ${isToday ? 'active' : ''}"
-                >
-                    <div class="day-name">${dayLabel}</div>
-                    <div class="day-date">${formattedDate}</div>
-                </button>
-            `;
+              <button 
+                  data-date="${dateStr}"
+                  class="date-nav-item ${isToday ? 'active' : ''}"
+              >
+                  <div class="day-name">${dayLabel}</div>
+                  <div class="day-date">${formattedDate}</div>
+              </button>
+          `;
       })
       .join('');
 
@@ -2234,16 +2233,19 @@ function setupDateNavigation() {
     const dateButtons = dayNav.querySelectorAll('.date-nav-item');
     dateButtons.forEach(button => {
       button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        dateButtons.forEach(btn => btn.classList.remove('active'));
+        const selectedDate = button.dataset.date;
+        const dayLabel = button.querySelector('.day-name').textContent;
 
-        // Add active class to clicked button
+        // Update mobile dropdown text if it exists
+        if (dateDropdownTrigger) {
+          dateDropdownTrigger.querySelector('span').textContent = dayLabel;
+        }
+
+        // Update active state
+        dateButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        // Get selected date
-        const selectedDate = button.dataset.date;
-
-        // Update programs based on selected date
+        // Update programs
         renderPrograms(selectedDate);
       });
     });
@@ -2257,6 +2259,12 @@ function setupDateNavigation() {
         });
       });
     }
+  }
+
+  // Initialize mobile date dropdown
+  if (dateDropdownTrigger) {
+    // Set initial text to "Today"
+    dateDropdownTrigger.querySelector('span').textContent = 'Today';
   }
 }
 
@@ -2542,3 +2550,86 @@ document.addEventListener('DOMContentLoaded', () => {
   setupChannelScrolling();
   // ... other initialization code ...
 });
+
+// Toggle date dropdown
+function toggleDateDropdown(force) {
+  const dropdown = document.getElementById('dateDropdown');
+  if (!dropdown) return;
+
+  const isOpen = dropdown.classList.contains('active');
+  const shouldOpen = force !== undefined ? force : !isOpen;
+
+  if (shouldOpen) {
+    dropdown.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scroll
+    updateDateDropdownList(); // Update the date list when opening
+  } else {
+    dropdown.classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scroll
+  }
+}
+
+// Update date dropdown list
+function updateDateDropdownList() {
+  const dropdownList = document.getElementById('dateDropdownList');
+  if (!dropdownList) return;
+
+  // Generate dates for a week
+  const dates = generateDateRange(0, 6); // Today + 6 days forward
+
+  dropdownList.innerHTML = dates
+    .map((date, index) => {
+      const isToday = new Date().toDateString() === date.toDateString();
+      const dateStr = date.toISOString().split('T')[0];
+
+      // Format date in Turkish
+      const formatter = new Intl.DateTimeFormat('tr-TR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+      });
+      const formattedDate = formatter.format(date);
+
+      // Determine the label
+      let dayLabel;
+      if (index === 0) {
+        dayLabel = 'Today';
+      } else if (index === 1) {
+        dayLabel = 'Tomorrow';
+      } else {
+        dayLabel = formattedDate;
+      }
+
+      return `
+            <button class="channel-dropdown-item" data-date="${dateStr}" onclick="selectDate('${dateStr}', '${dayLabel}')">
+                <span class="channel-dropdown-item__text">${dayLabel}</span>
+            </button>
+        `;
+    })
+    .join('');
+}
+
+// Select date from dropdown
+function selectDate(dateStr, label) {
+  // Update dropdown trigger text
+  const dateDropdownTrigger = document.getElementById('dateDropdownTrigger');
+  if (dateDropdownTrigger) {
+    dateDropdownTrigger.querySelector('span').textContent = label;
+  }
+
+  // Close the dropdown
+  toggleDateDropdown(false);
+
+  // Update the desktop date navigation if it exists
+  const dateButtons = document.querySelectorAll('.date-nav-item');
+  dateButtons.forEach(button => {
+    button.classList.toggle('active', button.dataset.date === dateStr);
+  });
+
+  // Update programs for selected date
+  renderPrograms(dateStr);
+}
+
+// Make functions globally available
+window.toggleDateDropdown = toggleDateDropdown;
+window.selectDate = selectDate;

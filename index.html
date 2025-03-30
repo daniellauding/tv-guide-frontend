@@ -116,36 +116,55 @@
 
     <!-- Mobile Dropdowns - Hidden on desktop -->
     <div class="mobile-dropdowns">
-      <!-- Mobile Providers -->
-      <div class="providers-dropdown-button">
-        <div class="providers-inner">
-          <button
-            id="providerDropdownTrigger"
-            class="provider-trigger"
-            onclick="toggleProviderDropdown()"
-          >
-            <span id="selectedProviderText">Provider #1</span>
-            <span class="icon-chevron-down"></span>
-          </button>
-        </div>
-      </div>
+      <!-- Provider Dropdown -->
+      <button
+        id="providerDropdownTrigger"
+        class="provider-trigger"
+        onclick="toggleProviderDropdown()"
+      >
+        <span id="selectedProviderText">Select Provider</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
 
-      <!-- Channel Dropdown Trigger -->
-      <div class="channels-dropdown-button">
-        <div class="providers-inner">
-          <button
-            id="channelDropdownTrigger"
-            class="provider-trigger"
-            onclick="toggleChannelDropdown()"
-          >
-            <span>Select Channel</span>
-            <span class="icon-chevron-down"></span>
-          </button>
-        </div>
-      </div>
+      <!-- Channel Dropdown -->
+      <button
+        id="channelDropdownTrigger"
+        class="provider-trigger"
+        onclick="toggleChannelDropdown()"
+      >
+        <span>Select Channel</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      <!-- Date Dropdown -->
+      <button id="dateDropdownTrigger" class="provider-trigger" onclick="toggleDateDropdown()">
+        <span id="selectedDateText">Today</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
     </div>
 
-    <!-- Mobile Provider Dropdown -->
+    <!-- Provider Dropdown Content -->
     <div id="providerDropdown" class="provider-dropdown">
       <div class="provider-dropdown__header">
         <h2 class="provider-dropdown__title">Select Provider</h2>
@@ -172,7 +191,7 @@
       </div>
     </div>
 
-    <!-- Channel Dropdown -->
+    <!-- Channel Dropdown Content -->
     <div id="channelDropdown" class="channel-dropdown">
       <div class="channel-dropdown__header">
         <h2 class="channel-dropdown__title">Select Channel</h2>
@@ -192,6 +211,26 @@
         <div id="channelDropdownList" class="channel-dropdown__list">
           <!-- Channels will be populated by JavaScript -->
         </div>
+      </div>
+    </div>
+
+    <!-- Date Dropdown Content -->
+    <div id="dateDropdown" class="channel-dropdown">
+      <div class="channel-dropdown__header">
+        <h3>Select Date</h3>
+        <button onclick="toggleDateDropdown(false)" class="channel-dropdown__close">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      <div id="dateDropdownList" class="channel-dropdown__content">
+        <!-- Date items will be populated by JavaScript -->
       </div>
     </div>
 
