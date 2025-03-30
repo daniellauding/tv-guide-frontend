@@ -186,7 +186,7 @@
      ========================================================================== */
 
   .date-nav {
-    @apply hidden md:visible sticky z-30;
+    @apply hidden md:flex sticky z-30;
     top: 180px; /* Adjusted to account for channels height */
   }
 
