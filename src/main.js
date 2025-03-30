@@ -2013,6 +2013,9 @@ function setupProviders() {
     const providerChannels = providers[providerId].channels;
     updateChannelList(providerChannels);
     updateProgramGrid(providerChannels);
+
+    // Update channel dropdown list
+    updateChannelDropdownList();
   }
 
   // Provider click handlers
@@ -2323,71 +2326,55 @@ const providers = {
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
-  const channelSection = document.querySelector('.channels');
-  const dayNav = document.querySelector('.date-nav');
-  let lastScrollY = 0;
-  const scrollThreshold = 100; // Show channel section after 100px of scrolling
-  const bufferZone = 30; // Buffer zone to prevent flickering
-  let isVisible = false;
-  let scrollTimer = null;
-
-  const isMobile = () => window.innerWidth < 768;
-
-  function syncChannelSectionAndDayNav(shouldBeVisible) {
-    if (shouldBeVisible !== isVisible) {
-      if (shouldBeVisible) {
-        channelSection.classList.add('visible');
-        dayNav.classList.add('with-channels');
-      } else {
-        channelSection.classList.remove('visible');
-        dayNav.classList.remove('with-channels');
-      }
-      isVisible = shouldBeVisible;
-    }
-  }
+  const channels = document.querySelector('.channels');
+  const dateNav = document.querySelector('.date-nav');
+  let lastScrollY = window.scrollY;
+  const scrollThreshold = 50; // Amount of scroll before hiding channels
 
   function updateSectionsOnScroll() {
-    if (scrollTimer) {
-      clearTimeout(scrollTimer);
+    const currentScrollY = window.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY;
+    const hasScrolledEnough = currentScrollY > scrollThreshold;
+
+    // Update channels visibility
+    if (channels) {
+      if (scrollingDown && hasScrolledEnough) {
+        channels.classList.add('hidden-on-scroll');
+      } else if (!scrollingDown && currentScrollY < scrollThreshold) {
+        channels.classList.remove('hidden-on-scroll');
+      }
     }
 
-    scrollTimer = setTimeout(() => {
-      const currentScrollY = window.scrollY;
-
-      if (isMobile()) {
-        if (!isVisible && currentScrollY > scrollThreshold) {
-          syncChannelSectionAndDayNav(true);
-        } else if (isVisible && currentScrollY < scrollThreshold - bufferZone) {
-          syncChannelSectionAndDayNav(false);
-        }
+    // Update date nav position
+    if (dateNav) {
+      if (scrollingDown && hasScrolledEnough) {
+        dateNav.style.top = '64px';
       } else {
-        channelSection.classList.add('visible');
-        channelSection.classList.add('desktop-mode');
-        dayNav.classList.remove('with-channels');
-        dayNav.classList.add('desktop-mode');
+        dateNav.style.top = window.innerWidth >= 768 ? '120px' : '180px';
       }
+    }
 
-      lastScrollY = currentScrollY;
-    }, 10);
+    lastScrollY = currentScrollY;
   }
 
+  // Add scroll event listener
   window.addEventListener('scroll', updateSectionsOnScroll, { passive: true });
 
+  // Update sections on resize
   window.addEventListener('resize', () => {
-    if (isMobile()) {
-      const shouldBeVisible = window.scrollY > scrollThreshold;
-      syncChannelSectionAndDayNav(shouldBeVisible);
-    } else {
-      channelSection.classList.add('visible');
-      channelSection.classList.add('desktop-mode');
-      dayNav.classList.remove('with-channels');
-      dayNav.classList.add('desktop-mode');
+    if (!channels?.classList.contains('hidden-on-scroll')) {
+      dateNav.style.top = window.innerWidth >= 768 ? '120px' : '180px';
     }
   });
 
-  // Initial update
+  // Initial setup
   updateSectionsOnScroll();
 }
+
+// Make sure to call setupScrollBasedSections when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  setupScrollBasedSections();
+});
 
 // Add this function to handle channel anchor scrolling
 function setupChannelAnchorScrolling() {
@@ -2423,3 +2410,111 @@ function setupChannelAnchorScrolling() {
     }
   });
 }
+
+// Toggle channel dropdown
+function toggleChannelDropdown(force) {
+  const dropdown = document.getElementById('channelDropdown');
+  if (!dropdown) return;
+
+  const isOpen = dropdown.classList.contains('active');
+  const shouldOpen = force !== undefined ? force : !isOpen;
+
+  if (shouldOpen) {
+    dropdown.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent body scroll
+    updateChannelDropdownList(); // Update the channel list when opening
+  } else {
+    dropdown.classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scroll
+  }
+}
+
+// Update channel dropdown list based on current provider
+function updateChannelDropdownList() {
+  const activeProvider = document.querySelector('.provider-dropdown-item--active')?.dataset
+    .provider;
+  if (!activeProvider) return;
+
+  const providerChannels = providers[activeProvider].channels;
+  const dropdownList = document.getElementById('channelDropdownList');
+  if (!dropdownList) return;
+
+  dropdownList.innerHTML = providerChannels
+    .map(channelId => {
+      const channel = tvData.channels.find(c => c.id === channelId);
+      if (!channel) return '';
+
+      return `
+      <button class="channel-dropdown-item" data-channel-id="${
+        channel.id
+      }" onclick="selectChannel('${channel.id}')">
+        <div class="channel-dropdown-item__img">
+          ${
+            channel.logo
+              ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`
+              : channel.name[0]
+          }
+        </div>
+        <span class="channel-dropdown-item__text">${channel.name}</span>
+      </button>
+    `;
+    })
+    .join('');
+}
+
+// Filter channels in dropdown
+function filterChannels(searchText) {
+  const items = document.querySelectorAll('.channel-dropdown-item');
+  const searchLower = searchText.toLowerCase();
+
+  items.forEach(item => {
+    const text = item.querySelector('.channel-dropdown-item__text').textContent.toLowerCase();
+    item.style.display = text.includes(searchLower) ? '' : 'none';
+  });
+}
+
+// Select channel from dropdown
+function selectChannel(channelId) {
+  // Close the dropdown
+  toggleChannelDropdown(false);
+
+  // Find the channel element in the horizontal list
+  const channelElement = document.querySelector(`.channel-card[data-channel-id="${channelId}"]`);
+  if (!channelElement) return;
+
+  // Scroll to the channel in the program list
+  const programElement = document.querySelector(`[data-channel-programs="${channelId}"]`);
+  if (programElement) {
+    programElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Highlight the channel in the horizontal list
+  channelElement.classList.add('highlight-channel');
+  setTimeout(() => {
+    channelElement.classList.remove('highlight-channel');
+  }, 2000);
+}
+
+// Add channel click handler for horizontal list
+function setupChannelScrolling() {
+  const channelCards = document.querySelectorAll('.channel-card');
+  channelCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const channelId = card.dataset.channelId;
+      if (channelId) {
+        selectChannel(channelId);
+      }
+    });
+  });
+}
+
+// Make functions globally available
+window.toggleChannelDropdown = toggleChannelDropdown;
+window.filterChannels = filterChannels;
+window.selectChannel = selectChannel;
+
+// Add setupChannelScrolling to the initialization
+document.addEventListener('DOMContentLoaded', () => {
+  setupChannelScrolling();
+  // ... other initialization code ...
+});

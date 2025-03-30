@@ -114,17 +114,34 @@
       </div>
     </header>
 
-    <!-- Mobile Providers - Hidden on desktop -->
-    <div class="providers">
-      <div class="providers-inner">
-        <button
-          id="providerDropdownTrigger"
-          class="w-full px-4 py-3 flex items-center justify-between text-base"
-          onclick="toggleProviderDropdown()"
-        >
-          <span id="selectedProviderText">Provider #1</span>
-          <span class="icon-chevron-down"></span>
-        </button>
+    <!-- Mobile Dropdowns - Hidden on desktop -->
+    <div class="mobile-dropdowns">
+      <!-- Mobile Providers -->
+      <div class="providers-dropdown-button">
+        <div class="providers-inner">
+          <button
+            id="providerDropdownTrigger"
+            class="provider-trigger"
+            onclick="toggleProviderDropdown()"
+          >
+            <span id="selectedProviderText">Provider #1</span>
+            <span class="icon-chevron-down"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Channel Dropdown Trigger -->
+      <div class="channels-dropdown-button">
+        <div class="providers-inner">
+          <button
+            id="channelDropdownTrigger"
+            class="provider-trigger"
+            onclick="toggleChannelDropdown()"
+          >
+            <span>Select Channel</span>
+            <span class="icon-chevron-down"></span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -155,12 +172,58 @@
       </div>
     </div>
 
+    <!-- Channel Dropdown -->
+    <div id="channelDropdown" class="channel-dropdown">
+      <div class="channel-dropdown__header">
+        <h2 class="channel-dropdown__title">Select Channel</h2>
+        <button class="channel-dropdown__close" onclick="toggleChannelDropdown()">
+          <span class="icon-close"></span>
+        </button>
+      </div>
+      <div class="channel-dropdown__search">
+        <input
+          type="text"
+          class="channel-dropdown__search-input"
+          placeholder="Search channels..."
+          onkeyup="filterChannels(this.value)"
+        />
+      </div>
+      <div class="channel-dropdown__content">
+        <div id="channelDropdownList" class="channel-dropdown__list">
+          <!-- Channels will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
     <!-- Channel Navigation Section -->
     <div class="channels">
-      <div class="channels__inner">
+      <div class="channels__inner shadow-right">
         <div class="channel-list__scroll">
           <div class="channel-list__wrapper scrollbar-hide">
-            <!-- Channel logos will be inserted here by JavaScript -->
+            <button class="channel-card" data-channel-id="show">
+              <div class="channel-card__img">S</div>
+            </button>
+            <button class="channel-card" data-channel-id="atv">
+              <div class="channel-card__img">A</div>
+            </button>
+            <button class="channel-card" data-channel-id="fox">
+              <div class="channel-card__img">F</div>
+            </button>
+            <button class="channel-card" data-channel-id="star">
+              <div class="channel-card__img">S</div>
+            </button>
+            <button class="channel-card" data-channel-id="trt1">
+              <div class="channel-card__img">T</div>
+            </button>
+            <button class="channel-card" data-channel-id="kanal7">
+              <div class="channel-card__img">K</div>
+            </button>
+            <button class="channel-card" data-channel-id="teve2">
+              <div class="channel-card__img">T</div>
+            </button>
+            <button class="channel-card" data-channel-id="beyaztv">
+              <div class="channel-card__img">B</div>
+            </button>
           </div>
         </div>
       </div>

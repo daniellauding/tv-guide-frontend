@@ -91,6 +91,17 @@
     top: 64px;
   }
 
+  .providers-inner {
+    @apply bg-white dark:bg-gray-900 shadow-sm;
+  }
+
+  .provider-trigger {
+    @apply w-full px-4 py-3 flex items-center justify-between text-base
+           bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700
+           rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800
+           text-gray-900 dark:text-white;
+  }
+
   /* Mobile Provider Dropdown */
   .provider-dropdown {
     @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
@@ -152,24 +163,20 @@
      ========================================================================== */
 
   .channels {
+    @apply fixed w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
     top: 124px;
-    @apply transform -translate-y-full opacity-0 pointer-events-none
-           w-full;
-    @apply md:transform-none md:opacity-100 md:pointer-events-auto md:static fixed md:relative md:top-0 z-40;
+  }
 
-    /* transition-all duration-300  */
+  .channels.hidden-on-scroll {
+    @apply -translate-y-full hidden;
   }
 
   .channel-list__scroll {
-    @apply flex items-center justify-center px-4 pr-0 py-4 md:pt-6 md:pb-0;
-  }
-
-  .channels.visible {
-    @apply transform translate-y-0 opacity-100 pointer-events-auto;
+    @apply flex items-center justify-center px-4 pr-0 py-4;
   }
 
   .channel-list__wrapper {
-    @apply flex space-x-4 overflow-x-auto md:overflow-visible scrollbar-hide relative w-full flex md:items-center md:justify-center;
+    @apply flex space-x-4 overflow-x-auto scrollbar-hide relative w-full items-center justify-start md:justify-center;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
   }
@@ -180,7 +187,7 @@
 
   .date-nav {
     @apply sticky z-30;
-    top: 124px;
+    top: 180px; /* Adjusted to account for channels height */
   }
 
   .date-nav__controls {
@@ -197,8 +204,12 @@
   }
 
   @media (min-width: 768px) {
-    .date-nav {
+    .channels {
       top: 64px;
+    }
+
+    .date-nav {
+      top: 120px;
     }
   }
 
@@ -331,5 +342,80 @@
 
   .status-ended {
     @apply text-status-ended;
+  }
+
+  /* Channel Dropdown Styles */
+  .channel-dropdown {
+    @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
+           flex flex-col transform transition-transform duration-300 ease-in-out;
+    transform: translateY(100%);
+  }
+
+  .channel-dropdown.active {
+    transform: translateY(0);
+  }
+
+  .channel-dropdown__header {
+    @apply flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  .channel-dropdown__title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+  }
+
+  .channel-dropdown__close {
+    @apply p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
+  }
+
+  .channel-dropdown__search {
+    @apply px-4 py-3 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  .channel-dropdown__search-input {
+    @apply w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 
+           border border-gray-200 dark:border-gray-700 rounded-lg
+           text-gray-900 dark:text-white placeholder-gray-500
+           focus:outline-none focus:ring-2 focus:ring-primary-500;
+  }
+
+  .channel-dropdown__content {
+    @apply flex-1 overflow-y-auto;
+  }
+
+  .channel-dropdown__list {
+    @apply py-2;
+  }
+
+  .channel-dropdown-item {
+    @apply w-full px-4 py-3 text-left 
+           flex items-center space-x-4
+           hover:bg-gray-100 dark:hover:bg-gray-800;
+  }
+
+  .channel-dropdown-item__img {
+    @apply w-12 h-12 flex items-center justify-center
+           rounded-lg border border-gray-200 dark:border-gray-700
+           bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white
+           text-xl font-semibold;
+  }
+
+  .channel-dropdown-item__text {
+    @apply text-base text-gray-900 dark:text-white;
+  }
+
+  /* ==========================================================================
+     Mobile Dropdowns Layout
+     ========================================================================== */
+
+  .mobile-dropdowns {
+    @apply fixed top-16 left-0 right-0 z-40 
+           flex flex-row gap-2 p-4
+           bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700
+           md:hidden;
+  }
+
+  .mobile-dropdowns .providers-dropdown-button,
+  .mobile-dropdowns .channels-dropdown-button {
+    @apply w-full;
   }
 }
