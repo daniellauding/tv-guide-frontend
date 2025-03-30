@@ -2473,19 +2473,43 @@ function filterChannels(searchText) {
   });
 }
 
-// Select channel from dropdown
+// Select channel from dropdown or horizontal list
 function selectChannel(channelId) {
-  // Close the dropdown
+  // Update channel dropdown trigger text
+  const channelDropdownTrigger = document.getElementById('channelDropdownTrigger');
+  const programCard = document.querySelector(`#channel-${channelId}`);
+  if (channelDropdownTrigger && programCard) {
+    const channelTitle = programCard.querySelector('.program-card__title').textContent;
+    channelDropdownTrigger.querySelector('span').textContent = channelTitle;
+  }
+
+  // Close the dropdown if it was opened
   toggleChannelDropdown(false);
 
   // Find the channel element in the horizontal list
   const channelElement = document.querySelector(`.channel-card[data-channel-id="${channelId}"]`);
   if (!channelElement) return;
 
-  // Scroll to the channel in the program list
-  const programElement = document.querySelector(`[data-channel-programs="${channelId}"]`);
+  // Scroll the horizontal channel list to show the selected channel
+  const channelList = channelElement.parentElement;
+  if (channelList) {
+    const scrollLeft =
+      channelElement.offsetLeft - (channelList.clientWidth - channelElement.clientWidth) / 2;
+    channelList.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+  }
+
+  // Scroll to the channel's program card
+  const programElement = document.querySelector(`#channel-${channelId}`);
   if (programElement) {
-    programElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Add some offset to account for fixed headers
+    const headerOffset = 180;
+    const elementPosition = programElement.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   }
 
   // Highlight the channel in the horizontal list
