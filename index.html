@@ -1,235 +1,214 @@
 <!DOCTYPE html>
 <html lang="tr" class="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV Rehberi</title>
-    <link href="./dist/output.css" rel="stylesheet">
-    <link href="./src/fonts/barlow.css" rel="stylesheet">
+    <link href="./dist/output.css" rel="stylesheet" />
+    <link href="./src/fonts/barlow.css" rel="stylesheet" />
     <script src="./src/constants/icons.js"></script>
     <script src="./src/main.js" defer></script>
-</head>
-<body class="body">
+  </head>
+  <body class="body">
     <!-- Header -->
     <header class="header">
-        <div class="header__container">
-            <nav class="nav-bar">
-                <div class="nav-bar__inner">
-                    <!-- Mobile menu button -->
-                    <button onclick="toggleMobileMenu()" 
-                      class="button button--icon"
-                      aria-label="Menu">
-                      <span class="icon icon-hamburger"></span>
-                    </button>
-                    <h1 class="nav-bar__logo" onclick="resetView()">
-                        <img src="./src/logo.png" alt="TV Rehberi" class="logo">
-                    </h1>
-                </div>
-                
-                <!-- Desktop Providers - Hidden on mobile -->
-                <div class="provider-list">
-                    <div class="provider-list__scroll">
-                        <div class="provider-list__wrapper">
-                            <button class="provider-card provider-card--active" data-provider="providerOne">
-                                Provider #1
-                            </button>
-                            <button class="provider-card" data-provider="providerTwo">
-                                Provider #2
-                            </button>
-                            <button class="provider-card" data-provider="providerThree">
-                                Provider #3
-                            </button>
-                            <button class="provider-card" data-provider="providerFour">
-                                Provider #4
-                            </button>
-                            <button class="provider-card" data-provider="providerFive">
-                                Provider #5
-                            </button>
-                            <button class="provider-card" data-provider="providerSix">
-                                Provider #6
-                            </button>
-                            <button class="provider-card" data-provider="providerSeven">
-                                Provider #7
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      <div class="header__container">
+        <nav class="nav-bar">
+          <div class="nav-bar__inner">
+            <!-- Mobile menu button -->
+            <button onclick="toggleMobileMenu()" class="button button--icon" aria-label="Menu">
+              <span class="icon icon-hamburger"></span>
+            </button>
+            <h1 class="nav-bar__logo" onclick="resetView()">
+              <img src="./src/logo.png" alt="TV Rehberi" class="logo" />
+            </h1>
+          </div>
 
-                <!-- Right side with theme toggle and mobile menu -->
-                <div class="nav-bar__controls">
-                    <!-- Search Toggle -->
-                    <button 
-                        id="searchToggle" 
-                        type="button"
-                        class="button button--icon"
-                        aria-label="Program Ara"
-                        title="Program Ara"
-                    >
-                        <span class="icon icon-search"></span>
-                    </button>
-
-                    <!-- Current Programs Toggle -->
-                    <button 
-                        id="currentProgramsToggle" 
-                        class="button button--icon"
-                        aria-label="Sadece Güncel Programları Göster"
-                        title="Sadece Güncel Programları Göster"
-                    >
-                        <span class="icon icon-clock"></span>
-                    </button>
-
-                    <!-- Theme Toggle Button -->
-                    <button 
-                        id="themeToggle" 
-                        class="button button--icon"
-                        aria-label="Toggle dark mode"
-                        title="Toggle dark mode">
-                          <span class="icon icon-dark"></span>
-                    </button>
-                </div>
-            </nav>
-        </div>
-        
-        <!-- Search Section (Hidden by default) -->
-        <div id="searchSection" class="search search--hidden hidden">
-            <div class="search__container">
-                <div class="search__wrapper">
-                    <input 
-                        type="search" 
-                        id="programs__contentearch" 
-                        placeholder="Program veya kanal ara..."
-                        class="search__input"
-                    >
-                    <button 
-                        id="closeSearch"
-                        class="search__close-btn"
-                        aria-label="Aramayı Kapat"
-                    >
-                        <span class="icon-close"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile menu overlay -->
-        <div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
-        <div id="mobileMenu" class="mobile-menu">
-            <div class="mobile-menu-header">
-                <button 
-                    onclick="toggleMobileMenu()"
-                    class="mobile-menu-close">
-                    <span class="icon-close"></span>
+          <!-- Desktop Providers - Hidden on mobile -->
+          <div class="provider-list">
+            <div class="provider-list__scroll">
+              <div class="provider-list__wrapper">
+                <button class="provider-card provider-card--active" data-provider="providerOne">
+                  Provider #1
                 </button>
+                <button class="provider-card" data-provider="providerTwo">Provider #2</button>
+                <button class="provider-card" data-provider="providerThree">Provider #3</button>
+                <button class="provider-card" data-provider="providerFour">Provider #4</button>
+                <button class="provider-card" data-provider="providerFive">Provider #5</button>
+                <button class="provider-card" data-provider="providerSix">Provider #6</button>
+                <button class="provider-card" data-provider="providerSeven">Provider #7</button>
+              </div>
             </div>
-            <div class="mobile-menu-content">
-                <a href="index.html" 
-                   class="mobile-menu-link">
-                    TV-tablå
-                </a>
-                
-                <a href="contact.html" 
-                   class="mobile-menu-link">
-                    Kontakta oss
-                </a>
-                
-                <a href="streaming.html" 
-                   class="mobile-menu-link">
-                    Streaming
-                </a>
-                
-                <a href="stats.html" 
-                   class="mobile-menu-link">
-                    Tittarsiffror
-                </a>
-            </div>
+          </div>
+
+          <!-- Right side with theme toggle and mobile menu -->
+          <div class="nav-bar__controls">
+            <!-- Search Toggle -->
+            <button
+              id="searchToggle"
+              type="button"
+              class="button button--icon"
+              aria-label="Program Ara"
+              title="Program Ara"
+            >
+              <span class="icon icon-search"></span>
+            </button>
+
+            <!-- Current Programs Toggle -->
+            <button
+              id="currentProgramsToggle"
+              class="button button--icon"
+              aria-label="Sadece Güncel Programları Göster"
+              title="Sadece Güncel Programları Göster"
+            >
+              <span class="icon icon-clock"></span>
+            </button>
+
+            <!-- Theme Toggle Button -->
+            <button
+              id="themeToggle"
+              class="button button--icon"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+            >
+              <span class="icon icon-dark"></span>
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Search Section (Hidden by default) -->
+      <div id="searchSection" class="search search--hidden hidden">
+        <div class="search__container">
+          <div class="search__wrapper">
+            <input
+              type="search"
+              id="programs__contentearch"
+              placeholder="Program veya kanal ara..."
+              class="search__input"
+            />
+            <button id="closeSearch" class="search__close-btn" aria-label="Aramayı Kapat">
+              <span class="icon-close"></span>
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
+      <div id="mobileMenu" class="mobile-menu">
+        <div class="mobile-menu-header">
+          <button onclick="toggleMobileMenu()" class="mobile-menu-close">
+            <span class="icon-close"></span>
+          </button>
+        </div>
+        <div class="mobile-menu-content">
+          <a href="index.html" class="mobile-menu-link"> TV-tablå </a>
+
+          <a href="contact.html" class="mobile-menu-link"> Kontakta oss </a>
+
+          <a href="streaming.html" class="mobile-menu-link"> Streaming </a>
+
+          <a href="stats.html" class="mobile-menu-link"> Tittarsiffror </a>
+        </div>
+      </div>
     </header>
 
     <!-- Mobile Providers - Hidden on desktop -->
     <div class="providers">
-        <div class="providers-inner">
-            <div class="provider-list__scroll">
-                <div class="provider-list__wrapper">
-                    <button class="provider-card--active" data-provider="providerOne">
-                        Provider #1
-                    </button>
-                    <button class="provider-card" data-provider="providerTwo">
-                        Provider #2
-                    </button>
-                    <button class="provider-card" data-provider="providerThree">
-                        Provider #3
-                    </button>
-                    <button class="provider-card" data-provider="providerFour">
-                        Provider #4
-                    </button>
-                    <button class="provider-card" data-provider="providerFive">
-                        Provider #5
-                    </button>
-                    <button class="provider-card" data-provider="providerSix">
-                        Provider #6
-                    </button>
-                    <button class="provider-card" data-provider="providerSeven">
-                        Provider #7
-                    </button>
-                </div>
-            </div>
+      <div class="providers-inner">
+        <button
+          id="providerDropdownTrigger"
+          class="w-full px-4 py-3 flex items-center justify-between text-base"
+          onclick="toggleProviderDropdown()"
+        >
+          <span id="selectedProviderText">Provider #1</span>
+          <span class="icon-chevron-down"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Provider Dropdown -->
+    <div id="providerDropdown" class="provider-dropdown">
+      <div class="provider-dropdown__header">
+        <h2 class="provider-dropdown__title">Select Provider</h2>
+        <button class="provider-dropdown__close" onclick="toggleProviderDropdown()">
+          <span class="icon-close"></span>
+        </button>
+      </div>
+      <div class="provider-dropdown__content">
+        <div class="provider-dropdown__list">
+          <button
+            class="provider-dropdown-item provider-dropdown-item--active"
+            data-provider="providerOne"
+          >
+            Provider #1
+            <span class="icon-check text-primary-500"></span>
+          </button>
+          <button class="provider-dropdown-item" data-provider="providerTwo">Provider #2</button>
+          <button class="provider-dropdown-item" data-provider="providerThree">Provider #3</button>
+          <button class="provider-dropdown-item" data-provider="providerFour">Provider #4</button>
+          <button class="provider-dropdown-item" data-provider="providerFive">Provider #5</button>
+          <button class="provider-dropdown-item" data-provider="providerSix">Provider #6</button>
+          <button class="provider-dropdown-item" data-provider="providerSeven">Provider #7</button>
         </div>
+      </div>
     </div>
 
     <!-- Channel Navigation Section -->
     <div class="channels">
-        <div class="channels__inner">
-            <div class="channel-list__scroll">
-                <div class="channel-list__wrapper scrollbar-hide">
-                    <!-- Channel logos will be inserted here by JavaScript -->
-                </div>
-            </div>
+      <div class="channels__inner">
+        <div class="channel-list__scroll">
+          <div class="channel-list__wrapper scrollbar-hide">
+            <!-- Channel logos will be inserted here by JavaScript -->
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Day Navigation Section -->
     <div class="date-nav">
-        <div class="date-nav__inner">
-            <div class="date-nav__controls">
-                <button id="prevDate" class="button button--icon btn--prev">
-                    <span class="icon icon-chevron-left"></span>
-                </button>
-                
-                <div class="date-list__scroll">
-                    <div class="date-list__wrapper">
-                        <!-- Days will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <button id="nextDate" class="button button--icon btn--next">
-                    <span class="icon icon-chevron-right"></span>
-                </button>
+      <div class="date-nav__inner">
+        <div class="date-nav__controls">
+          <button id="prevDate" class="button button--icon btn--prev">
+            <span class="icon icon-chevron-left"></span>
+          </button>
+
+          <div class="date-list__scroll">
+            <div class="date-list__wrapper">
+              <!-- Days will be populated by JavaScript -->
             </div>
+          </div>
+
+          <button id="nextDate" class="button button--icon btn--next">
+            <span class="icon icon-chevron-right"></span>
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- Main Content -->
     <main class="wrapper programs">
-        <div class="programs__content">
-            <!-- Program content will be inserted here by JavaScript -->
-        </div>
+      <div class="programs__content">
+        <!-- Program content will be inserted here by JavaScript -->
+      </div>
     </main>
 
     <!-- Update the footer section -->
     <footer class="footer">
-        <div class="footer__container">
-            <!-- Copyright -->
-            <p class="footer__copyright">© 2025 TV Rehberi. Tüm hakları saklıdır.</p>
+      <div class="footer__container">
+        <!-- Copyright -->
+        <p class="footer__copyright">© 2025 TV Rehberi. Tüm hakları saklıdır.</p>
 
-            <div class="footer__social">
-              <a href="#" class="footer__icon">
-                  <span class="icon icon-facebook"></span>
-              </a>
-              <a href="#" class="footer__icon">
-                  <span class="icon icon-instagram"></span>
-              </a>
-            </div>
+        <div class="footer__social">
+          <a href="#" class="footer__icon">
+            <span class="icon icon-facebook"></span>
+          </a>
+          <a href="#" class="footer__icon">
+            <span class="icon icon-instagram"></span>
+          </a>
         </div>
+      </div>
     </footer>
-</body>
-</html> 
+  </body>
+</html>

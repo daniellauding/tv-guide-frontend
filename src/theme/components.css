@@ -6,7 +6,8 @@
     color-scheme: light dark;
   }
 
-  .dark, html.dark {
+  .dark,
+  html.dark {
     /* Base */
     .body {
       @apply bg-body-dark;
@@ -32,12 +33,11 @@
 
     /* Provider */
 
-
-  /* ==========================================================================
+    /* ==========================================================================
      Provider Layout
   ========================================================================== */
 
-     .providers {
+    .providers {
       @apply bg-provider-background-dark;
       top: 64px;
     }
@@ -88,7 +88,6 @@
 
     .program-card,
     .program-wrapper {
-
     }
 
     .program-card {
@@ -118,47 +117,45 @@
     }
 
     .program-slot--upcoming {
-      
     }
 
     .footer {
       @apply bg-footer-dark;
     }
-  
-    .footer__title {
-        @apply text-white;
-    }
-  
-    .footer__subtitle {
-        @apply text-white;
-    }
-  
-    .footer__text {
-        @apply text-gray-300;
-    }
-  
-    .footer__link {
-        @apply text-gray-300 hover:text-white;
-    }
-  
-    .footer__icon {
-        @apply text-gray-300 hover:text-white;
-    }
-  
-    .footer__divider {
-        @apply border-gray-700;
-    }
-  
-    .footer__copyright {
-        @apply text-gray-300;
-    } 
 
+    .footer__title {
+      @apply text-white;
+    }
+
+    .footer__subtitle {
+      @apply text-white;
+    }
+
+    .footer__text {
+      @apply text-gray-300;
+    }
+
+    .footer__link {
+      @apply text-gray-300 hover:text-white;
+    }
+
+    .footer__icon {
+      @apply text-gray-300 hover:text-white;
+    }
+
+    .footer__divider {
+      @apply border-gray-700;
+    }
+
+    .footer__copyright {
+      @apply text-gray-300;
+    }
   }
 
   /* ==========================================================================
      Base Components
      ========================================================================== */
-  
+
   .body {
     @apply bg-body;
   }
@@ -188,37 +185,37 @@
     opacity: 0;
     pointer-events: none;
   }
-  
+
   .mobile-menu-backdrop.active {
     @apply opacity-50 pointer-events-auto;
   }
-  
+
   .mobile-menu {
     @apply fixed inset-y-0 left-0 h-screen bg-white z-90 
            shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[75vw] md:w-40;
     transform: translateX(-100%);
   }
-  
+
   .mobile-menu.active {
     @apply translate-x-0;
   }
-  
+
   .mobile-menu-header {
     @apply flex justify-end mb-6;
   }
-  
+
   .mobile-menu-close {
     @apply p-4 text-gray-600 hover:text-gray-800;
   }
-  
+
   .mobile-menu-content {
     @apply flex flex-col flex-grow px-6 py-8 space-y-6;
   }
-  
+
   .mobile-menu-link {
     @apply py-4 text-left text-2xl font-medium text-gray-600 hover:text-gray-800;
   }
-  
+
   /* ==========================================================================
      Provider Components
      ========================================================================== */
@@ -228,7 +225,6 @@
     top: 64px;
   }
 
-     
   .provider {
     @apply relative;
   }
@@ -336,7 +332,7 @@
   }
 
   .program-card__header .program-card__info {
-    @apply flex items-center space-x-3
+    @apply flex items-center space-x-3;
   }
 
   .program-card__header .program-card__logo {
@@ -474,7 +470,6 @@
   }
 
   .icon-close {
-
   }
 
   .form-input {
@@ -530,120 +525,121 @@
   }
 
   .modal--visible {
-      @apply block;
+    @apply block;
   }
 
   .modal__content {
-      @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden max-w-lg w-full;
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden max-w-lg w-full;
   }
 
   .modal__content--mobile {
-      @apply w-full h-full rounded-none;
+    @apply w-full h-full rounded-none;
   }
 
   .modal__hero {
-      @apply relative p-6 text-white;
+    @apply relative p-6 text-white;
   }
 
   .modal__hero-content {
-      @apply flex flex-col items-center text-center;
+    @apply flex flex-col items-center text-center;
   }
 
   .modal__close-btn,
   .modal__share-btn {
-      @apply absolute top-4 right-4 bg-white text-black rounded-full p-2 hover:bg-gray-300;
+    @apply absolute top-4 right-4 bg-white text-black rounded-full p-2 hover:bg-gray-300;
   }
 
   .modal__channel-info {
-      @apply flex flex-col items-center text-center;
+    @apply flex flex-col items-center text-center;
   }
 
   .modal__channel-logo {
-      @apply w-16 h-16 rounded-full;
+    @apply w-16 h-16 rounded-full;
   }
 
   .modal__program-title {
-      @apply text-lg font-bold;
+    @apply text-lg font-bold;
   }
 
   .modal__meta {
-      @apply flex justify-center space-x-4 text-sm;
+    @apply flex justify-center space-x-4 text-sm;
   }
 
-  .modal__date, .modal__time {
-      @apply bg-gray-200 text-gray-700 px-3 py-1 rounded-lg;
+  .modal__date,
+  .modal__time {
+    @apply bg-gray-200 text-gray-700 px-3 py-1 rounded-lg;
   }
 
   .modal__live-badge {
-      @apply bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-semibold;
+    @apply bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-semibold;
   }
 
   .modal__details {
-      @apply p-4;
+    @apply p-4;
   }
 
   .modal__info-grid {
-      @apply grid grid-cols-2 gap-4;
+    @apply grid grid-cols-2 gap-4;
   }
 
   .modal__info-item {
-      @apply flex flex-col;
+    @apply flex flex-col;
   }
 
   .modal__label {
-      @apply text-xs text-gray-500 uppercase;
+    @apply text-xs text-gray-500 uppercase;
   }
 
   .modal__value {
-      @apply text-sm font-medium;
+    @apply text-sm font-medium;
   }
 
   .modal__description {
-      @apply mt-4;
+    @apply mt-4;
   }
 
   .modal__description-title {
-      @apply text-lg font-semibold;
+    @apply text-lg font-semibold;
   }
 
   .modal__description-text {
-      @apply text-sm text-gray-600 dark:text-gray-400;
+    @apply text-sm text-gray-600 dark:text-gray-400;
   }
 
   .modal__progress {
-      @apply mt-4;
+    @apply mt-4;
   }
 
   .modal__progress-container {
-      @apply w-full bg-gray-300 rounded-lg h-2;
+    @apply w-full bg-gray-300 rounded-lg h-2;
   }
 
   .modal__progress-fill {
-      @apply bg-primary-500 h-2 rounded-lg;
+    @apply bg-primary-500 h-2 rounded-lg;
   }
 
   .modal__progress-text {
-      @apply text-xs text-gray-500 mt-1;
+    @apply text-xs text-gray-500 mt-1;
   }
 
   .modal__ad-space {
-      @apply mt-4;
+    @apply mt-4;
   }
 
   .modal__ad-placeholder {
-      @apply bg-gray-300 text-center p-4 rounded-lg;
+    @apply bg-gray-300 text-center p-4 rounded-lg;
   }
 
   .modal__header--mobile {
-      @apply flex items-center justify-between p-4 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
+    @apply flex items-center justify-between p-4 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800;
   }
 
   .modal__back-btn {
-      @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
+    @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600;
   }
 
   .modal__icon {
-      @apply w-6 h-6;
+    @apply w-6 h-6;
   }
 
   /* ==========================================================================
@@ -657,11 +653,11 @@
   .progress-bar {
     @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
   }
-  
+
   .progress-section {
     @apply mt-8 pt-8 border-t border-gray-200 dark:border-gray-700;
   }
-  
+
   /* ==========================================================================
      Utility Components
      ========================================================================== */
@@ -850,30 +846,30 @@
   }
 
   .footer__title {
-      @apply text-xl font-bold text-gray-900;
+    @apply text-xl font-bold text-gray-900;
   }
 
   .footer__subtitle {
-      @apply text-lg font-semibold text-gray-900;
+    @apply text-lg font-semibold text-gray-900;
   }
 
   .footer__text {
-      @apply text-sm text-gray-600;
+    @apply text-sm text-gray-600;
   }
 
   .footer__link {
-      @apply text-sm text-gray-600 hover:text-gray-900 transition-colors;
+    @apply text-sm text-gray-600 hover:text-gray-900 transition-colors;
   }
 
   .footer__icon {
-      @apply text-gray-600 hover:text-gray-900 transition-colors;
+    @apply text-gray-600 hover:text-gray-900 transition-colors;
   }
 
   .footer__divider {
-      @apply mt-8 pt-8 border-t border-gray-200;
+    @apply mt-8 pt-8 border-t border-gray-200;
   }
 
   .footer__copyright {
-      @apply text-sm text-gray-600 text-center;
-  } 
+    @apply text-sm text-gray-600 text-center;
+  }
 }
