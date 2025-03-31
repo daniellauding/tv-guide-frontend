@@ -243,7 +243,7 @@
   .mobile-menu {
     @apply fixed inset-y-0 left-0 h-screen bg-white z-90 
            /* shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[75vw] md:w-40; */
-           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[100vw] md:w-md;
+           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[100vw] md:w-[500px];
     transform: translateX(-100%);
   }
 
@@ -423,7 +423,6 @@
 
   .date-nav {
     @apply bg-body-light border-b-0 md:border-0 border-gray-200 sticky z-30;
-    top: 124px;
   }
 
   .date-nav__controls {
@@ -680,11 +679,15 @@
   }
 
   .modal__hero {
-    @apply relative p-6 text-white;
+    @apply relative;
+  }
+
+  .modal__hero-header {
+    @apply bg-gray-200 p-6;
   }
 
   .modal__hero-content {
-    @apply flex flex-col items-center text-center;
+    @apply flex flex-col items-center text-center p-6;
   }
 
   .modal__close-btn,
@@ -697,7 +700,7 @@
   }
 
   .modal__channel-logo {
-    @apply w-16 h-16 rounded-full;
+    @apply flex items-center justify-center rounded-lg border-light border text-black w-10 h-10 md:w-12 md:h-12;
   }
 
   .modal__program-title {

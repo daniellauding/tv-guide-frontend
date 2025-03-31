@@ -4,7 +4,7 @@
      ========================================================================== */
 
   .wrapper {
-    @apply max-w-7xl mx-auto px-4 pt-44 md:pt-2 pb-6;
+    @apply max-w-7xl mx-auto px-4 pt-44 md:pt-8 pb-6;
   }
 
   .wrapper .programs__content {
@@ -61,7 +61,7 @@
   }
 
   .search__container {
-    @apply max-w-7xl mx-auto px-4 py-4 ;
+    @apply max-w-7xl mx-auto px-4 py-4;
   }
 
   .search__wrapper {
@@ -128,7 +128,8 @@
 
   .date-nav {
     @apply hidden md:flex sticky z-30;
-    top: 180px; /* Adjusted to account for channels height */
+    top: 124px;
+    @apply md:top-0 md:relative;
   }
 
   .date-nav__controls {
