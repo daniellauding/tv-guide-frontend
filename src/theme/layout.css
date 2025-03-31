@@ -4,7 +4,7 @@
      ========================================================================== */
 
   .wrapper {
-    @apply max-w-7xl mx-auto px-4 pt-36 md:pt-2 pb-6;
+    @apply max-w-7xl mx-auto px-4 pt-44 md:pt-2 pb-6;
   }
 
   .wrapper .programs__content {
@@ -61,7 +61,7 @@
   }
 
   .search__container {
-    @apply max-w-7xl mx-auto px-3 py-3;
+    @apply max-w-7xl mx-auto px-4 py-4 ;
   }
 
   .search__wrapper {
@@ -105,7 +105,7 @@
      ========================================================================== */
 
   .channels {
-    @apply fixed top-[124px] md:relative md:top-0 w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
+    @apply fixed top-[131px] md:relative md:top-0 w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
   }
 
   .channels.hidden-on-scroll {
@@ -306,15 +306,11 @@
 
   .mobile-dropdown-item {
     @apply w-full px-4 py-3 text-left 
-           flex items-center space-x-4
-           hover:bg-gray-100 dark:hover:bg-gray-800;
+           flex items-center space-x-4 h-20;
   }
 
   .mobile-dropdown-item__img {
-    @apply w-12 h-12 flex items-center justify-center
-           rounded-lg border border-gray-200 dark:border-gray-700
-           bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white
-           text-xl font-semibold;
+    @apply min-w-10 min-h-10 md:min-w-12 md:min-h-12 flex items-center justify-center rounded-lg;
   }
 
   .mobile-dropdown-item__text {
@@ -349,37 +345,5 @@
   /* Channel dropdown item active state */
   .channel-dropdown-item--active {
     @apply bg-gray-100 dark:bg-gray-800 font-semibold;
-  }
-
-  /* Date dropdown specific styles - overriding channel dropdown styles */
-  #dateDropdown {
-    @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
-           flex flex-col transform transition-transform duration-300 ease-in-out;
-    transform: translateY(100%);
-  }
-
-  #dateDropdown.active {
-    transform: translateY(0);
-  }
-
-  #dateDropdown .channel-dropdown__header {
-    @apply flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700;
-  }
-
-  #dateDropdown .channel-dropdown__header h3 {
-    @apply text-lg font-semibold text-gray-900 dark:text-white;
-  }
-
-  #dateDropdown .channel-dropdown-item {
-    @apply w-full px-4 py-3 text-left text-base hover:bg-gray-100 dark:hover:bg-gray-800
-           flex items-center justify-between;
-  }
-
-  #dateDropdown .channel-dropdown-item--active {
-    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
-  }
-
-  #dateDropdown .channel-dropdown-item--active .channel-dropdown-item__text {
-    @apply font-semibold;
   }
 }

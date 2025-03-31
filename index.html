@@ -97,7 +97,37 @@
       <!-- Mobile menu overlay -->
       <div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
       <div id="mobileMenu" class="mobile-menu">
-        <div class="mobile-menu-header">
+        <div class="channel-dropdown__header mobile-dropdown__header">
+          <h2 class="channel-dropdown__title mobile-dropdown__title">Menu</h2>
+          <button
+            class="channel-dropdown__close mobile-dropdown__close"
+            onclick="toggleMobileMenu()"
+          >
+            <span class="icon-close"></span>
+          </button>
+        </div>
+        <div class="mobile-dropdown__content">
+          <div class="mobile-dropdown__list">
+            <a href="index.html" class="mobile-dropdown-item">
+              <span class="mobile-dropdown-item__text">TV-tablå</span>
+            </a>
+
+            <a href="contact.html" class="mobile-dropdown-item">
+              <span class="mobile-dropdown-item__text">Kontakta oss</span>
+            </a>
+
+            <a href="streaming.html" class="mobile-dropdown-item">
+              <span class="mobile-dropdown-item__text">Streaming</span>
+            </a>
+
+            <a href="stats.html" class="mobile-dropdown-item">
+              <span class="mobile-dropdown-item__text">Tittarsiffror</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="mobile-menu-header">
           <button onclick="toggleMobileMenu()" class="mobile-menu-close">
             <span class="icon-close"></span>
           </button>
@@ -111,7 +141,7 @@
 
           <a href="stats.html" class="mobile-menu-link"> Tittarsiffror </a>
         </div>
-      </div>
+      </div> -->
     </header>
 
     <!-- Mobile Dropdowns - Hidden on desktop -->
@@ -119,7 +149,7 @@
       <!-- Provider Dropdown -->
       <button
         id="providerDropdownTrigger"
-        class="provider-trigger"
+        class="mobile-dropdown-trigger"
         onclick="toggleProviderDropdown()"
       >
         <span id="selectedProviderText">Select Provider</span>
@@ -136,7 +166,7 @@
       <!-- Channel Dropdown -->
       <button
         id="channelDropdownTrigger"
-        class="provider-trigger"
+        class="mobile-dropdown-trigger"
         onclick="toggleChannelDropdown()"
       >
         <span>Select Channel</span>
@@ -151,7 +181,11 @@
       </button>
 
       <!-- Date Dropdown -->
-      <button id="dateDropdownTrigger" class="provider-trigger" onclick="toggleDateDropdown()">
+      <button
+        id="dateDropdownTrigger"
+        class="mobile-dropdown-trigger"
+        onclick="toggleDateDropdown()"
+      >
         <span id="selectedDateText">Today</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -181,26 +215,26 @@
             class="provider-dropdown-item provider-dropdown-item--active mobile-dropdown-item"
             data-provider="providerOne"
           >
-            Provider #1
+            <span class="mobile-dropdown-item__text">Provider #1</span>
             <span class="icon-check text-primary-500"></span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerTwo">
-            Provider #2
+            <span class="mobile-dropdown-item__text">Provider #2</span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerThree">
-            Provider #3
+            <span class="mobile-dropdown-item__text">Provider #3</span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerFour">
-            Provider #4
+            <span class="mobile-dropdown-item__text">Provider #4</span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerFive">
-            Provider #5
+            <span class="mobile-dropdown-item__text">Provider #5</span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerSix">
-            Provider #6
+            <span class="mobile-dropdown-item__text">Provider #6</span>
           </button>
           <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerSeven">
-            Provider #7
+            <span class="mobile-dropdown-item__text">Provider #7</span>
           </button>
         </div>
       </div>
@@ -235,7 +269,7 @@
     <!-- Date Dropdown Content -->
     <div id="dateDropdown" class="channel-dropdown mobile-dropdown">
       <div class="channel-dropdown__header mobile-dropdown__header">
-        <h3>Select Date</h3>
+        <h2 class="mobile-dropdown__title">Select Date</h2>
         <button
           onclick="toggleDateDropdown(false)"
           class="channel-dropdown__close mobile-dropdown__close"
