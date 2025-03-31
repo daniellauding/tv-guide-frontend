@@ -96,7 +96,7 @@
   }
 
   .provider-trigger {
-    @apply w-full px-4 py-3 flex items-center justify-between text-base
+    @apply w-full text-xs flex items-center justify-between
            bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700
            rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800
            text-gray-900 dark:text-white;
@@ -163,8 +163,7 @@
      ========================================================================== */
 
   .channels {
-    @apply fixed w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
-    top: 124px;
+    @apply fixed top-[124px] md:relative md:top-0 w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
   }
 
   .channels.hidden-on-scroll {
@@ -204,13 +203,13 @@
   }
 
   @media (min-width: 768px) {
-    .channels {
+    /* .channels {
       top: 64px;
-    }
-
+    } */
+    /* 
     .date-nav {
       top: 120px;
-    }
+    } */
   }
 
   .date-nav__inner {
@@ -417,5 +416,51 @@
   .mobile-dropdowns .providers-dropdown-button,
   .mobile-dropdowns .channels-dropdown-button {
     @apply w-full;
+  }
+
+  /* Channel card active state */
+  .channel-card--active {
+    @apply bg-primary-500 text-white;
+  }
+
+  .channel-card--active .channel-card__img {
+    @apply text-white;
+  }
+
+  /* Channel dropdown item active state */
+  .channel-dropdown-item--active {
+    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+  }
+
+  /* Date dropdown specific styles - overriding channel dropdown styles */
+  #dateDropdown {
+    @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
+           flex flex-col transform transition-transform duration-300 ease-in-out;
+    transform: translateY(100%);
+  }
+
+  #dateDropdown.active {
+    transform: translateY(0);
+  }
+
+  #dateDropdown .channel-dropdown__header {
+    @apply flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  #dateDropdown .channel-dropdown__header h3 {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+  }
+
+  #dateDropdown .channel-dropdown-item {
+    @apply w-full px-4 py-3 text-left text-base hover:bg-gray-100 dark:hover:bg-gray-800
+           flex items-center justify-between;
+  }
+
+  #dateDropdown .channel-dropdown-item--active {
+    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+  }
+
+  #dateDropdown .channel-dropdown-item--active .channel-dropdown-item__text {
+    @apply font-semibold;
   }
 }

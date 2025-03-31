@@ -2334,49 +2334,46 @@ const providers = {
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
+  const header = document.querySelector('.header');
   const channels = document.querySelector('.channels');
-  const dateNav = document.querySelector('.date-nav');
   let lastScrollY = window.scrollY;
-  const scrollThreshold = 50; // Amount of scroll before hiding channels
+  let ticking = false;
 
   function updateSectionsOnScroll() {
     const currentScrollY = window.scrollY;
-    const scrollingDown = currentScrollY > lastScrollY;
-    const hasScrolledEnough = currentScrollY > scrollThreshold;
 
-    // Update channels visibility
-    if (channels) {
-      if (scrollingDown && hasScrolledEnough) {
-        channels.classList.add('hidden-on-scroll');
-      } else if (!scrollingDown && currentScrollY < scrollThreshold) {
-        channels.classList.remove('hidden-on-scroll');
-      }
+    // Remove active classes if scrolled to top
+    if (currentScrollY < 100) {
+      // Remove active classes from channel cards and dropdown items
+      document.querySelectorAll('.channel-card').forEach(card => {
+        card.classList.remove('channel-card--active');
+      });
+      document.querySelectorAll('.channel-dropdown-item').forEach(item => {
+        item.classList.remove('channel-dropdown-item--active');
+      });
     }
 
-    // Update date nav position
-    if (dateNav) {
-      if (scrollingDown && hasScrolledEnough) {
-        dateNav.style.top = '64px';
-      } else {
-        dateNav.style.top = window.innerWidth >= 768 ? '120px' : '180px';
-      }
+    // Update header and channels visibility
+    if (currentScrollY > lastScrollY) {
+      // Scrolling down
+      header?.classList.add('header--hidden');
+      channels?.classList.add('hidden-on-scroll');
+    } else {
+      // Scrolling up
+      header?.classList.remove('header--hidden');
+      channels?.classList.remove('hidden-on-scroll');
     }
 
     lastScrollY = currentScrollY;
+    ticking = false;
   }
 
-  // Add scroll event listener
-  window.addEventListener('scroll', updateSectionsOnScroll, { passive: true });
-
-  // Update sections on resize
-  window.addEventListener('resize', () => {
-    if (!channels?.classList.contains('hidden-on-scroll')) {
-      dateNav.style.top = window.innerWidth >= 768 ? '120px' : '180px';
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateSectionsOnScroll);
+      ticking = true;
     }
   });
-
-  // Initial setup
-  updateSectionsOnScroll();
 }
 
 // Make sure to call setupScrollBasedSections when the page loads
@@ -2483,48 +2480,45 @@ function filterChannels(searchText) {
 
 // Select channel from dropdown or horizontal list
 function selectChannel(channelId) {
-  // Update channel dropdown trigger text
+  // Update dropdown trigger text with selected channel name
   const channelDropdownTrigger = document.getElementById('channelDropdownTrigger');
-  const programCard = document.querySelector(`#channel-${channelId}`);
-  if (channelDropdownTrigger && programCard) {
-    const channelTitle = programCard.querySelector('.program-card__title').textContent;
-    channelDropdownTrigger.querySelector('span').textContent = channelTitle;
+  const selectedChannel = document.querySelector(
+    `.channel-dropdown-item[data-channel-id="${channelId}"]`
+  );
+  if (channelDropdownTrigger && selectedChannel) {
+    channelDropdownTrigger.querySelector('span').textContent = selectedChannel.querySelector(
+      '.channel-dropdown-item__text'
+    ).textContent;
   }
 
-  // Close the dropdown if it was opened
+  // Close the dropdown
   toggleChannelDropdown(false);
 
-  // Find the channel element in the horizontal list
-  const channelElement = document.querySelector(`.channel-card[data-channel-id="${channelId}"]`);
-  if (!channelElement) return;
+  // Update active states in both dropdown and horizontal list
+  document.querySelectorAll('.channel-dropdown-item').forEach(item => {
+    item.classList.toggle('channel-dropdown-item--active', item.dataset.channelId === channelId);
+  });
 
-  // Scroll the horizontal channel list to show the selected channel
-  const channelList = channelElement.parentElement;
-  if (channelList) {
-    const scrollLeft =
-      channelElement.offsetLeft - (channelList.clientWidth - channelElement.clientWidth) / 2;
-    channelList.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-  }
+  document.querySelectorAll('.channel-card').forEach(card => {
+    card.classList.toggle('channel-card--active', card.dataset.channelId === channelId);
+  });
 
   // Scroll to the channel's program card
-  const programElement = document.querySelector(`#channel-${channelId}`);
-  if (programElement) {
-    // Add some offset to account for fixed headers
-    const headerOffset = 180;
-    const elementPosition = programElement.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+  const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+  if (programCard) {
+    programCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Highlight the channel in the horizontal list
-  channelElement.classList.add('highlight-channel');
-  setTimeout(() => {
-    channelElement.classList.remove('highlight-channel');
-  }, 2000);
+  // Find and scroll to the channel in the horizontal list
+  const channelCard = document.querySelector(`.channel-card[data-channel-id="${channelId}"]`);
+  if (channelCard) {
+    const container = channelCard.parentElement;
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = channelCard.getBoundingClientRect();
+    const scrollLeft =
+      cardRect.left - containerRect.left - containerRect.width / 2 + cardRect.width / 2;
+    container.scrollTo({ left: container.scrollLeft + scrollLeft, behavior: 'smooth' });
+  }
 }
 
 // Add channel click handler for horizontal list
@@ -2620,9 +2614,12 @@ function selectDate(dateStr, label) {
   // Close the dropdown
   toggleDateDropdown(false);
 
-  // Update the desktop date navigation if it exists
-  const dateButtons = document.querySelectorAll('.date-nav-item');
-  dateButtons.forEach(button => {
+  // Update active states in both dropdown and desktop navigation
+  document.querySelectorAll('#dateDropdownList .channel-dropdown-item').forEach(item => {
+    item.classList.toggle('channel-dropdown-item--active', item.dataset.date === dateStr);
+  });
+
+  document.querySelectorAll('.date-nav-item').forEach(button => {
     button.classList.toggle('active', button.dataset.date === dateStr);
   });
 
