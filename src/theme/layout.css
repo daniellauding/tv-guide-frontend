@@ -85,69 +85,11 @@
      ========================================================================== */
 
   .providers {
-    @apply md:hidden
-           w-full md:w-fit md:rounded-full md:shadow-sm overflow-x-auto scrollbar-hide
-           sticky md:relative z-40;
     top: 64px;
-  }
-
-  .providers-inner {
-    @apply bg-white dark:bg-gray-900 shadow-sm;
-  }
-
-  .provider-trigger {
-    @apply w-full text-xs flex items-center justify-between
-           bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700
-           rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800
-           text-gray-900 dark:text-white;
-  }
-
-  /* Mobile Provider Dropdown */
-  .provider-dropdown {
-    @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
-           flex flex-col transform transition-transform duration-300 ease-in-out;
-    transform: translateY(100%);
   }
 
   .provider-dropdown.active {
     transform: translateY(0);
-  }
-
-  .provider-dropdown__header {
-    @apply flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700;
-  }
-
-  .provider-dropdown__title {
-    @apply text-lg font-semibold;
-  }
-
-  .provider-dropdown__close {
-    @apply p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
-  }
-
-  .provider-dropdown__content {
-    @apply flex-1 overflow-y-auto;
-  }
-
-  .provider-dropdown__list {
-    @apply py-2;
-  }
-
-  .provider-dropdown-item {
-    @apply w-full px-4 py-3 text-left text-base hover:bg-gray-100 dark:hover:bg-gray-800
-           flex items-center justify-between;
-  }
-
-  .provider-dropdown-item--active {
-    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
-  }
-
-  .provider-list {
-    @apply hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
-  }
-
-  .provider-list__wrapper {
-    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-visible scrollbar-hide;
   }
 
   /* ==========================================================================
@@ -343,63 +285,40 @@
     @apply text-status-ended;
   }
 
-  /* Channel Dropdown Styles */
-  .channel-dropdown {
+  /* Dropdown Styles */
+  .mobile-dropdown {
     @apply fixed inset-0 bg-white dark:bg-gray-900 z-50 
            flex flex-col transform transition-transform duration-300 ease-in-out;
     transform: translateY(100%);
   }
 
-  .channel-dropdown.active {
+  .mobile-dropdown.active {
     transform: translateY(0);
   }
 
-  .channel-dropdown__header {
-    @apply flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700;
-  }
-
-  .channel-dropdown__title {
-    @apply text-lg font-semibold text-gray-900 dark:text-white;
-  }
-
-  .channel-dropdown__close {
-    @apply p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
-  }
-
-  .channel-dropdown__search {
-    @apply px-4 py-3 border-b border-gray-200 dark:border-gray-700;
-  }
-
-  .channel-dropdown__search-input {
-    @apply w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 
-           border border-gray-200 dark:border-gray-700 rounded-lg
-           text-gray-900 dark:text-white placeholder-gray-500
-           focus:outline-none focus:ring-2 focus:ring-primary-500;
-  }
-
-  .channel-dropdown__content {
+  .mobile-dropdown__content {
     @apply flex-1 overflow-y-auto;
   }
 
-  .channel-dropdown__list {
+  .mobile-dropdown__list {
     @apply py-2;
   }
 
-  .channel-dropdown-item {
+  .mobile-dropdown-item {
     @apply w-full px-4 py-3 text-left 
            flex items-center space-x-4
            hover:bg-gray-100 dark:hover:bg-gray-800;
   }
 
-  .channel-dropdown-item__img {
+  .mobile-dropdown-item__img {
     @apply w-12 h-12 flex items-center justify-center
            rounded-lg border border-gray-200 dark:border-gray-700
            bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white
            text-xl font-semibold;
   }
 
-  .channel-dropdown-item__text {
-    @apply text-base text-gray-900 dark:text-white;
+  .mobile-dropdown-item__text {
+    @apply w-full text-left;
   }
 
   /* ==========================================================================

@@ -165,60 +165,81 @@
     </div>
 
     <!-- Provider Dropdown Content -->
-    <div id="providerDropdown" class="provider-dropdown">
-      <div class="provider-dropdown__header">
-        <h2 class="provider-dropdown__title">Select Provider</h2>
-        <button class="provider-dropdown__close" onclick="toggleProviderDropdown()">
+    <div id="providerDropdown" class="provider-dropdown mobile-dropdown">
+      <div class="provider-dropdown__header mobile-dropdown__header">
+        <h2 class="provider-dropdown__title mobile-dropdown__title">Select Provider</h2>
+        <button
+          class="provider-dropdown__close mobile-dropdown__close"
+          onclick="toggleProviderDropdown()"
+        >
           <span class="icon-close"></span>
         </button>
       </div>
-      <div class="provider-dropdown__content">
-        <div class="provider-dropdown__list">
+      <div class="provider-dropdown__content mobile-dropdown__content">
+        <div class="provider-dropdown__list mobile-dropdown__list">
           <button
-            class="provider-dropdown-item provider-dropdown-item--active"
+            class="provider-dropdown-item provider-dropdown-item--active mobile-dropdown-item"
             data-provider="providerOne"
           >
             Provider #1
             <span class="icon-check text-primary-500"></span>
           </button>
-          <button class="provider-dropdown-item" data-provider="providerTwo">Provider #2</button>
-          <button class="provider-dropdown-item" data-provider="providerThree">Provider #3</button>
-          <button class="provider-dropdown-item" data-provider="providerFour">Provider #4</button>
-          <button class="provider-dropdown-item" data-provider="providerFive">Provider #5</button>
-          <button class="provider-dropdown-item" data-provider="providerSix">Provider #6</button>
-          <button class="provider-dropdown-item" data-provider="providerSeven">Provider #7</button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerTwo">
+            Provider #2
+          </button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerThree">
+            Provider #3
+          </button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerFour">
+            Provider #4
+          </button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerFive">
+            Provider #5
+          </button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerSix">
+            Provider #6
+          </button>
+          <button class="provider-dropdown-item mobile-dropdown-item" data-provider="providerSeven">
+            Provider #7
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Channel Dropdown Content -->
-    <div id="channelDropdown" class="channel-dropdown">
-      <div class="channel-dropdown__header">
-        <h2 class="channel-dropdown__title">Select Channel</h2>
-        <button class="channel-dropdown__close" onclick="toggleChannelDropdown()">
+    <div id="channelDropdown" class="channel-dropdown mobile-dropdown">
+      <div class="channel-dropdown__header mobile-dropdown__header">
+        <h2 class="channel-dropdown__title mobile-dropdown__title">Select Channel</h2>
+        <button
+          class="channel-dropdown__close mobile-dropdown__close"
+          onclick="toggleChannelDropdown()"
+        >
           <span class="icon-close"></span>
         </button>
       </div>
-      <div class="channel-dropdown__search">
+      <div class="channel-dropdown__search mobile-dropdown__search">
         <input
           type="text"
-          class="channel-dropdown__search-input"
+          class="channel-dropdown__search-input mobile-dropdown__search-input"
           placeholder="Search channels..."
           onkeyup="filterChannels(this.value)"
         />
       </div>
-      <div class="channel-dropdown__content">
-        <div id="channelDropdownList" class="channel-dropdown__list">
+      <div class="channel-dropdown__content mobile-dropdown__content">
+        <div id="channelDropdownList" class="channel-dropdown__list mobile-dropdown__list">
           <!-- Channels will be populated by JavaScript -->
         </div>
       </div>
     </div>
 
     <!-- Date Dropdown Content -->
-    <div id="dateDropdown" class="channel-dropdown">
-      <div class="channel-dropdown__header">
+    <div id="dateDropdown" class="channel-dropdown mobile-dropdown">
+      <div class="channel-dropdown__header mobile-dropdown__header">
         <h3>Select Date</h3>
-        <button onclick="toggleDateDropdown(false)" class="channel-dropdown__close">
+        <button
+          onclick="toggleDateDropdown(false)"
+          class="channel-dropdown__close mobile-dropdown__close"
+        >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
@@ -229,7 +250,7 @@
           </svg>
         </button>
       </div>
-      <div id="dateDropdownList" class="channel-dropdown__content">
+      <div id="dateDropdownList" class="channel-dropdown__content mobile-dropdown__content">
         <!-- Date items will be populated by JavaScript -->
       </div>
     </div>

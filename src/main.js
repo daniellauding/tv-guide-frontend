@@ -2348,8 +2348,8 @@ function setupScrollBasedSections() {
       document.querySelectorAll('.channel-card').forEach(card => {
         card.classList.remove('channel-card--active');
       });
-      document.querySelectorAll('.channel-dropdown-item').forEach(item => {
-        item.classList.remove('channel-dropdown-item--active');
+      document.querySelectorAll('.channel-dropdown-item .mobile-dropdown-item').forEach(item => {
+        item.classList.remove('channel-dropdown-item--active .mobile-dropdown-item--active');
       });
     }
 
@@ -2450,17 +2450,17 @@ function updateChannelDropdownList() {
       if (!channel) return '';
 
       return `
-      <button class="channel-dropdown-item" data-channel-id="${
+      <button class="channel-dropdown-item mobile-dropdown-item" data-channel-id="${
         channel.id
       }" onclick="selectChannel('${channel.id}')">
-        <div class="channel-dropdown-item__img">
+        <div class="channel-dropdown-item__img mobile-dropdown-item__img">
           ${
             channel.logo
               ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`
               : channel.name[0]
           }
         </div>
-        <span class="channel-dropdown-item__text">${channel.name}</span>
+        <span class="channel-dropdown-item__text mobile-dropdown-item__text">${channel.name}</span>
       </button>
     `;
     })
@@ -2469,11 +2469,13 @@ function updateChannelDropdownList() {
 
 // Filter channels in dropdown
 function filterChannels(searchText) {
-  const items = document.querySelectorAll('.channel-dropdown-item');
+  const items = document.querySelectorAll('.channel-dropdown-item .mobile-dropdown-item');
   const searchLower = searchText.toLowerCase();
 
   items.forEach(item => {
-    const text = item.querySelector('.channel-dropdown-item__text').textContent.toLowerCase();
+    const text = item
+      .querySelector('.channel-dropdown-item__text .mobile-dropdown-item__text')
+      .textContent.toLowerCase();
     item.style.display = text.includes(searchLower) ? '' : 'none';
   });
 }
@@ -2483,11 +2485,11 @@ function selectChannel(channelId) {
   // Update dropdown trigger text with selected channel name
   const channelDropdownTrigger = document.getElementById('channelDropdownTrigger');
   const selectedChannel = document.querySelector(
-    `.channel-dropdown-item[data-channel-id="${channelId}"]`
+    `.channel-dropdown-item[data-channel-id="${channelId}"] .mobile-dropdown-item`
   );
   if (channelDropdownTrigger && selectedChannel) {
     channelDropdownTrigger.querySelector('span').textContent = selectedChannel.querySelector(
-      '.channel-dropdown-item__text'
+      '.channel-dropdown-item__text .mobile-dropdown-item__text'
     ).textContent;
   }
 
@@ -2495,8 +2497,11 @@ function selectChannel(channelId) {
   toggleChannelDropdown(false);
 
   // Update active states in both dropdown and horizontal list
-  document.querySelectorAll('.channel-dropdown-item').forEach(item => {
-    item.classList.toggle('channel-dropdown-item--active', item.dataset.channelId === channelId);
+  document.querySelectorAll('.channel-dropdown-item mobile-dropdown-item').forEach(item => {
+    item.classList.toggle(
+      'channel-dropdown-item--active mobile-dropdown-item--active',
+      item.dataset.channelId === channelId
+    );
   });
 
   document.querySelectorAll('.channel-card').forEach(card => {
@@ -2595,8 +2600,8 @@ function updateDateDropdownList() {
       }
 
       return `
-            <button class="channel-dropdown-item" data-date="${dateStr}" onclick="selectDate('${dateStr}', '${dayLabel}')">
-                <span class="channel-dropdown-item__text">${dayLabel}</span>
+            <button class="channel-dropdown-item mobile-dropdown-item" data-date="${dateStr}" onclick="selectDate('${dateStr}', '${dayLabel}')">
+                <span class="channel-dropdown-item__text mobile-dropdown-item__text">${dayLabel}</span>
             </button>
         `;
     })
@@ -2615,9 +2620,14 @@ function selectDate(dateStr, label) {
   toggleDateDropdown(false);
 
   // Update active states in both dropdown and desktop navigation
-  document.querySelectorAll('#dateDropdownList .channel-dropdown-item').forEach(item => {
-    item.classList.toggle('channel-dropdown-item--active', item.dataset.date === dateStr);
-  });
+  document
+    .querySelectorAll('#dateDropdownList .channel-dropdown-item mobile-dropdown-item')
+    .forEach(item => {
+      item.classList.toggle(
+        'channel-dropdown-item--active mobile-dropdown-item--active',
+        item.dataset.date === dateStr
+      );
+    });
 
   document.querySelectorAll('.date-nav-item').forEach(button => {
     button.classList.toggle('active', button.dataset.date === dateStr);
