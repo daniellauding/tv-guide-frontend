@@ -2340,79 +2340,111 @@ const providers = {
 function setupScrollBasedSections() {
   let lastScrollTop = 0;
   let scrollTimeout;
+  let touchStartY = 0;
+  let isScrollingDown = false;
   const channelsSection = document.querySelector('.channels');
-  const mobileDropdowns = document.querySelector('.mobile-dropdowns');
-  const header = document.querySelector('.header');
-  const showThreshold = 100;
-  const hideOffset = 130; // Increased significantly to hide much earlier
-  const minScrollToHide = 1; // Hide after just 1px of scroll
+  const minScrollToHide = 1;
 
   function setInitialState() {
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (currentScrollTop > 0) {
       channelsSection.classList.add('initial-hidden');
-      console.log('🔴 Channels initially hidden at position:', Math.round(currentScrollTop));
     }
   }
 
   setInitialState();
 
-  function updateSectionsOnScroll() {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollingDown = currentScrollTop > lastScrollTop;
-    const scrollDelta = Math.abs(currentScrollTop - lastScrollTop);
-
+  function updateChannelsVisibility(currentScrollTop, isScrollingDown) {
     // Remove initial-hidden class if it exists to allow normal transitions
     channelsSection.classList.remove('initial-hidden');
 
-    // Get the position of mobile-dropdowns bottom edge
-    const dropdownsBottom = mobileDropdowns ? mobileDropdowns.getBoundingClientRect().bottom : 0;
-    const headerHeight = header ? header.getBoundingClientRect().height : 0;
-    const threshold = Math.max(0, dropdownsBottom + headerHeight - hideOffset);
+    // Get total scrollable height
+    const totalHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const maxScroll = totalHeight - viewportHeight;
+    const isAtBottom = currentScrollTop >= maxScroll - 10; // 10px threshold from bottom
 
-    // Log scroll info
-    console.log({
-      event: 'Scroll Update',
-      currentScroll: Math.round(currentScrollTop),
-      scrollDelta: Math.round(scrollDelta),
-      direction: scrollingDown ? 'down' : 'up',
-      threshold: Math.round(threshold),
-      dropdownsBottom: Math.round(dropdownsBottom),
-      headerHeight: Math.round(headerHeight),
-      channelsVisible: !channelsSection.classList.contains('hidden-on-scroll')
-    });
-
-    if (scrollingDown && scrollDelta >= minScrollToHide) {
-      // Hide almost immediately when scrolling down
+    if (isScrollingDown && currentScrollTop > minScrollToHide) {
+      // Always hide when scrolling down
       channelsSection.classList.add('hidden-on-scroll');
       channelsSection.classList.remove('visible-on-scroll');
-      console.log('🔴 Channels HIDDEN at scroll position:', Math.round(currentScrollTop));
-    } else if (!scrollingDown) {
-      if (currentScrollTop > showThreshold) {
-        channelsSection.classList.remove('hidden-on-scroll');
-        channelsSection.classList.add('visible-on-scroll');
-        console.log('🟢 Channels SHOWN at scroll position:', Math.round(currentScrollTop));
-      } else if (currentScrollTop <= 0) {
-        channelsSection.classList.remove('hidden-on-scroll');
-        channelsSection.classList.add('visible-on-scroll');
-        console.log('🟢 Channels SHOWN at page top');
-      }
+    } else if (!isScrollingDown && !isAtBottom) {
+      // Only show when scrolling up AND not at the bottom
+      channelsSection.classList.remove('hidden-on-scroll');
+      channelsSection.classList.add('visible-on-scroll');
     }
+  }
 
+  // Handle scroll events
+  function handleScroll() {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    isScrollingDown = currentScrollTop > lastScrollTop;
+
+    updateChannelsVisibility(currentScrollTop, isScrollingDown);
     lastScrollTop = currentScrollTop;
   }
 
-  // Throttle scroll event with minimal delay
-  window.addEventListener('scroll', () => {
-    if (!scrollTimeout) {
-      scrollTimeout = setTimeout(() => {
-        updateSectionsOnScroll();
-        scrollTimeout = null;
-      }, 0); // Reduced to 0ms for immediate response
+  // Throttled scroll handler
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!scrollTimeout) {
+        scrollTimeout = setTimeout(() => {
+          handleScroll();
+          scrollTimeout = null;
+        }, 0);
+      }
+    },
+    { passive: true }
+  );
+
+  // Touch event handlers
+  document.addEventListener(
+    'touchstart',
+    e => {
+      touchStartY = e.touches[0].clientY;
+      lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    'touchmove',
+    e => {
+      if (!touchStartY) return;
+
+      const touchY = e.touches[0].clientY;
+      const touchDiff = touchStartY - touchY;
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Update scrolling direction based on touch movement
+      isScrollingDown = touchDiff > 0;
+
+      if (Math.abs(touchDiff) > minScrollToHide) {
+        updateChannelsVisibility(currentScrollTop, isScrollingDown);
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    'touchend',
+    () => {
+      touchStartY = 0;
+      // Check final position after touch ends
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      updateChannelsVisibility(currentScrollTop, isScrollingDown);
+    },
+    { passive: true }
+  );
+
+  // Handle visibility changes
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      updateChannelsVisibility(currentScrollTop, isScrollingDown);
     }
   });
-
-  // Rest of the code...
 }
 
 // Make sure to call setupScrollBasedSections when the page loads
