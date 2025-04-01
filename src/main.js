@@ -2338,44 +2338,116 @@ const providers = {
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
+  let lastScrollTop = 0;
+  let scrollTimeout;
+  const channelsSection = document.querySelector('.channels');
+  const mobileDropdowns = document.querySelector('.mobile-dropdowns');
   const header = document.querySelector('.header');
-  const channels = document.querySelector('.channels');
-  let lastScrollY = window.scrollY;
-  let ticking = false;
+  const showThreshold = 100;
+  const hideOffset = 50;
 
-  function updateSectionsOnScroll() {
-    const currentScrollY = window.scrollY;
+  // Set initial state immediately before any other operations
+  function setInitialState() {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Remove active classes if scrolled to top
-    if (currentScrollY < 100) {
-      // Remove active classes from channel cards and dropdown items
-      document.querySelectorAll('.channel-card').forEach(card => {
-        card.classList.remove('channel-card--active');
-      });
-      document.querySelectorAll('.channel-dropdown-item .mobile-dropdown-item').forEach(item => {
-        item.classList.remove('channel-dropdown-item--active .mobile-dropdown-item--active');
-      });
+    // If not at top of page, add initial-hidden class
+    if (currentScrollTop > 0) {
+      channelsSection.classList.add('initial-hidden');
+      console.log('🔴 Channels initially hidden at position:', Math.round(currentScrollTop));
     }
-
-    // Update header and channels visibility
-    if (currentScrollY > lastScrollY) {
-      // Scrolling down
-      header?.classList.add('header--hidden');
-      channels?.classList.add('hidden-on-scroll');
-    } else {
-      // Scrolling up
-      header?.classList.remove('header--hidden');
-      channels?.classList.remove('hidden-on-scroll');
-    }
-
-    lastScrollY = currentScrollY;
-    ticking = false;
   }
 
+  // Call this immediately
+  setInitialState();
+
+  function updateSectionsOnScroll() {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollingDown = currentScrollTop > lastScrollTop;
+
+    // Remove initial-hidden class if it exists to allow normal transitions
+    channelsSection.classList.remove('initial-hidden');
+
+    // Get the position of mobile-dropdowns bottom edge
+    const dropdownsBottom = mobileDropdowns ? mobileDropdowns.getBoundingClientRect().bottom : 0;
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+    const threshold = Math.max(0, dropdownsBottom + headerHeight - hideOffset);
+
+    // Log scroll info
+    console.log({
+      event: 'Scroll Update',
+      currentScroll: Math.round(currentScrollTop),
+      direction: scrollingDown ? 'down' : 'up',
+      threshold: Math.round(threshold),
+      dropdownsBottom: Math.round(dropdownsBottom),
+      headerHeight: Math.round(headerHeight),
+      channelsVisible: !channelsSection.classList.contains('hidden-on-scroll')
+    });
+
+    if (scrollingDown) {
+      if (currentScrollTop > threshold) {
+        channelsSection.classList.add('hidden-on-scroll');
+        channelsSection.classList.remove('visible-on-scroll');
+        console.log('🔴 Channels HIDDEN at scroll position:', Math.round(currentScrollTop));
+      }
+    } else {
+      if (currentScrollTop > showThreshold) {
+        channelsSection.classList.remove('hidden-on-scroll');
+        channelsSection.classList.add('visible-on-scroll');
+        console.log('🟢 Channels SHOWN at scroll position:', Math.round(currentScrollTop));
+      } else if (currentScrollTop <= 0) {
+        channelsSection.classList.remove('hidden-on-scroll');
+        channelsSection.classList.add('visible-on-scroll');
+        console.log('🟢 Channels SHOWN at page top');
+      }
+    }
+
+    lastScrollTop = currentScrollTop;
+  }
+
+  // Handle initial page load state
+  function handleInitialState() {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const dropdownsBottom = mobileDropdowns ? mobileDropdowns.getBoundingClientRect().bottom : 0;
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+
+    console.log({
+      event: 'Page Load State',
+      currentScroll: Math.round(currentScrollTop),
+      dropdownsBottom: Math.round(dropdownsBottom),
+      headerHeight: Math.round(headerHeight),
+      channelsVisible: !channelsSection.classList.contains('hidden-on-scroll')
+    });
+
+    if (currentScrollTop > 0) {
+      // Keep initial-hidden class and add hidden-on-scroll
+      channelsSection.classList.add('hidden-on-scroll');
+      channelsSection.classList.remove('visible-on-scroll');
+      console.log('🔴 Channels HIDDEN on page load at position:', Math.round(currentScrollTop));
+    } else {
+      // Remove initial-hidden if at top
+      channelsSection.classList.remove('initial-hidden');
+      console.log('🟢 Channels SHOWN on page load at top');
+    }
+  }
+
+  // Call handleInitialState after a small delay to ensure proper DOM state
+  setTimeout(handleInitialState, 0);
+
+  // Throttle scroll event
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateSectionsOnScroll);
-      ticking = true;
+    if (!scrollTimeout) {
+      scrollTimeout = setTimeout(() => {
+        updateSectionsOnScroll();
+        scrollTimeout = null;
+      }, 5);
+    }
+  });
+
+  // Update sections when the page becomes visible
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      console.log('Page became visible - checking state');
+      handleInitialState();
     }
   });
 }

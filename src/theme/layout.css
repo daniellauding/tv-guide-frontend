@@ -105,11 +105,41 @@
      ========================================================================== */
 
   .channels {
-    @apply fixed top-[131px] md:relative md:top-0 w-full bg-white dark:bg-gray-900 z-40 transform transition-transform duration-300;
+    @apply fixed top-[131px] md:relative md:top-0 w-full bg-white dark:bg-gray-900 z-40;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    will-change: transform, opacity;
+  }
+
+  /* Add initial hidden state */
+  .channels.initial-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: none !important;
   }
 
   .channels.hidden-on-scroll {
-    @apply -translate-y-full hidden;
+    @apply md:block;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    /* Quick transition for hiding */
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  }
+
+  .channels.visible-on-scroll {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    /* Smooth transition for showing */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+
+  /* Add a utility class for no transitions */
+  .channels.no-transition {
+    transition: none !important;
   }
 
   .channel-list__scroll {
