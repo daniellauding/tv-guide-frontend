@@ -2344,25 +2344,23 @@ function setupScrollBasedSections() {
   const mobileDropdowns = document.querySelector('.mobile-dropdowns');
   const header = document.querySelector('.header');
   const showThreshold = 100;
-  const hideOffset = 50;
+  const hideOffset = 130; // Increased significantly to hide much earlier
+  const minScrollToHide = 1; // Hide after just 1px of scroll
 
-  // Set initial state immediately before any other operations
   function setInitialState() {
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // If not at top of page, add initial-hidden class
     if (currentScrollTop > 0) {
       channelsSection.classList.add('initial-hidden');
       console.log('🔴 Channels initially hidden at position:', Math.round(currentScrollTop));
     }
   }
 
-  // Call this immediately
   setInitialState();
 
   function updateSectionsOnScroll() {
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollingDown = currentScrollTop > lastScrollTop;
+    const scrollDelta = Math.abs(currentScrollTop - lastScrollTop);
 
     // Remove initial-hidden class if it exists to allow normal transitions
     channelsSection.classList.remove('initial-hidden');
@@ -2376,6 +2374,7 @@ function setupScrollBasedSections() {
     console.log({
       event: 'Scroll Update',
       currentScroll: Math.round(currentScrollTop),
+      scrollDelta: Math.round(scrollDelta),
       direction: scrollingDown ? 'down' : 'up',
       threshold: Math.round(threshold),
       dropdownsBottom: Math.round(dropdownsBottom),
@@ -2383,13 +2382,12 @@ function setupScrollBasedSections() {
       channelsVisible: !channelsSection.classList.contains('hidden-on-scroll')
     });
 
-    if (scrollingDown) {
-      if (currentScrollTop > threshold) {
-        channelsSection.classList.add('hidden-on-scroll');
-        channelsSection.classList.remove('visible-on-scroll');
-        console.log('🔴 Channels HIDDEN at scroll position:', Math.round(currentScrollTop));
-      }
-    } else {
+    if (scrollingDown && scrollDelta >= minScrollToHide) {
+      // Hide almost immediately when scrolling down
+      channelsSection.classList.add('hidden-on-scroll');
+      channelsSection.classList.remove('visible-on-scroll');
+      console.log('🔴 Channels HIDDEN at scroll position:', Math.round(currentScrollTop));
+    } else if (!scrollingDown) {
       if (currentScrollTop > showThreshold) {
         channelsSection.classList.remove('hidden-on-scroll');
         channelsSection.classList.add('visible-on-scroll');
@@ -2404,52 +2402,17 @@ function setupScrollBasedSections() {
     lastScrollTop = currentScrollTop;
   }
 
-  // Handle initial page load state
-  function handleInitialState() {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const dropdownsBottom = mobileDropdowns ? mobileDropdowns.getBoundingClientRect().bottom : 0;
-    const headerHeight = header ? header.getBoundingClientRect().height : 0;
-
-    console.log({
-      event: 'Page Load State',
-      currentScroll: Math.round(currentScrollTop),
-      dropdownsBottom: Math.round(dropdownsBottom),
-      headerHeight: Math.round(headerHeight),
-      channelsVisible: !channelsSection.classList.contains('hidden-on-scroll')
-    });
-
-    if (currentScrollTop > 0) {
-      // Keep initial-hidden class and add hidden-on-scroll
-      channelsSection.classList.add('hidden-on-scroll');
-      channelsSection.classList.remove('visible-on-scroll');
-      console.log('🔴 Channels HIDDEN on page load at position:', Math.round(currentScrollTop));
-    } else {
-      // Remove initial-hidden if at top
-      channelsSection.classList.remove('initial-hidden');
-      console.log('🟢 Channels SHOWN on page load at top');
-    }
-  }
-
-  // Call handleInitialState after a small delay to ensure proper DOM state
-  setTimeout(handleInitialState, 0);
-
-  // Throttle scroll event
+  // Throttle scroll event with minimal delay
   window.addEventListener('scroll', () => {
     if (!scrollTimeout) {
       scrollTimeout = setTimeout(() => {
         updateSectionsOnScroll();
         scrollTimeout = null;
-      }, 5);
+      }, 0); // Reduced to 0ms for immediate response
     }
   });
 
-  // Update sections when the page becomes visible
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      console.log('Page became visible - checking state');
-      handleInitialState();
-    }
-  });
+  // Rest of the code...
 }
 
 // Make sure to call setupScrollBasedSections when the page loads
