@@ -2356,13 +2356,7 @@ function setupScrollBasedSections() {
       return;
     }
 
-    // If we've already scrolled up once and channels are visible, keep them visible
-    if (channels.classList.contains('visible-on-scroll')) {
-      channels.classList.remove('hidden-on-scroll');
-      return;
-    }
-
-    // Normal scroll behavior for initial scroll
+    // Normal scroll behavior
     if (currentScroll > minScrollToHide) {
       if (currentScroll > lastScroll) {
         channels.classList.add('hidden-on-scroll');
