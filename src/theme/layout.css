@@ -113,6 +113,7 @@
     background: #fff;
     transition: opacity 0.3s ease;
     opacity: 1;
+    pointer-events: auto;
   }
 
   .channels.visible-on-scroll {
