@@ -4,7 +4,7 @@
      ========================================================================== */
 
   .wrapper {
-    @apply max-w-7xl mx-auto px-4 pt-[211px] md:pt-8 pb-6;
+    @apply max-w-7xl mx-auto px-4 pt-[172px] pb-6;
   }
 
   .wrapper .programs__content {
