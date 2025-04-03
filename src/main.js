@@ -2345,44 +2345,25 @@ function setupScrollBasedSections() {
   const channelsSection = document.querySelector('.channels');
   const minScrollToHide = 200;
 
-  function updateChannelsVisibility(currentScrollTop, isScrollingDown) {
-    // Get total scrollable height
-    const totalHeight = document.documentElement.scrollHeight;
-    const viewportHeight = window.innerHeight;
-    const maxScroll = totalHeight - viewportHeight;
-    const isAtBottom = currentScrollTop >= maxScroll - 10;
-    const hasScrolledUp = channelsSection.classList.contains('visible-on-scroll');
+  function updateChannelsVisibility(currentScroll, lastScroll) {
+    const channels = document.querySelector('.channels');
+    if (!channels) return;
 
-    console.log('=== Scroll Update ===');
-    console.log('Current scroll position:', currentScrollTop);
-    console.log('Scrolling direction:', isScrollingDown ? 'DOWN' : 'UP');
-    console.log('Has scrolled up before:', hasScrolledUp);
-
-    // Natural scroll behavior before threshold
-    if (currentScrollTop <= minScrollToHide) {
-      console.log('📍 Before threshold - natural scroll');
-      channelsSection.classList.remove('hidden-on-scroll');
-      channelsSection.classList.remove('visible-on-scroll');
+    // If we've already scrolled up once and channels are visible, keep them visible
+    if (channels.classList.contains('visible-on-scroll')) {
+      channels.classList.remove('hidden-on-scroll');
       return;
     }
 
-    // If scrolling down, only add hidden class if we've previously scrolled up
-    if (isScrollingDown) {
-      if (hasScrolledUp) {
-        console.log('🔽 Hiding channels - after previous scroll up');
-        channelsSection.classList.add('hidden-on-scroll');
-        channelsSection.classList.remove('visible-on-scroll');
+    // Normal scroll behavior for initial scroll
+    if (currentScroll > minScrollToHide) {
+      if (currentScroll > lastScroll) {
+        channels.classList.add('hidden-on-scroll');
+        channels.classList.remove('visible-on-scroll');
       } else {
-        console.log('🔽 Natural scroll down - no animation needed');
+        channels.classList.add('visible-on-scroll');
+        channels.classList.remove('hidden-on-scroll');
       }
-      return;
-    }
-
-    // Only handle visibility when explicitly scrolling UP and past threshold
-    if (!isScrollingDown && !isAtBottom && currentScrollTop > minScrollToHide) {
-      console.log('🔼 Showing channels with animation - scrolling up');
-      channelsSection.classList.remove('hidden-on-scroll');
-      channelsSection.classList.add('visible-on-scroll');
     }
   }
 
@@ -2400,7 +2381,7 @@ function setupScrollBasedSections() {
         console.log('⚡️ Direction changed:', isScrollingDown ? 'DOWN' : 'UP');
       }
 
-      updateChannelsVisibility(currentScrollTop, isScrollingDown);
+      updateChannelsVisibility(currentScrollTop, lastScrollTop);
       lastScrollTop = currentScrollTop;
     }
   }
@@ -2450,7 +2431,7 @@ function setupScrollBasedSections() {
           direction: isScrollingDown ? 'DOWN' : 'UP'
         });
 
-        updateChannelsVisibility(currentScrollTop, isScrollingDown);
+        updateChannelsVisibility(currentScrollTop, lastScrollTop);
       }
     },
     { passive: true }
