@@ -2343,33 +2343,44 @@ function setupScrollBasedSections() {
   let touchStartY = 0;
   let isScrollingDown = false;
   const channelsSection = document.querySelector('.channels');
-  const minScrollToHide = 1;
-
-  function setInitialState() {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (currentScrollTop > 0) {
-      channelsSection.classList.add('initial-hidden');
-    }
-  }
-
-  setInitialState();
+  const minScrollToHide = 200;
 
   function updateChannelsVisibility(currentScrollTop, isScrollingDown) {
-    // Remove initial-hidden class if it exists to allow normal transitions
-    channelsSection.classList.remove('initial-hidden');
-
     // Get total scrollable height
     const totalHeight = document.documentElement.scrollHeight;
     const viewportHeight = window.innerHeight;
     const maxScroll = totalHeight - viewportHeight;
-    const isAtBottom = currentScrollTop >= maxScroll - 10; // 10px threshold from bottom
+    const isAtBottom = currentScrollTop >= maxScroll - 10;
+    const hasScrolledUp = channelsSection.classList.contains('visible-on-scroll');
 
-    if (isScrollingDown && currentScrollTop > minScrollToHide) {
-      // Always hide when scrolling down
-      channelsSection.classList.add('hidden-on-scroll');
+    console.log('=== Scroll Update ===');
+    console.log('Current scroll position:', currentScrollTop);
+    console.log('Scrolling direction:', isScrollingDown ? 'DOWN' : 'UP');
+    console.log('Has scrolled up before:', hasScrolledUp);
+
+    // Natural scroll behavior before threshold
+    if (currentScrollTop <= minScrollToHide) {
+      console.log('📍 Before threshold - natural scroll');
+      channelsSection.classList.remove('hidden-on-scroll');
       channelsSection.classList.remove('visible-on-scroll');
-    } else if (!isScrollingDown && !isAtBottom) {
-      // Only show when scrolling up AND not at the bottom
+      return;
+    }
+
+    // If scrolling down, only add hidden class if we've previously scrolled up
+    if (isScrollingDown) {
+      if (hasScrolledUp) {
+        console.log('🔽 Hiding channels - after previous scroll up');
+        channelsSection.classList.add('hidden-on-scroll');
+        channelsSection.classList.remove('visible-on-scroll');
+      } else {
+        console.log('🔽 Natural scroll down - no animation needed');
+      }
+      return;
+    }
+
+    // Only handle visibility when explicitly scrolling UP and past threshold
+    if (!isScrollingDown && !isAtBottom && currentScrollTop > minScrollToHide) {
+      console.log('🔼 Showing channels with animation - scrolling up');
       channelsSection.classList.remove('hidden-on-scroll');
       channelsSection.classList.add('visible-on-scroll');
     }
@@ -2378,10 +2389,20 @@ function setupScrollBasedSections() {
   // Handle scroll events
   function handleScroll() {
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    isScrollingDown = currentScrollTop > lastScrollTop;
 
-    updateChannelsVisibility(currentScrollTop, isScrollingDown);
-    lastScrollTop = currentScrollTop;
+    // Only update direction if we've scrolled enough to matter
+    if (Math.abs(currentScrollTop - lastScrollTop) > 5) {
+      const prevScrollingDown = isScrollingDown;
+      isScrollingDown = currentScrollTop > lastScrollTop;
+
+      // Log direction change
+      if (prevScrollingDown !== isScrollingDown) {
+        console.log('⚡️ Direction changed:', isScrollingDown ? 'DOWN' : 'UP');
+      }
+
+      updateChannelsVisibility(currentScrollTop, isScrollingDown);
+      lastScrollTop = currentScrollTop;
+    }
   }
 
   // Throttled scroll handler
@@ -2392,7 +2413,7 @@ function setupScrollBasedSections() {
         scrollTimeout = setTimeout(() => {
           handleScroll();
           scrollTimeout = null;
-        }, 0);
+        }, 16);
       }
     },
     { passive: true }
@@ -2404,6 +2425,7 @@ function setupScrollBasedSections() {
     e => {
       touchStartY = e.touches[0].clientY;
       lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      console.log('👆 Touch start at Y:', touchStartY);
     },
     { passive: true }
   );
@@ -2417,10 +2439,17 @@ function setupScrollBasedSections() {
       const touchDiff = touchStartY - touchY;
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      // Update scrolling direction based on touch movement
-      isScrollingDown = touchDiff > 0;
+      // Only update if touch movement is significant
+      if (Math.abs(touchDiff) > 5) {
+        const prevScrollingDown = isScrollingDown;
+        isScrollingDown = touchDiff > 0;
 
-      if (Math.abs(touchDiff) > minScrollToHide) {
+        // Log touch movement
+        console.log('👆 Touch move:', {
+          diff: touchDiff,
+          direction: isScrollingDown ? 'DOWN' : 'UP'
+        });
+
         updateChannelsVisibility(currentScrollTop, isScrollingDown);
       }
     },
@@ -2430,6 +2459,7 @@ function setupScrollBasedSections() {
   document.addEventListener(
     'touchend',
     () => {
+      console.log('👆 Touch end');
       touchStartY = 0;
       // Check final position after touch ends
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -2437,14 +2467,6 @@ function setupScrollBasedSections() {
     },
     { passive: true }
   );
-
-  // Handle visibility changes
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      updateChannelsVisibility(currentScrollTop, isScrollingDown);
-    }
-  });
 }
 
 // Make sure to call setupScrollBasedSections when the page loads
