@@ -2616,70 +2616,50 @@ function selectChannel(channelId) {
 // Update setupChannelScrolling to use event delegation
 function setupChannelScrolling() {
   const channelList = document.querySelector('.channel-list__wrapper');
-  if (channelList) {
-    channelList.addEventListener('click', event => {
-      // Prevent any default behavior
-      event.preventDefault();
-      event.stopPropagation();
+  if (!channelList) return;
 
-      const channelCard = event.target.closest('.channel-card');
-      if (channelCard) {
-        const channelId = channelCard.dataset.channelId;
-        console.log('Channel clicked:', channelId);
+  // Add click handler only to the channel-list__wrapper
+  channelList.addEventListener('click', event => {
+    const channelCard = event.target.closest('.channel-card');
+    if (!channelCard) return; // Only handle clicks on channel cards
 
-        if (channelId) {
-          // Find the program card for this channel
-          const programCard = document.querySelector(
-            `.program-card[data-channel-id="${channelId}"]`
-          );
-          if (programCard) {
-            console.log('Found program card for channel:', channelId);
+    event.preventDefault();
+    event.stopPropagation();
 
-            // Calculate offset based on fixed elements
-            const header = document.querySelector('.header');
-            const mobileNav = document.querySelector('.mobile-dropdowns');
+    const channelId = channelCard.dataset.channelId;
+    if (!channelId) return;
 
-            // Calculate total offset
-            let offset = 0;
-            if (header) {
-              offset += header.offsetHeight;
-              console.log('Header height:', header.offsetHeight);
-            }
-            if (mobileNav) {
-              offset += mobileNav.offsetHeight;
-              console.log('Mobile nav height:', mobileNav.offsetHeight);
-            }
-
-            // Get the element's position
-            const rect = programCard.getBoundingClientRect();
-            const absoluteTop = rect.top + window.pageYOffset;
-            console.log('Program card position:', { top: rect.top, absoluteTop, offset });
-
-            // Scroll to position with offset
-            window.scrollTo({
-              top: absoluteTop - offset,
-              behavior: 'smooth'
-            });
-
-            // Update active states
-            document.querySelectorAll('.channel-card').forEach(card => {
-              card.classList.toggle('channel-card--active', card.dataset.channelId === channelId);
-            });
-
-            // Scroll the channel into view in the horizontal list
-            const container = channelCard.parentElement;
-            const containerRect = container.getBoundingClientRect();
-            const cardRect = channelCard.getBoundingClientRect();
-            const scrollLeft =
-              cardRect.left - containerRect.left - containerRect.width / 2 + cardRect.width / 2;
-            container.scrollTo({ left: container.scrollLeft + scrollLeft, behavior: 'smooth' });
-          } else {
-            console.log('Could not find program card for channel:', channelId);
-          }
-        }
-      }
+    // Update active states
+    document.querySelectorAll('.channel-card').forEach(card => {
+      card.classList.toggle('channel-card--active', card.dataset.channelId === channelId);
     });
-  }
+
+    // Scroll the channel into view in the horizontal list
+    const containerRect = channelList.getBoundingClientRect();
+    const cardRect = channelCard.getBoundingClientRect();
+    const scrollLeft =
+      cardRect.left - containerRect.left - containerRect.width / 2 + cardRect.width / 2;
+    channelList.scrollTo({ left: channelList.scrollLeft + scrollLeft, behavior: 'smooth' });
+
+    // Find and scroll to the program card
+    const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+    if (programCard) {
+      const header = document.querySelector('.header');
+      const mobileNav = document.querySelector('.mobile-dropdowns');
+
+      let offset = 0;
+      if (header) offset += header.offsetHeight;
+      if (mobileNav) offset += mobileNav.offsetHeight;
+
+      const rect = programCard.getBoundingClientRect();
+      const absoluteTop = rect.top + window.pageYOffset;
+
+      window.scrollTo({
+        top: absoluteTop - offset,
+        behavior: 'smooth'
+      });
+    }
+  });
 }
 
 // Make functions globally available
