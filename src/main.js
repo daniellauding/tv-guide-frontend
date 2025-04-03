@@ -2349,6 +2349,13 @@ function setupScrollBasedSections() {
     const channels = document.querySelector('.channels');
     if (!channels) return;
 
+    // Reset behavior when at the top of the page
+    if (currentScroll <= 0) {
+      channels.classList.remove('visible-on-scroll');
+      channels.classList.remove('hidden-on-scroll');
+      return;
+    }
+
     // If we've already scrolled up once and channels are visible, keep them visible
     if (channels.classList.contains('visible-on-scroll')) {
       channels.classList.remove('hidden-on-scroll');
