@@ -1,0 +1,104 @@
+<!-- Program Modal Template -->
+<div id="programModal" class="modal modal-base hidden">
+  <div class="modal__content" onclick="event.stopPropagation()">
+    <div class="modal__hero">
+      <div class="modal__hero-header">
+        <button onclick="closeModal()" class="modal__close-btn">✕</button>
+        <div class="modal__actions">
+          <button class="modal__action-btn like-btn" aria-label="Like">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+              />
+            </svg>
+          </button>
+          <button class="modal__action-btn dislike-btn" aria-label="Dislike">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018c.163 0 .326.02.485.06L17 4m-7 10v2a2 2 0 002 2h.095c.5 0 .905-.405.905-.905 0-.714.211-1.412.608-2.006L17 13V4m-7 10h2"
+              />
+            </svg>
+          </button>
+          <button onclick="shareProgram()" class="modal__share-btn">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal__hero-content">
+        <div class="modal__channel-info">
+          <div class="modal__channel-logo">
+            <img src="" alt="" class="program-card__logo-img" />
+          </div>
+          <h1 class="modal__program-title"></h1>
+        </div>
+        <div class="modal__meta">
+          <span class="modal__date"></span>
+          <span class="modal__time"></span>
+          <span class="live-badge hidden">CANLI</span>
+          <span class="modal__rating"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__details">
+      <div class="modal__info">
+        <div class="modal__info-grid">
+          <div class="modal__info-item">
+            <span class="modal__label">Tür</span>
+            <span class="modal__value program-type"></span>
+          </div>
+          <div class="modal__info-item">
+            <span class="modal__label">Süre</span>
+            <span class="modal__value program-duration"></span>
+          </div>
+          <div class="modal__info-item presenter-info hidden">
+            <span class="modal__label">Sunucu</span>
+            <span class="modal__value program-presenter"></span>
+          </div>
+          <div class="modal__info-item cast-info hidden">
+            <span class="modal__label">Oyuncular</span>
+            <span class="modal__value program-cast"></span>
+          </div>
+          <div class="modal__info-item rating-info hidden">
+            <span class="modal__label">İzleyici Kitlesi</span>
+            <span class="modal__value program-rating"></span>
+          </div>
+        </div>
+
+        <div class="modal__description hidden">
+          <h3 class="modal__description-title">Program Hakkında</h3>
+          <p class="modal__description-text"></p>
+        </div>
+
+        <div class="modal__progress hidden">
+          <div class="modal__progress-container">
+            <div class="modal__progress-fill"></div>
+          </div>
+          <div class="modal__progress-text"></div>
+        </div>
+
+        <div class="modal__next-episode hidden">
+          <h3 class="modal__next-episode-title">Sonraki Bölüm</h3>
+          <p class="modal__next-episode-info"></p>
+        </div>
+
+        <div class="modal__tags hidden">
+          <div class="modal__tags-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

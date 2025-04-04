@@ -7,8 +7,22 @@ const tvData = {
       logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Show_TV_logo.png',
       enabled: true,
       programs: [
-        { time: '00:00', title: 'Gece Haberleri', type: 'Haber', duration: '30', state: 'past' },
-        { time: '00:30', title: 'Gece Sineması', type: 'Film', duration: '120', state: 'past' },
+        {
+          time: '00:00',
+          title: 'Gece Haberleri',
+          type: 'Haber',
+          duration: '30',
+          state: 'past',
+          description: 'Günün önemli gelişmelerini ve son dakika haberlerini içeren gece bülteni.'
+        },
+        {
+          time: '00:30',
+          title: 'Gece Sineması',
+          type: 'Film',
+          duration: '120',
+          state: 'past',
+          description: 'Türk ve dünya sinemasından seçkin filmler.'
+        },
         { time: '02:30', title: 'Dizi Tekrarı', type: 'Dizi', duration: '90', state: 'past' },
         { time: '04:00', title: 'Sabah Sporu', type: 'Spor', duration: '60', state: 'past' },
         { time: '05:00', title: 'Günaydın Show', type: 'Program', duration: '60', state: 'past' },
@@ -20,14 +34,19 @@ const tvData = {
           title: 'Sabahın Sultanı',
           type: 'Program',
           duration: '180',
-          state: 'current'
+          state: 'current',
+          description:
+            'Güncel konular, yaşam hikayeleri ve uzman konuklarla sabah kuşağı programı.',
+          presenter: 'Seda Sayan'
         },
         {
           time: '13:00',
           title: 'Bir Zamanlar Çukurova',
           type: 'Dizi',
           duration: '120',
-          state: 'next'
+          state: 'next',
+          description: "1970'lerin Adana'sında geçen, aşk, ihtiras ve intikam dolu bir dizi.",
+          cast: ['Hilal Altınbilek', 'Uğur Güneş']
         },
         { time: '15:00', title: 'Didem Arslan', type: 'Program', duration: '120', state: 'next' },
         { time: '17:00', title: 'Akşam Haberleri', type: 'Haber', duration: '60', state: 'next' },
@@ -481,56 +500,32 @@ function renderChannelNav() {
 
 // Add this helper function to get relevant programs
 function getRelevantPrograms(programs, selectedDate) {
-  const currentTime = new Date();
-  const [currentHour, currentMinute] = [currentTime.getHours(), currentTime.getMinutes()];
-  const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinute
-    .toString()
-    .padStart(2, '0')}`;
-
-  let currentIndex = programs.findIndex(program => {
-    const [programHour, programMinute] = program.time.split(':').map(Number);
-    const programEndHour = programHour + Math.floor(Number(program.duration) / 60);
-    const programEndMinute = programMinute + (Number(program.duration) % 60);
-
-    return (
-      `${programHour.toString().padStart(2, '0')}:${programMinute.toString().padStart(2, '0')}` <=
-        currentTimeString &&
-      `${programEndHour.toString().padStart(2, '0')}:${programEndMinute
-        .toString()
-        .padStart(2, '0')}` >= currentTimeString
-    );
-  });
-
-  if (currentIndex === -1) {
-    currentIndex = programs.length - 1;
-  }
-
-  // Set program states based on their time
+  // For demo purposes, always mark one program as live (the one at index 6 or 7 in our data)
   const programsWithState = programs.map((program, index) => {
-    const isLiveProgram = isLive(program.time, program.duration, selectedDate);
-    let state;
-
-    if (isLiveProgram) {
-      state = 'today';
-    } else {
-      const [programHour, programMinute] = program.time.split(':').map(Number);
-      const programTime = new Date();
-      programTime.setHours(programHour, programMinute, 0, 0);
-
-      if (programTime < currentTime) {
-        state = 'past';
-      } else {
-        state = 'next';
-      }
+    // Force one program to be "live" - using index 6 or 7 to have some past programs
+    if (index === 6 || index === 7) {
+      return { ...program, state: 'today' };
     }
-
-    return { ...program, state };
+    // Programs before the live one are past
+    else if (index < 6) {
+      return { ...program, state: 'past' };
+    }
+    // Programs after the live one are upcoming
+    else {
+      return { ...program, state: 'next' };
+    }
   });
+
+  // Find current program index
+  const currentIndex = programsWithState.findIndex(program => program.state === 'today');
 
   return {
-    previous: programsWithState[currentIndex - 1],
-    current: programsWithState[currentIndex],
-    next: programsWithState[currentIndex + 1],
+    previous: currentIndex > 0 ? programsWithState[currentIndex - 1] : null,
+    current: currentIndex !== -1 ? programsWithState[currentIndex] : null,
+    next:
+      currentIndex !== -1 && currentIndex < programsWithState.length - 1
+        ? programsWithState[currentIndex + 1]
+        : null,
     allPrograms: programsWithState
   };
 }
@@ -541,217 +536,184 @@ let showAllPrograms = false;
 // Update the toggle function to work with the new button
 function toggleAllSchedules() {
   const button = document.getElementById('currentProgramsToggle');
-  const wasShowingAll = showAllPrograms;
+  const previousState = showAllPrograms;
   showAllPrograms = !showAllPrograms;
 
+  console.group('Toggle All Schedules');
+  console.log('Previous State:', previousState ? 'All Programs' : 'Current + 3 Upcoming');
+  console.log('New State:', showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming');
+
   // Update button appearance based on state
-  // When showAllPrograms is true, use button--active to indicate filter is active
-  // When showAllPrograms is false, remove button--active to indicate no filter
   if (showAllPrograms) {
     button.classList.add('button--active');
+    button.setAttribute('title', 'Sadece güncel programları göster');
   } else {
     button.classList.remove('button--active');
+    button.setAttribute('title', 'Tüm programları göster');
   }
 
-  // Re-render programs with current date to show/hide past programs
+  // Get current date
   const activeDay = document.querySelector('.date-nav-item.active');
   const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
+  console.log('Selected Date:', selectedDate);
 
-  // Force a complete re-render by clearing the content first
-  const content = document.querySelector('.programs__content');
-  if (content) {
-    // Clear the content
-    content.innerHTML = '';
+  // Re-render programs with current date
+  renderPrograms(selectedDate);
 
-    // If we're toggling back to filtered view from showing all
-    if (wasShowingAll && !showAllPrograms) {
-      // Force a complete refresh to ensure we show current programs
-      setTimeout(() => {
-        renderPrograms(selectedDate);
-
-        // Find and scroll to the first "today" program if available
-        setTimeout(() => {
-          const todayProgram = document.querySelector('.program-item.today');
-          if (todayProgram) {
-            todayProgram.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 100);
-      }, 50);
-    } else {
-      // Normal render
-      renderPrograms(selectedDate);
-    }
+  // If we're toggling back to filtered view, scroll to first live program
+  if (!showAllPrograms) {
+    setTimeout(() => {
+      const todayProgram = document.querySelector('.program-slot__item.today');
+      if (todayProgram) {
+        console.log(
+          'Scrolling to live program:',
+          todayProgram.querySelector('.program-slot__title').textContent
+        );
+        todayProgram.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        console.log('No live program found to scroll to');
+      }
+    }, 100);
   }
+
+  console.groupEnd();
 }
 
 // Modify the program rendering to include state classes
 function renderPrograms(selectedDate = null) {
   const content = document.querySelector('.programs__content');
   const channels = tvData.channels.filter(c => c.enabled);
-  const now = new Date();
+
+  console.group('Program Visibility Debug');
+  console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
+
+  const allChannelsPrograms = channels.map(channel => {
+    const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
+
+    // Find current/live program and upcoming programs
+    const currentProgram = allPrograms.find(p => p.state === 'today');
+    const upcomingPrograms = allPrograms.filter(p => p.state === 'next');
+    const pastPrograms = allPrograms.filter(p => p.state === 'past');
+
+    console.group(`Channel: ${channel.name}`);
+    console.log(
+      'Live Program:',
+      currentProgram
+        ? {
+            title: currentProgram.title,
+            time: currentProgram.time,
+            state: currentProgram.state
+          }
+        : 'None'
+    );
+
+    // Always show current + 3 upcoming
+    let displayPrograms = [];
+    if (currentProgram) {
+      displayPrograms.push(currentProgram);
+    }
+    displayPrograms = [...displayPrograms, ...upcomingPrograms.slice(0, 3)];
+
+    console.log(
+      'Default View Programs:',
+      displayPrograms.map(p => ({
+        title: p.title,
+        time: p.time,
+        state: p.state
+      }))
+    );
+
+    // If showAllPrograms is true, add all other programs while maintaining order
+    if (showAllPrograms) {
+      const remainingUpcoming = upcomingPrograms.slice(3);
+      displayPrograms = [...pastPrograms, ...displayPrograms, ...remainingUpcoming];
+
+      console.log('Additional Programs When Expanded:', {
+        pastPrograms: pastPrograms.length,
+        remainingUpcoming: remainingUpcoming.length,
+        totalVisible: displayPrograms.length
+      });
+    }
+
+    console.groupEnd();
+
+    return { channel, displayPrograms };
+  });
+
+  console.log('Total Channels:', channels.length);
+  console.log(
+    'Total Programs Visible:',
+    allChannelsPrograms.reduce((sum, ch) => sum + ch.displayPrograms.length, 0)
+  );
+  console.groupEnd();
 
   content.innerHTML = `
-        <div class="program-list">
-            ${channels
-              .map(channel => {
-                // Get all programs with their states
-                const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
-
-                // Find the current live program
-                let currentIndex = allPrograms.findIndex(program => program.state === 'today');
-
-                // If no live program, find the next upcoming one
-                if (currentIndex === -1) {
-                  currentIndex = allPrograms.findIndex(program => program.state === 'next');
-                }
-
-                // If still no match, find the most recent past program
-                if (currentIndex === -1 && allPrograms.length > 0) {
-                  // Find the most recent past program (closest to current time)
-                  let closestPastIndex = 0;
-                  let smallestTimeDiff = Infinity;
-
-                  allPrograms.forEach((program, index) => {
-                    if (program.state === 'past') {
-                      const [hours, minutes] = program.time.split(':').map(Number);
-                      const programTime = new Date();
-                      programTime.setHours(hours, minutes, 0, 0);
-                      const timeDiff = now - programTime;
-
-                      if (timeDiff < smallestTimeDiff) {
-                        smallestTimeDiff = timeDiff;
-                        closestPastIndex = index;
-                      }
-                    }
-                  });
-
-                  currentIndex = closestPastIndex;
-                }
-
-                // Limit programs to 4 when not showing all
-                let displayPrograms = allPrograms;
-                if (!showAllPrograms) {
-                  // If we have a current index, show it and the next 3
-                  if (currentIndex !== -1) {
-                    // Make sure we include at least one "today" program if it exists
-                    const todayIndex = allPrograms.findIndex(p => p.state === 'today');
-
-                    if (
-                      todayIndex !== -1 &&
-                      (todayIndex < currentIndex || todayIndex >= currentIndex + 4)
-                    ) {
-                      // If today program exists but wouldn't be included in our slice,
-                      // adjust the slice to include it
-                      if (todayIndex < currentIndex) {
-                        // Today is before our current index, include it
-                        displayPrograms = [
-                          allPrograms[todayIndex],
-                          ...allPrograms.slice(currentIndex, currentIndex + 3)
-                        ];
-                      } else {
-                        // Today is after our current slice, include it
-                        displayPrograms = [
-                          ...allPrograms.slice(currentIndex, currentIndex + 3),
-                          allPrograms[todayIndex]
-                        ];
-                      }
-                    } else {
-                      // Normal case - just take 4 programs from current index
-                      displayPrograms = allPrograms.slice(currentIndex, currentIndex + 4);
-                    }
-                  } else {
-                    // If no current program, just show the first 4
-                    displayPrograms = allPrograms.slice(0, Math.min(4, allPrograms.length));
-                  }
-                }
+    <div class="program-list">
+      ${allChannelsPrograms
+        .map(
+          ({ channel, displayPrograms }) => `
+        <div class="program-card" id="channel-${channel.id}" data-channel-id="${channel.id}">
+          <div class="program-card__header">
+            <div class="program-card__topbar">
+              <div class="program-card__info">
+                <div class="program-card__logo">
+                  <img src="${channel.logo}" alt="${channel.name}" 
+                    class="program-card__logo-img"
+                    onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
+                </div>
+                <div class="program-card__details">
+                  <h2 class="program-card__title">${channel.name}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="program-slot">
+            ${displayPrograms
+              .map(program => {
+                // For demo, always show 50% progress for live programs
+                const progress = program.state === 'today' ? 50 : 0;
+                const isLiveProgram = program.state === 'today';
 
                 return `
-                  <div class="program-card" id="channel-${channel.id}" data-channel-id="${
+                <div class="program-slot__item ${program.state}" onclick="showProgramModal('${
                   channel.id
-                }">
-                      <div class="program-card__header">
-                          <div class="program-card__topbar">
-                              <div class="program-card__info">
-                                  <div class="program-card__logo">
-                                      <img src="${channel.logo}" alt="${channel.name}" 
-                                          class="program-card__logo-img"
-                                          onerror="this.parentElement.innerHTML = '${
-                                            channel.name[0]
-                                          }'">
-                                  </div>
-                                  <div class="program-card__details">
-                                      <h2 class="program-card__title">${channel.name}</h2>
-                                  </div>
-                              </div>
-                          </div>
+                }', '${program.time}')">
+                  <div class="program-slot__content">
+                    <div class="program-slot__details">
+                      <div class="program-slot__time">${program.time}</div>
+                      <div class="program-slot__title">${program.title}</div>
+                    </div>
+                    ${
+                      isLiveProgram
+                        ? `
+                      <div class="program-slot__live-indicator">
+                        <span class="live-dot"></span>
+                        <span>CANLI</span>
                       </div>
-                      <div class="program-slot">
-                          ${displayPrograms
-                            .map(program => {
-                              const progress = calculateProgramProgress(
-                                program.time,
-                                program.duration,
-                                selectedDate
-                              );
-                              const isLiveProgram = isLive(
-                                program.time,
-                                program.duration,
-                                selectedDate
-                              );
-
-                              // Determine program state class
-                              let stateClass = '';
-                              if (program.state === 'program-slot--past') {
-                                stateClass = 'program-slot--past';
-                              } else if (program.state === 'program-slot--today') {
-                                stateClass = 'program-slot--live';
-                              } else {
-                                // next
-                                stateClass = 'program-slot--upcoming';
-                              }
-
-                              return `
-                                  <div class="program-slot__item ${stateClass}" onclick="showProgramModal('${
-                                channel.id
-                              }', '${program.time}')">
-                                      <div class="program-slot__content">
-                                          <div class="program-slot__details">
-                                              <div class="program-slot__time">${program.time}</div>
-                                              <div class="program-slot__title">${
-                                                program.title
-                                              }</div>
-                                          </div>
-                                          ${
-                                            isLiveProgram
-                                              ? `
-                                              <div class="program-slot__live-indicator">
-                                                  <span class="live-dot"></span>
-                                                  <span>CANLI</span>
-                                              </div>
-                                          `
-                                              : ''
-                                          }
-                                      </div>
-                                      ${
-                                        isLiveProgram
-                                          ? `
-                                          <div class="program-slot__progress">
-                                              <div class="program-slot__progress-bar" style="width: ${progress}%"></div>
-                                          </div>
-                                      `
-                                          : ''
-                                      }
-                                  </div>
-                              `;
-                            })
-                            .join('')}
-                      </div>
+                    `
+                        : ''
+                    }
                   </div>
+                  ${
+                    isLiveProgram
+                      ? `
+                    <div class="program-slot__progress">
+                      <div class="program-slot__progress-bar" style="width: 50%"></div>
+                    </div>
+                  `
+                      : ''
+                  }
+                </div>
               `;
               })
               .join('')}
+          </div>
         </div>
-    `;
+      `
+        )
+        .join('')}
+    </div>
+  `;
 }
 
 // Add this function to toggle full schedule
@@ -2176,14 +2138,26 @@ function calculateProgramProgress(programTime, duration, selectedDate = null) {
 
 // Helper function to check if a program is live
 function isLive(programTime, duration, selectedDate = null) {
+  const now = new Date();
   const [hours, minutes] = programTime.split(':').map(Number);
+
+  // Create program start date
   const programDate = selectedDate ? new Date(selectedDate) : new Date();
   programDate.setHours(hours, minutes, 0, 0);
 
-  const now = new Date();
-  const programEndTime = new Date(programDate.getTime() + duration * 60000);
+  // Create program end date
+  const programEndDate = new Date(programDate);
+  programEndDate.setMinutes(programEndDate.getMinutes() + Number(duration));
 
-  return now >= programDate && now <= programEndTime;
+  // For debugging
+  console.log('Time Check:', {
+    programTime,
+    now: now.toLocaleTimeString(),
+    programStart: programDate.toLocaleTimeString(),
+    programEnd: programEndDate.toLocaleTimeString()
+  });
+
+  return now >= programDate && now <= programEndDate;
 }
 
 // Update channel section visibility and scrolling behavior
