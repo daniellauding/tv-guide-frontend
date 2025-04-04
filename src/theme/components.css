@@ -154,6 +154,10 @@
       rounded-lg bg-body-dark border border-gray-700 text-gray-500;
     }
 
+    .program-card__title {
+      @apply text-white;
+    }
+
     .program-slot__item.past .program-slot__title {
       @apply text-gray-500;
     }
@@ -553,8 +557,22 @@
     @apply text-gray-500;
   }
 
+  .program-slot__item.live {
+    background-color: var(--color-primary-50);
+    border-color: var(--color-primary-100);
+  }
+
   .program-slot__item.live .program-slot__title {
-    @apply text-black;
+    color: text-black;
+    font-weight: 600;
+  }
+
+  .program-slot__item.live .program-slot__time {
+    color: text-black;
+  }
+
+  .dark .program-slot__item.live .program-slot__time {
+    color: var(--color-primary-300);
   }
 
   .program-slot__item.next .program-slot__title {
