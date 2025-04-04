@@ -1,0 +1,45 @@
+:root {
+  /* Colors */
+  --color-primary-500: theme('colors.primary.500');
+  --color-primary-600: theme('colors.primary.600');
+  --color-secondary-500: theme('colors.secondary.500');
+
+  /* Backgrounds */
+  --bg-body: theme('colors.body.DEFAULT');
+  --bg-card: theme('colors.card.DEFAULT');
+  --bg-header: theme('colors.header.light.DEFAULT');
+  --bg-providers: theme('colors.provider.DEFAULT');
+  --bg-channels: theme('colors.background.light');
+  --bg-filter: theme('colors.background.light');
+  --bg-footer: theme('colors.background.light');
+
+  /* Text */
+  --text-primary: theme('colors.text.DEFAULT');
+  --text-secondary: theme('colors.text.muted');
+  --text-muted: theme('colors.text.muted');
+
+  /* Borders */
+  --border-color: theme('colors.border.light');
+
+  /* Status */
+  --status-live: theme('colors.status.live');
+  --status-upcoming: theme('colors.status.upcoming');
+  --status-ended: theme('colors.status.ended');
+}
+
+/* Dark mode overrides */
+.dark {
+  --bg-body: theme('colors.body.dark');
+  --bg-card: theme('colors.card.dark');
+  --bg-header: theme('colors.header.dark.DEFAULT');
+  --bg-providers: theme('colors.provider.dark');
+  --bg-channels: theme('colors.background.dark');
+  --bg-filter: theme('colors.background.dark');
+  --bg-footer: theme('colors.background.dark');
+
+  --text-primary: theme('colors.text.dark');
+  --text-secondary: theme('colors.text.muted');
+  --text-muted: theme('colors.text.muted');
+
+  --border-color: theme('colors.border.dark');
+} 

@@ -1,0 +1,59 @@
+
+/* Auto-generated theme variables */
+:root {
+    --colors: [object Object];
+    --typography: [object Object];
+    --spacing: [object Object];
+    --border: [object Object];
+    --shadows: [object Object];
+    --transitions: [object Object];
+    --layout: [object Object];
+    --components: [object Object];
+}
+
+.dark {
+    
+}
+
+/* Utility classes using theme variables */
+.bg-primary { background-color: var(--colors-primary-DEFAULT); }
+.text-primary { color: var(--colors-primary-DEFAULT); }
+.border-primary { border-color: var(--colors-primary-DEFAULT); }
+
+.bg-secondary { background-color: var(--colors-secondary-DEFAULT); }
+.text-secondary { color: var(--colors-secondary-DEFAULT); }
+.border-secondary { border-color: var(--colors-secondary-DEFAULT); }
+
+/* Typography utilities */
+.font-sans { font-family: var(--typography-fontFamily-sans); }
+.font-display { font-family: var(--typography-fontFamily-display); }
+
+/* Spacing utilities */
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+
+/* Border radius utilities */
+.rounded-sm { border-radius: var(--border-radius-sm); }
+.rounded { border-radius: var(--border-radius-DEFAULT); }
+.rounded-lg { border-radius: var(--border-radius-lg); }
+
+/* Shadow utilities */
+.shadow-sm { box-shadow: var(--shadows-sm); }
+.shadow { box-shadow: var(--shadows-DEFAULT); }
+.shadow-md { box-shadow: var(--shadows-md); }
+.shadow-lg { box-shadow: var(--shadows-lg); }
+
+/* Transition utilities */
+.transition { transition-duration: var(--transitions-duration-DEFAULT); }
+.transition-fast { transition-duration: var(--transitions-duration-fast); }
+.transition-slow { transition-duration: var(--transitions-duration-slow); }
+
+/* Component-specific utilities */
+.header-height { height: var(--components-header-height); }
+.sidebar-width { width: var(--components-sidebar-width); }
+.modal-sm { max-width: var(--components-modal-sizes-sm); }
+.modal-md { max-width: var(--components-modal-sizes-md); }
+.modal-lg { max-width: var(--components-modal-sizes-lg); }

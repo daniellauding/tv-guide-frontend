@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Browser-specific fixes
+   ========================================================================== */
+
+/* Fix for search input cancel button (x) in WebKit browsers */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 0;
+  width: 0;
+  background: transparent;
+  position: absolute;
+}
+
+/* Use our custom close button instead */
+#closeSearch {
+  z-index: 10;
+  opacity: 1 !important;
+}
+
+/* Fix for Firefox search inputs */
+input[type="search"] {
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Ensure proper padding for the search input */
+.form-search {
+  padding-right: 3rem !important;
+}
+
+/* Fix for Firefox scrollbars */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.300') transparent;
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: theme('colors.gray.600') transparent;
+}
+
+/* Smooth scrolling */
+.program-card {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar in Firefox when not hovering */
+.program-card {
+  scrollbar-width: none;
+}
+
+.program-card:hover {
+  scrollbar-width: thin;
+}
+
+/* Hide scrollbar in Webkit/Chromium when not hovering */
+.program-card::-webkit-scrollbar {
+  width: 0;
+}
+
+.program-card:hover::-webkit-scrollbar {
+  width: 6px;
+} 

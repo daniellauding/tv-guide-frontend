@@ -1,0 +1,388 @@
+@layer components {
+  /* ==========================================================================
+     Layout Components
+     ========================================================================== */
+
+  .wrapper {
+    @apply max-w-7xl mx-auto px-4 pt-[172px] pb-6;
+  }
+
+  .wrapper .programs__content {
+    @apply space-y-6;
+  }
+
+  /* ==========================================================================
+     Header Layout
+     ========================================================================== */
+
+  .header {
+    @apply sticky md:relative top-0 z-50 transition-all duration-300 ease-in-out;
+  }
+
+  .header__container {
+    @apply mx-auto px-4;
+  }
+
+  .nav-bar {
+    @apply flex items-center justify-between h-16;
+  }
+
+  .nav-bar__inner {
+    @apply flex items-center space-x-6;
+  }
+
+  /* ==========================================================================
+     Navigation Layout
+     ========================================================================== */
+
+  .nav-link {
+    @apply text-text hover:text-text-hover dark:text-text-dark transition-colors
+           font-barlow font-medium;
+  }
+
+  .btn {
+    @apply flex-shrink-0;
+  }
+
+  .btn--prev {
+    @apply absolute left-0;
+  }
+
+  .btn--next {
+    @apply absolute right-0;
+  }
+
+  /* ==========================================================================
+     Search
+     ========================================================================== */
+
+  .search {
+    @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-sm;
+  }
+
+  .search__container {
+    @apply max-w-7xl mx-auto px-4 py-4;
+  }
+
+  .search__wrapper {
+    @apply relative flex w-full;
+  }
+
+  .search__input {
+    @apply w-full px-1.5 py-1.5 
+      md:px-2 md:pr-9 md:py-1.5;
+  }
+
+  .search__close-btn {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600 dark:text-gray-300;
+  }
+
+  .icon-close {
+  }
+
+  /* ==========================================================================
+     Provider Layout
+     ========================================================================== */
+
+  .providers {
+    top: 64px;
+  }
+
+  .provider-dropdown.active {
+    transform: translateY(0);
+  }
+
+  /* ==========================================================================
+     Nav-bar Controls
+     ========================================================================== */
+
+  .nav-bar__controls {
+    @apply flex items-center space-x-4;
+  }
+
+  /* ==========================================================================
+     Channel Layout
+     ========================================================================== */
+
+  .channels {
+    position: absolute;
+    top: 131px;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    background: #fff;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .channels.visible-on-scroll {
+    position: fixed;
+    top: 131px;
+    opacity: 1;
+  }
+
+  .channels.hidden-on-scroll {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Ensure smooth scrolling on touch devices */
+  @media (pointer: coarse) {
+    .channels {
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y pinch-zoom;
+    }
+  }
+
+  /* Add a utility class for no transitions */
+  .channels.no-transition {
+    transition: none !important;
+  }
+
+  .channel-list__scroll {
+    @apply flex items-center justify-center px-4 pr-0 py-4;
+  }
+
+  .channel-list__wrapper {
+    @apply flex space-x-4 overflow-x-auto scrollbar-hide relative w-full items-center justify-start md:justify-center;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* ==========================================================================
+     Date Navigation Layout
+     ========================================================================== */
+
+  .date-nav {
+    @apply hidden md:flex sticky z-30;
+    top: 124px;
+    @apply md:top-0 md:relative;
+  }
+
+  .date-nav__controls {
+    @apply flex items-center justify-center space-x-4 py-4;
+  }
+
+  .date-nav.desktop-mode {
+    @apply static;
+    top: auto;
+  }
+
+  .date-nav.with-channels {
+    top: 211px;
+  }
+
+  @media (min-width: 768px) {
+    /* .channels {
+      top: 64px;
+    } */
+    /* 
+    .date-nav {
+      top: 120px;
+    } */
+  }
+
+  .date-nav__inner {
+    @apply mx-auto max-w-7xl pl-4;
+  }
+
+  .date-nav .date-list__scroll {
+    @apply relative overflow-hidden flex-1;
+  }
+
+  .date-nav .date-list__wrapper {
+    @apply flex space-x-2 overflow-x-auto md:overflow-x-hidden relative scrollbar-hide md:justify-center;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .date-nav .date-list__wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .date-nav-item {
+    @apply rounded-lg h-8 px-3 text-center transition-none 
+   flex items-center justify-center gap-1 text-sm;
+  }
+
+  .date-nav-item.active {
+  }
+
+  /* ==========================================================================
+    Program Components
+    ========================================================================== */
+
+  .program-list {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-px;
+  }
+
+  /* ==========================================================================
+     Footer Layout
+     ========================================================================== */
+
+  /* ==========================================================================
+     Footer Components
+  ========================================================================== */
+
+  .footer {
+  }
+
+  .footer__container {
+    @apply max-w-7xl mx-auto px-4 py-8;
+  }
+
+  .footer__grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
+  }
+
+  .footer__section {
+    @apply space-y-4;
+  }
+
+  .footer__list {
+    @apply space-y-2;
+  }
+
+  .footer__social {
+    @apply mt-8 flex space-x-4 justify-center items-center;
+  }
+
+  /* ==========================================================================
+     Card Layout
+     ========================================================================== */
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden;
+  }
+
+  .card-header {
+    @apply p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 
+           bg-gray-50 dark:bg-gray-700
+           font-barlow font-semibold
+           text-title dark:text-title-dark;
+  }
+
+  .card-body {
+    @apply p-3 md:p-4;
+  }
+
+  /* ==========================================================================
+     Table Layout
+     ========================================================================== */
+
+  .table-container {
+    @apply w-full overflow-x-auto scrollbar-hide md:scrollbar-thin;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700;
+  }
+
+  .table-header {
+    @apply bg-gray-50 dark:bg-gray-700;
+  }
+
+  .table-header-cell {
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 
+           uppercase tracking-wider;
+  }
+
+  .table-row {
+    @apply bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white;
+  }
+
+  /* ==========================================================================
+     Status Components
+     ========================================================================== */
+
+  .status-live {
+    @apply text-status-live;
+  }
+
+  .status-upcoming {
+    @apply text-status-upcoming;
+  }
+
+  .status-ended {
+    @apply text-status-ended;
+  }
+
+  /* Dropdown Styles */
+  .mobile-dropdown {
+    @apply fixed inset-0 bg-white dark:bg-gray-900 z-30 
+           flex flex-col transform transition-transform duration-300 ease-in-out;
+    transform: translateY(100%);
+  }
+
+  .mobile-dropdown.active {
+    transform: translateY(0);
+  }
+
+  .mobile-dropdown__content {
+    @apply flex-1 overflow-y-auto;
+  }
+
+  .mobile-dropdown__list {
+    @apply py-2;
+  }
+
+  .mobile-dropdown-item {
+    @apply w-full px-4 py-3 text-left 
+           flex items-center space-x-4 h-20;
+  }
+
+  .mobile-dropdown-item__img {
+    @apply min-w-10 min-h-10 md:min-w-12 md:min-h-12 flex items-center justify-center rounded-lg;
+  }
+
+  .mobile-dropdown-item__text {
+    @apply w-full text-left;
+  }
+
+  /* ==========================================================================
+     Mobile Dropdowns Layout
+     ========================================================================== */
+
+  .mobile-dropdowns {
+    @apply fixed top-16 left-0 right-0 z-40 
+           flex flex-row gap-2 p-4
+           bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700
+           md:hidden;
+  }
+
+  .mobile-dropdowns .providers-dropdown-button,
+  .mobile-dropdowns .channels-dropdown-button {
+    @apply w-full;
+  }
+
+  /* Channel card active state */
+  .channel-card--active {
+    @apply bg-primary-500 text-white;
+  }
+
+  .channel-card--active .channel-card__img {
+    @apply text-white;
+  }
+
+  /* Channel dropdown item active state */
+  .channel-dropdown-item--active {
+    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+  }
+
+  /* Ensure mobile dropdowns stay above channels */
+  .mobile-dropdowns {
+    @apply z-40;
+  }
+
+  /* Ensure header stays above channels */
+  .header {
+    @apply sticky top-0 z-50;
+  }
+}
