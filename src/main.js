@@ -869,16 +869,14 @@ function showProgramModal(channelId, programTime) {
   modal.querySelector('.modal__date').textContent = formattedDate;
   modal.querySelector('.modal__time').textContent = program.time;
 
-  // Handle channel logo
-  const logoImg = modal.querySelector('.program-card__logo-img');
-  if (channel.logo) {
-    logoImg.src = channel.logo;
-    logoImg.alt = channel.name;
-    logoImg.onerror = () => {
-      logoImg.parentElement.innerHTML = channel.name[0];
-    };
-  } else {
-    logoImg.parentElement.innerHTML = channel.name[0];
+  // Handle channel logo - fallback to channel name initial if no logo
+  const logoContainer = modal.querySelector('.program-card__logo');
+  if (logoContainer) {
+    if (channel.logo) {
+      logoContainer.innerHTML = `<img class="program-card__logo-img" src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`;
+    } else {
+      logoContainer.innerHTML = channel.name[0];
+    }
   }
 
   // Handle program type
@@ -943,9 +941,10 @@ function showProgramModal(channelId, programTime) {
       program.description || `${program.title} - ${channel.name} kanalında ${program.time}'da`;
   }
 
-  // Handle progress bar for live programs
+  // Always show progress bar with current progress
   const progressSection = modal.querySelector('.modal__progress');
   if (progressSection) {
+    progressSection.classList.remove('hidden');
     if (isLiveProgram) {
       progressSection.classList.remove('hidden');
       modal.querySelector('.modal__progress-fill').style.width = `${progress}%`;

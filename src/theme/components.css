@@ -760,16 +760,13 @@
     @apply text-gray-600 dark:text-gray-300;
   }
 
+  /* Modal Progress Bar */
   .modal__progress {
-    @apply mt-6;
+    @apply mt-4;
   }
 
-  .modal__progress-container {
-    @apply w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
-  }
-
-  .modal__progress-fill {
-    @apply h-full bg-blue-500 transition-all duration-300 ease-in-out;
+  .modal__progress .program-slot__progress {
+    @apply mt-0;
   }
 
   .modal__progress-text {
