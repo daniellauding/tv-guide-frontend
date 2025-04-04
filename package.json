@@ -4,8 +4,8 @@
   "description": "TV Guide Frontend Application",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run watch",
-    "build": "tailwindcss -i ./src/theme/input.css -o ./dist/output.css --minify && cp -r index.html src/* dist/",
+    "dev": "tailwindcss -i ./src/theme/input.css -o ./dist/output.css --watch",
+    "build": "rm -rf dist && mkdir -p dist && tailwindcss -i ./src/theme/input.css -o ./dist/output.css --minify && cp index.html dist/ && cp -r src/* dist/",
     "serve": "live-server --config=live-server.json",
     "watch": "tailwindcss -i ./src/theme/input.css -o ./dist/output.css --watch",
     "live": "concurrently \"npm run watch\" \"npm run serve\""
