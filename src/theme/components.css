@@ -676,99 +676,56 @@
      ========================================================================== */
 
   .modal {
-    @apply fixed inset-0 flex items-center justify-center z-90;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease-in-out;
+    @apply fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out;
   }
 
   .modal.hidden {
     display: none;
   }
 
-  .modal:not(.hidden) {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-base {
-    @apply fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50;
-  }
-
-  .modal-window {
-    @apply bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full p-6;
-  }
-
-  .modal-header {
-    @apply flex justify-between items-start mb-4;
-  }
-
-  .modal-title {
-    @apply text-xl font-bold font-barlow
-           text-title dark:text-title-dark;
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm;
   }
 
   .modal__content {
-    @apply bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full h-full md:h-auto;
-    transform: scale(0.95);
-    transition: transform 0.2s ease-in-out;
+    @apply relative bg-white dark:bg-gray-800 w-full max-w-2xl mx-auto rounded-lg shadow-xl overflow-hidden z-50;
+    @apply transform transition-transform duration-300 ease-in-out;
   }
 
-  .modal:not(.hidden) .modal__content {
-    transform: scale(1);
+  .modal__header--mobile {
+    @apply block md:hidden p-4 border-b border-gray-200 dark:border-gray-700;
   }
 
-  .modal__content--mobile {
-    @apply w-full h-full rounded-none;
+  .modal__back-btn {
+    @apply p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors;
   }
 
   .modal__hero {
-    @apply relative;
-  }
-
-  .modal__hero-header {
-  }
-
-  .modal__hero-content {
-    @apply flex flex-col items-center text-center p-6;
-  }
-
-  .modal__close-btn,
-  .modal__share-btn {
-    @apply absolute top-4 right-4 bg-white dark:bg-gray-600 text-gray-900 dark:text-white 
-           rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-500 
-           transition-colors duration-200;
+    @apply relative p-6 bg-gray-50 dark:bg-gray-900;
   }
 
   .modal__close-btn {
-    @apply right-14;
+    @apply hidden md:block absolute top-4 right-16 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+  }
+
+  .modal__share-btn {
+    @apply absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+  }
+
+  .modal__hero-content {
+    @apply mt-4 md:mt-0;
   }
 
   .modal__channel-info {
-    @apply flex flex-col items-center text-center space-y-4;
-  }
-
-  .modal__channel-logo {
-    @apply w-14 h-14 md:w-14 md:h-14 flex items-center justify-center 
-    rounded-lg bg-body-dark border border-gray-700 text-gray-500;
+    @apply flex items-start space-x-4;
   }
 
   .modal__program-title {
-    @apply text-xl md:text-2xl font-bold text-gray-900;
+    @apply text-xl md:text-2xl font-bold text-gray-900 dark:text-white;
   }
 
   .modal__meta {
-    @apply flex justify-center space-x-4 mt-4;
-  }
-
-  .modal__date,
-  .modal__time {
-    @apply bg-gray-100  text-gray-700 
-           px-3 py-1 rounded-lg text-sm;
-  }
-
-  .live-badge {
-    @apply bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-medium;
+    @apply flex items-center space-x-2 mt-2 text-sm text-gray-600 dark:text-gray-400;
   }
 
   .modal__details {
@@ -776,19 +733,19 @@
   }
 
   .modal__info-grid {
-    @apply grid grid-cols-2 gap-4;
+    @apply grid grid-cols-2 md:grid-cols-3 gap-4 mb-6;
   }
 
   .modal__info-item {
-    @apply flex flex-col space-y-1;
+    @apply flex flex-col;
   }
 
   .modal__label {
-    @apply text-xs text-gray-500 text-gray-400 uppercase font-medium;
+    @apply text-sm text-gray-500 dark:text-gray-400;
   }
 
   .modal__value {
-    @apply text-sm font-medium text-gray-900 dark:text-white;
+    @apply text-base font-medium text-gray-900 dark:text-white;
   }
 
   .modal__description {
@@ -796,11 +753,11 @@
   }
 
   .modal__description-title {
-    @apply text-lg text-black font-semibold mb-2;
+    @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
   }
 
   .modal__description-text {
-    @apply text-sm text-black;
+    @apply text-gray-600 dark:text-gray-300;
   }
 
   .modal__progress {
@@ -808,44 +765,19 @@
   }
 
   .modal__progress-container {
-    @apply w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2;
+    @apply w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
   }
 
   .modal__progress-fill {
-    @apply h-full bg-primary-500 rounded-full transition-all duration-300;
+    @apply h-full bg-blue-500 transition-all duration-300 ease-in-out;
   }
 
   .modal__progress-text {
-    @apply text-xs text-gray-500 dark:text-gray-400 mt-1;
+    @apply mt-2 text-sm text-gray-600 dark:text-gray-400;
   }
 
-  .modal__header--mobile {
-    @apply flex items-center justify-between p-4 md:hidden;
-  }
-
-  .modal__back-btn {
-    @apply p-2 rounded-full 
-           text-gray-900
-           hover:bg-gray-200 transition-colors duration-200;
-  }
-
-  .modal__icon {
-    @apply w-6 h-6;
-  }
-
-  .modal-exit {
-    animation: modalExit 0.2s ease-in forwards;
-  }
-
-  @keyframes modalExit {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.95);
-    }
+  .live-badge {
+    @apply px-2 py-1 text-xs font-medium text-white bg-red-500 rounded;
   }
 
   /* ==========================================================================
