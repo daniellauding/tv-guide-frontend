@@ -1,73 +1,100 @@
 <!-- Program Modal -->
-<div id="programModal" class="modal hidden">
-  <div class="modal-backdrop"></div>
-  <div class="modal__content">
+<div id="programModal" class="modal" aria-hidden="true">
+  <div class="modal__content" onclick="event.stopPropagation()">
     <!-- Mobile Header -->
     <div class="modal__header--mobile">
-      <button class="modal__back-btn" onclick="closeModal()">
-        <svg class="modal__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button onclick="closeModal()" class="modal__back-btn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          ></path>
+        </svg>
+      </button>
+      <button class="modal__share-btn" id="mobileShareBtn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+          ></path>
         </svg>
       </button>
     </div>
 
     <!-- Hero Section -->
     <div class="modal__hero">
+      <div class="modal__hero-header">
+        <!-- Desktop Controls -->
+        <button onclick="closeModal()" class="modal__close-btn">✕</button>
+        <button class="modal__share-btn" id="desktopShareBtn">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+            ></path>
+          </svg>
+        </button>
+      </div>
       <div class="modal__hero-content">
         <div class="modal__channel-info">
-          <div class="program-card__logo"></div>
-          <div>
-            <h2 class="modal__program-title"></h2>
-            <div class="modal__meta">
-              <span class="modal__date"></span>
-              <span class="modal__time"></span>
-              <span class="live-badge hidden">CANLI</span>
-            </div>
+          <div class="modal__channel-logo">
+            <img src="" alt="" class="program-card__logo-img" />
           </div>
+          <h1 class="modal__program-title">Bir Zamanlar Çukurova</h1>
+        </div>
+        <div class="modal__meta">
+          <span class="modal__date">3 Nisan Perşembe</span>
+          <span class="modal__time">13:00</span>
+          <span class="live-badge hidden">CANLI</span>
         </div>
       </div>
     </div>
 
     <!-- Details Section -->
     <div class="modal__details">
-      <div class="modal__info-grid">
-        <div class="modal__info-item">
-          <span class="modal__label">Program Türü</span>
-          <span class="modal__value program-type"></span>
+      <div class="modal__info">
+        <div class="modal__info-grid">
+          <div class="modal__info-item">
+            <span class="modal__label">Tür</span>
+            <span class="program-type modal__value">Dizi</span>
+          </div>
+          <div class="modal__info-item">
+            <span class="modal__label">Süre</span>
+            <span class="program-duration modal__value">120 dakika</span>
+          </div>
+          <div class="modal__info-item presenter-info hidden">
+            <span class="modal__label">Sunucu</span>
+            <span class="program-presenter modal__value"></span>
+          </div>
+          <div class="modal__info-item cast-info">
+            <span class="modal__label">Oyuncular</span>
+            <span class="program-cast modal__value">Hilal Altınbilek, Uğur Güneş</span>
+          </div>
+          <div class="modal__info-item rating-info hidden">
+            <span class="modal__label">RTÜK Akıllı İşaretler</span>
+            <span class="program-rating modal__value"></span>
+          </div>
         </div>
-        <div class="modal__info-item">
-          <span class="modal__label">Süre</span>
-          <span class="modal__value program-duration"></span>
-        </div>
-        <div class="modal__info-item presenter-info hidden">
-          <span class="modal__label">Sunucu</span>
-          <span class="modal__value program-presenter"></span>
-        </div>
-        <div class="modal__info-item cast-info hidden">
-          <span class="modal__label">Oyuncular</span>
-          <span class="modal__value program-cast"></span>
-        </div>
-        <div class="modal__info-item rating-info hidden">
-          <span class="modal__label">Reyting</span>
-          <span class="modal__value program-rating"></span>
-        </div>
-      </div>
 
-      <div class="modal__description">
-        <h3 class="modal__description-title">Program Hakkında</h3>
-        <p class="modal__description-text"></p>
-      </div>
-
-      <div class="modal__progress">
-        <div class="program-slot__progress">
-          <div class="program-slot__progress-bar"></div>
+        <div class="modal__description">
+          <h3 class="modal__description-title">Program Hakkında</h3>
+          <p class="modal__description-text">
+            1970'lerin Adana'sında geçen, aşk, ihtiras ve intikam dolu bir dizi.
+          </p>
         </div>
-        <p class="modal__progress-text"></p>
+
+        <div class="modal__progress">
+          <div class="modal__progress-container">
+            <div class="modal__progress-fill"></div>
+          </div>
+          <div class="modal__progress-text"></div>
+        </div>
       </div>
     </div>
   </div>

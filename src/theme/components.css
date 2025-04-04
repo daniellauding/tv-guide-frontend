@@ -253,7 +253,8 @@
   }
 
   .mobile-menu-backdrop.active {
-    @apply opacity-50 pointer-events-auto;
+    opacity: 0.5;
+    @apply pointer-events-auto;
   }
 
   .mobile-menu {
@@ -676,68 +677,89 @@
      ========================================================================== */
 
   .modal {
-    @apply fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out;
-  }
-
-  .modal.hidden {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black backdrop-blur-sm;
     display: none;
   }
 
-  .modal-backdrop {
-    @apply fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm;
+  .modal[aria-hidden='false'] {
+    display: flex !important;
   }
 
   .modal__content {
-    @apply relative bg-white dark:bg-gray-800 w-full max-w-2xl mx-auto rounded-lg shadow-xl overflow-hidden z-50;
-    @apply transform transition-transform duration-300 ease-in-out;
+    @apply relative w-full h-full md:h-auto md:max-w-2xl md:rounded-2xl bg-white dark:bg-gray-800 overflow-hidden;
   }
 
   .modal__header--mobile {
-    @apply block md:hidden p-4 border-b border-gray-200 dark:border-gray-700;
+    @apply flex justify-between items-center p-4 md:hidden;
   }
 
   .modal__back-btn {
-    @apply p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors;
-  }
-
-  .modal__hero {
-    @apply relative p-6 bg-gray-50 dark:bg-gray-900;
-  }
-
-  .modal__close-btn {
-    @apply hidden md:block absolute top-4 right-16 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
   }
 
   .modal__share-btn {
-    @apply absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
+  }
+
+  .modal__hero {
+    @apply relative p-6 bg-gray-100 dark:bg-gray-700;
+  }
+
+  .modal__hero-header {
+    @apply hidden md:flex justify-end items-center space-x-2 mb-4;
+  }
+
+  .modal__close-btn {
+    @apply hidden md:block p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
   }
 
   .modal__hero-content {
-    @apply mt-4 md:mt-0;
+    @apply space-y-4;
   }
 
   .modal__channel-info {
     @apply flex items-start space-x-4;
   }
 
+  .modal__channel-logo {
+    @apply w-16 h-16 rounded-lg bg-white dark:bg-gray-600 flex items-center justify-center overflow-hidden;
+  }
+
   .modal__program-title {
-    @apply text-xl md:text-2xl font-bold text-gray-900 dark:text-white;
+    @apply text-2xl font-bold text-gray-900 dark:text-white;
   }
 
   .modal__meta {
-    @apply flex items-center space-x-2 mt-2 text-sm text-gray-600 dark:text-gray-400;
+    @apply flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-300;
+  }
+
+  .live-badge {
+    @apply flex items-center space-x-1 px-2 py-1 bg-red-500 text-white rounded-full text-xs font-medium;
+  }
+
+  .live-badge::before {
+    content: '';
+    @apply w-2 h-2 bg-white rounded-full animate-pulse;
+  }
+
+  .live-badge.hidden {
+    display: none;
   }
 
   .modal__details {
     @apply p-6;
   }
 
+  .modal__info {
+    @apply space-y-6;
+  }
+
   .modal__info-grid {
-    @apply grid grid-cols-2 md:grid-cols-3 gap-4 mb-6;
+    @apply grid grid-cols-2 gap-4;
   }
 
   .modal__info-item {
-    @apply flex flex-col;
+    @apply space-y-1;
   }
 
   .modal__label {
@@ -745,36 +767,35 @@
   }
 
   .modal__value {
-    @apply text-base font-medium text-gray-900 dark:text-white;
+    @apply text-sm font-medium text-gray-900 dark:text-white;
   }
 
   .modal__description {
-    @apply mt-6;
+    @apply space-y-2;
   }
 
   .modal__description-title {
-    @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
+    @apply text-lg font-medium text-gray-900 dark:text-white;
   }
 
   .modal__description-text {
-    @apply text-gray-600 dark:text-gray-300;
+    @apply text-sm text-gray-600 dark:text-gray-300;
   }
 
-  /* Modal Progress Bar */
   .modal__progress {
-    @apply mt-4;
+    @apply space-y-2;
   }
 
-  .modal__progress .program-slot__progress {
-    @apply mt-0;
+  .modal__progress-container {
+    @apply h-1 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden;
+  }
+
+  .modal__progress-fill {
+    @apply h-full bg-primary-500 transition-all duration-300 ease-in-out;
   }
 
   .modal__progress-text {
-    @apply mt-2 text-sm text-gray-600 dark:text-gray-400;
-  }
-
-  .live-badge {
-    @apply px-2 py-1 text-xs font-medium text-white bg-red-500 rounded;
+    @apply text-sm text-gray-500 dark:text-gray-400;
   }
 
   /* ==========================================================================

@@ -869,14 +869,14 @@ function showProgramModal(channelId, programTime) {
   modal.querySelector('.modal__date').textContent = formattedDate;
   modal.querySelector('.modal__time').textContent = program.time;
 
-  // Handle channel logo - fallback to channel name initial if no logo
-  const logoContainer = modal.querySelector('.program-card__logo');
-  if (logoContainer) {
-    if (channel.logo) {
-      logoContainer.innerHTML = `<img class="program-card__logo-img" src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`;
-    } else {
-      logoContainer.innerHTML = channel.name[0];
-    }
+  // Handle channel logo
+  const logoImg = modal.querySelector('.program-card__logo-img');
+  if (logoImg) {
+    logoImg.src = channel.logo;
+    logoImg.alt = channel.name;
+    logoImg.onerror = () => {
+      logoImg.parentElement.innerHTML = channel.name[0];
+    };
   }
 
   // Handle program type
@@ -893,7 +893,7 @@ function showProgramModal(channelId, programTime) {
       : 'Süre belirtilmemiş';
   }
 
-  // Handle live badge
+  // Handle live indicator
   const liveBadge = modal.querySelector('.live-badge');
   if (liveBadge) {
     liveBadge.classList.toggle('hidden', !isLiveProgram);
@@ -932,90 +932,57 @@ function showProgramModal(channelId, programTime) {
     }
   }
 
-  // Handle description - always show description section with default text if none provided
-  const descriptionSection = modal.querySelector('.modal__description');
-  if (descriptionSection) {
-    descriptionSection.classList.remove('hidden');
-    const descriptionText = modal.querySelector('.modal__description-text');
+  // Handle description
+  const descriptionText = modal.querySelector('.modal__description-text');
+  if (descriptionText) {
     descriptionText.textContent =
       program.description || `${program.title} - ${channel.name} kanalında ${program.time}'da`;
   }
 
-  // Always show progress bar with current progress
-  const progressSection = modal.querySelector('.modal__progress');
-  if (progressSection) {
-    progressSection.classList.remove('hidden');
-    if (isLiveProgram) {
-      progressSection.classList.remove('hidden');
-      modal.querySelector('.modal__progress-fill').style.width = `${progress}%`;
-      modal.querySelector('.modal__progress-text').textContent = `${progress}% tamamlandı`;
-    } else {
-      progressSection.classList.add('hidden');
-    }
+  // Handle progress bar
+  const progressFill = modal.querySelector('.modal__progress-fill');
+  if (progressFill && isLiveProgram) {
+    progressFill.style.width = `${progress}%`;
+    modal.querySelector('.modal__progress').classList.remove('hidden');
+  } else if (progressFill) {
+    modal.querySelector('.modal__progress').classList.add('hidden');
   }
 
-  // Set up share buttons
+  // Show modal
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  // Setup share buttons
+  const handleShare = () => shareProgram(channelId, programTime);
   const mobileShareBtn = modal.querySelector('#mobileShareBtn');
   const desktopShareBtn = modal.querySelector('#desktopShareBtn');
-  const handleShare = () => shareProgram(channelId, programTime);
 
-  // Event listeners for closing
-  const closeOnOutsideClick = e => {
-    if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
-      closeModal();
-    }
-  };
-
-  const closeOnEscape = e => {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  };
-
-  // Add event listeners
   mobileShareBtn?.addEventListener('click', handleShare);
   desktopShareBtn?.addEventListener('click', handleShare);
-  modal.addEventListener('click', closeOnOutsideClick);
-  document.addEventListener('keydown', closeOnEscape);
 
   // Store event listeners for cleanup
   modal._eventListeners = {
-    closeOnOutsideClick,
-    closeOnEscape,
-    handleShare
+    handleShare,
+    mobileShareBtn,
+    desktopShareBtn
   };
-
-  // Show modal
-  modal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
   const modal = document.getElementById('programModal');
   if (!modal) return;
 
-  // Remove event listeners using stored references
+  // Remove share button listeners
   if (modal._eventListeners) {
-    const { closeOnOutsideClick, closeOnEscape, handleShare } = modal._eventListeners;
-    modal.removeEventListener('click', closeOnOutsideClick);
-    document.removeEventListener('keydown', closeOnEscape);
-
-    // Remove share button listeners
-    const mobileShareBtn = modal.querySelector('#mobileShareBtn');
-    const desktopShareBtn = modal.querySelector('#desktopShareBtn');
+    const { handleShare, mobileShareBtn, desktopShareBtn } = modal._eventListeners;
     mobileShareBtn?.removeEventListener('click', handleShare);
     desktopShareBtn?.removeEventListener('click', handleShare);
-
-    // Clear stored listeners
     delete modal._eventListeners;
   }
 
-  modal.classList.add('modal-exit');
-  setTimeout(() => {
-    modal.classList.add('hidden');
-    modal.classList.remove('modal-exit');
-    document.body.style.overflow = '';
-  }, 200);
+  // Hide modal
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
 
 // Make closeModal globally available
@@ -2741,3 +2708,24 @@ function selectDate(dateStr, label) {
 // Make functions globally available
 window.toggleDateDropdown = toggleDateDropdown;
 window.selectDate = selectDate;
+
+// Make modal functions globally available
+window.showProgramModal = showProgramModal;
+
+// Initialize everything when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initializeIcons();
+  setupThemeToggle();
+  setupDateSelector();
+  setupSearch();
+  setupScrollShadows();
+  setupProviderScroll();
+  setupShrinkingHeader();
+  setupProviders();
+  setupChannelSectionVisibility();
+  setupDateNavigation();
+  setupScrollBasedSections();
+  setupChannelAnchorScrolling();
+  setupChannelScrolling();
+  initializeChannels();
+});
