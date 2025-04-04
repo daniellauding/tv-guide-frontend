@@ -154,16 +154,16 @@
       rounded-lg bg-body-dark border border-gray-700 text-gray-500;
     }
 
-    .program-card__title {
+    .program-slot__item.past .program-slot__title {
+      @apply text-gray-500;
+    }
+
+    .program-slot__item.live .program-slot__title {
       @apply text-white;
     }
 
-    .program-slot--past {
-      @apply bg-gray-800;
-    }
-
-    .program-slot--live {
-      @apply bg-red-900;
+    .program-slot__item.next .program-slot__title {
+      @apply text-white;
     }
 
     .program-slot--upcoming {
@@ -546,19 +546,19 @@
   }
 
   .program-slot__title {
-    @apply text-sm md:text-base font-medium;
+    @apply text-gray-900 text-sm md:text-base font-medium;
   }
 
-  .program-slot--past .program-slot__title {
-    @apply text-gray-500 dark:text-gray-500;
+  .program-slot__item.past .program-slot__title {
+    @apply text-gray-500;
   }
 
-  .program-slot--live .program-slot__title {
-    @apply text-red-500 dark:text-red-500;
+  .program-slot__item.live .program-slot__title {
+    @apply text-black;
   }
 
-  .program-slot--upcoming .program-slot__title {
-    @apply text-black dark:text-white;
+  .program-slot__item.next .program-slot__title {
+    @apply text-black;
   }
 
   .program-slot__live-indicator {

@@ -504,7 +504,7 @@ function getRelevantPrograms(programs, selectedDate) {
   const programsWithState = programs.map((program, index) => {
     // Force one program to be "live" - using index 6 or 7 to have some past programs
     if (index === 6 || index === 7) {
-      return { ...program, state: 'today' };
+      return { ...program, state: 'live' };
     }
     // Programs before the live one are past
     else if (index < 6) {
@@ -517,7 +517,7 @@ function getRelevantPrograms(programs, selectedDate) {
   });
 
   // Find current program index
-  const currentIndex = programsWithState.findIndex(program => program.state === 'today');
+  const currentIndex = programsWithState.findIndex(program => program.state === 'live');
 
   return {
     previous: currentIndex > 0 ? programsWithState[currentIndex - 1] : null,
@@ -591,7 +591,7 @@ function renderPrograms(selectedDate = null) {
     const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
 
     // Find current/live program and upcoming programs
-    const currentProgram = allPrograms.find(p => p.state === 'today');
+    const currentProgram = allPrograms.find(p => p.state === 'live');
     const upcomingPrograms = allPrograms.filter(p => p.state === 'next');
     const pastPrograms = allPrograms.filter(p => p.state === 'past');
 
@@ -671,8 +671,8 @@ function renderPrograms(selectedDate = null) {
             ${displayPrograms
               .map(program => {
                 // For demo, always show 50% progress for live programs
-                const progress = program.state === 'today' ? 50 : 0;
-                const isLiveProgram = program.state === 'today';
+                const progress = program.state === 'live' ? 50 : 0;
+                const isLiveProgram = program.state === 'live';
 
                 return `
                 <div class="program-slot__item ${program.state}" onclick="showProgramModal('${
