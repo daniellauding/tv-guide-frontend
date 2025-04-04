@@ -1025,9 +1025,9 @@ function shareProgram(channelId, programTime) {
 // Theme toggle
 function setupThemeToggle() {
   const themeToggle = document.getElementById('themeToggle');
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  if (!themeToggle) return;
 
-  // Check for saved theme preference or use system preference
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
   const savedTheme = localStorage.getItem('theme');
   const initialTheme = savedTheme || (prefersDarkScheme.matches ? 'dark' : 'light');
 
@@ -1038,15 +1038,19 @@ function setupThemeToggle() {
   // Set initial button state
   themeToggle.classList.toggle('button--active', initialTheme === 'dark');
 
+  // Remove any existing click listeners
+  const newThemeToggle = themeToggle.cloneNode(true);
+  themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
   // Add click handler
-  themeToggle.addEventListener('click', () => {
-    // Toggle theme
+  newThemeToggle.addEventListener('click', () => {
     const currentTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(currentTheme);
 
     // Toggle button state
-    themeToggle.classList.toggle('button--active', currentTheme === 'dark');
+    newThemeToggle.classList.toggle('button--active', currentTheme === 'dark');
 
     // Save preference
     localStorage.setItem('theme', currentTheme);
@@ -1058,7 +1062,7 @@ function setupThemeToggle() {
       const newTheme = e.matches ? 'dark' : 'light';
       document.documentElement.classList.remove('light', 'dark');
       document.documentElement.classList.add(newTheme);
-      themeToggle.classList.toggle('button--active', newTheme === 'dark');
+      newThemeToggle.classList.toggle('button--active', newTheme === 'dark');
     }
   });
 }
@@ -1487,9 +1491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeIcons();
 
   // Initialize theme toggle
-  if (document.getElementById('themeToggle')) {
-    setupThemeToggle();
-  }
+  setupThemeToggle();
 
   // Initialize current programs toggle with active state
   const currentProgramsToggle = document.getElementById('currentProgramsToggle');
@@ -2714,9 +2716,16 @@ window.showProgramModal = showProgramModal;
 
 // Initialize everything when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  initializeIcons();
+  // Initialize theme toggle first
   setupThemeToggle();
-  setupDateSelector();
+
+  // Only initialize date selector if the element exists
+  const dateSelector = document.getElementById('dateSelector');
+  if (dateSelector) {
+    setupDateSelector();
+  }
+
+  // Rest of the initialization
   setupSearch();
   setupScrollShadows();
   setupProviderScroll();
