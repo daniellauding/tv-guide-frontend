@@ -1041,16 +1041,17 @@ function showProgramModal(channelId, programTime) {
   // Handle program hero image
   const heroHeaderImg = modal.querySelector('.modal__hero-header-img');
   if (heroHeaderImg) {
-    // Clear any existing content
-    heroHeaderImg.innerHTML = '';
+    // Create a wrapper div for consistent styling
+    const imageWrapper = document.createElement('div');
+    imageWrapper.className =
+      'w-full h-full flex items-center justify-center text-4xl font-semibold text-gray-500';
 
-    if (program.heroImage) {
-      // Add placeholder text showing dimensions
-      const placeholder = document.createElement('div');
-      placeholder.className = 'flex items-center justify-center w-full h-full text-gray-500';
-      placeholder.textContent = `Program Image Placeholder (${program.heroImage})`;
-      heroHeaderImg.appendChild(placeholder);
-    }
+    // Show program's first letter as placeholder
+    imageWrapper.textContent = program.title[0].toUpperCase();
+
+    // Clear any existing content and add the wrapper
+    heroHeaderImg.innerHTML = '';
+    heroHeaderImg.appendChild(imageWrapper);
   }
 
   // Log program state with channel info
