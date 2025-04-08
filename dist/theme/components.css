@@ -681,7 +681,7 @@
      ========================================================================== */
 
   .modal {
-    @apply fixed inset-0 z-50 flex items-center justify-center bg-black backdrop-blur-sm;
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm;
     display: none;
   }
 
@@ -711,6 +711,10 @@
 
   .modal__hero-header {
     @apply hidden md:flex justify-end items-center space-x-2 mb-4;
+  }
+
+  .modal__hero-header-img {
+    @apply w-full aspect-video rounded-lg border-light border text-black flex items-center justify-center overflow-hidden bg-gray-100 dark:bg-gray-800;
   }
 
   .modal__close-btn {
