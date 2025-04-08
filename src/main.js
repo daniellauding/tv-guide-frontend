@@ -37,7 +37,8 @@ const tvData = {
           state: 'live',
           description:
             'Güncel konular, yaşam hikayeleri ve uzman konuklarla sabah kuşağı programı.',
-          presenter: 'Seda Sayan'
+          presenter: 'Seda Sayan',
+          heroImage: '16:9' // Aspect ratio for program image
         },
         {
           time: '13:00',
@@ -78,7 +79,14 @@ const tvData = {
         },
         { time: '07:00', title: 'Sabah Kahvesi', type: 'Program', duration: '120', state: 'past' },
         { time: '09:00', title: 'Müge Anlı', type: 'Program', duration: '180', state: 'past' },
-        { time: '10:00', title: 'Esra Erol', type: 'Program', duration: '180', state: 'live' },
+        {
+          time: '10:00',
+          title: 'Esra Erol',
+          type: 'Program',
+          duration: '180',
+          state: 'live',
+          heroImage: '16:9'
+        },
         { time: '13:00', title: 'ATV Gün Ortası', type: 'Haber', duration: '60', state: 'next' },
         { time: '14:00', title: 'Kardeşlerim', type: 'Dizi', duration: '120', state: 'next' },
         { time: '16:00', title: 'Yaprak Dökümü', type: 'Dizi', duration: '120', state: 'next' },
@@ -190,7 +198,15 @@ const tvData = {
           state: 'next'
         },
         { time: '14:00', title: 'Yerli Dizi', type: 'Dizi', duration: '120', state: 'next' },
-        { time: '16:00', title: 'Zuhal Topal', type: 'Program', duration: '120', state: 'next' },
+        {
+          time: '16:00',
+          title: 'Zuhal Topal',
+          type: 'Program',
+          duration: '120',
+          state: 'next',
+          heroImage: '16:9',
+          description: 'Zuhal Topal ile günlük talk show programı'
+        },
         { time: '18:00', title: 'Star Ana Haber', type: 'Haber', duration: '60', state: 'next' },
         { time: '19:00', title: 'Yerli Film', type: 'Film', duration: '120', state: 'next' },
         { time: '21:00', title: 'Ana Dizi', type: 'Dizi', duration: '150', state: 'next' },
@@ -216,7 +232,14 @@ const tvData = {
         { time: '04:00', title: 'Günün Yemeği', type: 'Yemek', duration: '60', state: 'past' },
         { time: '05:00', title: 'Oynat Bakalım', type: 'Eğlence', duration: '90', state: 'past' },
         { time: '06:30', title: '8de Sağlık', type: 'Program', duration: '150', state: 'past' },
-        { time: '09:00', title: 'Müge ve Gülşen', type: 'Program', duration: '180', state: 'live' },
+        {
+          time: '09:00',
+          title: 'Müge ve Gülşen',
+          type: 'Program',
+          duration: '180',
+          state: 'live',
+          heroImage: '16:9'
+        },
         {
           time: '10:00',
           title: 'Masterchef Türkiye',
@@ -317,7 +340,8 @@ const tvData = {
           title: 'Müge ve Gülşen',
           type: 'Program',
           duration: '180',
-          state: 'live'
+          state: 'live',
+          heroImage: '16:9'
         },
         { time: '13:00', title: 'Öğlen Haberleri', type: 'Haber', duration: '60', state: 'next' },
         { time: '14:00', title: 'Yerli Dizi', type: 'Dizi', duration: '120', state: 'next' },
@@ -976,6 +1000,67 @@ function showProgramModal(channelId, programTime) {
     mobileShareBtn,
     desktopShareBtn
   };
+
+  // Handle channel logo in modal
+  const modalChannelLogo = modal.querySelector('.modal__channel-logo');
+  if (modalChannelLogo) {
+    if (channel.logo) {
+      // Create a wrapper div for the logo
+      const logoWrapper = document.createElement('div');
+      logoWrapper.className =
+        'w-16 h-16 rounded-lg border-light border text-black logo-channel flex items-center justify-center overflow-hidden';
+
+      // Try to load the image
+      const img = new Image();
+      img.className = 'h-8 w-auto object-contain';
+      img.src = channel.logo;
+      img.alt = channel.name;
+
+      // Handle both load and error cases
+      img.onload = () => {
+        logoWrapper.innerHTML = ''; // Clear any existing content
+        logoWrapper.appendChild(img);
+      };
+
+      img.onerror = () => {
+        logoWrapper.textContent = channel.name[0].toUpperCase();
+      };
+
+      // Initially set the first letter while image loads
+      logoWrapper.textContent = channel.name[0].toUpperCase();
+
+      // Replace the entire content of modalChannelLogo
+      modalChannelLogo.innerHTML = '';
+      modalChannelLogo.appendChild(logoWrapper);
+    } else {
+      // No logo URL, just show the first letter
+      modalChannelLogo.innerHTML = `<div class="w-16 h-16 rounded-lg border-light border text-black logo-channel flex items-center justify-center overflow-hidden">${channel.name[0].toUpperCase()}</div>`;
+    }
+  }
+
+  // Handle program hero image
+  const heroHeaderImg = modal.querySelector('.modal__hero-header-img');
+  if (heroHeaderImg) {
+    // Clear any existing content
+    heroHeaderImg.innerHTML = '';
+
+    if (program.heroImage) {
+      // Add placeholder text showing dimensions
+      const placeholder = document.createElement('div');
+      placeholder.className = 'flex items-center justify-center w-full h-full text-gray-500';
+      placeholder.textContent = `Program Image Placeholder (${program.heroImage})`;
+      heroHeaderImg.appendChild(placeholder);
+    }
+  }
+
+  // Log program state with channel info
+  console.log('Program State:', {
+    title: program.title,
+    time: program.time,
+    state: programState,
+    progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A',
+    channel: channel.name
+  });
 }
 
 function closeModal() {
