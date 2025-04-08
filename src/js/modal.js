@@ -14,30 +14,21 @@ function showProgramModal(channelId, programTime) {
   const program = channel.programs.find(p => p.time === programTime);
   if (!program) return;
 
-  // Calculate program progress if live
-  const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
-  const isLiveProgram = isLive(program.time, program.duration, selectedDate);
-  const isPastProgram = isPast(program.time, selectedDate);
+  // Use the program's state from the data
+  const programState = program.state === 'current' ? 'live' : program.state || 'next';
+  const progress = program.state === 'live' || program.state === 'current' ? 50 : 0;
 
   console.log('Program State Debug:', {
     programTitle: program.title,
     time: program.time,
-    isPast: isPastProgram,
-    isLive: isLiveProgram,
-    isNext: !isPastProgram && !isLiveProgram,
+    state: programState,
     progress: progress
   });
 
   // Update modal state classes
   const modalContent = modal.querySelector('.modal__content');
   modalContent.classList.remove('past', 'live', 'next');
-  if (isPastProgram) {
-    modalContent.classList.add('past');
-  } else if (isLiveProgram) {
-    modalContent.classList.add('live');
-  } else {
-    modalContent.classList.add('next');
-  }
+  modalContent.classList.add(programState);
 
   console.log('Modal Classes:', {
     element: modalContent,
@@ -79,7 +70,7 @@ function showProgramModal(channelId, programTime) {
   // Handle live badge
   const liveBadge = modal.querySelector('.live-badge');
   if (liveBadge) {
-    liveBadge.classList.toggle('hidden', !isLiveProgram);
+    liveBadge.classList.toggle('hidden', programState !== 'live');
   }
 
   // Handle presenter info
@@ -132,7 +123,7 @@ function showProgramModal(channelId, programTime) {
   // Handle progress bar for live programs
   const progressSection = modal.querySelector('.modal__progress');
   if (progressSection) {
-    if (isLiveProgram) {
+    if (programState === 'live') {
       progressSection.classList.remove('hidden');
       modal.querySelector('.modal__progress-fill').style.width = `${progress}%`;
       modal.querySelector('.modal__progress-text').textContent = `${progress}% tamamlandı`;

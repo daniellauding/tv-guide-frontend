@@ -761,7 +761,7 @@
 
   /* Progress styling */
   .modal__progress {
-    @apply hidden mt-6;
+    @apply hidden;
   }
 
   .modal__progress-container {
@@ -809,11 +809,11 @@
   }
 
   .modal__channel-info {
-    @apply flex items-start space-x-4;
+    @apply flex items-start;
   }
 
   .modal__channel-logo {
-    @apply w-16 h-16 rounded-lg border-light border text-black logo-channel flex items-center justify-center overflow-hidden;
+    @apply w-16 h-16 min-w-16 min-h-16 rounded-lg border-light border text-black logo-channel flex items-center justify-center overflow-hidden ml-auto;
   }
 
   .modal__program-title {
@@ -821,7 +821,15 @@
   }
 
   .modal__meta {
-    @apply flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-300;
+    @apply flex flex-col text-sm text-gray-600 dark:text-gray-300 w-full gap-2;
+  }
+
+  .modal__meta-inner {
+    @apply flex gap-4;
+  }
+
+  .modal__meta-item {
+    @apply flex flex-col;
   }
 
   .live-badge {
@@ -838,7 +846,7 @@
   }
 
   .modal__details {
-    @apply p-6;
+    @apply p-6 flex flex-col;
   }
 
   .modal__info {
@@ -862,7 +870,7 @@
   }
 
   .modal__description {
-    @apply space-y-2;
+    @apply space-y-2 mt-8;
   }
 
   .modal__description-title {
