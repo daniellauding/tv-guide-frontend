@@ -852,11 +852,7 @@ function showProgramModal(channelId, programTime) {
   }
 
   const channel = tvData.channels.find(c => c.id === channelId);
-  if (!channel) return;
-
   const program = channel.programs.find(p => p.time === programTime);
-  if (!program) return;
-
   const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
   const isLiveProgram = isLive(program.time, program.duration, selectedDate);
 
@@ -937,29 +933,19 @@ function showProgramModal(channelId, programTime) {
   }
 
   // Handle description
-  const descriptionSection = modal.querySelector('.modal__description');
-  if (descriptionSection) {
-    if (program.description) {
-      descriptionSection.classList.remove('hidden');
-      modal.querySelector('.modal__description-text').textContent = program.description;
-    } else {
-      descriptionSection.classList.add('hidden');
-      modal.querySelector(
-        '.modal__description-text'
-      ).textContent = `${program.title} - ${channel.name} kanalında ${program.time}'da`;
-    }
+  const descriptionText = modal.querySelector('.modal__description-text');
+  if (descriptionText) {
+    descriptionText.textContent =
+      program.description || `${program.title} - ${channel.name} kanalında ${program.time}'da`;
   }
 
   // Handle progress bar
-  const progressSection = modal.querySelector('.modal__progress');
-  if (progressSection) {
-    if (isLiveProgram) {
-      progressSection.classList.remove('hidden');
-      modal.querySelector('.modal__progress-fill').style.width = `${progress}%`;
-      modal.querySelector('.modal__progress-text').textContent = `${progress}% tamamlandı`;
-    } else {
-      progressSection.classList.add('hidden');
-    }
+  const progressFill = modal.querySelector('.modal__progress-fill');
+  if (progressFill && isLiveProgram) {
+    progressFill.style.width = `${progress}%`;
+    modal.querySelector('.modal__progress').classList.remove('hidden');
+  } else if (progressFill) {
+    modal.querySelector('.modal__progress').classList.add('hidden');
   }
 
   // Show modal
@@ -974,31 +960,11 @@ function showProgramModal(channelId, programTime) {
   mobileShareBtn?.addEventListener('click', handleShare);
   desktopShareBtn?.addEventListener('click', handleShare);
 
-  // Add click handler to close when clicking outside
-  const closeOnOutsideClick = e => {
-    if (e.target === modal) {
-      closeModal();
-      modal.removeEventListener('click', closeOnOutsideClick);
-    }
-  };
-  modal.addEventListener('click', closeOnOutsideClick);
-
-  // Close modal with ESC key
-  const closeOnEscape = e => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.removeEventListener('keydown', closeOnEscape);
-    }
-  };
-  document.addEventListener('keydown', closeOnEscape);
-
   // Store event listeners for cleanup
   modal._eventListeners = {
     handleShare,
     mobileShareBtn,
-    desktopShareBtn,
-    closeOnOutsideClick,
-    closeOnEscape
+    desktopShareBtn
   };
 }
 
@@ -1008,12 +974,9 @@ function closeModal() {
 
   // Remove share button listeners
   if (modal._eventListeners) {
-    const { handleShare, mobileShareBtn, desktopShareBtn, closeOnOutsideClick, closeOnEscape } =
-      modal._eventListeners;
+    const { handleShare, mobileShareBtn, desktopShareBtn } = modal._eventListeners;
     mobileShareBtn?.removeEventListener('click', handleShare);
     desktopShareBtn?.removeEventListener('click', handleShare);
-    modal.removeEventListener('click', closeOnOutsideClick);
-    document.removeEventListener('keydown', closeOnEscape);
     delete modal._eventListeners;
   }
 
@@ -1022,9 +985,593 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-// Make functions globally available
+// Make closeModal globally available
 window.closeModal = closeModal;
-window.showProgramModal = showProgramModal;
+
+// Share program
+function shareProgram(channelId, programTime) {
+  const channel = tvData.channels.find(c => c.id === channelId);
+  const program = channel.programs.find(p => p.time === programTime);
+
+  const shareData = {
+    title: `${program.title} - ${channel.name}`,
+    text: `${program.title} programını ${channel.name}'de ${program.time}'da izle!`,
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(error => console.log('Error sharing:', error));
+  } else {
+    // Fallback for browsers that don't support Web Share API
+    const tempInput = document.createElement('input');
+    document.body.appendChild(tempInput);
+    tempInput.value = `${shareData.text}\n${shareData.url}`;
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+
+    // Show copy notification
+    const notification = document.createElement('div');
+    notification.className = 'copy-notification';
+    notification.textContent = 'Bağlantı kopyalandı!';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.remove();
+    }, 2000);
+  }
+}
+
+// Theme toggle
+function setupThemeToggle() {
+  const themeToggle = document.getElementById('themeToggle');
+  if (!themeToggle) return;
+
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const savedTheme = localStorage.getItem('theme');
+  const initialTheme = savedTheme || (prefersDarkScheme.matches ? 'dark' : 'light');
+
+  // Remove any existing theme classes and add the initial theme
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(initialTheme);
+
+  // Set initial button state
+  themeToggle.classList.toggle('button--active', initialTheme === 'dark');
+
+  // Remove any existing click listeners
+  const newThemeToggle = themeToggle.cloneNode(true);
+  themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+  // Add click handler
+  newThemeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(currentTheme);
+
+    // Toggle button state
+    newThemeToggle.classList.toggle('button--active', currentTheme === 'dark');
+
+    // Save preference
+    localStorage.setItem('theme', currentTheme);
+  });
+
+  // Listen for system theme changes
+  prefersDarkScheme.addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      const newTheme = e.matches ? 'dark' : 'light';
+      document.documentElement.classList.remove('light', 'dark');
+      document.documentElement.classList.add(newTheme);
+      newThemeToggle.classList.toggle('button--active', newTheme === 'dark');
+    }
+  });
+}
+
+// Add these new functions
+function setupDateSelector() {
+  const dateSelector = document.getElementById('dateSelector');
+  const dates = generateDateRange();
+
+  // Clear existing options
+  dateSelector.innerHTML = dates
+    .map(date => {
+      const dateString = date.toISOString().split('T')[0];
+      const isToday = new Date().toDateString() === date.toDateString();
+
+      // Format date in Turkish
+      const formatter = new Intl.DateTimeFormat('tr-TR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+      });
+
+      return `
+            <option value="${dateString}">
+                ${formatter.format(date)}${isToday ? ' (Bugün)' : ''}
+            </option>
+        `;
+    })
+    .join('');
+
+  // Set default to today
+  dateSelector.value = new Date().toISOString().split('T')[0];
+
+  dateSelector.addEventListener('change', e => {
+    const selectedDate = e.target.value;
+    const programData = programDates[selectedDate] || tvData;
+    renderPrograms(selectedDate);
+  });
+}
+
+// Unified channel detail view function
+function showChannelDetail(channelId) {
+  // Get the selected date from the active day button
+  const activeDay = document.querySelector('.date-nav-item.active');
+  const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
+
+  const channel = tvData.channels.find(c => c.id === channelId);
+  const content = document.querySelector('programs__content');
+
+  content.innerHTML = `
+        <button 
+            onclick="renderPrograms()"
+            class="mb-6 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+            ← Tüm Kanallara Dön
+        </button>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-8 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-6">
+                    <div class="w-24 h-24 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center">
+                        <img src="${channel.logo}" alt="${channel.name}" 
+                             class="h-16 w-auto object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">${
+                          channel.name
+                        }</h1>
+                        ${
+                          channel.description
+                            ? `
+                            <p class="mt-2 text-gray-600 dark:text-gray-300">${channel.description}</p>
+                        `
+                            : ''
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Günün Programları</h2>
+                <div class="space-y-4">
+                    ${channel.programs
+                      .map(program => {
+                        const progress = calculateProgramProgress(
+                          program.time,
+                          program.duration,
+                          selectedDate
+                        );
+                        const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+
+                        return `
+                            <div class="flex items-start space-x-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer"
+                                 onclick="showProgramModal('${channel.id}', '${program.time}')">
+                                <div class="w-20 text-gray-500 dark:text-gray-400">${
+                                  program.time
+                                }</div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <div class="font-medium text-gray-900 dark:text-white">${
+                                          program.title
+                                        }</div>
+                                        ${
+                                          isLiveProgram
+                                            ? `
+                                            <div class="live-indicator">
+                                                <span class="live-dot"></span>
+                                                <span>CANLI</span>
+                                            </div>
+                                        `
+                                            : ''
+                                        }
+                                    </div>
+                                    <div class="mt-1 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">
+                                            ${program.type}
+                                        </span>
+                                        <span class="ml-2">${program.duration} dk</span>
+                                    </div>
+                                    ${
+                                      program.description
+                                        ? `
+                                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">${program.description}</p>
+                                    `
+                                        : ''
+                                    }
+                                    ${
+                                      isLiveProgram
+                                        ? `
+                                        <div class="mt-2 progress-container">
+                                            <div class="progress-fill" style="width: ${progress}%"></div>
+                                        </div>
+                                    `
+                                        : ''
+                                    }
+                                </div>
+                            </div>
+                        `;
+                      })
+                      .join('')}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Add this new function
+function resetView() {
+  // Reset selectors if they exist
+  const dateSelector = document.getElementById('dateSelector');
+  const programSearch = document.getElementById('programSearch');
+
+  if (dateSelector) {
+    dateSelector.value = new Date().toISOString().split('T')[0];
+  }
+
+  if (programSearch) {
+    programSearch.value = '';
+  }
+
+  // Reset view
+  renderPrograms();
+
+  // Scroll to top of page smoothly
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// Add this function to handle search toggle
+function toggleSearch() {
+  const searchSection = document.getElementById('searchSection');
+  const searchToggle = document.getElementById('searchToggle');
+  const searchInput = document.getElementById('programSearch');
+  const isVisible = !searchSection.classList.contains('hidden');
+
+  if (isVisible) {
+    // Hide search
+    searchSection.classList.add('hidden');
+    searchToggle.classList.remove('button--active');
+    searchInput.value = ''; // Clear search input
+    // Clear search results if any
+    renderPrograms();
+  } else {
+    // Show search
+    searchSection.classList.remove('hidden');
+    searchToggle.classList.add('button--active');
+    // Focus search input
+    setTimeout(() => searchInput.focus(), 100);
+  }
+}
+
+// Update setupSearch function
+function setupSearch() {
+  const searchInput = document.getElementById('programSearch');
+  const searchToggle = document.getElementById('searchToggle');
+  const closeSearch = document.getElementById('closeSearch');
+
+  if (searchToggle) {
+    // Set initial state
+    searchToggle.classList.remove('button--active');
+    searchToggle.addEventListener('click', toggleSearch);
+  }
+
+  if (closeSearch) {
+    closeSearch.addEventListener('click', toggleSearch);
+  }
+
+  if (searchInput) {
+    // Existing search functionality
+    searchInput.addEventListener('input', e => {
+      const searchTerm = e.target.value.toLowerCase();
+      if (searchTerm.length >= 2) {
+        const results = tvData.channels.reduce((acc, channel) => {
+          const matchingPrograms = channel.programs
+            .filter(
+              program =>
+                program.title.toLowerCase().includes(searchTerm) ||
+                program.type?.toLowerCase().includes(searchTerm)
+            )
+            .map(program => ({ ...program, channelId: channel.id, channelName: channel.name }));
+          return [...acc, ...matchingPrograms];
+        }, []);
+        renderSearchResults(results, searchTerm);
+      } else if (searchTerm.length === 0) {
+        renderPrograms();
+      }
+    });
+
+    // Add escape key handler
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        toggleSearch();
+      }
+    });
+  }
+}
+
+// Add this function to initialize scroll shadows
+function setupScrollShadows() {
+  const desktopProviderContainer = document.querySelector('.provider-list .provider-list__scroll');
+  const mobileProviderContainer = document.querySelector('.providers .provider-list__scroll');
+  const channelSectionInner = document.querySelector('.channels__inner');
+
+  if (desktopProviderContainer) {
+    const desktopWrapper = desktopProviderContainer.querySelector('.provider-list__wrapper');
+
+    function updateDesktopShadows() {
+      const scrollLeft = desktopWrapper.scrollLeft;
+      const maxScrollLeft = desktopWrapper.scrollWidth - desktopWrapper.clientWidth;
+
+      // Only show shadows if there's scrollable content
+      if (desktopWrapper.scrollWidth <= desktopWrapper.clientWidth) {
+        desktopProviderContainer.classList.remove('shadow-left', 'shadow-right');
+      } else {
+        desktopProviderContainer.classList.toggle('shadow-left', scrollLeft > 0);
+        desktopProviderContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+      }
+    }
+
+    // Initial update
+    updateDesktopShadows();
+
+    // Update on scroll
+    desktopWrapper.addEventListener('scroll', updateDesktopShadows);
+
+    // Update on window resize
+    window.addEventListener('resize', updateDesktopShadows);
+  }
+
+  if (mobileProviderContainer) {
+    const mobileWrapper = mobileProviderContainer.querySelector('.provider-list__wrapper');
+
+    function updateMobileShadows() {
+      const scrollLeft = mobileWrapper.scrollLeft;
+      const maxScrollLeft = mobileWrapper.scrollWidth - mobileWrapper.clientWidth;
+
+      // Only show shadows if there's scrollable content
+      if (mobileWrapper.scrollWidth <= mobileWrapper.clientWidth) {
+        mobileProviderContainer.classList.remove('shadow-left', 'shadow-right');
+      } else {
+        mobileProviderContainer.classList.toggle('shadow-left', scrollLeft > 0);
+        mobileProviderContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+      }
+    }
+
+    // Initial update
+    updateMobileShadows();
+
+    // Update on scroll
+    mobileWrapper.addEventListener('scroll', updateMobileShadows);
+
+    // Update on window resize
+    window.addEventListener('resize', updateMobileShadows);
+  }
+
+  // Add shadows to the channel section
+  if (channelSectionInner) {
+    const channelNav = channelSectionInner.querySelector('.channel-list__wrapper');
+
+    function updateChannelSectionShadows() {
+      const scrollLeft = channelNav.scrollLeft;
+      const maxScrollLeft = channelNav.scrollWidth - channelNav.clientWidth;
+      const hasHorizontalScroll = channelNav.scrollWidth > channelNav.clientWidth;
+
+      // Only show shadows if there's scrollable content
+      if (!hasHorizontalScroll) {
+        channelSectionInner.classList.remove('shadow-left', 'shadow-right');
+      } else {
+        channelSectionInner.classList.toggle('shadow-left', scrollLeft > 0);
+        channelSectionInner.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+      }
+    }
+
+    // Initial update
+    updateChannelSectionShadows();
+
+    // Update on scroll
+    channelNav.addEventListener('scroll', updateChannelSectionShadows);
+
+    // Update on window resize
+    window.addEventListener('resize', updateChannelSectionShadows);
+
+    // Update when channel section becomes visible
+    const channelSection = document.querySelector('.channels');
+    if (channelSection) {
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.attributeName === 'class') {
+            if (channelSection.classList.contains('visible')) {
+              updateChannelSectionShadows();
+            }
+          }
+        });
+      });
+
+      observer.observe(channelSection, { attributes: true });
+    }
+  }
+
+  // Also add shadows to the day navigation
+  const dayNav = document.querySelector('.date-nav .date-list__wrapper');
+  const prevDateBtn = document.getElementById('prevDate');
+  const nextDateBtn = document.getElementById('nextDate');
+
+  if (dayNav) {
+    // Create a container for the week-days if it doesn't exist
+    if (!dayNav.parentElement.classList.contains('date-list__scroll')) {
+      const container = document.createElement('div');
+      container.className = 'date-list__scroll';
+      dayNav.parentNode.insertBefore(container, dayNav);
+      container.appendChild(dayNav);
+    }
+
+    const weekDaysContainer = dayNav.parentElement;
+
+    function updateDayNavShadows() {
+      const scrollLeft = dayNav.scrollLeft;
+      const maxScrollLeft = dayNav.scrollWidth - dayNav.clientWidth;
+      const hasHorizontalScroll = dayNav.scrollWidth > dayNav.clientWidth;
+
+      // Only show shadows if there's scrollable content
+      if (!hasHorizontalScroll) {
+        weekDaysContainer.classList.remove('shadow-left', 'shadow-right');
+        if (prevDateBtn) prevDateBtn.classList.add('hidden');
+        if (nextDateBtn) nextDateBtn.classList.add('hidden');
+      } else {
+        // Update shadows
+        weekDaysContainer.classList.toggle('shadow-left', scrollLeft > 0);
+        weekDaysContainer.classList.toggle('shadow-right', scrollLeft < maxScrollLeft - 5); // 5px buffer
+
+        // Update navigation buttons
+        if (prevDateBtn) prevDateBtn.classList.toggle('hidden', scrollLeft <= 0);
+        if (nextDateBtn) nextDateBtn.classList.toggle('hidden', scrollLeft >= maxScrollLeft - 5);
+      }
+    }
+
+    // Initial update
+    updateDayNavShadows();
+
+    // Update on scroll
+    dayNav.addEventListener('scroll', updateDayNavShadows);
+
+    // Update on window resize
+    window.addEventListener('resize', updateDayNavShadows);
+
+    // Add click handlers for the navigation buttons
+    if (prevDateBtn) {
+      prevDateBtn.addEventListener('click', () => {
+        dayNav.scrollBy({
+          left: -100,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    if (nextDateBtn) {
+      nextDateBtn.addEventListener('click', () => {
+        dayNav.scrollBy({
+          left: 100,
+          behavior: 'smooth'
+        });
+      });
+    }
+  }
+}
+
+// Update the DOMContentLoaded listener to include setupScrollShadows
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date().toISOString().split('T')[0];
+
+  // Initialize all required functionality
+  initializeChannels();
+  setupProviders();
+  setupProviderScroll();
+  setupShrinkingHeader();
+  setupChannelSectionVisibility();
+  setupDateNavigation();
+  setupSearch();
+  setupScrollShadows(); // Add this line
+  setupScrollBasedSections(); // Add scroll behavior for channel section
+  setupChannelAnchorScrolling(); // Add channel anchor scrolling
+  renderChannelNav();
+  renderPrograms(today);
+  initializeIcons();
+
+  // Initialize theme toggle
+  setupThemeToggle();
+
+  // Initialize current programs toggle with active state
+  const currentProgramsToggle = document.getElementById('currentProgramsToggle');
+  if (currentProgramsToggle) {
+    // Set initial state based on showAllPrograms state
+    if (showAllPrograms) {
+      currentProgramsToggle.classList.add('button--active');
+    } else {
+      currentProgramsToggle.classList.remove('button--active');
+    }
+    currentProgramsToggle.addEventListener('click', toggleAllSchedules);
+  }
+
+  // Add click event to backdrop to close menu when clicked
+  const backdrop = document.getElementById('mobileMenuBackdrop');
+  if (backdrop) {
+    backdrop.addEventListener('click', toggleMobileMenu);
+  }
+});
+
+function showChannelPreferences() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-base';
+  modal.innerHTML = `
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title">Kanal Tercihleri</h3>
+                <button class="nav-button close-modal">
+                    ${createIcon('close', 'w-5 h-5')}
+                </button>
+            </div>
+
+            <!-- Existing channel selection content -->
+            <div class="p-4">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Görmek istediğiniz kanalları seçin ve sıralayın
+                </p>
+                <div class="space-y-2" id="channelPreferencesList">
+                    ${tvData.channels
+                      .map(
+                        (channel, index) => `
+                        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="cursor-move text-gray-400">⋮⋮</div>
+                                <button 
+                                    type="button"
+                                    role="switch"
+                                    aria-checked="${channel.enabled || false}"
+                                    onclick="toggleChannel('${channel.id}', ${!channel.enabled})"
+                                    class="channel-switch"
+                                >
+                                    <span class="channel-switch-handle"></span>
+                                </button>
+                                <img src="${channel.logo}" alt="${channel.name}" class="h-6 w-auto">
+                                <label class="text-sm font-medium">
+                                    ${channel.name}
+                                </label>
+                            </div>
+                            <span class="text-sm text-gray-500">${index + 1}</span>
+                        </div>
+                    `
+                      )
+                      .join('')}
+                </div>
+            </div>
+        </div>
+    `;
+
+  // Add click handler to close when clicking outside
+  modal.addEventListener('click', e => {
+    // Close if clicking outside the modal window or on close button
+    if (e.target === modal || e.target.closest('.close-modal')) {
+      modal.remove();
+    }
+  });
+
+  document.body.appendChild(modal);
+  // Initialize icons for the newly added content
+  initializeIcons();
+}
 
 // Update the toggle function to show live changes
 function toggleChannel(channelId, enabled) {
@@ -2163,3 +2710,31 @@ function selectDate(dateStr, label) {
 // Make functions globally available
 window.toggleDateDropdown = toggleDateDropdown;
 window.selectDate = selectDate;
+
+// Make modal functions globally available
+window.showProgramModal = showProgramModal;
+
+// Initialize everything when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize theme toggle first
+  setupThemeToggle();
+
+  // Only initialize date selector if the element exists
+  const dateSelector = document.getElementById('dateSelector');
+  if (dateSelector) {
+    setupDateSelector();
+  }
+
+  // Rest of the initialization
+  setupSearch();
+  setupScrollShadows();
+  setupProviderScroll();
+  setupShrinkingHeader();
+  setupProviders();
+  setupChannelSectionVisibility();
+  setupDateNavigation();
+  setupScrollBasedSections();
+  setupChannelAnchorScrolling();
+  setupChannelScrolling();
+  initializeChannels();
+});

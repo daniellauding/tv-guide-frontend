@@ -80,6 +80,10 @@
       @apply bg-chip-background-dark-active text-chip-text-dark-active hover:bg-chip-background-dark-hover;
     }
 
+    .modal__channel-logo {
+      @apply bg-body-dark border border-gray-700 text-gray-500;
+    }
+
     .modal-content {
       @apply bg-body-dark;
     }
@@ -682,11 +686,7 @@
   }
 
   .modal[aria-hidden='false'] {
-    display: flex;
-  }
-
-  .modal[aria-hidden='true'] {
-    display: none;
+    display: flex !important;
   }
 
   .modal__content {
@@ -726,7 +726,7 @@
   }
 
   .modal__channel-logo {
-    @apply w-16 h-16 rounded-lg bg-white dark:bg-gray-600 flex items-center justify-center overflow-hidden;
+    @apply w-16 h-16 rounded-lg border-light border text-black logo-channel flex items-center justify-center overflow-hidden;
   }
 
   .modal__program-title {
