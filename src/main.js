@@ -34,7 +34,7 @@ const tvData = {
           title: 'Sabahın Sultanı',
           type: 'Program',
           duration: '180',
-          state: 'current',
+          state: 'live',
           description:
             'Güncel konular, yaşam hikayeleri ve uzman konuklarla sabah kuşağı programı.',
           presenter: 'Seda Sayan'
@@ -78,7 +78,7 @@ const tvData = {
         },
         { time: '07:00', title: 'Sabah Kahvesi', type: 'Program', duration: '120', state: 'past' },
         { time: '09:00', title: 'Müge Anlı', type: 'Program', duration: '180', state: 'past' },
-        { time: '10:00', title: 'Esra Erol', type: 'Program', duration: '180', state: 'current' },
+        { time: '10:00', title: 'Esra Erol', type: 'Program', duration: '180', state: 'live' },
         { time: '13:00', title: 'ATV Gün Ortası', type: 'Haber', duration: '60', state: 'next' },
         { time: '14:00', title: 'Kardeşlerim', type: 'Dizi', duration: '120', state: 'next' },
         { time: '16:00', title: 'Yaprak Dökümü', type: 'Dizi', duration: '120', state: 'next' },
@@ -120,7 +120,7 @@ const tvData = {
           duration: '180',
           state: 'past'
         },
-        { time: '10:00', title: 'Yasak Elma', type: 'Dizi', duration: '120', state: 'current' },
+        { time: '10:00', title: 'Yasak Elma', type: 'Dizi', duration: '120', state: 'live' },
         { time: '12:00', title: 'Fox Ana Haber', type: 'Haber', duration: '60', state: 'next' },
         {
           time: '13:00',
@@ -180,7 +180,7 @@ const tvData = {
           title: 'Aramızda Kalmasın',
           type: 'Program',
           duration: '180',
-          state: 'current'
+          state: 'live'
         },
         {
           time: '13:00',
@@ -216,7 +216,7 @@ const tvData = {
         { time: '04:00', title: 'Günün Yemeği', type: 'Yemek', duration: '60', state: 'past' },
         { time: '05:00', title: 'Oynat Bakalım', type: 'Eğlence', duration: '90', state: 'past' },
         { time: '06:30', title: '8de Sağlık', type: 'Program', duration: '150', state: 'past' },
-        { time: '09:00', title: 'Müge ve Gülşen', type: 'Program', duration: '180', state: 'past' },
+        { time: '09:00', title: 'Müge ve Gülşen', type: 'Program', duration: '180', state: 'live' },
         {
           time: '10:00',
           title: 'Masterchef Türkiye',
@@ -256,7 +256,7 @@ const tvData = {
         { time: '05:30', title: 'Yeşil Deniz', type: 'Dizi', duration: '120', state: 'past' },
         { time: '07:30', title: 'İyilik Kulübü', type: 'Program', duration: '90', state: 'past' },
         { time: '09:00', title: 'Uzun Hikaye', type: 'Dizi', duration: '120', state: 'past' },
-        { time: '10:00', title: 'Gönül Dağı', type: 'Dizi', duration: '120', state: 'current' },
+        { time: '10:00', title: 'Gönül Dağı', type: 'Dizi', duration: '120', state: 'live' },
         { time: '12:00', title: 'Ana Haber', type: 'Haber', duration: '60', state: 'next' },
         { time: '13:00', title: 'Masallarla Biz', type: 'Çocuk', duration: '30', state: 'next' },
         { time: '13:30', title: 'Belgesel', type: 'Belgesel', duration: '60', state: 'next' },
@@ -288,7 +288,7 @@ const tvData = {
         },
         { time: '06:00', title: 'Sabah Kahvesi', type: 'Program', duration: '180', state: 'past' },
         { time: '09:00', title: 'Mutfak Bahane', type: 'Program', duration: '60', state: 'past' },
-        { time: '10:00', title: 'Elif', type: 'Dizi', duration: '180', state: 'current' },
+        { time: '10:00', title: 'Elif', type: 'Dizi', duration: '180', state: 'live' },
         { time: '13:00', title: 'Kanal 7 Haber', type: 'Haber', duration: '60', state: 'next' },
         { time: '14:00', title: 'Yemin', type: 'Dizi', duration: '120', state: 'next' },
         { time: '16:00', title: 'Emanet', type: 'Dizi', duration: '120', state: 'next' },
@@ -317,7 +317,7 @@ const tvData = {
           title: 'Müge ve Gülşen',
           type: 'Program',
           duration: '180',
-          state: 'current'
+          state: 'live'
         },
         { time: '13:00', title: 'Öğlen Haberleri', type: 'Haber', duration: '60', state: 'next' },
         { time: '14:00', title: 'Yerli Dizi', type: 'Dizi', duration: '120', state: 'next' },
@@ -378,7 +378,7 @@ const tvData = {
         { time: '03:00', title: 'Dünya Gündemi', type: 'Haber', duration: '60', state: 'past' },
         { time: '04:00', title: 'Sabah Raporu', type: 'Haber', duration: '180', state: 'past' },
         { time: '07:00', title: 'Güne Başlarken', type: 'Haber', duration: '180', state: 'past' },
-        { time: '10:00', title: 'Gün Ortası', type: 'Haber', duration: '180', state: 'current' },
+        { time: '10:00', title: 'Gün Ortası', type: 'Haber', duration: '180', state: 'live' },
         { time: '13:00', title: 'Öğle Bülteni', type: 'Haber', duration: '60', state: 'next' },
         {
           time: '14:00',
@@ -838,23 +838,33 @@ function showProgramModal(channelId, programTime) {
   const modal = document.getElementById('programModal');
   if (!modal) return;
 
-  // Get the date from either dateSelector, active day, or today
-  let selectedDate;
-  const dateSelector = document.getElementById('dateSelector');
+  // Get the selected date
   const activeDay = document.querySelector('.date-nav-item.active');
+  const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
 
-  if (dateSelector && dateSelector.value) {
-    selectedDate = dateSelector.value;
-  } else if (activeDay && activeDay.dataset.date) {
-    selectedDate = activeDay.dataset.date;
-  } else {
-    selectedDate = new Date().toISOString().split('T')[0];
-  }
-
+  // Get channel and program data
   const channel = tvData.channels.find(c => c.id === channelId);
+  if (!channel) return;
+
   const program = channel.programs.find(p => p.time === programTime);
-  const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
-  const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+  if (!program) return;
+
+  // Determine program state
+  const programState = program.state === 'current' ? 'live' : program.state || 'next'; // Convert 'current' to 'live'
+  const progress = program.state === 'live' || program.state === 'current' ? 50 : 0; // Set progress to 50% for live/current programs
+
+  // Log program state for debugging
+  console.log('Program State:', {
+    title: program.title,
+    time: program.time,
+    state: programState,
+    progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A'
+  });
+
+  // Update modal content and state classes
+  const modalContent = modal.querySelector('.modal__content');
+  modalContent.classList.remove('past', 'live', 'next');
+  modalContent.classList.add(programState);
 
   // Format date in Turkish
   const formatter = new Intl.DateTimeFormat('tr-TR', {
@@ -896,7 +906,7 @@ function showProgramModal(channelId, programTime) {
   // Handle live indicator
   const liveBadge = modal.querySelector('.live-badge');
   if (liveBadge) {
-    liveBadge.classList.toggle('hidden', !isLiveProgram);
+    liveBadge.classList.toggle('hidden', program.state !== 'live');
   }
 
   // Handle presenter info
@@ -941,7 +951,7 @@ function showProgramModal(channelId, programTime) {
 
   // Handle progress bar
   const progressFill = modal.querySelector('.modal__progress-fill');
-  if (progressFill && isLiveProgram) {
+  if (progressFill && program.state === 'live') {
     progressFill.style.width = `${progress}%`;
     modal.querySelector('.modal__progress').classList.remove('hidden');
   } else if (progressFill) {
@@ -2122,15 +2132,19 @@ function isLive(programTime, duration, selectedDate = null) {
   const programEndDate = new Date(programDate);
   programEndDate.setMinutes(programEndDate.getMinutes() + Number(duration));
 
-  // For debugging
-  console.log('Time Check:', {
-    programTime,
-    now: now.toLocaleTimeString(),
-    programStart: programDate.toLocaleTimeString(),
-    programEnd: programEndDate.toLocaleTimeString()
-  });
-
   return now >= programDate && now <= programEndDate;
+}
+
+// Helper function to check if a program has ended
+function isPast(programTime, selectedDate = null) {
+  const now = new Date();
+  const [hours, minutes] = programTime.split(':').map(Number);
+
+  // Create program start date
+  const programDate = selectedDate ? new Date(selectedDate) : new Date();
+  programDate.setHours(hours, minutes, 0, 0);
+
+  return now > programDate;
 }
 
 // Update channel section visibility and scrolling behavior
@@ -2738,3 +2752,19 @@ document.addEventListener('DOMContentLoaded', () => {
   setupChannelScrolling();
   initializeChannels();
 });
+
+// Export functions to window object
+window.showProgramModal = showProgramModal;
+window.closeModal = closeModal;
+window.shareProgram = shareProgram;
+window.toggleMobileMenu = toggleMobileMenu;
+window.toggleSearch = toggleSearch;
+window.toggleProviderDropdown = toggleProviderDropdown;
+window.toggleChannelDropdown = toggleChannelDropdown;
+window.toggleDateDropdown = toggleDateDropdown;
+window.selectChannel = selectChannel;
+window.selectDate = selectDate;
+window.filterChannels = filterChannels;
+window.isLive = isLive;
+window.isPast = isPast;
+window.calculateProgramProgress = calculateProgramProgress;

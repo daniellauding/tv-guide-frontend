@@ -17,6 +17,35 @@ function showProgramModal(channelId, programTime) {
   // Calculate program progress if live
   const progress = calculateProgramProgress(program.time, program.duration, selectedDate);
   const isLiveProgram = isLive(program.time, program.duration, selectedDate);
+  const isPastProgram = isPast(program.time, selectedDate);
+
+  console.log('Program State Debug:', {
+    programTitle: program.title,
+    time: program.time,
+    isPast: isPastProgram,
+    isLive: isLiveProgram,
+    isNext: !isPastProgram && !isLiveProgram,
+    progress: progress
+  });
+
+  // Update modal state classes
+  const modalContent = modal.querySelector('.modal__content');
+  modalContent.classList.remove('past', 'live', 'next');
+  if (isPastProgram) {
+    modalContent.classList.add('past');
+  } else if (isLiveProgram) {
+    modalContent.classList.add('live');
+  } else {
+    modalContent.classList.add('next');
+  }
+
+  console.log('Modal Classes:', {
+    element: modalContent,
+    classList: modalContent.classList.toString(),
+    isPastClass: modalContent.classList.contains('past'),
+    isLiveClass: modalContent.classList.contains('live'),
+    isNextClass: modalContent.classList.contains('next')
+  });
 
   // Format date in Turkish
   const formatter = new Intl.DateTimeFormat('tr-TR', {
