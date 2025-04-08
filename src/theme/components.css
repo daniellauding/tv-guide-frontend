@@ -167,6 +167,18 @@
       @apply dark:border-gray-700;
     }
 
+    .search {
+      @apply bg-body-dark border-gray-700;
+    }
+
+    .search__input {
+      @apply bg-body-dark border-gray-700;
+    }
+
+    .search__close-btn {
+      @apply text-gray-700;
+    }
+
     .mobile-dropdown__search-input {
       @apply bg-body-dark border-gray-700 text-white;
     }
@@ -655,7 +667,7 @@
      ========================================================================== */
 
   .search {
-    @apply bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-sm;
+    @apply bg-white border-t border-b border-gray-200 shadow-sm absolute z-50 w-full;
   }
 
   .search__container {
@@ -667,16 +679,16 @@
   }
 
   .search__input {
-    @apply w-full px-1.5 py-1.5 
-    md:px-9 md:py-1.5 rounded-full pl-1.5 text-sm
-    bg-select-light dark:bg-select-dark md:py-2
+    @apply w-full px-2 py-1.5 
+    md:px-9 md:py-1.5 rounded-full pl-2 text-sm
+    bg-select-light  md:py-2
     shadow-sm
-    text-gray-600 dark:text-gray-300
+    text-gray-600 
     focus:outline-none focus:ring-2 focus:ring-primary-500 border border-gray-200;
   }
 
   .search__close-btn {
-    @apply absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600 dark:text-gray-300;
+    @apply absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600;
   }
 
   .icon-close {

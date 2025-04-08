@@ -68,11 +68,6 @@
     @apply relative flex w-full;
   }
 
-  .search__input {
-    @apply w-full px-1.5 py-1.5 
-      md:px-2 md:pr-9 md:py-1.5;
-  }
-
   .search__close-btn {
     @apply absolute right-3 top-1/2 -translate-y-1/2 btn text-gray-600 dark:text-gray-300;
   }
