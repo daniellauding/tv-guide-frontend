@@ -735,7 +735,7 @@
   }
 
   .modal__content {
-    @apply relative w-full h-full md:h-auto md:max-w-2xl md:rounded-2xl bg-white overflow-hidden;
+    @apply relative w-full h-full md:h-auto md:max-w-2xl md:rounded-2xl bg-white overflow-hidden overflow-y-auto;
   }
 
   /* Program states for modal */
