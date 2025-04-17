@@ -361,7 +361,7 @@
 
   /* Channel card active state */
   .channel-card--active {
-    @apply bg-primary-500 text-white;
+    /* @apply bg-primary-500 text-white; */
   }
 
   .channel-card--active .channel-card__img {
