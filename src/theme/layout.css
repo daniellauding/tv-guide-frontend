@@ -4,7 +4,7 @@
      ========================================================================== */
 
   .wrapper {
-    @apply max-w-7xl mx-auto px-4 pt-[172px] pb-6;
+    @apply max-w-7xl mx-auto px-4 pt-[172px] md:pt-0 pb-6;
   }
 
   .wrapper .programs__content {
@@ -109,6 +109,8 @@
     transition: opacity 0.3s ease;
     opacity: 1;
     pointer-events: auto;
+
+    @apply md:relative md:top-0;
   }
 
   .channels.visible-on-scroll {
