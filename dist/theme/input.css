@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Base Imports
+   ========================================================================== */
+@import './variables.css';
+@import './components.css';
+@import './layout.css';
+@import './utilities.css';
+@import './browser-fixes.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Additional Components
+   ========================================================================== */
+@layer components {
+    /* Theme Switch Components */
+    .theme-switch {
+        @apply relative inline-flex h-6 w-11 items-center rounded-full 
+               bg-gray-200 dark:bg-gray-700 transition-colors duration-200 ease-in-out;
+    }
+
+    .theme-switch-handle {
+        @apply inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 
+               transition duration-200 ease-in-out translate-x-1;
+    }
+
+    .theme-switch[aria-checked="true"] .theme-switch-handle {
+        @apply translate-x-6;
+    }
+
+    .theme-switch:focus {
+        @apply outline-none ring-2 ring-offset-2 ring-primary-500;
+    }
+
+    /* Channel Switch Components */
+    .channel-switch {
+        @apply relative inline-flex h-5 w-9 items-center rounded-full 
+               bg-gray-200 dark:bg-gray-700 transition-colors duration-200 ease-in-out cursor-pointer;
+    }
+
+    .channel-switch-handle {
+        @apply inline-block h-3 w-3 transform rounded-full bg-white shadow-sm ring-0 
+               transition duration-200 ease-in-out translate-x-1;
+    }
+
+    .channel-switch[aria-checked="true"] {
+        @apply bg-primary-500;
+    }
+
+    .channel-switch[aria-checked="true"] .channel-switch-handle {
+        @apply translate-x-5;
+    }
+
+    /* Live Indicator Components */
+    .live-indicator {
+        @apply inline-flex items-center text-red-500 text-xs font-medium;
+    }
+
+    .live-dot {
+        @apply w-1.5 h-1.5 bg-red-500 rounded-full mr-1 animate-pulse;
+    }
+
+    /* Icon Components */
+    .search-icon {
+        @apply fill-gray-600 dark:fill-gray-800 transition-colors duration-200;
+    }
+
+    /* Add static modal styles */
+    .modal-container {
+        @apply fixed inset-0 bg-black flex items-center justify-center p-4 z-50;
+    }
+
+    .modal-content {
+        @apply bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full p-6;
+    }
+
+    .modal-header {
+        @apply flex justify-between items-start mb-4;
+    }
+
+    .modal-title {
+        @apply text-xl font-bold text-gray-900 dark:text-white;
+    }
+
+    .modal-close {
+        @apply text-gray-500 hover:text-gray-700 cursor-pointer;
+    }
+
+    .modal-body {
+        @apply space-y-4;
+    }
+
+    .modal-label {
+        @apply text-sm font-medium text-gray-500;
+    }
+
+    .modal-value {
+        @apply text-gray-900 dark:text-white;
+    }
+
+    .progress-bar {
+        @apply h-1 bg-progress dark:bg-progress rounded-full overflow-hidden;
+    }
+
+    .progress-fill {
+        @apply h-full bg-progressFill dark:bg-progressFill transition-all duration-300;
+    }
+
+    .btn {
+        @apply transition-all duration-200 hover:scale-95 active:scale-95;
+    }
+
+    .mobile-menu-enter {
+        animation: mobileMenuFadeIn 0.2s ease-out;
+    }
+
+    .mobile-menu-leave {
+        animation: mobileMenuFadeOut 0.2s ease-in;
+    }
+}
+
+/* Existing utilities */
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Modal animation */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-enter {
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+/* Add mobile menu animations */
+@keyframes mobileMenuFadeIn {
+    from { opacity: 0; transform: translateX(-100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes mobileMenuFadeOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-100%); }
+}
+
+@keyframes backdropFadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.5; }
+}
+
+@keyframes backdropFadeOut {
+    from { opacity: 0.5; }
+    to { opacity: 0; }
+} 
