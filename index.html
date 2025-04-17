@@ -19,8 +19,8 @@
             <button onclick="toggleMobileMenu()" class="button button--icon" aria-label="Menu">
               <span class="icon icon-hamburger"></span>
             </button>
-            <h1 class="nav-bar__logo" onclick="resetView()">
-              <img src="./src/logo.png" alt="TV Rehberi" class="logo" />
+            <h1 class="nav-bar__logo m-0" onclick="resetView()">
+              <img src="./src/logo.png" alt="TV Rehberi" class="logo h-8"/>
             </h1>
           </div>
 
@@ -57,10 +57,11 @@
             <!-- Current Programs Toggle -->
             <button
               id="currentProgramsToggle"
-              class="button button--icon"
+              class="button button--icon flex flex-row items-center gap-1 m-0 px-4"
               aria-label="Sadece Güncel Programları Göster"
               title="Sadece Güncel Programları Göster"
             >
+              <span class="text-xs font-medium leading-[10px]">Tüm akış</span>
               <span class="icon icon-clock"></span>
             </button>
 

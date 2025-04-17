@@ -10,7 +10,7 @@
   html.dark {
     /* Base */
     .body {
-      @apply bg-body-dark;
+      @apply bg-body-dark  text-white;
     }
 
     /* Header */
@@ -272,7 +272,7 @@
      ========================================================================== */
 
   .body {
-    @apply bg-body;
+    @apply bg-body text-black;
   }
 
   /* ==========================================================================
@@ -308,8 +308,7 @@
 
   .mobile-menu {
     @apply fixed inset-y-0 left-0 h-screen bg-white z-90 
-           /* shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[75vw] md:w-40; */
-           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[100vw] md:w-[500px];
+           shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto w-[75vw] md:w-[500px];
     transform: translateX(-100%);
   }
 
@@ -359,7 +358,7 @@
   }
 
   .button--icon {
-    @apply p-2 rounded-lg transition-all duration-200 hover:scale-95 active:scale-95;
+    @apply flex justify-center items-center rounded-lg transition-all hover:scale-95 active:scale-95 min-w-[48px] h-[48px];
   }
 
   .button--active {
@@ -801,7 +800,7 @@
   }
 
   .modal__hero {
-    @apply relative p-6 bg-gray-100;
+    @apply relative bg-gray-100;
   }
 
   .modal__hero-header {
@@ -809,7 +808,7 @@
   }
 
   .modal__hero-header-img {
-    @apply w-full aspect-video rounded-lg text-black flex items-center justify-center overflow-hidden bg-gray-100;
+    @apply w-full aspect-video text-black flex items-center justify-center overflow-hidden bg-gray-100;
   }
 
   .modal__close-btn {
