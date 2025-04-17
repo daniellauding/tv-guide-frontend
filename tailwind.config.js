@@ -662,8 +662,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: 'var(--font-sans, Inter, system-ui, sans-serif)',
-        display: 'var(--font-display, Poppins, system-ui, sans-serif)',
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
         barlow: 'var(--font-barlow, Barlow, sans-serif)'
       },
       zIndex: {
