@@ -3442,9 +3442,9 @@ function updateChannelList(providerChannels) {
 
   channelNav.innerHTML = channels
     .map(
-      channel => `
+      (channel, index) => `
         <button 
-            class="channel-card"
+            class="channel-card ${index === 0 ? 'first' : ''}"
             data-channel-id="${channel.id}"
         >
             <div class="channel-card__img">
@@ -3734,6 +3734,8 @@ function setupScrollBasedSections() {
     const channels = document.querySelector('.channels');
     if (!channels) return;
 
+    console.log(currentScroll, lastScroll);
+
     // Reset behavior when at the top of the page
     if (currentScroll <= 0) {
       channels.classList.remove('visible-on-scroll');
@@ -3830,7 +3832,7 @@ function setupScrollBasedSections() {
       touchStartY = 0;
       // Check final position after touch ends
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      updateChannelsVisibility(currentScrollTop, isScrollingDown);
+      updateChannelsVisibility(currentScrollTop, lastScrollTop);
     },
     { passive: true }
   );
@@ -3998,6 +4000,10 @@ function selectChannel(channelId) {
   }
 }
 
+document.addEventListener('click', (event) => {
+  console.log(event);
+});
+
 // Update setupChannelScrolling to use event delegation
 function setupChannelScrolling() {
   const channelList = document.querySelector('.channel-list__wrapper');
@@ -4006,6 +4012,7 @@ function setupChannelScrolling() {
   // Add click handler only to the channel-list__wrapper
   channelList.addEventListener('click', event => {
     const channelCard = event.target.closest('.channel-card');
+  
     if (!channelCard) return; // Only handle clicks on channel cards
 
     event.preventDefault();
@@ -4037,8 +4044,13 @@ function setupChannelScrolling() {
       if (mobileNav) offset += mobileNav.offsetHeight;
 
       const rect = programCard.getBoundingClientRect();
-      const absoluteTop = rect.top + window.pageYOffset;
+      let absoluteTop = rect.top + window.pageYOffset;
 
+      if (channelCard.classList.contains('first')) {
+        absoluteTop = 0;
+        offset = 0;
+        console.log('first');
+      }
       window.scrollTo({
         top: absoluteTop - offset,
         behavior: 'smooth'
@@ -4051,12 +4063,6 @@ function setupChannelScrolling() {
 window.toggleChannelDropdown = toggleChannelDropdown;
 window.filterChannels = filterChannels;
 window.selectChannel = selectChannel;
-
-// Add setupChannelScrolling to the initialization
-document.addEventListener('DOMContentLoaded', () => {
-  setupChannelScrolling();
-  // ... other initialization code ...
-});
 
 // Toggle date dropdown
 function toggleDateDropdown(force) {
