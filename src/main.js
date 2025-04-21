@@ -1976,7 +1976,7 @@ function renderPrograms(selectedDate = null) {
 
     console.groupEnd();
 
-    return { channel, displayPrograms };
+    return { channel, displayPrograms, allPrograms };
   });
 
   console.log('Total Channels:', channels.length);
@@ -1990,7 +1990,7 @@ function renderPrograms(selectedDate = null) {
     <div class="program-list">
       ${allChannelsPrograms
         .map(
-          ({ channel, displayPrograms }) => `
+          ({ channel, displayPrograms, allPrograms }) => `
         <div class="program-card" id="channel-${channel.id}" data-channel-id="${channel.id}">
           <div class="program-card__header">
             <div class="program-card__topbar">
@@ -2003,10 +2003,20 @@ function renderPrograms(selectedDate = null) {
                 <div class="program-card__details">
                   <h2 class="program-card__title">${channel.name}</h2>
                 </div>
+                <button class="schedule-toggle-btn ml-auto" 
+                  data-channel-id="${channel.id}" 
+                  onclick="toggleSchedule('${channel.id}')"
+                  title="${showAllPrograms ? 'Sadece güncel programları göster' : 'Tüm programları göster'}"
+                >${createIcon(
+                  channel.expanded ? 'chevron-up' : 'chevron-down',
+                  'w-4 h-4'
+                )}</button>
               </div>
             </div>
           </div>
-          <div class="program-slot">
+          <div class="program-slot" id="programs-${channel.id}" ${
+            channel.expanded ? 'data-expanded="true"' : ''
+          }>
             ${displayPrograms
               .map(program => {
                 // For demo, always show 50% progress for live programs
@@ -2058,31 +2068,94 @@ function renderPrograms(selectedDate = null) {
 // Add this function to toggle full schedule
 function toggleSchedule(channelId) {
   const channel = tvData.channels.find(c => c.id === channelId);
+  if (!channel) return;
+  
+  // Toggle the expanded state on the channel object
+  channel.expanded = !channel.expanded;
+  
   const programsContainer = document.getElementById(`programs-${channelId}`);
-  const button = programsContainer.parentElement.querySelector('button');
+  if (!programsContainer) return;
+  
+  const button = document.querySelector(`button[data-channel-id="${channelId}"]`);
+  if (!button) return;
 
-  if (programsContainer.dataset.expanded) {
+  if (!channel.expanded) {
     // Collapse to show only relevant programs
-    const relevantPrograms = getRelevantPrograms(channel.programs);
-    renderChannelPrograms(
-      programsContainer,
-      [relevantPrograms.previous, relevantPrograms.current, relevantPrograms.next].filter(Boolean),
-      channel.id
-    );
+    programsContainer.removeAttribute('data-expanded');
+    
     // Change to chevron down icon
-    button.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>`;
-    delete programsContainer.dataset.expanded;
+    button.innerHTML = createIcon('chevron-down', 'w-4 h-4');
+    button.setAttribute('title', 'Tüm programları göster');
   } else {
     // Expand to show all programs
-    renderChannelPrograms(programsContainer, channel.programs, channel.id);
+    programsContainer.setAttribute('data-expanded', 'true');
+    
     // Change to chevron up icon
-    button.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-        </svg>`;
-    programsContainer.dataset.expanded = 'true';
+    button.innerHTML = createIcon('chevron-up', 'w-4 h-4');
+    button.setAttribute('title', 'Sadece güncel programları göster');
   }
+  
+  // Re-render only this channel's programs
+  const { allPrograms } = getRelevantPrograms(channel.programs);
+  
+  // Find current/live program and upcoming programs
+  const currentProgram = allPrograms.find(p => p.state === 'live');
+  const upcomingPrograms = allPrograms.filter(p => p.state === 'next');
+  const pastPrograms = allPrograms.filter(p => p.state === 'past');
+  
+  // Determine which programs to show
+  let displayPrograms = [];
+  if (currentProgram) {
+    displayPrograms.push(currentProgram);
+  }
+  displayPrograms = [...displayPrograms, ...upcomingPrograms.slice(0, 3)];
+  
+  // If expanded, show all programs
+  if (channel.expanded) {
+    const remainingUpcoming = upcomingPrograms.slice(3);
+    displayPrograms = [...pastPrograms, ...displayPrograms, ...remainingUpcoming];
+  }
+  
+  // Update the program slot content
+  programsContainer.innerHTML = displayPrograms
+    .map(program => {
+      // For demo, always show 50% progress for live programs
+      const progress = program.state === 'live' ? 50 : 0;
+      const isLiveProgram = program.state === 'live';
+
+      return `
+      <div class="program-slot__item ${program.state}" onclick="showProgramModal('${
+        channelId
+      }', '${program.time}')">
+        <div class="program-slot__content">
+          <div class="program-slot__details">
+            <div class="program-slot__time">${program.time}</div>
+            <div class="program-slot__title">${program.title}</div>
+          </div>
+          ${
+            isLiveProgram
+              ? `
+            <div class="program-slot__live-indicator">
+              <span class="live-dot"></span>
+              <span>CANLI</span>
+            </div>
+          `
+              : ''
+          }
+        </div>
+        ${
+          isLiveProgram
+            ? `
+          <div class="program-slot__progress">
+            <div class="program-slot__progress-bar" style="width: 50%"></div>
+          </div>
+        `
+            : ''
+        }
+      </div>
+    `;
+    })
+    .join('');
 }
 
 // Helper function to render channel programs
@@ -4198,3 +4271,4 @@ window.filterChannels = filterChannels;
 window.isLive = isLive;
 window.isPast = isPast;
 window.calculateProgramProgress = calculateProgramProgress;
+window.toggleSchedule = toggleSchedule;

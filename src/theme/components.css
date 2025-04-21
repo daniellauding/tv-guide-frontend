@@ -450,11 +450,11 @@
   }
 
   .provider-list {
-    @apply hidden md:block mx-4 rounded-full shadow-none overflow-hidden;
+    @apply hidden md:block mx-4 shadow-none overflow-hidden;
   }
 
   .provider-list__wrapper {
-    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-visible scrollbar-hide;
+    @apply flex whitespace-nowrap p-4 overflow-x-auto md:overflow-auto scrollbar-hide;
   }
 
   /* ==========================================================================
@@ -539,7 +539,7 @@
   }
 
   .program-card__header .program-card__info {
-    @apply flex items-center space-x-3;
+    @apply flex items-center space-x-3 w-full;
   }
 
   .program-card__header .program-card__logo {
@@ -559,7 +559,7 @@
   }
 
   .program-card__topbar {
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between w-full;
   }
 
   .program-card__info {
@@ -615,7 +615,7 @@
   }
 
   .program-slot__item.past .program-slot__title {
-    @apply text-gray-500;
+    @apply text-gray-500 font-normal;
   }
 
   .program-slot__item.live {
@@ -799,12 +799,20 @@
     @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
   }
 
+  .modal__share-btn.mobile {
+    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white md:hidden;
+  }
+
+  .modal__share-btn.desktop {
+    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hidden md:inline;
+  }
+
   .modal__hero {
     @apply relative bg-gray-100;
   }
 
   .modal__hero-header {
-    @apply hidden md:flex justify-end items-center mb-4;
+    @apply hidden md:flex justify-end items-center p-4;
   }
 
   .modal__hero-header-img {
