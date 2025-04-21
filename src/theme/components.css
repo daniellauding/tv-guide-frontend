@@ -265,6 +265,26 @@
     .footer__copyright {
       @apply text-gray-300;
     }
+
+    .modal__reactions {
+      @apply flex space-x-2;
+    }
+
+    .modal__reactions {
+      @apply flex;
+    }
+
+    .modal__reaction--like {
+      @apply text-red-500 hover:text-red-400;
+    }
+
+    .modal__reaction--dislike {
+      @apply text-gray-400 hover:text-gray-300;
+    }
+
+    .modal__progress-fill {
+      @apply bg-gray-600 w-full;
+    }
   }
 
   /* ==========================================================================
@@ -868,6 +888,26 @@
     @apply p-6 flex flex-col;
   }
 
+  .modal__reactions {
+    @apply flex items-center space-x-6 mt-4 pb-4;
+  }
+
+  .modal__reaction {
+    @apply flex items-center space-x-2 cursor-pointer transition-colors;
+  }
+
+  .modal__reaction-count {
+    @apply text-sm font-medium text-gray-600 dark:text-gray-400;
+  }
+
+  .modal__reaction--like {
+    @apply text-red-500 hover:text-red-400;
+  }
+
+  .modal__reaction--dislike {
+    @apply text-gray-400 hover:text-gray-300;
+  }
+
   .modal__info {
     @apply space-y-6;
   }
@@ -1142,4 +1182,13 @@
   .footer__copyright {
     @apply text-sm text-gray-600 text-center;
   }
+}
+
+/* Light mode styles for reactions */
+.modal__reaction--like {
+  @apply text-red-500 hover:text-red-600;
+}
+
+.modal__reaction--dislike {
+  @apply text-gray-600 hover:text-gray-800;
 }
