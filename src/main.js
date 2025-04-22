@@ -316,6 +316,506 @@ const tvData = {
         },
         {
           time: '19:00',
+          title: 'Kim Milyoner Olmak İster?',
+          type: 'Yarışma',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next'
+        },
+        {
+          time: '21:00',
+          title: 'Kuruluş Osman',
+          type: 'Dizi',
+          duration: '150',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'current',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:15',
+          title: 'Film',
+          type: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:30',
+          title: 'Sabah Kahvesi',
+          type: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '23:30',
+          title: 'Son Durak',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        }
+      ]
+    },
+    {
+      id: 'fox',
+      name: 'FOX TV',
+      logo: 'https://new.static.tv.nu/336964923?forceFit=1&height=80&quality=50&width=80',
+      color: '#FF6600',
+      programs: [
+        {
+          time: '00:00',
+          title: 'Gece Haberleri',
+          type: 'Haber',
+          duration: '30',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '00:30',
+          title: 'Dizi Tekrarı',
+          type: 'Dizi',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '02:30',
+          title: 'Film',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '04:30',
+          title: 'Sabah Haberleri',
+          type: 'Haber',
+          duration: '90',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '06:00',
+          title: 'İsmail Küçükkaya ile Çalar Saat',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '180',
+          state: 'past'
+        },
+        {
+          time: '09:00',
+          title: 'Çağla ile Yeni Bir Gün',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '180',
+          state: 'past'
+        },
+        {
+          time: '10:00',
+          title: 'Yasak Elma',
+          type: 'Dizi',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'live',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '12:00',
+          title: 'Fox Ana Haber',
+          type: 'Haber',
+          duration: '60',
+          state: 'next',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '13:00',
+          title: 'Evlilik Hakkında Her Şey',
+          type: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '120',
+          state: 'next'
+        },
+        {
+          time: '15:00',
+          title: 'Fulya ile Umudun Olsun',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '120',
+          state: 'next'
+        },
+        {
+          time: '17:00',
+          title: 'Fox Akşam Haberleri',
+          type: 'Haber',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next'
+        },
+        {
+          time: '18:00',
+          title: 'Ana Haber',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '19:00',
+          title: 'Prime Dizi',
+          type: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '120',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:00',
+          title: 'Show Prime',
+          type: 'Program',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:00',
+          title: 'Gece Kuşağı',
+          type: 'Program',
+          duration: '00',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:30',
+          title: 'Çağla ile Yeni Bir Gün',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next'
+        },
+        {
+          time: '23:00',
+          title: 'Fox Ana Haber',
+          type: 'Program',
+          duration: '0',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        }
+      ]
+    },
+    {
+      id: 'star',
+      name: 'Star TV',
+      logo: 'https://new.static.tv.nu/280339015?forceFit=1&height=80&quality=50&width=80',
+      color: '#3366CC',
+      programs: [
+        {
+          time: '00:00',
+          title: 'Gece Bülteni',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '30',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '00:30',
+          title: 'Sinema',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '02:30',
+          title: 'Dizi Tekrarı',
+          type: 'Dizi',
+          duration: '90',
+          state: 'past',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '04:00',
+          title: 'Sabah Yıldızı',
+          type: 'Program',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '06:00',
+          title: 'Star Sabah',
+          type: 'Haber',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '08:00',
+          title: 'Mesut Yar ile Uyanış',
+          type: 'Program',
+          duration: '180',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '10:00',
+          title: 'Aramızda Kalmasın',
+          type: 'Program',
+          duration: '180',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'live',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '13:00',
+          title: 'Star Öğle Haberleri',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '14:00',
+          title: 'Yerli Dizi',
+          type: 'Dizi',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '16:00',
+          title: 'Zuhal Topal',
+          type: 'Program',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Zuhal Topal ile günlük talk show programı. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '18:00',
+          title: 'Star Ana Haber',
+          type: 'Haber',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '19:00',
+          title: 'Yerli Film',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:00',
+          title: 'Ana Dizi',
+          type: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '150',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:00',
+          title: 'Aramızda Kalmasın',
+          type: 'Haber',
+          duration: '0',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '23:00',
+          title: 'Sinema',
+          type: 'Haber',
+          duration: '0',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '23:30',
+          title: 'Gece Haberleri',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '30',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        }
+      ]
+    },
+    {
+      id: 'tv8',
+      name: 'TV8',
+      logo: 'https://new.static.tv.nu/207762871?forceFit=1&height=80&quality=50&width=80',
+      color: '#CC0066',
+      programs: [
+        {
+          time: '00:00',
+          title: 'Survivor All Star',
+          type: 'Program',
+          duration: '150',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '02:30',
+          title: 'Magazin 8',
+          type: 'Magazin',
+          duration: '90',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '04:00',
+          title: 'Günün Yemeği',
+          type: 'Yemek',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '05:00',
+          title: 'Oynat Bakalım',
+          type: 'Eğlence',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '90',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '06:30',
+          title: '8de Sağlık',
+          type: 'Program',
+          duration: '150',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '09:00',
+          title: 'Müge ve Gülşen',
+          type: 'Program',
+          duration: '180',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'live',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '10:00',
+          title: 'Masterchef Türkiye',
+          type: 'Yarışma',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '180',
+          state: 'current',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '13:00',
+          title: 'Survivor Panorama',
+          type: 'Reality',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '15:00',
+          title: 'Çarkıfelek',
+          type: 'Yarışma',
+          duration: '90',
+          state: 'next',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '16:30',
+          title: 'Para Bende',
+          type: 'Yarışma',
+          duration: '90',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '18:00',
+          title: 'TV8 Ana Haber',
+          type: 'Haber',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '19:00',
           title: 'O Ses Türkiye',
           type: 'Yarışma',
           duration: '180',
