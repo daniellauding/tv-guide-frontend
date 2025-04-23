@@ -1992,8 +1992,10 @@ function renderPrograms(selectedDate = null) {
     <div class="program-list">
       ${allChannelsPrograms
         .map(
-          ({ channel, displayPrograms, allPrograms }) => `
-        <div class="program-card" id="channel-${channel.id}" data-channel-id="${channel.id}">
+          ({ channel, displayPrograms, allPrograms }, index) => `
+        <div class="program-card ${index === 0 ? 'first' : ''}" id="channel-${
+            channel.id
+          }" data-channel-id="${channel.id}">
           <div class="program-card__header">
             <div class="program-card__topbar">
               <div class="program-card__info">
@@ -3925,7 +3927,7 @@ function setupScrollBasedSections() {
       touchStartY = 0;
       // Check final position after touch ends
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      updateChannelsVisibility(currentScrollTop, lastScrollTop);
+      // updateChannelsVisibility(currentScrollTop, lastScrollTop);
     },
     { passive: true }
   );
@@ -4149,7 +4151,18 @@ function selectChannel(channelId) {
 
     // Get the element's position
     const rect = programCard.getBoundingClientRect();
-    const absoluteTop = rect.top + window.pageYOffset;
+    let absoluteTop = rect.top + window.pageYOffset;
+
+    if (programCard.classList.contains('first')) {
+      absoluteTop = 0;
+      offset = 0;
+      console.log('first');
+    } else {
+      isAutoScrolling = true;
+      setTimeout(() => {
+        isAutoScrolling = false;
+      }, 1000);
+    }
 
     // Scroll to position with offset
     window.scrollTo({
