@@ -495,11 +495,11 @@
 
   .channel-card__img {
     @apply w-14 h-14 md:w-14 md:h-14 logo-channel flex items-center justify-center 
-           rounded-lg border-light border text-black;
+           rounded-lg border-light border text-black p-2;
   }
 
   .channel-card__img-img {
-    @apply h-8 md:h-10 w-auto object-contain;
+    @apply object-contain;
   }
 
   /* ==========================================================================
@@ -563,7 +563,7 @@
   }
 
   .program-card__header .program-card__logo {
-    @apply flex items-center justify-center rounded-lg border-light border text-black min-w-10 min-h-10 md:min-w-12 md:min-h-12;
+    @apply flex items-center justify-center rounded-lg border-light border text-black min-w-10 min-h-10 md:min-w-12 md:min-h-12 p-2;
   }
 
   .program-card__header .program-card__title {
@@ -587,11 +587,11 @@
   }
 
   .program-card__logo {
-    @apply flex items-center justify-center rounded-lg min-w-10 min-h-10 md:min-w-12 md:min-h-12;
+    @apply flex items-center justify-center rounded-lg h-6 w-6;
   }
 
   .program-card__logo-img {
-    @apply h-6 md:h-8 w-auto object-contain;
+    @apply object-contain;
   }
 
   .program-card__title {
@@ -686,7 +686,7 @@
      ========================================================================== */
 
   .search {
-    @apply bg-white border-t border-b border-gray-200 shadow-sm absolute z-50 w-full;
+    @apply bg-white border-t border-b border-gray-200 shadow-sm absolute top-0 z-50 w-full;
   }
 
   .search__container {

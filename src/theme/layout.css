@@ -87,6 +87,10 @@
     transform: translateY(0);
   }
 
+  .schedule-toggle-btn {
+    @apply bg-gray-800 hover:bg-gray-700 hover:text-gray-300 dark:focus:ring-gray-600;
+  }
+
   /* ==========================================================================
      Nav-bar Controls
      ========================================================================== */
@@ -142,7 +146,7 @@
   }
 
   .channel-list__wrapper {
-    @apply flex space-x-4 overflow-x-auto scrollbar-hide relative w-full items-center justify-start md:justify-center;
+    @apply flex space-x-2 overflow-x-auto scrollbar-hide relative w-full items-center justify-start md:justify-center;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     overflow-y: hidden;
@@ -272,10 +276,7 @@
      ========================================================================== */
 
   .schedule-toggle-btn {
-    @apply p-1.5 rounded-full transition-colors 
-           hover:bg-gray-100 hover:text-gray-700 
-           dark:hover:bg-gray-700 dark:hover:text-gray-300
-           focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600;
+    @apply p-1.5 rounded-full transition-colors bg-gray-100 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300;
   }
 
   /* ==========================================================================

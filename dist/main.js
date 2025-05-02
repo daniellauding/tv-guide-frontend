@@ -1738,6 +1738,8 @@ const tvData = {
   ]
 };
 
+let isAutoScrolling = false;
+
 // Add this helper function to generate realistic dates
 function generateDateRange(daysBack = 0, daysForward = 6) {
   const dates = [];
@@ -1990,8 +1992,10 @@ function renderPrograms(selectedDate = null) {
     <div class="program-list">
       ${allChannelsPrograms
         .map(
-          ({ channel, displayPrograms, allPrograms }) => `
-        <div class="program-card" id="channel-${channel.id}" data-channel-id="${channel.id}">
+          ({ channel, displayPrograms, allPrograms }, index) => `
+        <div class="program-card ${index === 0 ? 'first' : ''}" id="channel-${
+            channel.id
+          }" data-channel-id="${channel.id}">
           <div class="program-card__header">
             <div class="program-card__topbar">
               <div class="program-card__info">
@@ -2006,11 +2010,10 @@ function renderPrograms(selectedDate = null) {
                 <button class="schedule-toggle-btn ml-auto" 
                   data-channel-id="${channel.id}" 
                   onclick="toggleSchedule('${channel.id}')"
-                  title="${showAllPrograms ? 'Sadece güncel programları göster' : 'Tüm programları göster'}"
-                >${createIcon(
-                  channel.expanded ? 'chevron-up' : 'chevron-down',
-                  'w-4 h-4'
-                )}</button>
+                  title="${
+                    showAllPrograms ? 'Sadece güncel programları göster' : 'Tüm programları göster'
+                  }"
+                >${createIcon(channel.expanded ? 'chevron-up' : 'chevron-down', 'w-4 h-4')}</button>
               </div>
             </div>
           </div>
@@ -2069,53 +2072,53 @@ function renderPrograms(selectedDate = null) {
 function toggleSchedule(channelId) {
   const channel = tvData.channels.find(c => c.id === channelId);
   if (!channel) return;
-  
+
   // Toggle the expanded state on the channel object
   channel.expanded = !channel.expanded;
-  
+
   const programsContainer = document.getElementById(`programs-${channelId}`);
   if (!programsContainer) return;
-  
+
   const button = document.querySelector(`button[data-channel-id="${channelId}"]`);
   if (!button) return;
 
   if (!channel.expanded) {
     // Collapse to show only relevant programs
     programsContainer.removeAttribute('data-expanded');
-    
+
     // Change to chevron down icon
     button.innerHTML = createIcon('chevron-down', 'w-4 h-4');
     button.setAttribute('title', 'Tüm programları göster');
   } else {
     // Expand to show all programs
     programsContainer.setAttribute('data-expanded', 'true');
-    
+
     // Change to chevron up icon
     button.innerHTML = createIcon('chevron-up', 'w-4 h-4');
     button.setAttribute('title', 'Sadece güncel programları göster');
   }
-  
+
   // Re-render only this channel's programs
   const { allPrograms } = getRelevantPrograms(channel.programs);
-  
+
   // Find current/live program and upcoming programs
   const currentProgram = allPrograms.find(p => p.state === 'live');
   const upcomingPrograms = allPrograms.filter(p => p.state === 'next');
   const pastPrograms = allPrograms.filter(p => p.state === 'past');
-  
+
   // Determine which programs to show
   let displayPrograms = [];
   if (currentProgram) {
     displayPrograms.push(currentProgram);
   }
   displayPrograms = [...displayPrograms, ...upcomingPrograms.slice(0, 3)];
-  
+
   // If expanded, show all programs
   if (channel.expanded) {
     const remainingUpcoming = upcomingPrograms.slice(3);
     displayPrograms = [...pastPrograms, ...displayPrograms, ...remainingUpcoming];
   }
-  
+
   // Update the program slot content
   programsContainer.innerHTML = displayPrograms
     .map(program => {
@@ -2124,9 +2127,9 @@ function toggleSchedule(channelId) {
       const isLiveProgram = program.state === 'live';
 
       return `
-      <div class="program-slot__item ${program.state}" onclick="showProgramModal('${
-        channelId
-      }', '${program.time}')">
+      <div class="program-slot__item ${program.state}" onclick="showProgramModal('${channelId}', '${
+        program.time
+      }')">
         <div class="program-slot__content">
           <div class="program-slot__details">
             <div class="program-slot__time">${program.time}</div>
@@ -3796,10 +3799,11 @@ const providers = {
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
-  let lastScrollTop = 0;
+  // We now use the global variables instead of local ones
+  // let lastScrollTop = 0; - removed
   let scrollTimeout;
   let touchStartY = 0;
-  let isScrollingDown = false;
+  // let isScrollingDown = false; - removed
   const channelsSection = document.querySelector('.channels');
   const minScrollToHide = 200;
 
@@ -3813,6 +3817,12 @@ function setupScrollBasedSections() {
     if (currentScroll <= 0) {
       channels.classList.remove('visible-on-scroll');
       channels.classList.remove('hidden-on-scroll');
+      return;
+    }
+
+    if (isAutoScrolling) {
+      channels.classList.add('hidden-on-scroll');
+      channels.classList.remove('visible-on-scroll');
       return;
     }
 
@@ -3840,6 +3850,18 @@ function setupScrollBasedSections() {
       // Log direction change
       if (prevScrollingDown !== isScrollingDown) {
         console.log('⚡️ Direction changed:', isScrollingDown ? 'DOWN' : 'UP');
+
+        // Add more detailed logging when scrolling upward
+        if (!isScrollingDown) {
+          console.log('📊 Scroll UP detected (direction -Y):', {
+            currentPosition: currentScrollTop,
+            previousPosition: lastScrollTop,
+            difference: lastScrollTop - currentScrollTop,
+            channelNavVisible: document
+              .querySelector('.channels')
+              ?.classList.contains('visible-on-scroll')
+          });
+        }
       }
 
       updateChannelsVisibility(currentScrollTop, lastScrollTop);
@@ -3905,7 +3927,7 @@ function setupScrollBasedSections() {
       touchStartY = 0;
       // Check final position after touch ends
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      updateChannelsVisibility(currentScrollTop, lastScrollTop);
+      // updateChannelsVisibility(currentScrollTop, lastScrollTop);
     },
     { passive: true }
   );
@@ -3930,10 +3952,54 @@ function setupChannelAnchorScrolling() {
         // Prevent default anchor behavior
         event.preventDefault();
 
+        // Log the channel element click
+        console.log('🔗 Channel anchor clicked:', {
+          channelId,
+          channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
+          elementType: channelElement.tagName,
+          elementClasses: channelElement.className
+        });
+
+        // Check channel nav visibility
+        const channelNav = document.querySelector('.channels');
+        const isChannelNavHiding = channelNav && channelNav.classList.contains('hidden-on-scroll');
+        const isChannelNavVisible =
+          channelNav && channelNav.classList.contains('visible-on-scroll');
+        const channelNavState = isChannelNavHiding
+          ? 'HIDING'
+          : isChannelNavVisible
+          ? 'VISIBLE'
+          : 'NORMAL';
+
+        // Add simple direction & Y log
+        console.log(
+          `🔽 CHANNEL PRESS: ${channelId} | Direction: ${
+            isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'
+          } | Y: ${window.pageYOffset} | Nav: ${channelNavState}`
+        );
+
+        if (isChannelNavHiding) {
+          console.log('🚫 Channel anchor clicked while nav is HIDING', {
+            channelId,
+            scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+          });
+        }
+
         // Find the target program container for this channel
         const targetElement = document.getElementById(`channel-${channelId}`);
 
         if (targetElement) {
+          // Get position information
+          const rect = targetElement.getBoundingClientRect();
+          const absoluteTop = rect.top + window.pageYOffset;
+
+          console.log('📍 Target program position:', {
+            channelId,
+            programYPosition: absoluteTop,
+            relativePosition: rect.top,
+            windowScroll: window.pageYOffset
+          });
+
           // Scroll to the target element with smooth behavior
           targetElement.scrollIntoView({
             behavior: 'smooth',
@@ -3945,6 +4011,8 @@ function setupChannelAnchorScrolling() {
           setTimeout(() => {
             targetElement.classList.remove('highlight-channel');
           }, 2000);
+        } else {
+          console.warn('⚠️ Target element not found for channel anchor:', channelId);
         }
       }
     }
@@ -4019,6 +4087,37 @@ function filterChannels(searchText) {
 function selectChannel(channelId) {
   // Update dropdown trigger text with selected channel name
   const channelDropdownTrigger = document.getElementById('channelDropdownTrigger');
+
+  // Log channel selection
+  console.log('🎯 Channel selected from dropdown:', {
+    channelId,
+    channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown'
+  });
+
+  // Check channel nav visibility
+  const channelNav = document.querySelector('.channels');
+  const isChannelNavHiding = channelNav && channelNav.classList.contains('hidden-on-scroll');
+  const isChannelNavVisible = channelNav && channelNav.classList.contains('visible-on-scroll');
+  const channelNavState = isChannelNavHiding
+    ? 'HIDING'
+    : isChannelNavVisible
+    ? 'VISIBLE'
+    : 'NORMAL';
+
+  // Add simple direction & Y log for consistency
+  console.log(
+    `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
+      window.pageYOffset
+    } | Nav: ${channelNavState}`
+  );
+
+  if (isChannelNavHiding) {
+    console.log('🚫 Channel selected while nav is HIDING', {
+      channelId,
+      scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+    });
+  }
+
   const selectedChannel = document.querySelector(
     `.channel-dropdown-item[data-channel-id="${channelId}"]`
   );
@@ -4052,7 +4151,18 @@ function selectChannel(channelId) {
 
     // Get the element's position
     const rect = programCard.getBoundingClientRect();
-    const absoluteTop = rect.top + window.pageYOffset;
+    let absoluteTop = rect.top + window.pageYOffset;
+
+    if (programCard.classList.contains('first')) {
+      absoluteTop = 0;
+      offset = 0;
+      console.log('first');
+    } else {
+      isAutoScrolling = true;
+      setTimeout(() => {
+        isAutoScrolling = false;
+      }, 1000);
+    }
 
     // Scroll to position with offset
     window.scrollTo({
@@ -4073,7 +4183,7 @@ function selectChannel(channelId) {
   }
 }
 
-document.addEventListener('click', (event) => {
+document.addEventListener('click', event => {
   console.log(event);
 });
 
@@ -4085,7 +4195,7 @@ function setupChannelScrolling() {
   // Add click handler only to the channel-list__wrapper
   channelList.addEventListener('click', event => {
     const channelCard = event.target.closest('.channel-card');
-  
+
     if (!channelCard) return; // Only handle clicks on channel cards
 
     event.preventDefault();
@@ -4093,6 +4203,50 @@ function setupChannelScrolling() {
 
     const channelId = channelCard.dataset.channelId;
     if (!channelId) return;
+
+    // Get the current scroll direction from our global variable
+    const isUpwardScroll = lastScrollTop > 0 && !isScrollingDown;
+    // Check channel nav visibility
+    const channelNav = document.querySelector('.channels');
+    const isChannelNavHiding = channelNav && channelNav.classList.contains('hidden-on-scroll');
+    const isChannelNavVisible = channelNav && channelNav.classList.contains('visible-on-scroll');
+    const channelNavState = isChannelNavHiding
+      ? 'HIDING'
+      : isChannelNavVisible
+      ? 'VISIBLE'
+      : 'NORMAL';
+
+    console.log('Channel clicked:', channelId, 'After upward scroll:', isUpwardScroll);
+
+    // New comprehensive log with direction and Y position
+    console.log(
+      `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
+        window.pageYOffset
+      } | Nav: ${channelNavState}`
+    );
+
+    if (isUpwardScroll) {
+      console.log('⬆️ User clicked on channel after scrolling UP (direction -Y)');
+
+      // Check if channel navigation is visible
+      if (channelNav && channelNav.classList.contains('visible-on-scroll')) {
+        console.log(
+          '🎯 Important! Channel clicked when nav is visible after scrolling UP (-Y direction)',
+          {
+            channelId,
+            scrollPosition: window.pageYOffset || document.documentElement.scrollTop,
+            timestamp: new Date().toISOString()
+          }
+        );
+      }
+    }
+
+    if (isChannelNavHiding) {
+      console.log('🚫 Channel clicked while nav is HIDING', {
+        channelId,
+        scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+      });
+    }
 
     // Update active states
     document.querySelectorAll('.channel-card').forEach(card => {
@@ -4119,14 +4273,38 @@ function setupChannelScrolling() {
       const rect = programCard.getBoundingClientRect();
       let absoluteTop = rect.top + window.pageYOffset;
 
+      // Log channel and position information
+      console.log('📺 Channel click details:', {
+        channelId,
+        channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
+        programYPosition: absoluteTop,
+        relativePosition: rect.top,
+        windowScroll: window.pageYOffset,
+        offset
+      });
+
       if (channelCard.classList.contains('first')) {
         absoluteTop = 0;
         offset = 0;
         console.log('first');
+      } else {
+        isAutoScrolling = true;
+        setTimeout(() => {
+          isAutoScrolling = false;
+        }, 1000);
       }
       window.scrollTo({
         top: absoluteTop - offset,
         behavior: 'smooth'
+      });
+    } else {
+      // Log when program card isn't found
+      console.warn('⚠️ Program card not found for channel:', {
+        channelId,
+        channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
+        availablePrograms: Array.from(document.querySelectorAll('.program-card')).map(
+          card => card.dataset.channelId
+        )
       });
     }
   });
@@ -4272,3 +4450,7 @@ window.isLive = isLive;
 window.isPast = isPast;
 window.calculateProgramProgress = calculateProgramProgress;
 window.toggleSchedule = toggleSchedule;
+
+// Declare global variables for tracking scroll direction
+let lastScrollTop = 0;
+let isScrollingDown = false;
