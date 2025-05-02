@@ -88,7 +88,7 @@
   }
 
   .schedule-toggle-btn {
-    @apply bg-gray-700 hover:bg-gray-700 hover:text-gray-300 dark:focus:ring-gray-600;
+    @apply bg-gray-800 hover:bg-gray-700 hover:text-gray-300 dark:focus:ring-gray-600;
   }
 
   /* ==========================================================================
@@ -394,5 +394,78 @@
   /* Ensure header stays above channels */
   .header {
     @apply sticky top-0 z-50;
+  }
+
+  /* ==========================================================================
+     Floating Action Button (FAB) and Modal Overlay
+     ========================================================================== */
+
+  .fab-menu-btn {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 100;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #7c3aed;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .fab-menu-btn:active,
+  .fab-menu-btn:hover {
+    background: #5b21b6;
+  }
+  @media (min-width: 768px) {
+    .fab-menu-btn {
+      display: none;
+    }
+  }
+
+  .fab-menu-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 101;
+    background: rgba(30, 0, 60, 0.98);
+    display: none;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    transition: opacity 0.3s;
+  }
+  .fab-menu-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+  .fab-menu-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem 0.5rem 1.5rem;
+  }
+  .fab-menu-modal__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .fab-menu-modal__close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+  }
+  .fab-menu-modal__content {
+    flex: 1;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    overflow-y: auto;
   }
 }
