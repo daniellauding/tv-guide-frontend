@@ -417,8 +417,7 @@
   }
 
   .mobile-menu-backdrop#fabMenuBackdrop {
-    @apply opacity-50 bg-transparent pointer-events-auto;
-    z-index: 1001;
+    @apply opacity-50 bg-transparent pointer-events-auto z-30;
   }
 
   .fab-menu-modal .mobile-dropdown__content {

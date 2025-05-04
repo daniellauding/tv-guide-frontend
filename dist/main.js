@@ -4470,7 +4470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (fabBackdrop) {
     fabBackdrop.addEventListener('click', function () {
-      console.log('Backdrop clicked!');
+      // console.log('Backdrop clicked!');
       closeFabMenuModal();
     });
   } else {
