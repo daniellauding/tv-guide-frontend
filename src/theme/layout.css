@@ -159,11 +159,11 @@
   .date-nav {
     @apply md:flex fixed z-30;
     top: 65px;
-    @apply md:top-0 md:relative;
+    @apply md:top-0 md:relative w-full overflow-x-auto;
   }
 
   .date-nav__controls {
-    @apply flex items-center justify-center space-x-4 py-4;
+    @apply flex items-center justify-start space-x-4 py-4;
   }
 
   .date-nav.desktop-mode {
@@ -186,7 +186,8 @@
   }
 
   .date-nav__inner {
-    @apply mx-auto max-w-7xl;
+    /* @apply mx-auto max-w-7xl; */
+    @apply pl-4;
   }
 
   .date-nav .date-list__scroll {
