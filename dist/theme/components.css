@@ -69,7 +69,7 @@
 
     /* Date Navigation */
     .date-nav {
-      @apply bg-body-dark border-b-0;
+      @apply bg-body-dark border-gray-700;
     }
 
     .date-nav-item {
@@ -507,7 +507,7 @@
      ========================================================================== */
 
   .date-nav {
-    @apply bg-body-light border-b-0 md:border-0 border-gray-200 sticky z-30;
+    @apply bg-body-light border-b-0 md:border-0 border-b border-gray-200 sticky z-30;
   }
 
   .date-nav__controls {

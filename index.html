@@ -134,60 +134,6 @@
       </div> -->
     </header>
 
-    <!-- Mobile Dropdowns - Hidden on desktop -->
-    <div class="mobile-dropdowns">
-      <!-- Provider Dropdown -->
-      <button
-        id="providerDropdownTrigger"
-        class="mobile-dropdown-trigger"
-        onclick="toggleProviderDropdown()"
-      >
-        <span id="selectedProviderText">Select Provider</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-
-      <!-- Channel Dropdown -->
-      <button
-        id="channelDropdownTrigger"
-        class="mobile-dropdown-trigger"
-        onclick="toggleChannelDropdown()"
-      >
-        <span>Select Channel</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-
-      <!-- Date Dropdown -->
-      <button
-        id="dateDropdownTrigger"
-        class="mobile-dropdown-trigger"
-        onclick="toggleDateDropdown()"
-      >
-        <span id="selectedDateText">Today</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-    </div>
-
     <!-- Provider Dropdown Content -->
     <div id="providerDropdown" class="provider-dropdown mobile-dropdown">
       <div class="provider-dropdown__header mobile-dropdown__header">
@@ -481,7 +427,9 @@
     </footer>
 
     <!-- Floating FAB Menu Button and Modal (injected by JS, but fallback for no-JS) -->
-    <button class="fab-menu-btn" style="display:none;">&#9776;</button>
+    <button class="fab-menu-btn" style="display:none;">
+      <span class="icon icon-hamburger"></span>
+    </button>
     <div id="fabMenuBackdrop" class="mobile-menu-backdrop" style="display:none;"></div>
     <div class="fab-menu-modal mobile-dropdown">
       <div class="channel-dropdown__header mobile-dropdown__header">

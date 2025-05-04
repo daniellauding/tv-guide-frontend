@@ -157,8 +157,8 @@
      ========================================================================== */
 
   .date-nav {
-    @apply hidden md:flex sticky z-30;
-    top: 124px;
+    @apply md:flex fixed z-30;
+    top: 65px;
     @apply md:top-0 md:relative;
   }
 
@@ -186,19 +186,18 @@
   }
 
   .date-nav__inner {
-    @apply mx-auto max-w-7xl pl-4;
+    @apply mx-auto max-w-7xl;
   }
 
   .date-nav .date-list__scroll {
-    @apply relative overflow-hidden flex-1;
+    @apply relative flex items-center justify-center overflow-x-hidden;
   }
 
   .date-nav .date-list__wrapper {
-    @apply flex space-x-2 overflow-x-auto md:overflow-x-hidden relative scrollbar-hide md:justify-center;
+    @apply flex space-x-2 overflow-x-auto scrollbar-hide relative w-full items-center justify-start md:justify-center;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow-y: hidden;
   }
 
   .date-nav .date-list__wrapper::-webkit-scrollbar {
@@ -401,10 +400,14 @@
      ========================================================================== */
 
   .fab-menu-btn {
-    @apply fixed right-6 bottom-6 z-20 w-14 h-14 rounded-full bg-purple-600 text-white 
+    @apply fixed right-6 bottom-6 z-20 w-14 h-14 rounded-full bg-[#f79133] text-white 
           flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.18)] text-2xl 
           cursor-pointer transition-colors duration-200
-          hover:bg-purple-800 active:bg-purple-800 md:hidden;
+          hover:bg-[#f79133] active:bg-[#f79133] md:hidden;
+  }
+
+  .fab-menu-btn .icon {
+    @apply text-white;
   }
 
   .fab-menu-modal {
