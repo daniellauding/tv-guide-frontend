@@ -3114,12 +3114,12 @@ function initializeChannels() {
       atv: true,
       fox: true,
       star: true,
-      tv8: false,
+      tv8: true,
       trt1: true,
       kanal7: true,
       teve2: true,
       beyaztv: true,
-      ntv: false
+      ntv: true
     },
     providerTwo: {
       show: true,
