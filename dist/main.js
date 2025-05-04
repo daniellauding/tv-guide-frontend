@@ -1209,6 +1209,356 @@ const tvData = {
       ]
     },
     {
+      id: 'teve2',
+      name: 'Teve2',
+      logo: 'https://new.static.tv.nu/65792923?forceFit=1&height=80&quality=50&width=80',
+      programs: [
+        {
+          time: '00:00',
+          title: 'Gece Haberleri',
+          type: 'Haber',
+          duration: '30',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '00:30',
+          title: 'Sinema',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '02:30',
+          title: 'Dizi Tekrarı',
+          type: 'Dizi',
+          duration: '90',
+          state: 'past',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '04:00',
+          title: 'Magazin',
+          type: 'Magazin',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '05:00',
+          title: 'Müzik',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '06:00',
+          title: 'Sabah Keyfi',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '180',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '09:00',
+          title: '2. Sayfa',
+          type: 'Magazin',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '10:00',
+          title: 'Müge ve Gülşen',
+          type: 'Program',
+          duration: '180',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'live'
+        },
+        {
+          time: '13:00',
+          title: 'Öğlen Haberleri',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '14:00',
+          title: 'Yerli Dizi',
+          type: 'Dizi',
+          duration: '120',
+          state: 'next',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '16:00',
+          title: 'Magazin',
+          type: 'Magazin',
+          duration: '120',
+          state: 'next',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '18:00',
+          title: 'Ana Haber',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '19:00',
+          title: 'Dizi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          type: 'Dizi',
+          duration: '120',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:00',
+          title: 'Sinema',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:00',
+          title: 'Gece Kuşağı',
+          type: 'Program',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:30',
+          title: 'Sabah Keyfi',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          type: 'Program',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '23:00',
+          title: 'Dizi Tekrarı',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        }
+      ]
+    },
+    {
+      id: 'beyaztv',
+      name: 'Beyaz TV',
+      logo: 'https://new.static.tv.nu/53729725?forceFit=1&height=80&quality=50&width=80',
+      programs: [
+        {
+          time: '00:00',
+          title: 'Gece Haberleri',
+          type: 'Haber',
+          duration: '30',
+          state: 'past',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '00:30',
+          title: 'Sinema',
+          type: 'Film',
+          duration: '120',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '02:30',
+          title: 'Dizi Tekrarı',
+          type: 'Dizi',
+          duration: '90',
+          state: 'past',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '04:00',
+          title: 'Belgesel',
+          type: 'Belgesel',
+          duration: '60',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '05:00',
+          title: 'Sabah Namazı',
+          type: 'Din',
+          duration: '30',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '05:30',
+          title: 'Nur Viral',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '150',
+          state: 'past',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '08:00',
+          title: 'Sabah Haberleri',
+          type: 'Haber',
+          duration: '120',
+          state: 'past',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '10:00',
+          title: 'Uyan Türkiyem',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '180',
+          state: 'current',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '13:00',
+          title: 'Öğle Haberleri',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          type: 'Haber',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '14:00',
+          title: 'Söylemezsem Olmaz',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          type: 'Program',
+          duration: '180',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '17:00',
+          title: 'Beyaz Ana Haber',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '18:00',
+          title: 'Dinamit',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '120',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '20:00',
+          title: 'Ana Haber',
+          type: 'Haber',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '60',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '21:00',
+          title: 'Yerli Film',
+          type: 'Film',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '120',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:00',
+          title: 'Gece Kuşağı',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '22:30',
+          title: 'Belgesel',
+          type: 'Program',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          duration: '0',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        },
+        {
+          time: '23:00',
+          title: 'Gece Haberleri',
+          type: 'Program',
+          duration: '0',
+          hero: 'https://new.static.tv.nu/366437357?forceFit=0&height=1200&quality=50&width=1200',
+          state: 'next',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices erat a dolor hendrerit, nec maximus orci rutrum. Integer vel vehicula nibh, sit amet auctor sem. Etiam vitae aliquet neque. Phasellus porta nec turpis in venenatis. Praesent eget feugiat erat, sit amet euismod velit. Praesent ut arcu ligula. Nunc consequat maximus libero, a porttitor urna facilisis ut. In imperdiet ex id ex convallis varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer a est non tortor malesuada ornare. Phasellus egestas lacus sit amet lobortis facilisis. Curabitur bibendum pulvinar scelerisque.'
+        }
+      ]
+    },
+    {
       id: 'ntv',
       name: 'NTV',
       logo: 'https://new.static.tv.nu/79052397?forceFit=1&height=80&quality=50&width=80',
@@ -1530,9 +1880,9 @@ function toggleAllSchedules() {
   const previousState = showAllPrograms;
   showAllPrograms = !showAllPrograms;
 
-  console.group('Toggle All Schedules');
-  console.log('Previous State:', previousState ? 'All Programs' : 'Current + 3 Upcoming');
-  console.log('New State:', showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming');
+  // console.group('Toggle All Schedules');
+  // console.log('Previous State:', previousState ? 'All Programs' : 'Current + 3 Upcoming');
+  // console.log('New State:', showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming');
 
   // Update button appearance based on state
   if (showAllPrograms) {
@@ -1546,7 +1896,7 @@ function toggleAllSchedules() {
   // Get current date
   const activeDay = document.querySelector('.date-nav-item.active');
   const selectedDate = activeDay ? activeDay.dataset.date : new Date().toISOString().split('T')[0];
-  console.log('Selected Date:', selectedDate);
+  // console.log('Selected Date:', selectedDate);
 
   // Re-render programs with current date
   renderPrograms(selectedDate);
@@ -1556,13 +1906,13 @@ function toggleAllSchedules() {
     setTimeout(() => {
       const todayProgram = document.querySelector('.program-slot__item.today');
       if (todayProgram) {
-        console.log(
-          'Scrolling to live program:',
-          todayProgram.querySelector('.program-slot__title').textContent
-        );
+        // console.log(
+        //   'Scrolling to live program:',
+        //   todayProgram.querySelector('.program-slot__title').textContent
+        // );
         todayProgram.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
-        console.log('No live program found to scroll to');
+        // console.log('No live program found to scroll to');
       }
     }, 100);
   }
@@ -1575,8 +1925,8 @@ function renderPrograms(selectedDate = null) {
   const content = document.querySelector('.programs__content');
   const channels = tvData.channels.filter(c => c.enabled);
 
-  console.group('Program Visibility Debug');
-  console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
+  // console.group('Program Visibility Debug');
+  // console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
 
   const allChannelsPrograms = channels.map(channel => {
     const { allPrograms } = getRelevantPrograms(channel.programs, selectedDate);
@@ -1586,17 +1936,17 @@ function renderPrograms(selectedDate = null) {
     const upcomingPrograms = allPrograms.filter(p => p.state === 'next');
     const pastPrograms = allPrograms.filter(p => p.state === 'past');
 
-    console.group(`Channel: ${channel.name}`);
-    console.log(
-      'Live Program:',
-      currentProgram
-        ? {
-            title: currentProgram.title,
-            time: currentProgram.time,
-            state: currentProgram.state
-          }
-        : 'None'
-    );
+    // console.group(`Channel: ${channel.name}`);
+    // console.log(
+    //   'Live Program:',
+    //   currentProgram
+    //     ? {
+    //         title: currentProgram.title,
+    //         time: currentProgram.time,
+    //         state: currentProgram.state
+    //       }
+    //     : 'None'
+    // );
 
     // Always show current + 3 upcoming
     let displayPrograms = [];
@@ -1605,14 +1955,14 @@ function renderPrograms(selectedDate = null) {
     }
     displayPrograms = [...displayPrograms, ...upcomingPrograms.slice(0, 3)];
 
-    console.log(
-      'Default View Programs:',
-      displayPrograms.map(p => ({
-        title: p.title,
-        time: p.time,
-        state: p.state
-      }))
-    );
+    // console.log(
+    //   'Default View Programs:',
+    //   displayPrograms.map(p => ({
+    //     title: p.title,
+    //     time: p.time,
+    //     state: p.state
+    //   }))
+    // );
 
     // If showAllPrograms is true, add all other programs while maintaining order
     if (showAllPrograms) {
@@ -1626,17 +1976,17 @@ function renderPrograms(selectedDate = null) {
       });
     }
 
-    console.groupEnd();
+    // console.groupEnd();
 
     return { channel, displayPrograms, allPrograms };
   });
 
-  console.log('Total Channels:', channels.length);
-  console.log(
-    'Total Programs Visible:',
-    allChannelsPrograms.reduce((sum, ch) => sum + ch.displayPrograms.length, 0)
-  );
-  console.groupEnd();
+  // console.log('Total Channels:', channels.length);
+  // console.log(
+  //   'Total Programs Visible:',
+  //   allChannelsPrograms.reduce((sum, ch) => sum + ch.displayPrograms.length, 0)
+  // );
+  // console.groupEnd();
 
   content.innerHTML = `
     <div class="program-list">
@@ -1919,12 +2269,12 @@ function showProgramModal(channelId, programTime) {
   const progress = program.state === 'live' || program.state === 'current' ? 50 : 0; // Set progress to 50% for live/current programs
 
   // Log program state for debugging
-  console.log('Program State:', {
-    title: program.title,
-    time: program.time,
-    state: programState,
-    progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A'
-  });
+  // console.log('Program State:', {
+  //   title: program.title,
+  //   time: program.time,
+  //   state: programState,
+  //   progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A'
+  // });
 
   // Update modal content and state classes
   const modalContent = modal.querySelector('.modal__content');
@@ -2119,13 +2469,13 @@ function showProgramModal(channelId, programTime) {
   }
 
   // Log program state with channel info
-  console.log('Program State:', {
-    title: program.title,
-    time: program.time,
-    state: programState,
-    progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A',
-    channel: channel.name
-  });
+  // console.log('Program State:', {
+  //   title: program.title,
+  //   time: program.time,
+  //   state: programState,
+  //   progress: program.state === 'live' || program.state === 'current' ? progress + '%' : 'N/A',
+  //   channel: channel.name
+  // });
 }
 
 function closeModal() {
@@ -3301,7 +3651,7 @@ function isPast(programTime, selectedDate = null) {
 function setupChannelSectionVisibility() {
   // This functionality is now handled by setupScrollBasedSections
   // Keeping this function as a stub to avoid breaking existing code
-  console.log('Channel section visibility is now handled by setupScrollBasedSections');
+  // console.log('Channel section visibility is now handled by setupScrollBasedSections');
 }
 
 // Update setupDateNavigation function
@@ -3461,7 +3811,7 @@ function setupScrollBasedSections() {
     const channels = document.querySelector('.channels');
     if (!channels) return;
 
-    console.log(currentScroll, lastScroll);
+    // console.log(currentScroll, lastScroll);
 
     // Reset behavior when at the top of the page
     if (currentScroll <= 0) {
@@ -3499,18 +3849,18 @@ function setupScrollBasedSections() {
 
       // Log direction change
       if (prevScrollingDown !== isScrollingDown) {
-        console.log('⚡️ Direction changed:', isScrollingDown ? 'DOWN' : 'UP');
+        // console.log('⚡️ Direction changed:', isScrollingDown ? 'DOWN' : 'UP');
 
         // Add more detailed logging when scrolling upward
         if (!isScrollingDown) {
-          console.log('📊 Scroll UP detected (direction -Y):', {
-            currentPosition: currentScrollTop,
-            previousPosition: lastScrollTop,
-            difference: lastScrollTop - currentScrollTop,
-            channelNavVisible: document
-              .querySelector('.channels')
-              ?.classList.contains('visible-on-scroll')
-          });
+          // console.log('📊 Scroll UP detected (direction -Y):', {
+          //   currentPosition: currentScrollTop,
+          //   previousPosition: lastScrollTop,
+          //   difference: lastScrollTop - currentScrollTop,
+          //   channelNavVisible: document
+          //     .querySelector('.channels')
+          //     ?.classList.contains('visible-on-scroll')
+          // });
         }
       }
 
@@ -3539,7 +3889,7 @@ function setupScrollBasedSections() {
     e => {
       touchStartY = e.touches[0].clientY;
       lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      console.log('👆 Touch start at Y:', touchStartY);
+      // console.log('👆 Touch start at Y:', touchStartY);
     },
     { passive: true }
   );
@@ -3559,10 +3909,10 @@ function setupScrollBasedSections() {
         isScrollingDown = touchDiff > 0;
 
         // Log touch movement
-        console.log('👆 Touch move:', {
-          diff: touchDiff,
-          direction: isScrollingDown ? 'DOWN' : 'UP'
-        });
+        // console.log('👆 Touch move:', {
+        //   diff: touchDiff,
+        //   direction: isScrollingDown ? 'DOWN' : 'UP'
+        // });
 
         updateChannelsVisibility(currentScrollTop, lastScrollTop);
       }
@@ -3573,7 +3923,7 @@ function setupScrollBasedSections() {
   document.addEventListener(
     'touchend',
     () => {
-      console.log('👆 Touch end');
+      // console.log('👆 Touch end');
       touchStartY = 0;
       // Check final position after touch ends
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -3603,12 +3953,12 @@ function setupChannelAnchorScrolling() {
         event.preventDefault();
 
         // Log the channel element click
-        console.log('🔗 Channel anchor clicked:', {
-          channelId,
-          channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
-          elementType: channelElement.tagName,
-          elementClasses: channelElement.className
-        });
+        // console.log('🔗 Channel anchor clicked:', {
+        //   channelId,
+        //   channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
+        //   elementType: channelElement.tagName,
+        //   elementClasses: channelElement.className
+        // });
 
         // Check channel nav visibility
         const channelNav = document.querySelector('.channels');
@@ -3622,17 +3972,17 @@ function setupChannelAnchorScrolling() {
           : 'NORMAL';
 
         // Add simple direction & Y log
-        console.log(
-          `🔽 CHANNEL PRESS: ${channelId} | Direction: ${
-            isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'
-          } | Y: ${window.pageYOffset} | Nav: ${channelNavState}`
-        );
+        // console.log(
+        //   `🔽 CHANNEL PRESS: ${channelId} | Direction: ${
+        //     isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'
+        //   } | Y: ${window.pageYOffset} | Nav: ${channelNavState}`
+        // );
 
         if (isChannelNavHiding) {
-          console.log('🚫 Channel anchor clicked while nav is HIDING', {
-            channelId,
-            scrollPosition: window.pageYOffset || document.documentElement.scrollTop
-          });
+          // console.log('🚫 Channel anchor clicked while nav is HIDING', {
+          //   channelId,
+          //   scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+          // });
         }
 
         // Find the target program container for this channel
@@ -3643,12 +3993,12 @@ function setupChannelAnchorScrolling() {
           const rect = targetElement.getBoundingClientRect();
           const absoluteTop = rect.top + window.pageYOffset;
 
-          console.log('📍 Target program position:', {
-            channelId,
-            programYPosition: absoluteTop,
-            relativePosition: rect.top,
-            windowScroll: window.pageYOffset
-          });
+          // console.log('📍 Target program position:', {
+          //   channelId,
+          //   programYPosition: absoluteTop,
+          //   relativePosition: rect.top,
+          //   windowScroll: window.pageYOffset
+          // });
 
           // Scroll to the target element with smooth behavior
           targetElement.scrollIntoView({
@@ -3662,7 +4012,7 @@ function setupChannelAnchorScrolling() {
             targetElement.classList.remove('highlight-channel');
           }, 2000);
         } else {
-          console.warn('⚠️ Target element not found for channel anchor:', channelId);
+          // console.warn('⚠️ Target element not found for channel anchor:', channelId);
         }
       }
     }
@@ -3739,10 +4089,10 @@ function selectChannel(channelId) {
   const channelDropdownTrigger = document.getElementById('channelDropdownTrigger');
 
   // Log channel selection
-  console.log('🎯 Channel selected from dropdown:', {
-    channelId,
-    channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown'
-  });
+  // console.log('🎯 Channel selected from dropdown:', {
+  //   channelId,
+  //   channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown'
+  // });
 
   // Check channel nav visibility
   const channelNav = document.querySelector('.channels');
@@ -3755,17 +4105,17 @@ function selectChannel(channelId) {
     : 'NORMAL';
 
   // Add simple direction & Y log for consistency
-  console.log(
-    `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
-      window.pageYOffset
-    } | Nav: ${channelNavState}`
-  );
+  // console.log(
+  //   `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
+  //     window.pageYOffset
+  //   } | Nav: ${channelNavState}`
+  // );
 
   if (isChannelNavHiding) {
-    console.log('🚫 Channel selected while nav is HIDING', {
-      channelId,
-      scrollPosition: window.pageYOffset || document.documentElement.scrollTop
-    });
+    // console.log('🚫 Channel selected while nav is HIDING', {
+    //   channelId,
+    //   scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+    // });
   }
 
   const selectedChannel = document.querySelector(
@@ -3806,7 +4156,7 @@ function selectChannel(channelId) {
     if (programCard.classList.contains('first')) {
       absoluteTop = 0;
       offset = 0;
-      console.log('first');
+      // console.log('first');
     } else {
       isAutoScrolling = true;
       setTimeout(() => {
@@ -3833,9 +4183,9 @@ function selectChannel(channelId) {
   }
 }
 
-document.addEventListener('click', event => {
-  console.log(event);
-});
+// document.addEventListener('click', event => {
+//   console.log(event);
+// });
 
 // Update setupChannelScrolling to use event delegation
 function setupChannelScrolling() {
@@ -3866,36 +4216,36 @@ function setupChannelScrolling() {
       ? 'VISIBLE'
       : 'NORMAL';
 
-    console.log('Channel clicked:', channelId, 'After upward scroll:', isUpwardScroll);
+    // console.log('Channel clicked:', channelId, 'After upward scroll:', isUpwardScroll);
 
     // New comprehensive log with direction and Y position
-    console.log(
-      `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
-        window.pageYOffset
-      } | Nav: ${channelNavState}`
-    );
+    // console.log(
+    //   `🔽 CHANNEL PRESS: ${channelId} | Direction: ${isScrollingDown ? '⬇️ DOWN' : '⬆️ UP'} | Y: ${
+    //     window.pageYOffset
+    //   } | Nav: ${channelNavState}`
+    // );
 
     if (isUpwardScroll) {
-      console.log('⬆️ User clicked on channel after scrolling UP (direction -Y)');
+      // console.log('⬆️ User clicked on channel after scrolling UP (direction -Y)');
 
       // Check if channel navigation is visible
       if (channelNav && channelNav.classList.contains('visible-on-scroll')) {
-        console.log(
-          '🎯 Important! Channel clicked when nav is visible after scrolling UP (-Y direction)',
-          {
-            channelId,
-            scrollPosition: window.pageYOffset || document.documentElement.scrollTop,
-            timestamp: new Date().toISOString()
-          }
-        );
+        // console.log(
+        //   '🎯 Important! Channel clicked when nav is visible after scrolling UP (-Y direction)',
+        //   {
+        //     channelId,
+        //     scrollPosition: window.pageYOffset || document.documentElement.scrollTop,
+        //     timestamp: new Date().toISOString()
+        //   }
+        // );
       }
     }
 
     if (isChannelNavHiding) {
-      console.log('🚫 Channel clicked while nav is HIDING', {
-        channelId,
-        scrollPosition: window.pageYOffset || document.documentElement.scrollTop
-      });
+      // console.log('🚫 Channel clicked while nav is HIDING', {
+      //   channelId,
+      //   scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+      // });
     }
 
     // Update active states
@@ -3924,19 +4274,19 @@ function setupChannelScrolling() {
       let absoluteTop = rect.top + window.pageYOffset;
 
       // Log channel and position information
-      console.log('📺 Channel click details:', {
-        channelId,
-        channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
-        programYPosition: absoluteTop,
-        relativePosition: rect.top,
-        windowScroll: window.pageYOffset,
-        offset
-      });
+      // console.log('📺 Channel click details:', {
+      //   channelId,
+      //   channelName: tvData.channels.find(c => c.id === channelId)?.name || 'Unknown',
+      //   programYPosition: absoluteTop,
+      //   relativePosition: rect.top,
+      //   windowScroll: window.pageYOffset,
+      //   offset
+      // });
 
       if (channelCard.classList.contains('first')) {
         absoluteTop = 0;
         offset = 0;
-        console.log('first');
+        // console.log('first');
       } else {
         isAutoScrolling = true;
         setTimeout(() => {
@@ -4086,12 +4436,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Show the floating button only on mobile
   const fabBtn = document.querySelector('.fab-menu-btn');
   const fabModal = document.querySelector('.fab-menu-modal');
+  const fabBackdrop = document.getElementById('fabMenuBackdrop');
+
+  function closeFabMenuModal() {
+    fabModal.classList.remove('active');
+    fabBackdrop.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
   if (!fabBtn || !fabModal) return;
   if (window.innerWidth < 768) {
     fabBtn.style.display = 'flex';
   } else {
     fabBtn.style.display = 'none';
   }
+  
   window.addEventListener('resize', () => {
     if (window.innerWidth < 768) {
       fabBtn.style.display = 'flex';
@@ -4104,39 +4463,116 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fabBtn.addEventListener('click', () => {
     fabModal.classList.add('active');
+    fabBackdrop.style.display = 'block';
     document.body.style.overflow = 'hidden';
     window.updateFabMenuChannelList();
   });
-  fabModal.querySelector('.fab-menu-modal__close').addEventListener('click', () => {
-    fabModal.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-  fabModal.addEventListener('click', (e) => {
+
+  if (fabBackdrop) {
+    fabBackdrop.addEventListener('click', function () {
+      console.log('Backdrop clicked!');
+      closeFabMenuModal();
+    });
+  } else {
+    console.log('fabMenuBackdrop not found!');
+  }
+
+  fabModal.querySelector('.fab-menu-modal-dropdown__close').addEventListener('click', closeFabMenuModal);
+  fabBackdrop.addEventListener('click', closeFabMenuModal);
+
+  fabModal.addEventListener('click', e => {
     if (e.target === fabModal) {
-      fabModal.classList.remove('active');
-      document.body.style.overflow = '';
+      closeFabMenuModal();
     }
   });
   window.updateFabMenuChannelList = function() {
+    // Render search input above providers
+    let searchHtml = `<div class="fab-menu-search" style="margin-bottom:0.75rem;">
+      <input type="text" id="fabMenuSearchInput" class="channel-dropdown__search-input mobile-dropdown__search-input" placeholder="Search channels..." style="width:100%;padding:0.5rem 1rem;border-radius:0.5rem;border:1px solid #e5e7eb;">
+    </div>`;
+
+    // Render providers above channels
+    const providerKeys = Object.keys(providers);
+    let providersHtml = '<div class="fab-menu-providers" style="display:flex;gap:0.5rem;margin-bottom:1rem;overflow-x:auto;">';
+    providerKeys.forEach(key => {
+      const provider = providers[key];
+      providersHtml += `
+        <button class="provider-card${document.querySelector('.provider-dropdown-item--active')?.dataset.provider === key ? ' provider-card--active' : ''}"
+          data-provider="${key}" style="flex:0 0 auto;padding:0.5rem 1rem;border-radius:0.5rem;font-weight:600;${document.querySelector('.provider-dropdown-item--active')?.dataset.provider === key ? 'background:#ede9fe;color:#5b21b6;' : 'background:#fff;color:#7c3aed;'}">
+          ${provider.name || key}
+        </button>
+      `;
+    });
+    providersHtml += '</div>';
+
     const activeProvider = document.querySelector('.provider-dropdown-item--active')?.dataset.provider;
     if (!activeProvider) return;
     const providerChannels = providers[activeProvider].channels;
     const fabList = document.getElementById('fabMenuChannelList');
     if (!fabList) return;
-    fabList.innerHTML = providerChannels
-      .map(channelId => {
-        const channel = tvData.channels.find(c => c.id === channelId);
-        if (!channel) return '';
-        return `
-        <button class="channel-dropdown-item mobile-dropdown-item" data-channel-id="${channel.id}" onclick="selectChannel('${channel.id}')">
+    fabList.innerHTML =
+      searchHtml +
+      providersHtml +
+      `<div class="channel-wrapper">` +
+      providerChannels
+        .map(channelId => {
+          const channel = tvData.channels.find(c => c.id === channelId);
+          if (!channel) return '';
+          return `
+        <button class="channel-dropdown-item mobile-dropdown-item" data-channel-id="${channel.id}">
           <div class="channel-dropdown-item__img mobile-dropdown-item__img">
-            ${channel.logo ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">` : channel.name[0]}
+            ${
+              channel.logo
+                ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`
+                : channel.name[0]
+            }
           </div>
-          <span class="channel-dropdown-item__text mobile-dropdown-item__text">${channel.name}</span>
+          <span class="channel-dropdown-item__text mobile-dropdown-item__text">${
+            channel.name
+          }</span>
         </button>
       `;
-      })
-      .join('');
+        })
+        .join(''); +`</div>`;
+    // Attach search handler
+    const searchInput = document.getElementById('fabMenuSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', function(e) {
+        const searchText = e.target.value;
+        // Only filter inside the FAB menu
+        const items = fabList.querySelectorAll('.channel-dropdown-item');
+        const searchLower = searchText.toLowerCase();
+        items.forEach(item => {
+          const text = item.querySelector('.channel-dropdown-item__text').textContent.toLowerCase();
+          item.style.display = text.includes(searchLower) ? '' : 'none';
+        });
+      });
+    }
+    // Attach click handler in JS for each provider button
+    fabList.querySelectorAll('.provider-card').forEach(btn => {
+      btn.onclick = function() {
+        const providerId = btn.getAttribute('data-provider');
+        if (providerId) {
+          window.updateProviderView(providerId);
+          setTimeout(() => window.updateFabMenuChannelList(), 50);
+        }
+      };
+    });
+    // Attach click handler in JS for each channel button
+    fabList.querySelectorAll('.channel-dropdown-item').forEach(btn => {
+      btn.onclick = function() {
+        const channelId = btn.getAttribute('data-channel-id');
+        if (channelId) {
+          selectChannel(channelId);
+          // Hide the FAB modal after selection
+          const fabModal = document.querySelector('.fab-menu-modal');
+          if (fabModal) {
+            fabModal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      };
+    });
   };
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('provider-dropdown-item')) {

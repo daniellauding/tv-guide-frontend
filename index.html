@@ -482,12 +482,15 @@
 
     <!-- Floating FAB Menu Button and Modal (injected by JS, but fallback for no-JS) -->
     <button class="fab-menu-btn" style="display:none;">&#9776;</button>
-    <div class="fab-menu-modal">
-      <div class="fab-menu-modal__header">
-        <span class="fab-menu-modal__title">Kanaler</span>
-        <button class="fab-menu-modal__close" aria-label="Close">&times;</button>
+    <div id="fabMenuBackdrop" class="mobile-menu-backdrop" style="display:none;"></div>
+    <div class="fab-menu-modal mobile-dropdown">
+      <div class="channel-dropdown__header mobile-dropdown__header">
+        <h2 class="channel-dropdown__title mobile-dropdown__title">Kanaler</h2>
+        <button class="fab-menu-modal-dropdown__close mobile-dropdown__close" aria-label="Close">
+          <span class="icon-close"></span>
+        </button>
       </div>
-      <div class="fab-menu-modal__content">
+      <div class="mobile-dropdown__content">
         <div id="fabMenuChannelList"></div>
       </div>
     </div>
