@@ -4139,7 +4139,7 @@ function showProgramModal(channelId, programTime) {
 
   // Handle progress bar
   const progressFill = modal.querySelector('.modal__progress-fill');
-  if (progressFill && program.state === 'live') {
+  if (progressFill && (program.state === 'live' || program.state === 'current')) {
     progressFill.style.width = `${progress}%`;
     modal.querySelector('.modal__progress').classList.remove('hidden');
   } else if (progressFill) {

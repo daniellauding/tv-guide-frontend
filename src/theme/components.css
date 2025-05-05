@@ -681,7 +681,7 @@
   }
 
   .program-slot__item.next .program-slot__title {
-    @apply text-black;
+    @apply text-black font-normal;
   }
 
   .program-slot__live-indicator {
@@ -698,7 +698,7 @@
   }
 
   .program-slot__progress-bar {
-    @apply h-full bg-yellow-500 rounded-full;
+    @apply h-full bg-[#FFCC4C] rounded-full;
   }
 
   /* ==========================================================================
@@ -832,19 +832,19 @@
   }
 
   .modal__header--mobile {
-    @apply flex justify-between items-center p-4 md:hidden;
+    @apply flex justify-between items-center p-4 md:hidden fixed w-full md:relative z-20;
   }
 
   .modal__back-btn {
-    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
+    @apply p-2 text-white;
   }
 
   .modal__share-btn {
-    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
+    @apply p-2 text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
   }
 
   .modal__share-btn.mobile {
-    @apply p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white md:hidden;
+    @apply p-2 text-white md:hidden;
   }
 
   .modal__share-btn.desktop {
@@ -872,7 +872,7 @@
   }
 
   .modal__channel-info {
-    @apply flex items-start;
+    @apply flex items-start flex-col gap-4;
   }
 
   .modal__channel-logo {
@@ -1218,7 +1218,7 @@
 }
 
 .button--icon.btn--next, .button--icon.btn--prev {
-  @apply bg-white shadow-md rounded-full w-8 h-8 min-w-8 min-h-8;
+  @apply bg-white shadow-md rounded-full w-8 h-8 min-w-8 min-h-8 z-20;
 }
 
 .button--icon.btn--next .icon svg, .button--icon.btn--prev .icon svg {
