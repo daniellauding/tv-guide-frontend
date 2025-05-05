@@ -3777,13 +3777,6 @@ function renderPrograms(selectedDate = null) {
                 <div class="program-card__details">
                   <h2 class="program-card__title">${channel.name}</h2>
                 </div>
-                <button class="schedule-toggle-btn ml-auto" 
-                  data-channel-id="${channel.id}" 
-                  onclick="toggleSchedule('${channel.id}')"
-                  title="${
-                    showAllPrograms ? 'Sadece güncel programları göster' : 'Tüm programları göster'
-                  }"
-                >${createIcon(channel.expanded ? 'chevron-up' : 'chevron-down', 'w-4 h-4')}</button>
               </div>
             </div>
           </div>
@@ -3830,6 +3823,15 @@ function renderPrograms(selectedDate = null) {
               })
               .join('')}
           </div>
+          <button class="schedule-toggle-btn" 
+            data-channel-id="${channel.id}" 
+            onclick="toggleSchedule('${channel.id}')"
+            title="${
+              showAllPrograms ? 'Sadece güncel programları göster' : 'Tüm programları göster'
+            }"
+          >
+            ${createIcon(channel.expanded ? 'chevron-up' : 'chevron-down', 'w-4 h-4')}
+          </button>
         </div>
       `
         )
@@ -3845,6 +3847,7 @@ function toggleSchedule(channelId) {
 
   // Toggle the expanded state on the channel object
   channel.expanded = !channel.expanded;
+  renderPrograms();
 
   const programsContainer = document.getElementById(`programs-${channelId}`);
   if (!programsContainer) return;
