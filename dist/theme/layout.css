@@ -45,11 +45,11 @@
   }
 
   .btn--prev {
-    @apply absolute left-0;
+    @apply absolute left-2;
   }
 
   .btn--next {
-    @apply absolute right-0;
+    @apply absolute right-2;
   }
 
   /* ==========================================================================
@@ -119,8 +119,10 @@
 
   .channels.visible-on-scroll {
     position: fixed;
-    top: 131px;
+    top: 130px;
     opacity: 1;
+
+    @apply md:relative md:top-0;
   }
 
   .channels.hidden-on-scroll {
@@ -159,7 +161,7 @@
   .date-nav {
     @apply md:flex fixed z-30;
     top: 65px;
-    @apply md:top-0 md:relative w-full overflow-x-auto;
+    @apply md:top-0 md:relative w-full overflow-x-auto md:justify-center;
   }
 
   .date-nav__controls {
@@ -187,7 +189,7 @@
 
   .date-nav__inner {
     /* @apply mx-auto max-w-7xl; */
-    @apply pl-4;
+    /* @apply pl-4; */
   }
 
   .date-nav .date-list__scroll {
@@ -431,6 +433,10 @@
   }
 
   .fab-menu-modal .mobile-dropdown__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
     overflow: hidden;
   }
 
@@ -443,7 +449,14 @@
   }
 
   .fab-menu-modal .mobile-dropdown__content .mobile-dropdown-item .mobile-dropdown-item__img {
-    @apply min-w-14 min-h-14 md:min-w-14 md:min-h-14;
+    @apply min-w-14 min-h-14 md:min-w-14 md:min-h-14 p-2;
+  }
+
+  #fabMenuChannelList {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
 
   .channel-wrapper {
@@ -451,4 +464,45 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 0;
   }
+
+  .fab-menu-search {
+    @apply p-4;
+  }
+
+
+/* Fab provider nav shadows */
+  .fab-provider-list__scroll::before,
+  .fab-provider-list__scroll::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-8 pointer-events-none z-10 opacity-0 transition-opacity duration-200;
+  }
+
+  .fab-provider-list__scroll::before {
+    @apply left-0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .fab-provider-list__scroll::after {
+    @apply right-0;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
+  }
+
+  .fab-provider-list__scroll.shadow-left::before {
+    @apply opacity-100;
+  }
+
+  .fab-provider-list__scroll.shadow-right::after {
+    @apply opacity-100;
+  }
+
+  .dark .fab-provider-list__scroll::before {
+    background-image: linear-gradient(to right, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+  .dark .fab-provider-list__scroll::after {
+    background-image: linear-gradient(to left, rgba(30, 41, 59, 0.15), transparent);
+  }
+
+
+
 }

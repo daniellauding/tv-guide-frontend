@@ -1208,3 +1208,16 @@
 .modal__reaction--dislike {
   @apply text-gray-600 hover:text-gray-800;
 }
+
+.button--icon.btn--next, .button--icon.btn--prev {
+  @apply bg-white shadow-md rounded-full w-8 h-8 min-w-8 min-h-8;
+}
+
+.button--icon.btn--next .icon svg, .button--icon.btn--prev .icon svg {
+  @apply !w-4 !h-4;
+}
+
+.btn--next:hover, .btn--prev:hover {
+  @apply bg-gray-100;
+}
+
