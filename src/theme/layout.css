@@ -210,6 +210,12 @@
    flex items-center justify-center gap-1 text-sm;
   }
 
+  .chip {
+    @apply rounded-lg h-8 px-3 text-center transition-none 
+   flex items-center justify-center gap-1 text-sm;
+  }
+
+
   .date-nav-item.active {
   }
 
@@ -444,5 +450,13 @@
     @apply h-full overflow-y-auto grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0;
+  }
+
+  .fab-menu-search {
+    @apply p-4;
+  }
+
+  .fab-menu-providers {
+    @apply p-4;
   }
 }

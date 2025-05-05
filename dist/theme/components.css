@@ -80,6 +80,14 @@
       @apply bg-chip-background-dark-active text-chip-text-dark-active hover:bg-chip-background-dark-hover;
     }
 
+    .chip {
+      @apply bg-chip-background-dark text-chip-text-dark hover:bg-chip-background-dark-hover;
+    }
+
+    .chip.chip--active {
+      @apply bg-chip-background-dark-active text-chip-text-dark-active hover:bg-chip-background-dark-hover;
+    }
+
     .modal__channel-logo {
       @apply bg-body-dark border border-gray-700 text-gray-500;
     }
@@ -528,6 +536,14 @@
   }
 
   .date-nav-item.active {
+    @apply bg-chip-background-light-active text-chip-text-light-active hover:bg-chip-background-light-hover;
+  }
+
+  .chip {
+    @apply bg-chip-background-light text-chip-text-light hover:bg-chip-background-light-hover;
+  }
+
+  .chip.chip--active {
     @apply bg-chip-background-light-active text-chip-text-light-active hover:bg-chip-background-light-hover;
   }
 

@@ -210,6 +210,12 @@
    flex items-center justify-center gap-1 text-sm;
   }
 
+  .chip {
+    @apply rounded-lg h-8 px-3 text-center transition-none 
+   flex items-center justify-center gap-1 text-sm;
+  }
+
+
   .date-nav-item.active {
   }
 

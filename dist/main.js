@@ -4497,8 +4497,12 @@ document.addEventListener('DOMContentLoaded', () => {
     providerKeys.forEach(key => {
       const provider = providers[key];
       providersHtml += `
-        <button class="provider-card${document.querySelector('.provider-dropdown-item--active')?.dataset.provider === key ? ' provider-card--active' : ''}"
-          data-provider="${key}" style="flex:0 0 auto;padding:0.5rem 1rem;border-radius:0.5rem;font-weight:600;${document.querySelector('.provider-dropdown-item--active')?.dataset.provider === key ? 'background:#ede9fe;color:#5b21b6;' : 'background:#fff;color:#7c3aed;'}">
+        <button class="chip provider-card${
+          document.querySelector('.provider-dropdown-item--active')?.dataset.provider === key
+            ? ' chip--active provider-card--active'
+            : ''
+        }"
+          data-provider="${key}">
           ${provider.name || key}
         </button>
       `;
