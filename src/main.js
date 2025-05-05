@@ -6289,7 +6289,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateFabMenuChannelList = function() {
     // Render search input above providers
     let searchHtml = `<div class="fab-menu-search" style="margin-bottom:0.75rem;">
-      <input type="text" id="fabMenuSearchInput" class="channel-dropdown__search-input mobile-dropdown__search-input" placeholder="Search channels..." style="width:100%;padding:0.5rem 1rem;border-radius:0.5rem;border:1px solid #e5e7eb;">
+      <input type="text" id="fabMenuSearchInput" class="channel-dropdown__search-input mobile-dropdown__search-input" placeholder="Search channels...">
     </div>`;
 
     // Render providers above channels

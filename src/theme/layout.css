@@ -87,9 +87,7 @@
     transform: translateY(0);
   }
 
-  .schedule-toggle-btn {
-    @apply bg-gray-800 hover:bg-gray-700 hover:text-gray-300 dark:focus:ring-gray-600;
-  }
+
 
   /* ==========================================================================
      Nav-bar Controls
@@ -466,7 +464,7 @@
   }
 
   .fab-menu-search {
-    @apply p-4;
+    @apply px-4 pt-1 pb-2;
   }
 
 

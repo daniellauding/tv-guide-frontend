@@ -53,6 +53,14 @@
       @apply bg-gray-700;
     }
 
+    .schedule-toggle-btn {
+      @apply bg-gray-800 hover:bg-gray-700 hover:text-gray-300 dark:focus:ring-gray-600;
+    }
+
+  .button--icon.btn--next, .button--icon.btn--prev {
+    @apply bg-gray-800 hover:bg-gray-700;
+  }
+
     /* Channel */
 
     .channels {
