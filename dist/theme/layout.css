@@ -424,8 +424,8 @@
   }
 
   .fab-menu-modal.active {
-    height: 74vh;
-    transform: translateY(26vh);
+    height: 85vh;
+    transform: translateY(15vh);
   }
 
   .mobile-menu-backdrop#fabMenuBackdrop {

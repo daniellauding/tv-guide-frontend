@@ -424,12 +424,12 @@
   }
 
   .fab-menu-modal.active {
-    height: 74vh;
-    transform: translateY(26vh);
+    height: 85vh;
+    transform: translateY(15vh);
   }
 
   .mobile-menu-backdrop#fabMenuBackdrop {
-    @apply opacity-50 bg-transparent pointer-events-auto z-30;
+    @apply opacity-50 bg-transparent pointer-events-auto z-50;
   }
 
   .fab-menu-modal .mobile-dropdown__content {

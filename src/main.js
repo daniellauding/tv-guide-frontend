@@ -5818,6 +5818,10 @@ function toggleAllSchedules() {
 function renderPrograms(selectedDate = null) {
   const content = document.querySelector('.programs__content');
   const channels = tvData.channels.filter(c => c.enabled);
+  console.log(
+    '[MAIN VIEW] Enabled channels being rendered:',
+    channels.map(c => c.id)
+  );
 
   // console.group('Program Visibility Debug');
   // console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
@@ -7005,6 +7009,10 @@ function toggleChannel(channelId, enabled) {
 
 // Initialize channels with enabled state based on provider
 function initializeChannels() {
+  console.log(
+    'Enabled channels:',
+    tvData.channels.filter(c => c.enabled).map(c => c.id)
+  );
   const providerAvailability = {
     providerOne: {
       show: true,
@@ -7346,6 +7354,7 @@ function setupProviders() {
   let activeProvider = 'providerOne'; // Default provider
 
   function updateProviderView(providerId) {
+    console.log('[updateProviderView] Called with:', providerId);
     // Update active state of provider cards (desktop)
     document.querySelectorAll('.provider-card').forEach(card => {
       if (card.dataset.provider === providerId) {
@@ -7373,6 +7382,7 @@ function setupProviders() {
     // Close dropdown after selection
     toggleProviderDropdown(false);
 
+    activeProvider = providerId;
     // Initialize channels for this provider
     initializeChannels();
 
@@ -7454,6 +7464,7 @@ function updateChannelList(providerChannels) {
 
 // Update program grid based on provider
 function updateProgramGrid(providerChannels) {
+  console.log('[updateProgramGrid] called with:', providerChannels);
   const contentDiv = document.querySelector('programs__content');
   const wrapperDiv = document.querySelector('.wrapper');
   if (!contentDiv) return;
@@ -7747,6 +7758,9 @@ const providers = {
     channels: ['kanal7', 'teve2', 'beyaztv']
   }
 };
+
+window.providers = providers;
+console.log('window.providers:', window.providers);
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
@@ -8454,7 +8468,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : ''
         }"
           data-provider="${key}">
-          ${provider.name || key}
+          ${provider.name || key} 
         </button>
       `;
     });
@@ -8557,11 +8571,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Attach click handler in JS for each provider button
     fabList.querySelectorAll('.provider-card').forEach(btn => {
-      btn.onclick = function() {
+      btn.onclick = function () {
         const providerId = btn.getAttribute('data-provider');
         if (providerId) {
-          window.updateProviderView(providerId);
-          setTimeout(() => window.updateFabMenuChannelList(), 50);
+          console.log('[FAB] Provider button clicked:', providerId);
+          window.updateProviderView(providerId); // This should trigger everything
+          setTimeout(() => {
+            window.updateFabMenuChannelList();
+          }, 50);
+          closeFabMenuModal();
         }
       };
     });
