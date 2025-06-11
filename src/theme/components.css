@@ -835,6 +835,7 @@
 
   .modal__header--mobile {
     @apply flex justify-between items-center p-4 md:hidden fixed w-full md:relative z-20;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
   }
 
   .modal__back-btn {
