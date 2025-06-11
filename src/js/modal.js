@@ -1,7 +1,9 @@
 // Show program modal
-function showProgramModal(channelId, programTime) {
+function showProgramModal(channelId, programTimeOrTitle) {
   const modal = document.getElementById('programModal');
   if (!modal) return;
+
+  console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
 
   // Get the selected date
   const activeDay = document.querySelector('.date-nav-item.active');
@@ -9,10 +11,22 @@ function showProgramModal(channelId, programTime) {
 
   // Get channel and program data
   const channel = tvData.channels.find(c => c.id === channelId);
-  if (!channel) return;
+  if (!channel) {
+    console.error('Channel not found:', channelId);
+    return;
+  }
 
-  const program = channel.programs.find(p => p.time === programTime);
-  if (!program) return;
+  // Try to find program by time first, then by title
+  let program = channel.programs.find(p => p.time === programTimeOrTitle);
+  if (!program) {
+    program = channel.programs.find(p => p.title === programTimeOrTitle);
+  }
+  
+  console.log('Found program:', program);
+  if (!program) {
+    console.error('Program not found:', { channelId, programTimeOrTitle });
+    return;
+  }
 
   // Use the program's state from the data
   const programState = program.state === 'current' ? 'live' : program.state || 'next';
@@ -133,8 +147,18 @@ function showProgramModal(channelId, programTime) {
   }
 
   // Show modal
+  console.log('Showing modal for program:', program.title);
+  modal.style.display = 'flex';  // Force flex display
   modal.classList.remove('hidden');
+  modal.classList.remove('modal-exit');
+  modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  
+  // Force a reflow to ensure the modal is visible
+  modal.offsetHeight;
+  
+  // Add modal-enter class for animation
+  modal.classList.add('modal-enter');
 
   // Add click handler to close when clicking outside
   const closeOnOutsideClick = e => {
@@ -160,10 +184,12 @@ function closeModal() {
   const modal = document.getElementById('programModal');
   if (modal) {
     modal.classList.add('modal-exit');
+    modal.classList.remove('modal-enter');
     setTimeout(() => {
       document.body.style.overflow = '';
       modal.classList.add('hidden');
       modal.classList.remove('modal-exit');
+      modal.style.display = 'none';  // Reset display style
     }, 300);
   }
 }

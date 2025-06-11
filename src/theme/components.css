@@ -775,8 +775,12 @@
     display: none;
   }
 
-  .modal[aria-hidden='false'] {
-    display: flex !important;
+  .modal.hidden {
+    display: none;
+  }
+
+  .modal:not(.hidden) {
+    display: flex;
   }
 
   .modal__content {

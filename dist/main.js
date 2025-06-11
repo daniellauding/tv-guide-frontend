@@ -6665,7 +6665,8 @@ function resetView() {
 function toggleSearch() {
   const searchSection = document.getElementById('searchSection');
   const searchToggle = document.getElementById('searchToggle');
-  const searchInput = document.getElementById('programSearch');
+  const searchInput = document.getElementById('programs__contentearch');
+  const searchResults = document.getElementById('searchResults');
   const isVisible = !searchSection.classList.contains('hidden');
 
   if (isVisible) {
@@ -6673,25 +6674,25 @@ function toggleSearch() {
     searchSection.classList.add('hidden');
     searchToggle.classList.remove('button--active');
     searchInput.value = ''; // Clear search input
-    // Clear search results if any
-    renderPrograms();
+    if (searchResults) {
+      searchResults.classList.add('hidden'); // Hide results
+    }
   } else {
     // Show search
     searchSection.classList.remove('hidden');
     searchToggle.classList.add('button--active');
-    // Focus search input
     setTimeout(() => searchInput.focus(), 100);
   }
 }
 
 // Update setupSearch function
 function setupSearch() {
-  const searchInput = document.getElementById('programSearch');
+  const searchInput = document.getElementById('programs__contentearch');
   const searchToggle = document.getElementById('searchToggle');
   const closeSearch = document.getElementById('closeSearch');
+  const searchResults = document.getElementById('searchResults');
 
   if (searchToggle) {
-    // Set initial state
     searchToggle.classList.remove('button--active');
     searchToggle.addEventListener('click', toggleSearch);
   }
@@ -6701,7 +6702,6 @@ function setupSearch() {
   }
 
   if (searchInput) {
-    // Existing search functionality
     searchInput.addEventListener('input', e => {
       const searchTerm = e.target.value.toLowerCase();
       if (searchTerm.length >= 2) {
@@ -6710,14 +6710,18 @@ function setupSearch() {
             .filter(
               program =>
                 program.title.toLowerCase().includes(searchTerm) ||
-                program.type?.toLowerCase().includes(searchTerm)
+                program.type?.toLowerCase().includes(searchTerm) ||
+                channel.name.toLowerCase().includes(searchTerm)
             )
             .map(program => ({ ...program, channelId: channel.id, channelName: channel.name }));
           return [...acc, ...matchingPrograms];
         }, []);
         renderSearchResults(results, searchTerm);
-      } else if (searchTerm.length === 0) {
-        renderPrograms();
+      } else {
+        // Hide results if search term is too short
+        if (searchResults) {
+          searchResults.classList.add('hidden');
+        }
       }
     });
 
@@ -6725,6 +6729,15 @@ function setupSearch() {
     searchInput.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         toggleSearch();
+      }
+    });
+
+    // Close results when clicking outside
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#searchSection')) {
+        if (searchResults) {
+          searchResults.classList.add('hidden');
+        }
       }
     });
   }
@@ -8285,6 +8298,100 @@ window.selectDate = selectDate;
 
 // Make modal functions globally available
 window.showProgramModal = showProgramModal;
+
+// Helper function to format time
+function formatTime(timeString) {
+  if (!timeString) return '';
+  const date = new Date(timeString);
+  return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// Search results rendering function
+function renderSearchResults(results, searchTerm) {
+  const searchResults = document.getElementById('searchResults');
+  const channelResults = document.getElementById('channelResults');
+  const programResults = document.getElementById('programResults');
+
+  if (!searchResults || !channelResults || !programResults) return;
+
+  // Show the results container
+  searchResults.classList.remove('hidden');
+
+  // Group results by type
+  const channels = new Set();
+  const programs = [];
+
+  results.forEach(result => {
+    if (result.channelId) {
+      // Add channel to unique channels set
+      const channel = tvData.channels.find(c => c.id === result.channelId);
+      if (channel) {
+        channels.add(channel);
+      }
+      // Add program to programs array
+      programs.push(result);
+    }
+  });
+
+  // Render channel results
+  channelResults.innerHTML = Array.from(channels)
+    .map(
+      channel => `
+      <div class="search__result-item" onclick="selectChannel('${channel.id}')">
+        <div class="search__result-logo">
+          <img src="${channel.logo}" alt="${channel.name}" 
+            onerror="this.parentElement.innerHTML = '${channel.name[0]}'">
+        </div>
+        <div class="search__result-info">
+          <div class="search__result-title">${channel.name}</div>
+        </div>
+      </div>
+    `
+    )
+    .join('');
+
+  // Render program results
+  programResults.innerHTML = programs
+    .map(
+      program => `
+      <div class="search__result-item" onclick="showProgramModal('${program.channelId}', '${program.id}')">
+        <div class="search__result-logo">
+          ${program.channelName[0]}
+        </div>
+        <div class="search__result-info">
+          <div class="search__result-title">${program.title}</div>
+          <div class="search__result-subtitle">${program.channelName}</div>
+          <div class="search__result-time">${formatTime(program.startTime)} - ${formatTime(program.endTime)}</div>
+        </div>
+      </div>
+    `
+    )
+    .join('');
+
+  // Show "No results" message if needed
+  if (channels.size === 0) {
+    channelResults.innerHTML = '<div class="px-4 py-2 text-sm text-gray-500">Sonuç bulunamadı</div>';
+  }
+  if (programs.length === 0) {
+    programResults.innerHTML = '<div class="px-4 py-2 text-sm text-gray-500">Sonuç bulunamadı</div>';
+  }
+}
+
+function selectChannel(channelId) {
+  const channel = document.getElementById(`channel-${channelId}`);
+  if (channel) {
+    // Close search
+    toggleSearch();
+    // Scroll to channel
+    channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Highlight channel briefly
+    channel.classList.add('highlight');
+    setTimeout(() => channel.classList.remove('highlight'), 2000);
+  }
+}
+
+// Make functions globally available
+window.selectChannel = selectChannel;
 
 // Initialize everything when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
