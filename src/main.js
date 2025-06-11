@@ -8486,6 +8486,14 @@ window.handleProgramClick = handleProgramClick;
 
 // Initialize everything when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure modal is hidden on page load
+  const modal = document.getElementById('programModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
   // Initialize theme toggle first
   setupThemeToggle();
 
