@@ -148,17 +148,20 @@ function showProgramModal(channelId, programTimeOrTitle) {
 
   // Show modal
   console.log('Showing modal for program:', program.title);
-  modal.style.display = 'flex';  // Force flex display
-  modal.classList.remove('hidden');
-  modal.classList.remove('modal-exit');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
   
-  // Force a reflow to ensure the modal is visible
+  // First set display to flex (but still invisible)
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
+  
+  // Force a reflow
   modal.offsetHeight;
   
-  // Add modal-enter class for animation
-  modal.classList.add('modal-enter');
+  // Then add the show class to trigger animation
+  requestAnimationFrame(() => {
+    modal.classList.add('show');
+  });
+  
+  document.body.style.overflow = 'hidden';
 
   // Add click handler to close when clicking outside
   const closeOnOutsideClick = e => {
@@ -182,16 +185,17 @@ function showProgramModal(channelId, programTimeOrTitle) {
 // Close modal
 function closeModal() {
   const modal = document.getElementById('programModal');
-  if (modal) {
-    modal.classList.add('modal-exit');
-    modal.classList.remove('modal-enter');
-    setTimeout(() => {
-      document.body.style.overflow = '';
-      modal.classList.add('hidden');
-      modal.classList.remove('modal-exit');
-      modal.style.display = 'none';  // Reset display style
-    }, 300);
-  }
+  if (!modal) return;
+
+  // Start hiding animation
+  modal.classList.remove('show');
+
+  // Wait for animation to finish
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 200);
 }
 
 // Share program
