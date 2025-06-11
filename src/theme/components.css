@@ -93,7 +93,8 @@
     }
 
     .chip.chip--active {
-      @apply bg-chip-background-dark-active text-chip-text-dark-active hover:bg-chip-background-dark-hover;
+      @apply bg-chip-background-dark-active text-chip-text-dark-active;
+      /* hover:bg-chip-background-dark-hover */
     }
 
     .modal__channel-logo {
@@ -552,7 +553,8 @@
   }
 
   .chip.chip--active {
-    @apply bg-chip-background-light-active text-chip-text-light-active hover:bg-chip-background-light-hover;
+    @apply bg-chip-background-light-active text-chip-text-light-active;
+    /* hover:bg-chip-background-light-hover */
   }
 
   /* ==========================================================================

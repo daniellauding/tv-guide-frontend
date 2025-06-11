@@ -5817,7 +5817,28 @@ function toggleAllSchedules() {
 // Modify the program rendering to include state classes
 function renderPrograms(selectedDate = null) {
   const content = document.querySelector('.programs__content');
-  const channels = tvData.channels.filter(c => c.enabled);
+  if (!content) {
+    console.error('Programs content element not found');
+    return;
+  }
+  
+  // Get the active provider
+  const activeProviderElem = document.querySelector('.provider-dropdown-item--active');
+  const providerId = activeProviderElem ? activeProviderElem.dataset.provider : 'providerOne';
+  console.log(`Active provider for rendering: ${providerId}`);
+  
+  // Get provider channels
+  const providerChannels = providers[providerId]?.channels || [];
+  
+  // Filter channels that are both enabled and in the current provider
+  const channels = tvData.channels.filter(
+    channel => channel.enabled && providerChannels.includes(channel.id)
+  );
+  
+  console.log(
+    '[MAIN VIEW] Channels being rendered:',
+    channels.map(c => c.id)
+  );
 
   // console.group('Program Visibility Debug');
   // console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
@@ -7005,159 +7026,27 @@ function toggleChannel(channelId, enabled) {
 
 // Initialize channels with enabled state based on provider
 function initializeChannels() {
-  const providerAvailability = {
-    providerOne: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      kanal7: true,
-      teve2: true,
-      beyaztv: true,
-      ntv: true,
-      lorem: true,
-      ipsum: true,
-      dolor: true,
-      suscipit: true,
-      tempor: true,
-      quis: true,
-      butter: true,
-      mystery: true,
-      changes: true,
-      wish: true,
-      olle: true,
-      regent: true,
-      mtv: true,
-      shell: true,
-      kruka: true,
-      testar: true,
-      mycket: true,
-      massa: true,
-      mer: true,
-      providers: true,
-      blomma: true,
-    },
-    providerTwo: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerThree: {
-      show: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerFour: {
-      show: true,
-      kanal7: true,
-      teve2: true
-    },
-    providerFive: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerSix: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      kanal7: true,
-      teve2: true,
-      beyaztv: true,
-      ntv: true
-    },
-    providerSeven: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerEight: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerNine: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true
-    },
-    providerTen: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerEleven: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerTwelve: {
-      show: true,
-      atv: true,
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true,
-      ntv: true
-    },
-    providerThirteen: {
-      show: true,
-      atv: true
-    },
-    providerFourteen: {
-      fox: true,
-      star: true,
-      tv8: true,
-      trt1: true
-    },
-    providerFifteen: {
-      kanal7: true,
-      teve2: true,
-      beyaztv: true
-    }
-  };
-
-  // Get current provider
-  const activeProvider = document.querySelector('.provider-card--active');
-  const providerId = activeProvider ? activeProvider.dataset.provider : 'providerOne';
-
-  // Set enabled state based on provider availability
+  console.log('Initializing channels based on active provider');
+  
+  // Get current provider by checking the active class
+  const activeProviderElem = document.querySelector('.provider-dropdown-item--active, .provider-card--active');
+  const providerId = activeProviderElem ? activeProviderElem.dataset.provider : 'providerOne';
+  
+  console.log(`Active provider for channel initialization: ${providerId}`);
+  
+  // Get provider channels directly from the providers object
+  const providerChannels = providers[providerId]?.channels || [];
+  
+  console.log(`Provider ${providerId} has ${providerChannels.length} channels: ${providerChannels.join(', ')}`);
+  
+  // Set enabled state for each channel based on whether it's in the provider's channel list
   tvData.channels.forEach(channel => {
-    channel.enabled = providerAvailability[providerId]?.[channel.id] ?? false;
+    const isEnabled = providerChannels.includes(channel.id);
+    channel.enabled = isEnabled;
   });
+  
+  const enabledChannels = tvData.channels.filter(c => c.enabled).map(c => c.id);
+  console.log(`Enabled ${enabledChannels.length} channels after initialization: ${enabledChannels.join(', ')}`);
 }
 
 // Call this when the page loads
@@ -7346,6 +7235,14 @@ function setupProviders() {
   let activeProvider = 'providerOne'; // Default provider
 
   function updateProviderView(providerId) {
+    console.log('[updateProviderView] Called with:', providerId);
+    
+    // Make sure provider exists
+    if (!providers[providerId]) {
+      console.error('Provider not found:', providerId);
+      return;
+    }
+    
     // Update active state of provider cards (desktop)
     document.querySelectorAll('.provider-card').forEach(card => {
       if (card.dataset.provider === providerId) {
@@ -7373,16 +7270,27 @@ function setupProviders() {
     // Close dropdown after selection
     toggleProviderDropdown(false);
 
-    // Initialize channels for this provider
+    // Set active provider
+    activeProvider = providerId;
+    
+    // Initialize channels for this provider - this is critical for filtering
     initializeChannels();
 
-    // Update visible channels
+    // Get channels for this specific provider
     const providerChannels = providers[providerId].channels;
+    console.log(`Updating UI with ${providerChannels.length} channels from provider ${providerId}`);
+    
+    // Update channel list in the horizontal navigation
     updateChannelList(providerChannels);
+    
+    // Update the main program grid content
     updateProgramGrid(providerChannels);
 
     // Update channel dropdown list
     updateChannelDropdownList();
+    
+    // Force a redraw of the program grid to ensure it reflects the current provider
+    renderPrograms();
   }
 
   // Provider click handlers
@@ -7454,23 +7362,38 @@ function updateChannelList(providerChannels) {
 
 // Update program grid based on provider
 function updateProgramGrid(providerChannels) {
-  const contentDiv = document.querySelector('programs__content');
+  console.log('[updateProgramGrid] called with:', providerChannels);
+  const contentDiv = document.querySelector('.programs__content');
   const wrapperDiv = document.querySelector('.wrapper');
-  if (!contentDiv) return;
+  
+  if (!contentDiv && !wrapperDiv) {
+    console.error('Program grid elements not found');
+    return;
+  }
 
   // Filter channels that are both in provider and enabled
   const channels = tvData.channels.filter(
     channel => providerChannels.includes(channel.id) && channel.enabled
   );
 
+  console.log(`Filtered ${channels.length} enabled channels for the program grid`);
+
   // Only show content if there are channels to display
   if (channels.length > 0) {
-    if (wrapperDiv) wrapperDiv.style.display = 'block';
-    renderPrograms();
+    if (wrapperDiv) {
+      wrapperDiv.style.display = 'block';
+      console.log('Showing program wrapper');
+    }
+    // The actual content rendering happens in renderPrograms() which is called after this
   } else {
     // Hide the wrapper and clear content if no channels
-    if (wrapperDiv) wrapperDiv.style.display = 'none';
-    contentDiv.innerHTML = '';
+    if (wrapperDiv) {
+      wrapperDiv.style.display = 'none';
+      console.log('Hiding program wrapper - no channels to display');
+    }
+    if (contentDiv) {
+      contentDiv.innerHTML = '';
+    }
   }
 }
 
@@ -7747,6 +7670,9 @@ const providers = {
     channels: ['kanal7', 'teve2', 'beyaztv']
   }
 };
+
+window.providers = providers;
+console.log('window.providers:', window.providers);
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
@@ -8454,7 +8380,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : ''
         }"
           data-provider="${key}">
-          ${provider.name || key}
+          ${provider.name || key} 
         </button>
       `;
     });
@@ -8473,16 +8399,22 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    const activeProvider = document.querySelector('.provider-dropdown-item--active')?.dataset.provider;
-    if (!activeProvider) return;
-    const providerChannels = providers[activeProvider].channels;
+    // Collect all channels from all providers
+    const allChannelIds = new Set();
+    providerKeys.forEach(key => {
+      const provider = providers[key];
+      provider.channels.forEach(channelId => {
+        allChannelIds.add(channelId);
+      });
+    });
+
     const fabList = document.getElementById('fabMenuChannelList');
     if (!fabList) return;
     fabList.innerHTML =
       searchHtml +
       providersHtml +
       `<div class="channel-wrapper">` +
-      providerChannels
+      Array.from(allChannelIds)
         .map(channelId => {
           const channel = tvData.channels.find(c => c.id === channelId);
           if (!channel) return '';
@@ -8557,11 +8489,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Attach click handler in JS for each provider button
     fabList.querySelectorAll('.provider-card').forEach(btn => {
-      btn.onclick = function() {
+      btn.onclick = function () {
         const providerId = btn.getAttribute('data-provider');
         if (providerId) {
-          window.updateProviderView(providerId);
-          setTimeout(() => window.updateFabMenuChannelList(), 50);
+          console.log('[FAB] Provider button clicked:', providerId);
+          window.updateProviderView(providerId); // This updates the main UI grid
+          
+          // Update active state in fab menu
+          fabList.querySelectorAll('.provider-card').forEach(card => {
+            card.classList.toggle('provider-card--active', card.getAttribute('data-provider') === providerId);
+            card.classList.toggle('chip--active', card.getAttribute('data-provider') === providerId);
+          });
+          
+          // Update channel list in fab menu
+          const providerChannels = providers[providerId].channels;
+          const channelWrapper = fabList.querySelector('.channel-wrapper');
+          if (channelWrapper && providerChannels) {
+            channelWrapper.innerHTML = providerChannels
+              .map(channelId => {
+                const channel = tvData.channels.find(c => c.id === channelId);
+                if (!channel) return '';
+                return `
+                  <button class="channel-dropdown-item mobile-dropdown-item" data-channel-id="${channel.id}">
+                    <div class="channel-dropdown-item__img mobile-dropdown-item__img">
+                      ${channel.logo 
+                        ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`
+                        : channel.name[0]
+                      }
+                    </div>
+                    <span class="channel-dropdown-item__text mobile-dropdown-item__text">${channel.name}</span>
+                  </button>
+                `;
+              })
+              .join('');
+              
+            // Reattach click handlers to new channel buttons
+            channelWrapper.querySelectorAll('.channel-dropdown-item').forEach(btn => {
+              btn.onclick = function() {
+                const channelId = btn.getAttribute('data-channel-id');
+                if (channelId) {
+                  selectChannel(channelId);
+                  closeFabMenuModal();
+                }
+              };
+            });
+          }
         }
       };
     });

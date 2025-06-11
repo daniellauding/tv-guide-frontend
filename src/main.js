@@ -8494,17 +8494,45 @@ document.addEventListener('DOMContentLoaded', () => {
         if (providerId) {
           console.log('[FAB] Provider button clicked:', providerId);
           window.updateProviderView(providerId); // This updates the main UI grid
-          closeFabMenuModal(); // Close the FAB menu
           
-          // Scroll to top of page
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+          // Update active state in fab menu
+          fabList.querySelectorAll('.provider-card').forEach(card => {
+            card.classList.toggle('provider-card--active', card.getAttribute('data-provider') === providerId);
+            card.classList.toggle('chip--active', card.getAttribute('data-provider') === providerId);
           });
           
-          // Reset lastScrollTop variable if it exists
-          if (typeof lastScrollTop !== 'undefined') {
-            lastScrollTop = 0;
+          // Update channel list in fab menu
+          const providerChannels = providers[providerId].channels;
+          const channelWrapper = fabList.querySelector('.channel-wrapper');
+          if (channelWrapper && providerChannels) {
+            channelWrapper.innerHTML = providerChannels
+              .map(channelId => {
+                const channel = tvData.channels.find(c => c.id === channelId);
+                if (!channel) return '';
+                return `
+                  <button class="channel-dropdown-item mobile-dropdown-item" data-channel-id="${channel.id}">
+                    <div class="channel-dropdown-item__img mobile-dropdown-item__img">
+                      ${channel.logo 
+                        ? `<img src="${channel.logo}" alt="${channel.name}" onerror="this.parentElement.innerHTML='${channel.name[0]}'">`
+                        : channel.name[0]
+                      }
+                    </div>
+                    <span class="channel-dropdown-item__text mobile-dropdown-item__text">${channel.name}</span>
+                  </button>
+                `;
+              })
+              .join('');
+              
+            // Reattach click handlers to new channel buttons
+            channelWrapper.querySelectorAll('.channel-dropdown-item').forEach(btn => {
+              btn.onclick = function() {
+                const channelId = btn.getAttribute('data-channel-id');
+                if (channelId) {
+                  selectChannel(channelId);
+                  closeFabMenuModal();
+                }
+              };
+            });
           }
         }
       };
