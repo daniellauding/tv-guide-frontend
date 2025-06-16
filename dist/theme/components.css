@@ -771,12 +771,16 @@
      ========================================================================== */
 
   .modal {
-    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm;
+    @apply fixed inset-0 z-50 items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-200;
+    opacity: 0;
+    visibility: hidden;
     display: none;
   }
 
-  .modal[aria-hidden='false'] {
-    display: flex !important;
+  .modal.show {
+    opacity: 1;
+    visibility: visible;
+    display: flex;
   }
 
   .modal__content {

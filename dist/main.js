@@ -6291,9 +6291,41 @@ function showProgramModal(channelId, programTime) {
     modal.querySelector('.modal__progress').classList.add('hidden');
   }
 
-  // Show modal
+  // Show modal with proper display logic
+  console.log('Showing modal for program:', program.title);
+  
+  // First set display to flex (but still invisible)
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
   modal.setAttribute('aria-hidden', 'false');
+  
+  // Force a reflow
+  modal.offsetHeight;
+  
+  // Then add the show class to trigger animation
+  requestAnimationFrame(() => {
+    modal.classList.add('show');
+  });
+  
   document.body.style.overflow = 'hidden';
+
+  // Add click handler to close when clicking outside
+  const closeOnOutsideClick = e => {
+    if (e.target === modal) {
+      closeModal();
+      modal.removeEventListener('click', closeOnOutsideClick);
+    }
+  };
+  modal.addEventListener('click', closeOnOutsideClick);
+
+  // Close modal with ESC key
+  const closeOnEscape = e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', closeOnEscape);
+    }
+  };
+  document.addEventListener('keydown', closeOnEscape);
 
   // Setup share buttons
   const handleShare = () => shareProgram(channelId, programTime);
@@ -6408,9 +6440,16 @@ function closeModal() {
     delete modal._eventListeners;
   }
 
-  // Hide modal
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  // Start hiding animation
+  modal.classList.remove('show');
+
+  // Wait for animation to finish
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }, 200);
 }
 
 // Make closeModal globally available
@@ -6705,17 +6744,32 @@ function setupSearch() {
     searchInput.addEventListener('input', e => {
       const searchTerm = e.target.value.toLowerCase();
       if (searchTerm.length >= 2) {
+        console.log('Searching for:', searchTerm);
         const results = tvData.channels.reduce((acc, channel) => {
+          console.log('Checking channel:', channel.name, 'Programs:', channel.programs);
           const matchingPrograms = channel.programs
-            .filter(
-              program =>
-                program.title.toLowerCase().includes(searchTerm) ||
-                program.type?.toLowerCase().includes(searchTerm) ||
-                channel.name.toLowerCase().includes(searchTerm)
-            )
-            .map(program => ({ ...program, channelId: channel.id, channelName: channel.name }));
+            .filter(program => {
+              const titleMatch = program.title.toLowerCase().includes(searchTerm);
+              const typeMatch = program.type?.toLowerCase().includes(searchTerm);
+              const channelMatch = channel.name.toLowerCase().includes(searchTerm);
+              console.log('Program:', program.title, { titleMatch, typeMatch, channelMatch, programId: program.id });
+              return titleMatch || typeMatch || channelMatch;
+            })
+            .map(program => {
+              console.log('Mapping program:', program);
+              return {
+                id: program.id || `${channel.id}-${program.title.replace(/\s+/g, '-')}`,
+                title: program.title,
+                type: program.type,
+                startTime: program.startTime,
+                endTime: program.endTime,
+                channelId: channel.id,
+                channelName: channel.name
+              };
+            });
           return [...acc, ...matchingPrograms];
         }, []);
+        console.log('Search results:', results);
         renderSearchResults(results, searchTerm);
       } else {
         // Hide results if search term is too short
@@ -8314,8 +8368,17 @@ function renderSearchResults(results, searchTerm) {
 
   if (!searchResults || !channelResults || !programResults) return;
 
+  console.log('Rendering search results:', results);
+
   // Show the results container
   searchResults.classList.remove('hidden');
+
+  // Make sure modal is available
+  const modal = document.getElementById('programModal');
+  if (!modal) {
+    console.error('Program modal not found!');
+    return;
+  }
 
   // Group results by type
   const channels = new Set();
@@ -8354,19 +8417,38 @@ function renderSearchResults(results, searchTerm) {
   programResults.innerHTML = programs
     .map(
       program => `
-      <div class="search__result-item" onclick="showProgramModal('${program.channelId}', '${program.id}')">
+      <div class="search__result-item" data-channel-id="${program.channelId}" data-program-time="${program.time}">
         <div class="search__result-logo">
           ${program.channelName[0]}
         </div>
         <div class="search__result-info">
           <div class="search__result-title">${program.title}</div>
           <div class="search__result-subtitle">${program.channelName}</div>
-          <div class="search__result-time">${formatTime(program.startTime)} - ${formatTime(program.endTime)}</div>
+          ${program.time ? 
+            `<div class="search__result-time">${program.time}</div>` 
+            : ''}
         </div>
       </div>
     `
     )
     .join('');
+
+    // Add click handlers to program results
+  programResults.querySelectorAll('.search__result-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const channelId = item.dataset.channelId;
+      const programTitle = item.querySelector('.search__result-title').textContent;
+      console.log('Program clicked:', { channelId, programTitle });
+
+      // Close search first
+      toggleSearch();
+      
+      // Show modal after a short delay
+      setTimeout(() => {
+        showProgramModal(channelId, programTitle);
+      }, 100);
+    });
+  });
 
   // Show "No results" message if needed
   if (channels.size === 0) {
@@ -8393,8 +8475,57 @@ function selectChannel(channelId) {
 // Make functions globally available
 window.selectChannel = selectChannel;
 
+function handleProgramClick(channelId, programTitle) {
+  console.log('Handling program click:', { channelId, programTitle });
+  
+  // Find the program in the channel's programs
+  const channel = tvData.channels.find(c => c.id === channelId);
+  if (!channel) {
+    console.error('Channel not found:', channelId);
+    return;
+  }
+
+  // Find the first occurrence of the program that matches exactly
+  const program = channel.programs.find(p => {
+    const match = p.title.trim() === programTitle.trim();
+    console.log('Comparing:', { 
+      programTitle: p.title.trim(), 
+      searchTitle: programTitle.trim(), 
+      match 
+    });
+    return match;
+  });
+
+  if (program) {
+    console.log('Program found:', program);
+    // Close search
+    toggleSearch();
+    // Show program modal with a slight delay to ensure search is closed
+    setTimeout(() => {
+      showProgramModal(channelId, program.time);
+    }, 100);
+  } else {
+    console.error('Program not found:', { 
+      channelId, 
+      programTitle,
+      availablePrograms: channel.programs.map(p => p.title)
+    });
+  }
+}
+
+// Make handleProgramClick globally available
+window.handleProgramClick = handleProgramClick;
+
 // Initialize everything when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure modal is hidden on page load
+  const modal = document.getElementById('programModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
   // Initialize theme toggle first
   setupThemeToggle();
 
@@ -8585,13 +8716,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInput) {
       searchInput.addEventListener('input', function(e) {
         const searchText = e.target.value;
+        const channelWrapper = fabList.querySelector('.channel-wrapper');
+        if (!channelWrapper) return;
+
         // Only filter inside the FAB menu
         const items = fabList.querySelectorAll('.channel-dropdown-item');
         const searchLower = searchText.toLowerCase();
+        let hasVisibleItems = false;
+
         items.forEach(item => {
           const text = item.querySelector('.channel-dropdown-item__text').textContent.toLowerCase();
-          item.style.display = text.includes(searchLower) ? '' : 'none';
+          const isVisible = text.includes(searchLower);
+          item.style.display = isVisible ? '' : 'none';
+          if (isVisible) hasVisibleItems = true;
         });
+
+        // Show/hide empty state
+        let emptyState = channelWrapper.querySelector('.empty-state');
+        if (!hasVisibleItems) {
+          if (!emptyState) {
+            emptyState = document.createElement('div');
+            emptyState.className = 'empty-state';
+            emptyState.innerHTML = `
+              <div class="flex flex-col items-center justify-center p-8 text-center">
+                <span class="text-gray-500 dark:text-gray-400">Sonuç bulunamadı</span>
+              </div>
+            `;
+            channelWrapper.appendChild(emptyState);
+          }
+          emptyState.style.display = '';
+        } else if (emptyState) {
+          emptyState.style.display = 'none';
+        }
       });
     }
     // Attach click handler in JS for each provider button

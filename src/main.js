@@ -6167,9 +6167,11 @@ function renderChannelPrograms(container, programs, channelId) {
 }
 
 // Show program modal
-function showProgramModal(channelId, programTime) {
+function showProgramModal(channelId, programTimeOrTitle) {
   const modal = document.getElementById('programModal');
   if (!modal) return;
+
+  console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
 
   // Get the selected date
   const activeDay = document.querySelector('.date-nav-item.active');
@@ -6177,10 +6179,22 @@ function showProgramModal(channelId, programTime) {
 
   // Get channel and program data
   const channel = tvData.channels.find(c => c.id === channelId);
-  if (!channel) return;
+  if (!channel) {
+    console.error('Channel not found:', channelId);
+    return;
+  }
 
-  const program = channel.programs.find(p => p.time === programTime);
-  if (!program) return;
+  // Try to find program by time first, then by title
+  let program = channel.programs.find(p => p.time === programTimeOrTitle);
+  if (!program) {
+    program = channel.programs.find(p => p.title === programTimeOrTitle);
+  }
+  
+  console.log('Found program:', program);
+  if (!program) {
+    console.error('Program not found:', { channelId, programTimeOrTitle });
+    return;
+  }
 
   // Determine program state
   const programState = program.state === 'current' ? 'live' : program.state || 'next'; // Convert 'current' to 'live'
@@ -6291,12 +6305,44 @@ function showProgramModal(channelId, programTime) {
     modal.querySelector('.modal__progress').classList.add('hidden');
   }
 
-  // Show modal
+  // Show modal with proper display logic
+  console.log('Showing modal for program:', program.title);
+  
+  // First set display to flex (but still invisible)
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
   modal.setAttribute('aria-hidden', 'false');
+  
+  // Force a reflow
+  modal.offsetHeight;
+  
+  // Then add the show class to trigger animation
+  requestAnimationFrame(() => {
+    modal.classList.add('show');
+  });
+  
   document.body.style.overflow = 'hidden';
 
+  // Add click handler to close when clicking outside
+  const closeOnOutsideClick = e => {
+    if (e.target === modal) {
+      closeModal();
+      modal.removeEventListener('click', closeOnOutsideClick);
+    }
+  };
+  modal.addEventListener('click', closeOnOutsideClick);
+
+  // Close modal with ESC key
+  const closeOnEscape = e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', closeOnEscape);
+    }
+  };
+  document.addEventListener('keydown', closeOnEscape);
+
   // Setup share buttons
-  const handleShare = () => shareProgram(channelId, programTime);
+  const handleShare = () => shareProgram(channelId, program.time);
   const mobileShareBtn = modal.querySelector('#mobileShareBtn');
   const desktopShareBtn = modal.querySelector('#desktopShareBtn');
 
@@ -6408,9 +6454,16 @@ function closeModal() {
     delete modal._eventListeners;
   }
 
-  // Hide modal
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  // Start hiding animation
+  modal.classList.remove('show');
+
+  // Wait for animation to finish
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }, 200);
 }
 
 // Make closeModal globally available
@@ -8406,14 +8459,7 @@ function renderSearchResults(results, searchTerm) {
       
       // Show modal after a short delay
       setTimeout(() => {
-        const modal = document.getElementById('programModal');
-        if (modal) {
-          modal.classList.remove('hidden');
-          modal.setAttribute('aria-hidden', 'false');
-          showProgramModal(channelId, programTitle);
-        } else {
-          console.error('Modal element not found!');
-        }
+        showProgramModal(channelId, programTitle);
       }, 100);
     });
   });
@@ -8470,7 +8516,7 @@ function handleProgramClick(channelId, programTitle) {
     toggleSearch();
     // Show program modal with a slight delay to ensure search is closed
     setTimeout(() => {
-      showProgramModal(channelId, program.id);
+      showProgramModal(channelId, program.time);
     }, 100);
   } else {
     console.error('Program not found:', { 
