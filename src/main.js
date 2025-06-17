@@ -8805,7 +8805,14 @@ document.addEventListener('DOMContentLoaded', () => {
               btn.onclick = function() {
                 const channelId = btn.getAttribute('data-channel-id');
                 if (channelId) {
-                  selectChannel(channelId);
+                  // Scroll to channel without opening search (unlike selectChannel function)
+                  const channel = document.getElementById(`channel-${channelId}`);
+                  if (channel) {
+                    channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Highlight channel briefly
+                    channel.classList.add('highlight');
+                    setTimeout(() => channel.classList.remove('highlight'), 2000);
+                  }
                   closeFabMenuModal();
                 }
               };
@@ -8819,7 +8826,15 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.onclick = function() {
         const channelId = btn.getAttribute('data-channel-id');
         if (channelId) {
-          selectChannel(channelId);
+          // Scroll to channel without opening search (unlike selectChannel function)
+          const channel = document.getElementById(`channel-${channelId}`);
+          if (channel) {
+            channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Highlight channel briefly
+            channel.classList.add('highlight');
+            setTimeout(() => channel.classList.remove('highlight'), 2000);
+          }
+          
           // Hide the FAB modal after selection
           const fabModal = document.querySelector('.fab-menu-modal');
           if (fabModal) {
