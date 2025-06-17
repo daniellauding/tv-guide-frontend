@@ -77,8 +77,8 @@
 
   /* Search Results Dropdown */
   .search__results {
-    @apply absolute left-0 right-0 top-full mt-1 bg-white dark:bg-gray-800 
-           rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 
+    @apply absolute left-0 right-0 top-full mt-0 bg-white 
+          shadow-lg 
            max-h-[70vh] overflow-y-auto z-50;
   }
 
@@ -87,11 +87,11 @@
   }
 
   .search__results-section:not(:last-child) {
-    @apply border-b border-gray-200 dark:border-gray-700;
+    @apply border-b border-gray-200;
   }
 
   .search__results-title {
-    @apply px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400;
+    @apply px-4 py-2 text-sm font-medium text-gray-500;
   }
 
   .search__results-list {
@@ -99,12 +99,12 @@
   }
 
   .search__result-item {
-    @apply flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer;
+    @apply flex items-center px-4 py-2 hover:bg-gray-100  cursor-pointer;
   }
 
   .search__result-logo {
-    @apply w-10 h-10 rounded-lg border border-gray-200 dark:border-gray-700 
-           flex items-center justify-center overflow-hidden bg-gray-50 dark:bg-gray-800;
+    @apply w-14 h-14 md:w-14 md:h-14 p-2 rounded-lg border border-light 
+           flex items-center justify-center overflow-hidden;
   }
 
   .search__result-info {
@@ -112,15 +112,15 @@
   }
 
   .search__result-title {
-    @apply text-sm font-medium text-gray-900 dark:text-white;
+    @apply text-sm font-medium text-gray-900;
   }
 
   .search__result-subtitle {
-    @apply text-sm text-gray-500 dark:text-gray-400;
+    @apply text-sm text-gray-500;
   }
 
   .search__result-time {
-    @apply text-xs text-gray-500 dark:text-gray-400;
+    @apply text-xs text-gray-500;
   }
 
   /* Channel highlight animation */
