@@ -8228,6 +8228,11 @@ function setupChannelScrolling() {
       if (header) offset += header.offsetHeight;
       if (mobileNav) offset += mobileNav.offsetHeight;
 
+      const programHead = programCard.querySelector('.program-card__header');
+      if (programHead) {
+        offset += programHead.offsetHeight + 72;
+      }
+
       const rect = programCard.getBoundingClientRect();
       let absoluteTop = rect.top + window.pageYOffset;
 
@@ -8481,8 +8486,8 @@ function selectChannel(channelId) {
     // Scroll to channel
     channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     // Highlight channel briefly
-    channel.classList.add('highlight');
-    setTimeout(() => channel.classList.remove('highlight'), 2000);
+    // channel.classList.add('highlight');
+    // setTimeout(() => channel.classList.remove('highlight'), 2000);
   }
 }
 
@@ -8831,8 +8836,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (channel) {
             channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
             // Highlight channel briefly
-            channel.classList.add('highlight');
-            setTimeout(() => channel.classList.remove('highlight'), 2000);
+            // channel.classList.add('highlight');
+            // setTimeout(() => channel.classList.remove('highlight'), 2000);
           }
           
           // Hide the FAB modal after selection
