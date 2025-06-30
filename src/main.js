@@ -8718,48 +8718,9 @@ function setupLongPressHandling() {
         }
         
         if (channelCard) {
-          handleChannelCardLongPress(channelCard);
+          // Just prevent context menu, don't scroll
         } else if (dropdownItem) {
-          const channelId = dropdownItem.dataset.channelId;
-          if (channelId) {
-            // Same scroll action as dropdown item click
-            const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
-            if (programCard) {
-              const header = document.querySelector('.header');
-              const mobileNav = document.querySelector('.mobile-dropdowns');
-
-              let offset = 0;
-              if (header) offset += header.offsetHeight;
-              if (mobileNav) offset += mobileNav.offsetHeight;
-
-              const programHead = programCard.querySelector('.program-card__header');
-              if (programHead) {
-                offset += programHead.offsetHeight + 24;
-              }
-
-              const rect = programCard.getBoundingClientRect();
-              let absoluteTop = rect.top + window.pageYOffset;
-
-              if (programCard.classList.contains('first')) {
-                absoluteTop = 0;
-                offset = 0;
-              }
-
-              window.scrollTo({
-                top: absoluteTop - offset,
-                behavior: 'smooth'
-              });
-              
-              // Close FAB modal if this is a fab dropdown item
-              const fabModal = document.querySelector('.fab-menu-modal');
-              if (fabModal && fabModal.classList.contains('active')) {
-                fabModal.classList.remove('active');
-                const fabBackdrop = document.getElementById('fabMenuBackdrop');
-                if (fabBackdrop) fabBackdrop.style.display = 'none';
-                document.body.style.overflow = '';
-              }
-            }
-          }
+          // Just prevent context menu, don't scroll
         } else if (programLogo) {
           handleProgramLogoLongPress(programLogo);
         }
@@ -8795,62 +8756,10 @@ function setupLongPressHandling() {
       
       if (channelCard) {
         e.preventDefault();
-        // Add haptic feedback if available
-        if (navigator.vibrate) {
-          navigator.vibrate(50);
-        }
-        handleChannelCardLongPress(channelCard);
+        // Just prevent context menu, don't scroll
       } else if (dropdownItem) {
         e.preventDefault();
-        // Add haptic feedback if available
-        if (navigator.vibrate) {
-          navigator.vibrate(50);
-        }
-        const channelId = dropdownItem.dataset.channelId;
-        if (channelId) {
-          // Same scroll action as dropdown item click
-          const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
-          if (programCard) {
-            const header = document.querySelector('.header');
-            const mobileNav = document.querySelector('.mobile-dropdowns');
-
-            let offset = 0;
-            if (header) offset += header.offsetHeight;
-            if (mobileNav) offset += mobileNav.offsetHeight;
-
-            const programHead = programCard.querySelector('.program-card__header');
-            if (programHead) {
-              offset += programHead.offsetHeight + 24;
-            }
-
-            const rect = programCard.getBoundingClientRect();
-            let absoluteTop = rect.top + window.pageYOffset;
-
-            if (programCard.classList.contains('first')) {
-              absoluteTop = 0;
-              offset = 0;
-            } else {
-              isAutoScrolling = true;
-              setTimeout(() => {
-                isAutoScrolling = false;
-              }, 1000);
-            }
-
-            window.scrollTo({
-              top: absoluteTop - offset,
-              behavior: 'smooth'
-            });
-            
-            // Close FAB modal if this is a fab dropdown item
-            const fabModal = document.querySelector('.fab-menu-modal');
-            if (fabModal && fabModal.classList.contains('active')) {
-              fabModal.classList.remove('active');
-              const fabBackdrop = document.getElementById('fabMenuBackdrop');
-              if (fabBackdrop) fabBackdrop.style.display = 'none';
-              document.body.style.overflow = '';
-            }
-          }
-        }
+        // Just prevent context menu, don't scroll
       } else if (programLogo) {
         e.preventDefault();
         // Add haptic feedback if available
