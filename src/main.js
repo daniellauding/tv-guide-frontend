@@ -5825,7 +5825,7 @@ function renderPrograms(selectedDate = null) {
   // Get the active provider
   const activeProviderElem = document.querySelector('.provider-dropdown-item--active');
   const providerId = activeProviderElem ? activeProviderElem.dataset.provider : 'providerOne';
-  console.log(`Active provider for rendering: ${providerId}`);
+  // console.log(`Active provider for rendering: ${providerId}`);
   
   // Get provider channels
   const providerChannels = providers[providerId]?.channels || [];
@@ -5835,10 +5835,10 @@ function renderPrograms(selectedDate = null) {
     channel => channel.enabled && providerChannels.includes(channel.id)
   );
   
-  console.log(
-    '[MAIN VIEW] Channels being rendered:',
-    channels.map(c => c.id)
-  );
+  // console.log(
+  //   '[MAIN VIEW] Channels being rendered:',
+  //   channels.map(c => c.id)
+  // );
 
   // console.group('Program Visibility Debug');
   // console.log(`Current View Mode: ${showAllPrograms ? 'All Programs' : 'Current + 3 Upcoming'}`);
@@ -5884,11 +5884,11 @@ function renderPrograms(selectedDate = null) {
       const remainingUpcoming = upcomingPrograms.slice(3);
       displayPrograms = [...pastPrograms, ...displayPrograms, ...remainingUpcoming];
 
-      console.log('Additional Programs When Expanded:', {
-        pastPrograms: pastPrograms.length,
-        remainingUpcoming: remainingUpcoming.length,
-        totalVisible: displayPrograms.length
-      });
+      // console.log('Additional Programs When Expanded:', {
+      //   pastPrograms: pastPrograms.length,
+      //   remainingUpcoming: remainingUpcoming.length,
+      //   totalVisible: displayPrograms.length
+      // });
     }
 
     // console.groupEnd();
@@ -6171,7 +6171,7 @@ function showProgramModal(channelId, programTimeOrTitle) {
   const modal = document.getElementById('programModal');
   if (!modal) return;
 
-  console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
+  // console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
 
   // Get the selected date
   const activeDay = document.querySelector('.date-nav-item.active');
@@ -6190,9 +6190,9 @@ function showProgramModal(channelId, programTimeOrTitle) {
     program = channel.programs.find(p => p.title === programTimeOrTitle);
   }
   
-  console.log('Found program:', program);
+  // console.log('Found program:', program);
   if (!program) {
-    console.error('Program not found:', { channelId, programTimeOrTitle });
+    // console.error('Program not found:', { channelId, programTimeOrTitle });
     return;
   }
 
@@ -6306,7 +6306,7 @@ function showProgramModal(channelId, programTimeOrTitle) {
   }
 
   // Show modal with proper display logic
-  console.log('Showing modal for program:', program.title);
+  // console.log('Showing modal for program:', program.title);
   
   // First set display to flex (but still invisible)
   modal.style.display = 'flex';
@@ -6481,7 +6481,7 @@ function shareProgram(channelId, programTime) {
   };
 
   if (navigator.share) {
-    navigator.share(shareData).catch(error => console.log('Error sharing:', error));
+    // navigator.share(shareData).catch(error => console.log('Error sharing:', error));
   } else {
     // Fallback for browsers that don't support Web Share API
     const tempInput = document.createElement('input');
@@ -6758,19 +6758,19 @@ function setupSearch() {
     searchInput.addEventListener('input', e => {
       const searchTerm = e.target.value.toLowerCase();
       if (searchTerm.length >= 2) {
-        console.log('Searching for:', searchTerm);
+        // console.log('Searching for:', searchTerm);
         const results = tvData.channels.reduce((acc, channel) => {
-          console.log('Checking channel:', channel.name, 'Programs:', channel.programs);
+          // console.log('Checking channel:', channel.name, 'Programs:', channel.programs);
           const matchingPrograms = channel.programs
             .filter(program => {
               const titleMatch = program.title.toLowerCase().includes(searchTerm);
               const typeMatch = program.type?.toLowerCase().includes(searchTerm);
               const channelMatch = channel.name.toLowerCase().includes(searchTerm);
-              console.log('Program:', program.title, { titleMatch, typeMatch, channelMatch, programId: program.id });
+              // console.log('Program:', program.title, { titleMatch, typeMatch, channelMatch, programId: program.id });
               return titleMatch || typeMatch || channelMatch;
             })
             .map(program => {
-              console.log('Mapping program:', program);
+              // console.log('Mapping program:', program);
               return {
                 id: program.id || `${channel.id}-${program.title.replace(/\s+/g, '-')}`,
                 title: program.title,
@@ -6783,7 +6783,7 @@ function setupSearch() {
             });
           return [...acc, ...matchingPrograms];
         }, []);
-        console.log('Search results:', results);
+        // console.log('Search results:', results);
         renderSearchResults(results, searchTerm);
       } else {
         // Hide results if search term is too short
@@ -7107,18 +7107,18 @@ function toggleChannel(channelId, enabled) {
 
 // Initialize channels with enabled state based on provider
 function initializeChannels() {
-  console.log('Initializing channels based on active provider');
+  // console.log('Initializing channels based on active provider');
   
   // Get current provider by checking the active class
   const activeProviderElem = document.querySelector('.provider-dropdown-item--active, .provider-card--active');
   const providerId = activeProviderElem ? activeProviderElem.dataset.provider : 'providerOne';
   
-  console.log(`Active provider for channel initialization: ${providerId}`);
+  // console.log(`Active provider for channel initialization: ${providerId}`);
   
   // Get provider channels directly from the providers object
   const providerChannels = providers[providerId]?.channels || [];
   
-  console.log(`Provider ${providerId} has ${providerChannels.length} channels: ${providerChannels.join(', ')}`);
+  // console.log(`Provider ${providerId} has ${providerChannels.length} channels: ${providerChannels.join(', ')}`);
   
   // Set enabled state for each channel based on whether it's in the provider's channel list
   tvData.channels.forEach(channel => {
@@ -7127,7 +7127,7 @@ function initializeChannels() {
   });
   
   const enabledChannels = tvData.channels.filter(c => c.enabled).map(c => c.id);
-  console.log(`Enabled ${enabledChannels.length} channels after initialization: ${enabledChannels.join(', ')}`);
+  // console.log(`Enabled ${enabledChannels.length} channels after initialization: ${enabledChannels.join(', ')}`);
 }
 
 // Call this when the page loads
@@ -7316,7 +7316,7 @@ function setupProviders() {
   let activeProvider = 'providerOne'; // Default provider
 
   function updateProviderView(providerId) {
-    console.log('[updateProviderView] Called with:', providerId);
+    // console.log('[updateProviderView] Called with:', providerId);
     
     // Make sure provider exists
     if (!providers[providerId]) {
@@ -7359,7 +7359,7 @@ function setupProviders() {
 
     // Get channels for this specific provider
     const providerChannels = providers[providerId].channels;
-    console.log(`Updating UI with ${providerChannels.length} channels from provider ${providerId}`);
+    // console.log(`Updating UI with ${providerChannels.length} channels from provider ${providerId}`);
     
     // Update channel list in the horizontal navigation
     updateChannelList(providerChannels);
@@ -7443,7 +7443,7 @@ function updateChannelList(providerChannels) {
 
 // Update program grid based on provider
 function updateProgramGrid(providerChannels) {
-  console.log('[updateProgramGrid] called with:', providerChannels);
+  // console.log('[updateProgramGrid] called with:', providerChannels);
   const contentDiv = document.querySelector('.programs__content');
   const wrapperDiv = document.querySelector('.wrapper');
   
@@ -7457,20 +7457,20 @@ function updateProgramGrid(providerChannels) {
     channel => providerChannels.includes(channel.id) && channel.enabled
   );
 
-  console.log(`Filtered ${channels.length} enabled channels for the program grid`);
+  // console.log(`Filtered ${channels.length} enabled channels for the program grid`);
 
   // Only show content if there are channels to display
   if (channels.length > 0) {
     if (wrapperDiv) {
       wrapperDiv.style.display = 'block';
-      console.log('Showing program wrapper');
+      // console.log('Showing program wrapper');
     }
     // The actual content rendering happens in renderPrograms() which is called after this
   } else {
     // Hide the wrapper and clear content if no channels
     if (wrapperDiv) {
       wrapperDiv.style.display = 'none';
-      console.log('Hiding program wrapper - no channels to display');
+      // console.log('Hiding program wrapper - no channels to display');
     }
     if (contentDiv) {
       contentDiv.innerHTML = '';
@@ -7753,7 +7753,7 @@ const providers = {
 };
 
 window.providers = providers;
-console.log('window.providers:', window.providers);
+// console.log('window.providers:', window.providers);
 
 // Add this function to handle the scroll behavior for the channel section
 function setupScrollBasedSections() {
@@ -8230,7 +8230,7 @@ function setupChannelScrolling() {
 
       const programHead = programCard.querySelector('.program-card__header');
       if (programHead) {
-        offset += programHead.offsetHeight + 72;
+        offset += programHead.offsetHeight + 24;
       }
 
       const rect = programCard.getBoundingClientRect();
@@ -8387,7 +8387,7 @@ function renderSearchResults(results, searchTerm) {
 
   if (!searchResults || !channelResults || !programResults) return;
 
-  console.log('Rendering search results:', results);
+  // console.log('Rendering search results:', results);
 
   // Show the results container
   searchResults.classList.remove('hidden');
@@ -8457,7 +8457,7 @@ function renderSearchResults(results, searchTerm) {
     item.addEventListener('click', () => {
       const channelId = item.dataset.channelId;
       const programTitle = item.querySelector('.search__result-title').textContent;
-      console.log('Program clicked:', { channelId, programTitle });
+      // console.log('Program clicked:', { channelId, programTitle });
 
       // Close search first
       toggleSearch();
@@ -8479,15 +8479,43 @@ function renderSearchResults(results, searchTerm) {
 }
 
 function selectChannel(channelId) {
-  const channel = document.getElementById(`channel-${channelId}`);
-  if (channel) {
-    // Close search
-    toggleSearch();
-    // Scroll to channel
-    channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Close search
+  toggleSearch();
+  
+  // Find and scroll to the program card with same offset as channel-card clicks
+  const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+  if (programCard) {
+    const header = document.querySelector('.header');
+    const mobileNav = document.querySelector('.mobile-dropdowns');
+
+    let offset = 0;
+    if (header) offset += header.offsetHeight;
+    if (mobileNav) offset += mobileNav.offsetHeight;
+
+    const programHead = programCard.querySelector('.program-card__header');
+    if (programHead) {
+      offset += programHead.offsetHeight + 24;
+    }
+
+    const rect = programCard.getBoundingClientRect();
+    let absoluteTop = rect.top + window.pageYOffset;
+
+    if (programCard.classList.contains('first')) {
+      absoluteTop = 0;
+      offset = 0;
+    }
+
+    window.scrollTo({
+      top: absoluteTop - offset,
+      behavior: 'smooth'
+    });
+    
     // Highlight channel briefly
-    // channel.classList.add('highlight');
-    // setTimeout(() => channel.classList.remove('highlight'), 2000);
+    // const channel = document.getElementById(`channel-${channelId}`);
+    // if (channel) {
+    //   channel.classList.add('highlight');
+    //   setTimeout(() => channel.classList.remove('highlight'), 2000);
+    // }
   }
 }
 
@@ -8495,7 +8523,7 @@ function selectChannel(channelId) {
 window.selectChannel = selectChannel;
 
 function handleProgramClick(channelId, programTitle) {
-  console.log('Handling program click:', { channelId, programTitle });
+  // console.log('Handling program click:', { channelId, programTitle });
   
   // Find the program in the channel's programs
   const channel = tvData.channels.find(c => c.id === channelId);
@@ -8507,16 +8535,16 @@ function handleProgramClick(channelId, programTitle) {
   // Find the first occurrence of the program that matches exactly
   const program = channel.programs.find(p => {
     const match = p.title.trim() === programTitle.trim();
-    console.log('Comparing:', { 
-      programTitle: p.title.trim(), 
-      searchTitle: programTitle.trim(), 
-      match 
-    });
+    // console.log('Comparing:', { 
+    //   programTitle: p.title.trim(), 
+    //   searchTitle: programTitle.trim(), 
+    //   match 
+    // });
     return match;
   });
 
   if (program) {
-    console.log('Program found:', program);
+    // console.log('Program found:', program);
     // Close search
     toggleSearch();
     // Show program modal with a slight delay to ensure search is closed
@@ -8608,7 +8636,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeFabMenuModal();
     });
   } else {
-    console.log('fabMenuBackdrop not found!');
+    // console.log('fabMenuBackdrop not found!');
   }
 
   fabModal.querySelector('.fab-menu-modal-dropdown__close').addEventListener('click', closeFabMenuModal);
@@ -8774,7 +8802,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.onclick = function () {
         const providerId = btn.getAttribute('data-provider');
         if (providerId) {
-          console.log('[FAB] Provider button clicked:', providerId);
+          // console.log('[FAB] Provider button clicked:', providerId);
           window.updateProviderView(providerId); // This updates the main UI grid
           
           // Update active state in fab menu
@@ -8810,13 +8838,33 @@ document.addEventListener('DOMContentLoaded', () => {
               btn.onclick = function() {
                 const channelId = btn.getAttribute('data-channel-id');
                 if (channelId) {
-                  // Scroll to channel without opening search (unlike selectChannel function)
-                  const channel = document.getElementById(`channel-${channelId}`);
-                  if (channel) {
-                    channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Highlight channel briefly
-                    channel.classList.add('highlight');
-                    setTimeout(() => channel.classList.remove('highlight'), 2000);
+                  // Find and scroll to the program card with same offset as channel-card clicks
+                  const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+                  if (programCard) {
+                    const header = document.querySelector('.header');
+                    const mobileNav = document.querySelector('.mobile-dropdowns');
+
+                    let offset = 0;
+                    if (header) offset += header.offsetHeight;
+                    if (mobileNav) offset += mobileNav.offsetHeight;
+
+                    const programHead = programCard.querySelector('.program-card__header');
+                    if (programHead) {
+                      offset += programHead.offsetHeight + 24;
+                    }
+
+                    const rect = programCard.getBoundingClientRect();
+                    let absoluteTop = rect.top + window.pageYOffset;
+
+                    if (programCard.classList.contains('first')) {
+                      absoluteTop = 0;
+                      offset = 0;
+                    }
+
+                    window.scrollTo({
+                      top: absoluteTop - offset,
+                      behavior: 'smooth'
+                    });
                   }
                   closeFabMenuModal();
                 }
@@ -8831,13 +8879,33 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.onclick = function() {
         const channelId = btn.getAttribute('data-channel-id');
         if (channelId) {
-          // Scroll to channel without opening search (unlike selectChannel function)
-          const channel = document.getElementById(`channel-${channelId}`);
-          if (channel) {
-            channel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Highlight channel briefly
-            // channel.classList.add('highlight');
-            // setTimeout(() => channel.classList.remove('highlight'), 2000);
+          // Find and scroll to the program card with same offset as channel-card clicks
+          const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+          if (programCard) {
+            const header = document.querySelector('.header');
+            const mobileNav = document.querySelector('.mobile-dropdowns');
+
+            let offset = 0;
+            if (header) offset += header.offsetHeight;
+            if (mobileNav) offset += mobileNav.offsetHeight;
+
+            const programHead = programCard.querySelector('.program-card__header');
+            if (programHead) {
+              offset += programHead.offsetHeight + 24;
+            }
+
+            const rect = programCard.getBoundingClientRect();
+            let absoluteTop = rect.top + window.pageYOffset;
+
+            if (programCard.classList.contains('first')) {
+              absoluteTop = 0;
+              offset = 0;
+            }
+
+            window.scrollTo({
+              top: absoluteTop - offset,
+              behavior: 'smooth'
+            });
           }
           
           // Hide the FAB modal after selection

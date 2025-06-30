@@ -3,7 +3,7 @@ function showProgramModal(channelId, programTimeOrTitle) {
   const modal = document.getElementById('programModal');
   if (!modal) return;
 
-  console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
+  // console.log('showProgramModal called with:', { channelId, programTimeOrTitle });
 
   // Get the selected date
   const activeDay = document.querySelector('.date-nav-item.active');
@@ -22,9 +22,9 @@ function showProgramModal(channelId, programTimeOrTitle) {
     program = channel.programs.find(p => p.title === programTimeOrTitle);
   }
   
-  console.log('Found program:', program);
+  // console.log('Found program:', program);
   if (!program) {
-    console.error('Program not found:', { channelId, programTimeOrTitle });
+    // console.error('Program not found:', { channelId, programTimeOrTitle });
     return;
   }
 
