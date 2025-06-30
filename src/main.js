@@ -8563,6 +8563,306 @@ function handleProgramClick(channelId, programTitle) {
 // Make handleProgramClick globally available
 window.handleProgramClick = handleProgramClick;
 
+// Setup long press handling to prevent image context menu and trigger scroll
+function setupLongPressHandling() {
+  let longPressTimer;
+  window.isLongPress = false;
+
+  // Function to handle long press on channel cards
+  function handleChannelCardLongPress(channelCard) {
+    const channelId = channelCard.dataset.channelId;
+    if (!channelId) return;
+
+    // Trigger the same scroll action as click
+    const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+    if (programCard) {
+      const header = document.querySelector('.header');
+      const mobileNav = document.querySelector('.mobile-dropdowns');
+
+      let offset = 0;
+      if (header) offset += header.offsetHeight;
+      if (mobileNav) offset += mobileNav.offsetHeight;
+
+      const programHead = programCard.querySelector('.program-card__header');
+      if (programHead) {
+        offset += programHead.offsetHeight + 24;
+      }
+
+      const rect = programCard.getBoundingClientRect();
+      let absoluteTop = rect.top + window.pageYOffset;
+
+      if (programCard.classList.contains('first')) {
+        absoluteTop = 0;
+        offset = 0;
+      } else {
+        isAutoScrolling = true;
+        setTimeout(() => {
+          isAutoScrolling = false;
+        }, 1000);
+      }
+
+      window.scrollTo({
+        top: absoluteTop - offset,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  // Function to handle long press on program card logos
+  function handleProgramLogoLongPress(logoElement) {
+    const programCard = logoElement.closest('.program-card');
+    if (programCard) {
+      const channelId = programCard.dataset.channelId;
+      if (channelId) {
+        // Scroll to this program card's header
+        const header = document.querySelector('.header');
+        const mobileNav = document.querySelector('.mobile-dropdowns');
+
+        let offset = 0;
+        if (header) offset += header.offsetHeight;
+        if (mobileNav) offset += mobileNav.offsetHeight;
+
+        const programHead = programCard.querySelector('.program-card__header');
+        if (programHead) {
+          offset += programHead.offsetHeight + 24;
+        }
+
+        const rect = programCard.getBoundingClientRect();
+        let absoluteTop = rect.top + window.pageYOffset;
+
+        if (programCard.classList.contains('first')) {
+          absoluteTop = 0;
+          offset = 0;
+        } else {
+          isAutoScrolling = true;
+          setTimeout(() => {
+            isAutoScrolling = false;
+          }, 1000);
+        }
+
+        window.scrollTo({
+          top: absoluteTop - offset,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // Add event delegation for all elements with images - more aggressive prevention
+  document.addEventListener('contextmenu', function(e) {
+    // Prevent context menu on channel cards, dropdown items, and program logos
+    const channelCard = e.target.closest('.channel-card');
+    const dropdownItem = e.target.closest('.channel-dropdown-item');
+    const programLogo = e.target.closest('.program-card__logo');
+    const isImg = e.target.tagName === 'IMG';
+    const imgParent = e.target.closest('.channel-card__img, .channel-dropdown-item__img, .program-card__logo');
+    
+    if (channelCard || dropdownItem || programLogo || (isImg && imgParent)) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
+  }, { capture: true, passive: false });
+
+  // Additional image-specific context menu prevention
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') {
+      const isChannelImg = e.target.closest('.channel-card, .channel-dropdown-item, .program-card__logo');
+      if (isChannelImg) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }
+  }, { capture: true, passive: false });
+
+  // Add CSS to prevent image context menu and selection
+  const style = document.createElement('style');
+  style.textContent = `
+    .channel-card img,
+    .channel-dropdown-item img,
+    .mobile-dropdown-item img,
+    .program-card__logo img {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .channel-card,
+    .channel-dropdown-item,
+    .mobile-dropdown-item,
+    .program-card__logo {
+      -webkit-touch-callout: none;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Touch handling for mobile long press
+  document.addEventListener('touchstart', function(e) {
+    const channelCard = e.target.closest('.channel-card');
+    const dropdownItem = e.target.closest('.channel-dropdown-item');
+    const programLogo = e.target.closest('.program-card__logo');
+    
+    if (channelCard || dropdownItem || programLogo) {
+      window.isLongPress = false;
+      longPressTimer = setTimeout(() => {
+        window.isLongPress = true;
+        
+        // Add haptic feedback if available
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+        
+        if (channelCard) {
+          handleChannelCardLongPress(channelCard);
+        } else if (dropdownItem) {
+          const channelId = dropdownItem.dataset.channelId;
+          if (channelId) {
+            // Same scroll action as dropdown item click
+            const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+            if (programCard) {
+              const header = document.querySelector('.header');
+              const mobileNav = document.querySelector('.mobile-dropdowns');
+
+              let offset = 0;
+              if (header) offset += header.offsetHeight;
+              if (mobileNav) offset += mobileNav.offsetHeight;
+
+              const programHead = programCard.querySelector('.program-card__header');
+              if (programHead) {
+                offset += programHead.offsetHeight + 24;
+              }
+
+              const rect = programCard.getBoundingClientRect();
+              let absoluteTop = rect.top + window.pageYOffset;
+
+              if (programCard.classList.contains('first')) {
+                absoluteTop = 0;
+                offset = 0;
+              }
+
+              window.scrollTo({
+                top: absoluteTop - offset,
+                behavior: 'smooth'
+              });
+              
+              // Close FAB modal if this is a fab dropdown item
+              const fabModal = document.querySelector('.fab-menu-modal');
+              if (fabModal && fabModal.classList.contains('active')) {
+                fabModal.classList.remove('active');
+                const fabBackdrop = document.getElementById('fabMenuBackdrop');
+                if (fabBackdrop) fabBackdrop.style.display = 'none';
+                document.body.style.overflow = '';
+              }
+            }
+          }
+        } else if (programLogo) {
+          handleProgramLogoLongPress(programLogo);
+        }
+      }, 500); // 500ms for long press
+    }
+  }, true);
+
+  document.addEventListener('touchend', function(e) {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+    }
+    
+    // If a long press just occurred, prevent any click events for a short time
+    if (window.isLongPress) {
+      setTimeout(() => {
+        window.isLongPress = false;
+      }, 100);
+    }
+  }, true);
+
+  document.addEventListener('touchmove', function(e) {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+    }
+  }, true);
+
+  // Mouse handling for desktop long press (right-click)
+  document.addEventListener('mousedown', function(e) {
+    if (e.button === 2) { // Right-click
+      const channelCard = e.target.closest('.channel-card');
+      const dropdownItem = e.target.closest('.channel-dropdown-item');
+      const programLogo = e.target.closest('.program-card__logo');
+      
+      if (channelCard) {
+        e.preventDefault();
+        // Add haptic feedback if available
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+        handleChannelCardLongPress(channelCard);
+      } else if (dropdownItem) {
+        e.preventDefault();
+        // Add haptic feedback if available
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+        const channelId = dropdownItem.dataset.channelId;
+        if (channelId) {
+          // Same scroll action as dropdown item click
+          const programCard = document.querySelector(`.program-card[data-channel-id="${channelId}"]`);
+          if (programCard) {
+            const header = document.querySelector('.header');
+            const mobileNav = document.querySelector('.mobile-dropdowns');
+
+            let offset = 0;
+            if (header) offset += header.offsetHeight;
+            if (mobileNav) offset += mobileNav.offsetHeight;
+
+            const programHead = programCard.querySelector('.program-card__header');
+            if (programHead) {
+              offset += programHead.offsetHeight + 24;
+            }
+
+            const rect = programCard.getBoundingClientRect();
+            let absoluteTop = rect.top + window.pageYOffset;
+
+            if (programCard.classList.contains('first')) {
+              absoluteTop = 0;
+              offset = 0;
+            } else {
+              isAutoScrolling = true;
+              setTimeout(() => {
+                isAutoScrolling = false;
+              }, 1000);
+            }
+
+            window.scrollTo({
+              top: absoluteTop - offset,
+              behavior: 'smooth'
+            });
+            
+            // Close FAB modal if this is a fab dropdown item
+            const fabModal = document.querySelector('.fab-menu-modal');
+            if (fabModal && fabModal.classList.contains('active')) {
+              fabModal.classList.remove('active');
+              const fabBackdrop = document.getElementById('fabMenuBackdrop');
+              if (fabBackdrop) fabBackdrop.style.display = 'none';
+              document.body.style.overflow = '';
+            }
+          }
+        }
+      } else if (programLogo) {
+        e.preventDefault();
+        // Add haptic feedback if available
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+        handleProgramLogoLongPress(programLogo);
+      }
+    }
+  }, true);
+}
+
 // Initialize everything when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   // Ensure modal is hidden on page load
@@ -8593,6 +8893,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollBasedSections();
   setupChannelAnchorScrolling();
   setupChannelScrolling();
+  setupLongPressHandling();
   initializeChannels();
 
   // Show the floating button only on mobile
@@ -8835,7 +9136,12 @@ document.addEventListener('DOMContentLoaded', () => {
               
             // Reattach click handlers to new channel buttons
             channelWrapper.querySelectorAll('.channel-dropdown-item').forEach(btn => {
-              btn.onclick = function() {
+              btn.onclick = function(e) {
+                // Don't execute if this was triggered by a long press
+                if (window.isLongPress) {
+                  return;
+                }
+                
                 const channelId = btn.getAttribute('data-channel-id');
                 if (channelId) {
                   // Find and scroll to the program card with same offset as channel-card clicks
@@ -8859,6 +9165,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (programCard.classList.contains('first')) {
                       absoluteTop = 0;
                       offset = 0;
+                    } else {
+                      isAutoScrolling = true;
+                      setTimeout(() => {
+                        isAutoScrolling = false;
+                      }, 1000);
                     }
 
                     window.scrollTo({
@@ -8876,7 +9187,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Attach click handler in JS for each channel button
     fabList.querySelectorAll('.channel-dropdown-item').forEach(btn => {
-      btn.onclick = function() {
+      btn.onclick = function(e) {
+        // Don't execute if this was triggered by a long press
+        if (window.isLongPress) {
+          return;
+        }
+        
         const channelId = btn.getAttribute('data-channel-id');
         if (channelId) {
           // Find and scroll to the program card with same offset as channel-card clicks
