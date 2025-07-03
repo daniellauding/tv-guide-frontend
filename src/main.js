@@ -5814,6 +5814,46 @@ function toggleAllSchedules() {
   console.groupEnd();
 }
 
+// Mock program variations for different dates
+function getProgramsForDate(selectedDate) {
+  if (!selectedDate) return tvData.channels;
+  
+  // Create variations based on date
+  const dateObj = new Date(selectedDate);
+  const dayOfWeek = dateObj.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  
+  // Generate different program variations for each day
+  const programVariations = {
+    0: 'Pazar', // Sunday 
+    1: 'Pazartesi', // Monday
+    2: 'Salı', // Tuesday 
+    3: 'Çarşamba', // Wednesday
+    4: 'Perşembe', // Thursday
+    5: 'Cuma', // Friday
+    6: 'Cumartesi' // Saturday
+  };
+  
+  const dayName = programVariations[dayOfWeek];
+  
+  // Create modified channels with different programs for each date
+  return tvData.channels.map(channel => ({
+    ...channel,
+    programs: channel.programs.map(program => ({
+      ...program,
+      title: `${program.title} (${dayName})`,
+      // Vary the live program based on day
+      state: dayOfWeek === 0 && program.time === '09:00' ? 'live' :
+             dayOfWeek === 1 && program.time === '10:00' ? 'live' :
+             dayOfWeek === 2 && program.time === '11:00' ? 'live' :
+             dayOfWeek === 3 && program.time === '12:00' ? 'live' :
+             dayOfWeek === 4 && program.time === '13:00' ? 'live' :
+             dayOfWeek === 5 && program.time === '14:00' ? 'live' :
+             dayOfWeek === 6 && program.time === '15:00' ? 'live' :
+             program.state
+    }))
+  }));
+}
+
 // Modify the program rendering to include state classes
 function renderPrograms(selectedDate = null) {
   const content = document.querySelector('.programs__content');
@@ -5830,8 +5870,11 @@ function renderPrograms(selectedDate = null) {
   // Get provider channels
   const providerChannels = providers[providerId]?.channels || [];
   
+  // Get date-specific channel data
+  const dateSpecificChannels = getProgramsForDate(selectedDate);
+  
   // Filter channels that are both enabled and in the current provider
-  const channels = tvData.channels.filter(
+  const channels = dateSpecificChannels.filter(
     channel => channel.enabled && providerChannels.includes(channel.id)
   );
   
@@ -6015,8 +6058,17 @@ function toggleSchedule(channelId) {
     button.setAttribute('title', 'Sadece güncel programları göster');
   }
 
+  // Get the selected date
+  const activeDay = document.querySelector('.date-nav-item.active');
+  const selectedDate = activeDay ? activeDay.dataset.date : null;
+  
+  // Get date-specific programs for this channel
+  const dateSpecificChannels = getProgramsForDate(selectedDate);
+  const dateSpecificChannel = dateSpecificChannels.find(c => c.id === channelId);
+  const channelPrograms = dateSpecificChannel ? dateSpecificChannel.programs : channel.programs;
+  
   // Re-render only this channel's programs
-  const { allPrograms } = getRelevantPrograms(channel.programs);
+  const { allPrograms } = getRelevantPrograms(channelPrograms);
 
   // Find current/live program and upcoming programs
   const currentProgram = allPrograms.find(p => p.state === 'live');
