@@ -5992,12 +5992,11 @@ function toggleSchedule(channelId) {
 
   // Toggle the expanded state on the channel object
   channel.expanded = !channel.expanded;
-  renderPrograms();
 
   const programsContainer = document.getElementById(`programs-${channelId}`);
   if (!programsContainer) return;
 
-  const button = document.querySelector(`button[data-channel-id="${channelId}"]`);
+  const button = document.querySelector(`.schedule-toggle-btn[data-channel-id="${channelId}"]`);
   if (!button) return;
 
   if (!channel.expanded) {
@@ -8810,9 +8809,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const fabModal = document.querySelector('.fab-menu-modal');
   const fabBackdrop = document.getElementById('fabMenuBackdrop');
 
-  function closeFabMenuModal() {
-    fabModal.classList.remove('active');
-    fabBackdrop.style.display = 'none';
+  window.closeFabMenuModal = function() {
+    const fabModal = document.querySelector('.fab-menu-modal');
+    const fabBackdrop = document.getElementById('fabMenuBackdrop');
+    if (fabModal) {
+      fabModal.classList.remove('active');
+    }
+    if (fabBackdrop) {
+      fabBackdrop.style.display = 'none';
+    }
     document.body.style.overflow = '';
   }
 
@@ -8843,18 +8848,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (fabBackdrop) {
     fabBackdrop.addEventListener('click', function () {
       // console.log('Backdrop clicked!');
-      closeFabMenuModal();
+      window.closeFabMenuModal();
     });
   } else {
     // console.log('fabMenuBackdrop not found!');
   }
 
-  fabModal.querySelector('.fab-menu-modal-dropdown__close').addEventListener('click', closeFabMenuModal);
-  fabBackdrop.addEventListener('click', closeFabMenuModal);
+  fabModal.querySelector('.fab-menu-modal-dropdown__close').addEventListener('click', window.closeFabMenuModal);
+  fabBackdrop.addEventListener('click', window.closeFabMenuModal);
 
   fabModal.addEventListener('click', e => {
     if (e.target === fabModal) {
-      closeFabMenuModal();
+      window.closeFabMenuModal();
     }
   });
   window.updateFabMenuChannelList = function() {
@@ -9086,7 +9091,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       behavior: 'smooth'
                     });
                   }
-                  closeFabMenuModal();
+                  window.closeFabMenuModal();
                 }
               };
             });
@@ -9133,12 +9138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           }
           
-          // Hide the FAB modal after selection
-          const fabModal = document.querySelector('.fab-menu-modal');
-          if (fabModal) {
-            fabModal.classList.remove('active');
-            document.body.style.overflow = '';
-          }
+          window.closeFabMenuModal();
         }
       };
     });
