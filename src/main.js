@@ -8307,6 +8307,7 @@ function setupChannelScrolling() {
           isAutoScrolling = false;
         }, 1000);
       }
+
       window.scrollTo({
         top: absoluteTop - offset,
         behavior: 'smooth'
@@ -9170,7 +9171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let offset = 0;
             if (header) offset += header.offsetHeight;
             if (mobileNav) offset += mobileNav.offsetHeight;
-
+            
             const programHead = programCard.querySelector('.program-card__header');
             if (programHead) {
               offset += programHead.offsetHeight + 24;
@@ -9182,6 +9183,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (programCard.classList.contains('first')) {
               absoluteTop = 0;
               offset = 0;
+            } else {
+              isAutoScrolling = true;
+              setTimeout(() => {
+                isAutoScrolling = false;
+              }, 1000);
             }
 
             window.scrollTo({
